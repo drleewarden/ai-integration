@@ -11,6 +11,9 @@ import {
   CheckCircle,
   MessageSquare,
   Sparkles,
+  Star,
+  TrendingUp,
+  Rocket,
 } from "lucide-react";
 
 export default function AIConsultancySite() {
@@ -31,19 +34,16 @@ export default function AIConsultancySite() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleInputChange = (e: {
-    target: { name: string; value: string };
-  }) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const sendEmail = async (e: { preventDefault: () => void }) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
 
-    // Validate form
     if (!formData.name || !formData.email || !formData.message) {
       setFormStatus({
         type: "error",
@@ -53,7 +53,6 @@ export default function AIConsultancySite() {
       return;
     }
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setFormStatus({
@@ -106,153 +105,105 @@ export default function AIConsultancySite() {
 
   const services = [
     {
-      icon: <Brain className="w-8 h-8" />,
+      icon: <Brain className="w-10 h-10" />,
       title: "AI Strategy & Roadmap",
       description:
         "Develop comprehensive AI integration strategies aligned with your business objectives and technical capabilities.",
-      color: "from-purple-200 to-purple-300",
     },
     {
-      icon: <Zap className="w-8 h-8" />,
+      icon: <Zap className="w-10 h-10" />,
       title: "Custom AI Solutions",
       description:
         "Build tailored AI models and systems that solve your specific business challenges and enhance product capabilities.",
-      color: "from-blue-200 to-blue-300",
     },
     {
-      icon: <Target className="w-8 h-8" />,
+      icon: <Target className="w-10 h-10" />,
       title: "Implementation & Integration",
       description:
         "Seamlessly integrate AI technologies into your existing products and workflows with minimal disruption.",
-      color: "from-pink-200 to-pink-300",
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: <Users className="w-10 h-10" />,
       title: "Team Training & Support",
       description:
         "Empower your team with AI knowledge and provide ongoing support to ensure long-term success.",
-      color: "from-teal-200 to-teal-300",
     },
+  ];
+
+  const stats = [
+    { value: "50+", label: "AI Projects Delivered" },
+    { value: "95%", label: "Client Satisfaction" },
+    { value: "$2M+", label: "Revenue Generated" },
+    { value: "24/7", label: "Support Available" },
   ];
 
   const caseStudies = [
     {
       company: "E-Commerce Platform",
-      challenge: "Needed personalized product recommendations",
-      solution: "Implemented ML-based recommendation engine",
+      description: "Personalized product recommendations that drive sales",
       result: "35% increase in conversion rates",
-      color: "bg-gradient-to-br from-purple-100 to-pink-100",
+      metric: "+35%",
     },
     {
       company: "SaaS Analytics Tool",
-      challenge: "Manual data analysis was time-consuming",
-      solution: "Integrated predictive analytics with AI",
+      description: "Predictive analytics for faster business insights",
       result: "10x faster insights generation",
-      color: "bg-gradient-to-br from-blue-100 to-cyan-100",
+      metric: "10x",
     },
     {
       company: "Customer Support Platform",
-      challenge: "High volume of repetitive inquiries",
-      solution: "Deployed intelligent chatbot system",
+      description: "Intelligent chatbot reducing support workload",
       result: "60% reduction in support tickets",
-      color: "bg-gradient-to-br from-teal-100 to-green-100",
-    },
-  ];
-
-  const process = [
-    {
-      step: "01",
-      title: "Discovery",
-      description:
-        "Understand your business goals, technical landscape, and AI readiness",
-    },
-    {
-      step: "02",
-      title: "Strategy",
-      description:
-        "Design a tailored AI integration roadmap with clear milestones",
-    },
-    {
-      step: "03",
-      title: "Development",
-      description: "Build and train AI models specific to your use case",
-    },
-    {
-      step: "04",
-      title: "Integration",
-      description: "Seamlessly deploy AI into your existing systems",
-    },
-    {
-      step: "05",
-      title: "Optimization",
-      description: "Monitor, refine, and scale AI performance over time",
+      metric: "-60%",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 text-gray-800">
-      {/* Animated background elements */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse" />
-        <div
-          className="absolute top-40 right-10 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-        <div
-          className="absolute bottom-20 left-1/2 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"
-          style={{ animationDelay: "2s" }}
-        />
-      </div>
-
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Navigation */}
-      <nav className="fixed w-full bg-white/80 backdrop-blur-md z-50 shadow-sm">
+      <nav className="fixed w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2 group">
+            <div className="flex items-center space-x-2 group cursor-pointer">
               <div className="relative">
-                <Brain className="w-8 h-8 text-purple-500 transition-transform group-hover:rotate-12" />
-                <Sparkles className="w-4 h-4 text-pink-400 absolute -top-1 -right-1 animate-pulse" />
+                <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Brain className="w-6 h-6 text-white" />
+                </div>
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold text-gray-900">
                 AI Integration Labs
               </span>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex items-center space-x-8">
               <a
                 href="#services"
-                className="hover:text-purple-600 transition-colors relative group"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Services
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-purple-600 transition-all group-hover:w-full" />
-              </a>
-              <a
-                href="#process"
-                className="hover:text-pink-600 transition-colors relative group"
-              >
-                Process
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-pink-600 transition-all group-hover:w-full" />
               </a>
               <a
                 href="#case-studies"
-                className="hover:text-blue-600 transition-colors relative group"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 Case Studies
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
+              </a>
+              <a
+                href="#process"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                Process
               </a>
               <a
                 href="#contact"
-                className="hover:text-teal-600 transition-colors relative group"
+                className="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 transition-all hover:scale-105"
               >
-                Contact
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal-600 transition-all group-hover:w-full" />
+                Get Started
               </a>
             </div>
 
-            {/* Mobile menu button */}
             <button
-              className="md:hidden text-purple-600"
+              className="md:hidden text-gray-900"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X /> : <Menu />}
@@ -260,33 +211,32 @@ export default function AIConsultancySite() {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-purple-100 animate-fadeIn">
+          <div className="md:hidden bg-white border-t border-gray-100">
             <div className="px-4 py-4 space-y-3">
               <a
                 href="#services"
-                className="block hover:text-purple-600 transition-colors"
+                className="block text-gray-600 hover:text-gray-900"
               >
                 Services
               </a>
               <a
-                href="#process"
-                className="block hover:text-pink-600 transition-colors"
-              >
-                Process
-              </a>
-              <a
                 href="#case-studies"
-                className="block hover:text-blue-600 transition-colors"
+                className="block text-gray-600 hover:text-gray-900"
               >
                 Case Studies
               </a>
               <a
-                href="#contact"
-                className="block hover:text-teal-600 transition-colors"
+                href="#process"
+                className="block text-gray-600 hover:text-gray-900"
               >
-                Contact
+                Process
+              </a>
+              <a
+                href="#contact"
+                className="block bg-black text-white px-6 py-2 rounded-full text-center"
+              >
+                Get Started
               </a>
             </div>
           </div>
@@ -294,67 +244,146 @@ export default function AIConsultancySite() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="inline-block mb-4 px-4 py-2 bg-purple-100 rounded-full text-purple-700 text-sm font-medium animate-bounce">
-            ✨ Transforming Businesses with AI
+      <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-full mb-6 animate-slideDown">
+              <Sparkles className="w-4 h-4 text-gray-600" />
+              <span className="text-sm font-medium text-gray-700">
+                Trusted by innovative companies
+              </span>
+            </div>
+
+            <h1 className="text-6xl md:text-8xl line-height-1 font-bold mb-6 text-gray-900 animate-fadeInUp">
+              Building AI Solutions,
+              <br />
+              <span className="relative  inline-block md:text-4xl text-gray-500">
+                integration & automation.
+                <div className="absolute -bottom-2 left-0 w-full h-3 bg-yellow-200 -z-10 animate-expand"></div>
+              </span>
+            </h1>
+
+            <p
+              className="text-xl md:text-2xl text-gray-600 mb-10 max-w-3xl mx-auto animate-fadeInUp"
+              style={{ animationDelay: "0.2s" }}
+            >
+              Turn your product vision into market success with AI-powered
+              solutions
+            </p>
+
+            <div
+              className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp"
+              style={{ animationDelay: "0.4s" }}
+            >
+              <a
+                href="#contact"
+                className="group bg-black text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-xl flex items-center justify-center space-x-2"
+              >
+                <span>Start Free Trial</span>
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href="#case-studies"
+                className="bg-white border-2 border-gray-900 text-gray-900 px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-xl"
+              >
+                View Case Studies
+              </a>
+            </div>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text text-transparent animate-fadeIn">
-            Transform Your Products with AI
-          </h1>
-          <p
-            className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto animate-fadeIn"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Expert AI integration consultancy helping businesses unlock the
-            power of artificial intelligence
-          </p>
-          <div
-            className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeIn"
-            style={{ animationDelay: "0.4s" }}
-          >
-            <a
-              href="#contact"
-              className="group bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 rounded-full font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2"
-            >
-              <span>Get Started</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </a>
-            <a
-              href="#services"
-              className="group bg-white hover:bg-gray-50 border-2 border-purple-300 hover:border-purple-400 text-purple-600 px-8 py-4 rounded-full font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
-            >
-              Learn More
-            </a>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20">
+            {stats.map((stat, idx) => (
+              <div
+                key={idx}
+                className="text-center p-6 bg-white rounded-2xl border border-gray-200 hover:border-gray-900 transition-all hover:scale-105 animate-fadeInUp"
+                style={{ animationDelay: `${0.6 + idx * 0.1}s` }}
+              >
+                <div className="text-4xl font-bold text-gray-900 mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-sm text-gray-600">{stat.label}</div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Our Services
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Comprehensive AI solutions tailored to your unique business needs
-          </p>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <section id="services" className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-900">
+              Premium services
+              <br />
+              fueling startup growth
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Comprehensive AI solutions tailored to your unique business needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6">
             {services.map((service, idx) => (
               <div
                 key={idx}
-                className="group bg-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 border border-gray-100 animate-fadeIn"
-                style={{ animationDelay: `${idx * 0.1}s` }}
+                className="group bg-white p-8 rounded-3xl border border-gray-200 hover:border-gray-900 transition-all hover:scale-105 hover:shadow-2xl cursor-pointer"
+                style={{
+                  animation: `slideInUp 0.6s ease-out ${idx * 0.1}s both`,
+                }}
               >
-                <div
-                  className={`inline-block p-3 rounded-xl bg-gradient-to-br ${service.color} text-gray-700 mb-4 group-hover:scale-110 transition-transform`}
-                >
+                <div className="w-16 h-16 bg-gray-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-black group-hover:text-white transition-all group-hover:scale-110">
                   {service.icon}
                 </div>
-                <h3 className="text-xl font-semibold mb-3 text-gray-800">
+                <h3 className="text-2xl font-bold mb-3 text-gray-900">
                   {service.title}
                 </h3>
-                <p className="text-gray-600">{service.description}</p>
+                <p className="text-gray-600 leading-relaxed">
+                  {service.description}
+                </p>
+                <div className="mt-6 flex items-center text-gray-900 font-semibold group-hover:translate-x-2 transition-transform">
+                  <span>Learn more</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Case Studies */}
+      <section id="case-studies" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-900">
+              Startups that thrived
+              <br />
+              with our support
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {caseStudies.map((study, idx) => (
+              <div
+                key={idx}
+                className="group bg-gray-50 p-8 rounded-3xl hover:bg-white border border-transparent hover:border-gray-900 transition-all hover:scale-105 hover:shadow-2xl cursor-pointer"
+                style={{
+                  animation: `slideInUp 0.6s ease-out ${idx * 0.15}s both`,
+                }}
+              >
+                <div className="text-6xl font-bold text-gray-900 mb-6">
+                  {study.metric}
+                </div>
+                <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                  {study.company}
+                </h3>
+                <p className="text-gray-600 mb-6">{study.description}</p>
+                <div className="flex items-center space-x-2 text-green-600 font-semibold">
+                  <TrendingUp className="w-5 h-5" />
+                  <span>{study.result}</span>
+                </div>
               </div>
             ))}
           </div>
@@ -362,200 +391,215 @@ export default function AIConsultancySite() {
       </section>
 
       {/* Process Section */}
-      <section
-        id="process"
-        className="relative py-20 px-4 sm:px-6 lg:px-8 bg-white/50 backdrop-blur-sm"
-      >
-        <div className="max-w-7xl mx-auto relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent">
-            Our Process
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            A proven methodology for successful AI integration
-          </p>
-          <div className="grid md:grid-cols-5 gap-6">
-            {process.map((item, idx) => (
-              <div key={idx} className="relative group">
-                <div
-                  className="bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 text-white p-6 rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:scale-105 animate-fadeIn"
-                  style={{ animationDelay: `${idx * 0.1}s` }}
-                >
-                  <div className="text-3xl font-bold mb-3 opacity-60">
-                    {item.step}
-                  </div>
-                  <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                  <p className="text-sm text-white/90">{item.description}</p>
-                </div>
-                {idx < process.length - 1 && (
-                  <ArrowRight className="hidden md:block absolute top-1/2 -right-8 transform -translate-y-1/2 text-purple-300 w-6 h-6 animate-pulse" />
-                )}
-              </div>
-            ))}
+      <section id="process" className="py-24 px-4 sm:px-6 lg:px-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-900">
+              From idea to launch —
+              <br />
+              we help AI startups move fast
+            </h2>
           </div>
-        </div>
-      </section>
 
-      {/* Case Studies Section */}
-      <section
-        id="case-studies"
-        className="relative py-20 px-4 sm:px-6 lg:px-8"
-      >
-        <div className="max-w-7xl mx-auto relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
-            Success Stories
-          </h2>
-          <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-            Real results from our AI integration projects
-          </p>
           <div className="grid md:grid-cols-3 gap-8">
-            {caseStudies.map((study, idx) => (
-              <div
-                key={idx}
-                className={`${study.color} p-8 rounded-2xl shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2 animate-fadeIn`}
-                style={{ animationDelay: `${idx * 0.15}s` }}
-              >
-                <h3 className="text-2xl font-bold mb-4 text-gray-800">
-                  {study.company}
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <div className="text-sm text-gray-600 font-semibold mb-1">
-                      Challenge
-                    </div>
-                    <p className="text-gray-700">{study.challenge}</p>
-                  </div>
-                  <div>
-                    <div className="text-sm text-gray-600 font-semibold mb-1">
-                      Solution
-                    </div>
-                    <p className="text-gray-700">{study.solution}</p>
-                  </div>
-                  <div className="pt-4 border-t border-gray-300">
-                    <div className="flex items-center space-x-2 text-green-600">
-                      <CheckCircle className="w-5 h-5 animate-pulse" />
-                      <span className="font-semibold">{study.result}</span>
-                    </div>
-                  </div>
-                </div>
+            <div className="bg-white p-8 rounded-3xl border border-gray-200 hover:border-gray-900 transition-all hover:scale-105 hover:shadow-xl">
+              <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+                1
               </div>
-            ))}
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                Discovery & Strategy
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                We dive deep into your business goals, technical landscape, and
+                AI readiness to design a tailored roadmap.
+              </p>
+            </div>
+
+            <div
+              className="bg-white p-8 rounded-3xl border border-gray-200 hover:border-gray-900 transition-all hover:scale-105 hover:shadow-xl"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+                2
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                Build & Integrate
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                Our team builds custom AI models and seamlessly integrates them
+                into your existing systems.
+              </p>
+            </div>
+
+            <div
+              className="bg-white p-8 rounded-3xl border border-gray-200 hover:border-gray-900 transition-all hover:scale-105 hover:shadow-xl"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <div className="w-12 h-12 bg-black text-white rounded-full flex items-center justify-center text-xl font-bold mb-6">
+                3
+              </div>
+              <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                Optimize & Scale
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                We monitor, refine, and scale AI performance while training your
+                team for long-term success.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section
-        id="contact"
-        className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100"
-      >
-        <div className="max-w-3xl mx-auto text-center relative z-10">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Ready to Get Started?
-          </h2>
-          <p className="text-gray-600 mb-8">
-            Lets discuss how AI can transform your product and drive business
-            growth
-          </p>
-          <div className="bg-white p-8 rounded-2xl shadow-2xl">
-            {formStatus.message && (
-              <div
-                className={`mb-4 p-4 rounded-xl ${
-                  formStatus.type === "success"
-                    ? "bg-green-100 text-green-700 border border-green-300"
-                    : formStatus.type === "error"
-                      ? "bg-red-100 text-red-700 border border-red-300"
-                      : "bg-blue-100 text-blue-700 border border-blue-300"
-                }`}
-              >
-                {formStatus.message}
-              </div>
-            )}
-            <div className="space-y-4">
-              <div className="grid md:grid-cols-2 gap-4">
+      {/* CTA Section */}
+      <section id="contact" className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gray-900 rounded-3xl p-12 text-center text-white relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900"></div>
+
+            <div className="relative z-10">
+              <Rocket className="w-16 h-16 mx-auto mb-6 animate-bounce" />
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                Ready to transform your product?
+              </h2>
+              <p className="text-xl text-gray-300 mb-8">
+                Start with a free 3-day trial. No commitment required.
+              </p>
+
+              {formStatus.message && (
+                <div
+                  className={`mb-6 p-4 rounded-xl ${
+                    formStatus.type === "success"
+                      ? "bg-green-500/20 text-green-300 border border-green-500"
+                      : "bg-red-500/20 text-red-300 border border-red-500"
+                  }`}
+                >
+                  {formStatus.message}
+                </div>
+              )}
+
+              <div className="max-w-2xl mx-auto space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder="Your Name *"
+                    className="bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all text-white placeholder-gray-400"
+                    required
+                  />
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder="Email Address *"
+                    className="bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all text-white placeholder-gray-400"
+                    required
+                  />
+                </div>
                 <input
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="company"
+                  value={formData.company}
                   onChange={handleInputChange}
-                  placeholder="Your Name *"
-                  className="bg-gray-50 border-2 border-purple-200 rounded-xl px-4 py-3 focus:outline-none focus:border-purple-400 transition-all"
+                  placeholder="Company Name"
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all text-white placeholder-gray-400"
+                />
+                <textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="Tell us about your project... *"
+                  rows={4}
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-6 py-4 focus:outline-none focus:border-white/40 transition-all text-white placeholder-gray-400"
                   required
                 />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder="Email Address *"
-                  className="bg-gray-50 border-2 border-pink-200 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-400 transition-all"
-                  required
-                />
+                <button
+                  onClick={sendEmail}
+                  disabled={isSubmitting}
+                  className={`w-full bg-white text-gray-900 px-8 py-4 rounded-full font-bold transition-all hover:scale-105 hover:shadow-2xl flex items-center justify-center space-x-2 ${
+                    isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
+                >
+                  <MessageSquare className="w-5 h-5" />
+                  <span>
+                    {isSubmitting ? "Sending..." : "Start Free Trial"}
+                  </span>
+                </button>
               </div>
-              <input
-                type="text"
-                name="company"
-                value={formData.company}
-                onChange={handleInputChange}
-                placeholder="Company Name"
-                className="w-full bg-gray-50 border-2 border-blue-200 rounded-xl px-4 py-3 focus:outline-none focus:border-blue-400 transition-all"
-              />
-              <textarea
-                name="message"
-                value={formData.message}
-                onChange={handleInputChange}
-                placeholder="Tell us about your project... *"
-                rows={4}
-                className="w-full bg-gray-50 border-2 border-teal-200 rounded-xl px-4 py-3 focus:outline-none focus:border-teal-400 transition-all"
-                required
-              />
-              <button
-                onClick={sendEmail}
-                disabled={isSubmitting}
-                className={`w-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105 flex items-center justify-center space-x-2 ${
-                  isSubmitting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                <MessageSquare className="w-5 h-5" />
-                <span>
-                  {isSubmitting ? "Sending..." : "Schedule a Consultation"}
-                </span>
-              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative bg-white/80 backdrop-blur-md border-t border-purple-100 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto text-center relative z-10">
-          <div className="flex items-center justify-center space-x-2 mb-4 group">
-            <Brain className="w-6 h-6 text-purple-500 group-hover:rotate-12 transition-transform" />
-            <span className="text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              AI Integration Labs
-            </span>
+      <footer className="bg-white border-t border-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                <Brain className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-lg font-bold text-gray-900">
+                AI Integration Labs
+              </span>
+            </div>
+            <p className="text-gray-600 text-sm">
+              © 2025 AI Integration Labs. All rights reserved.
+            </p>
           </div>
-          <p className="text-gray-600 mb-4">
-            Empowering businesses with intelligent AI solutions
-          </p>
-          <p className="text-gray-400 text-sm">
-            © 2025 AI Integration Labs. All rights reserved.
-          </p>
         </div>
       </footer>
 
       <style jsx>{`
-        @keyframes fadeIn {
+        @keyframes fadeInUp {
           from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
           }
           to {
             opacity: 1;
             transform: translateY(0);
           }
         }
-        .animate-fadeIn {
-          animation: fadeIn 0.6s ease-out forwards;
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(50px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes expand {
+          from {
+            width: 0;
+          }
+          to {
+            width: 100%;
+          }
+        }
+        .animate-fadeInUp {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .animate-slideDown {
+          animation: slideDown 0.6s ease-out forwards;
+        }
+        .animate-expand {
+          animation: expand 1s ease-out 0.5s forwards;
+          width: 0;
         }
       `}</style>
     </div>
