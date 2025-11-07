@@ -8,10 +8,8 @@ import {
   ArrowRight,
   Menu,
   X,
-  CheckCircle,
   MessageSquare,
   Sparkles,
-  Star,
   TrendingUp,
   Rocket,
 } from "lucide-react";
@@ -34,12 +32,14 @@ export default function AIConsultancySite() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const sendEmail = async (e) => {
+  const sendEmail = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setFormStatus({ type: "", message: "" });
