@@ -281,7 +281,7 @@ export default function AIConsultancySite() {
                 href="#contact"
                 className="group bg-black text-white px-8 py-4 rounded-full font-semibold transition-all hover:scale-105 hover:shadow-xl flex items-center justify-center space-x-2"
               >
-                <span>Start Free Trial</span>
+                <span>Send Email</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
@@ -462,7 +462,7 @@ export default function AIConsultancySite() {
                 Ready to transform your product?
               </h2>
               <p className="text-xl text-gray-300 mb-8">
-                Start with a free 3-day trial. No commitment required.
+                Please message for a free consultation.
               </p>
 
               {formStatus.message && (
