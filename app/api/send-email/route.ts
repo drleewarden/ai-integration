@@ -1,7 +1,10 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend only when API key is available
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 interface ConsultationRequestBody {
   name: string;
@@ -23,6 +26,15 @@ function escapeHtml(s: string): string {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
+    // Check if Resend is properly configured
+    if (!resend) {
+      console.error("[send-email] Resend API key not configured");
+      return NextResponse.json(
+        { error: "Email service not configured. Please contact us directly." },
+        { status: 503 },
+      );
+    }
+
     const body = (await request.json()) as ConsultationRequestBody;
     const name = body?.name?.trim() ?? "";
     const email = body?.email?.trim() ?? "";
@@ -32,23 +44,26 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Name, email, and message are required." },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (!EMAIL_RE.test(email)) {
       return NextResponse.json(
         { error: "Please provide a valid email address." },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (message.length > 5000) {
       return NextResponse.json(
-        { error: "Message is too long — please keep it under 5,000 characters." },
-        { status: 400 }
+        {
+          error: "Message is too long — please keep it under 5,000 characters.",
+        },
+        { status: 400 },
       );
     }
 
-    const FROM = process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
+    const FROM =
+      process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
     const TO = process.env.RESEND_TO ?? "drleewarden@gmail.com";
 
     const html = renderEmail({
@@ -72,8 +87,11 @@ export async function POST(request: Request): Promise<NextResponse> {
     const errorMessage =
       error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: "Failed to send. Please try again or email us directly.", details: errorMessage },
-      { status: 500 }
+      {
+        error: "Failed to send. Please try again or email us directly.",
+        details: errorMessage,
+      },
+      { status: 500 },
     );
   }
 }

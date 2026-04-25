@@ -1,6 +1,26 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import "./globals.css";
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant-garamond",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-syne",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-mono",
+});
 
 export const metadata: Metadata = {
   title: "Creative Milk — Intelligence that actually works",
@@ -35,18 +55,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${cormorantGaramond.variable} ${syne.variable} ${dmMono.variable}`}
+    >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-0JX1S9YZ2G"
           strategy="afterInteractive"
