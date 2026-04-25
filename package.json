@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "lightningcss": "^1.32.0",
-    "next": "^16.2.4",
+    "next": "^15.5.15",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },
@@ -26,7 +26,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.15.0",
-    "eslint-config-next": "^16.2.4",
+    "eslint-config-next": "^15.5.15",
     "lucide-react": "^0.544.0",
     "resend": "^6.1.2",
     "tailwindcss": "^4.0.0-alpha.29",
