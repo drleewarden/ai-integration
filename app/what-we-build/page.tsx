@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "What AI Can Do For Your Business | Use Cases & Applications | Creative Milk",
@@ -9,7 +11,8 @@ export const metadata: Metadata = {
 
 const useCases = [
   {
-    eyebrow: "USE CASE 01",
+    number: "01",
+    category: "Customer Support & Triage",
     headline: "Stop your best people from answering the same question 40 times a day.",
     body: "Most support queues are 60–70% tier-1 queries — password resets, billing questions, feature how-tos — that follow predictable patterns and require no human judgement. AI handles these end-to-end. What's left for your team is the work that actually needs them.",
     builds: [
@@ -27,7 +30,8 @@ const useCases = [
     fit: "Businesses with 500+ tickets/week and a repeating pattern in tier-1 queries",
   },
   {
-    eyebrow: "USE CASE 02",
+    number: "02",
+    category: "Sales & Revenue Intelligence",
     headline: "Stop leaving revenue in the data you already have.",
     body: "E-commerce businesses are sitting on purchase history, browse behaviour, and session data that most of them never fully use. AI turns that data into personalised product and content experiences that convert at a measurably higher rate — without increasing ad spend.",
     builds: [
@@ -45,7 +49,8 @@ const useCases = [
     fit: "E-commerce businesses with 12+ months of transaction data and returning customers",
   },
   {
-    eyebrow: "USE CASE 03",
+    number: "03",
+    category: "Operations & Workflow Automation",
     headline: "The manual processes that eat your team's week don't have to.",
     body: "Operations work — data entry, report generation, approval routing, document processing, scheduling — follows rules. Rules can be automated. The question isn't whether it's possible; it's which processes are worth automating first, and in what order they compound.",
     builds: [
@@ -63,7 +68,8 @@ const useCases = [
     fit: "Businesses where staff spend 30%+ of their week on repeatable, rules-based tasks",
   },
   {
-    eyebrow: "USE CASE 04",
+    number: "04",
+    category: "Data & Reporting Automation",
     headline: "Stop paying your analysts to pull reports. Start paying them to think.",
     body: "Standard reporting — weekly dashboards, client reports, performance summaries — is valuable. The manual process of generating it is not. AI handles the data pull, the formatting, the distribution, and the anomaly detection. Your analysts focus on what the numbers mean and what to do about them.",
     builds: [
@@ -81,7 +87,8 @@ const useCases = [
     fit: "Teams running 10+ regular reports and spending more than 20% of analyst time on report generation",
   },
   {
-    eyebrow: "USE CASE 05",
+    number: "05",
+    category: "Document Processing & Extraction",
     headline: "Documents are where professional services businesses lose the most time.",
     body: "Accounting firms, law firms, financial advisers, and construction businesses process enormous volumes of documents — contracts, invoices, applications, compliance forms. Reading, classifying, extracting data from, and routing these documents is skilled but time-consuming work. AI handles the routine volume. Your team handles the judgement calls.",
     builds: [
@@ -99,7 +106,8 @@ const useCases = [
     fit: "Professional services businesses processing 50+ structured documents per week",
   },
   {
-    eyebrow: "USE CASE 06",
+    number: "06",
+    category: "Knowledge Management & Search",
     headline: "What if every new team member could access the knowledge of your most experienced one?",
     body: "Growing businesses accumulate knowledge in the heads of their longest-serving people. When those people are unavailable — or when they leave — that knowledge walks out with them. AI knowledge systems capture, organise, and make that expertise accessible to the whole team in real time.",
     builds: [
@@ -120,143 +128,343 @@ const useCases = [
 
 const industries = [
   { name: "Professional Services", sub: "Accounting, legal, financial advice", problems: "Document processing, client intake, compliance, reporting" },
-  { name: "Construction & Trades", sub: null, problems: "Project scheduling, procurement, safety reporting, document management" },
-  { name: "E-Commerce", sub: null, problems: "Recommendations, personalisation, inventory, customer retention" },
-  { name: "Healthcare & NDIS", sub: null, problems: "Intake, scheduling, compliance documentation, care coordination" },
-  { name: "SaaS", sub: null, problems: "Support automation, analytics, onboarding, churn prediction" },
+  { name: "Financial Services", sub: null, problems: "Document review, compliance flagging, reporting automation, client servicing" },
+  { name: "Retail & E-Commerce", sub: null, problems: "Recommendations, personalisation, inventory, customer retention" },
+  { name: "Healthcare & Allied Health", sub: null, problems: "Intake, scheduling, compliance documentation, care coordination" },
+  { name: "Logistics & Distribution", sub: null, problems: "Scheduling, route optimisation, exception handling, reporting" },
 ];
 
 export default function WhatWeBuild() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-6" style={{ color: "var(--liquid-gold)" }}>
-            WHAT WE BUILD
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 max-w-3xl leading-tight" style={{ color: "var(--warm-cream)" }}>
-            Here's what AI actually does for a business like yours.
-          </h1>
-          <p className="text-lg max-w-2xl leading-relaxed" style={{ color: "rgba(245,240,232,0.65)" }}>
-            Not a list of tools. Not a buzzword glossary. Real systems, organised by the type of problem you're trying to solve. Find your situation and see what's been built for businesses in exactly the same position.
-          </p>
-          <p className="mt-6 text-sm" style={{ color: "rgba(245,240,232,0.45)" }}>
-            We've applied AI to 50+ business problems. These are the categories where we see the most consistent, measurable impact.
-          </p>
-        </div>
-      </section>
-
-      {/* Use cases */}
-      {useCases.map((uc, idx) => (
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main">
+        {/* Hero */}
         <section
-          key={idx}
-          className="py-20 px-4 sm:px-6 lg:px-8"
-          style={{ backgroundColor: idx % 2 === 0 ? "var(--warm-cream)" : "white" }}
+          className="section"
+          style={{
+            backgroundColor: "var(--midnight-ink)",
+            paddingTop: "clamp(6rem, 12vw, 9rem)",
+          }}
         >
-          <div className="max-w-7xl mx-auto">
-            <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--liquid-gold)" }}>
-              {uc.eyebrow}
+          <div className="container">
+            <span className="eyebrow" style={{ marginBottom: "1.5rem" }}>What We Build</span>
+            <h1
+              className="h-display"
+              style={{
+                color: "var(--warm-cream)",
+                fontSize: "clamp(3rem, 7vw, 6rem)",
+                maxWidth: "18ch",
+                marginTop: "1.25rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Here's what AI actually does for a business <em className="gold">like yours.</em>
+            </h1>
+            <p
+              className="body-copy"
+              style={{
+                maxWidth: "52ch",
+                color: "rgba(245,240,232,0.65)",
+                marginBottom: "1.25rem",
+              }}
+            >
+              Not a list of tools. Not a buzzword glossary. Real systems, organised by the type of problem
+              you're trying to solve. Find your situation and see what's been built for businesses in exactly
+              the same position.
             </p>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div>
-                <h2 className="text-3xl font-bold mb-4" style={{ color: "var(--midnight-ink)" }}>
-                  {uc.headline}
-                </h2>
-                <p className="text-base leading-relaxed mb-6" style={{ color: "rgba(15,21,38,0.7)" }}>
+            <p
+              className="label"
+              style={{ color: "rgba(245,240,232,0.4)" }}
+            >
+              We've applied AI to 50+ business problems. These are the categories where we see the most consistent, measurable impact.
+            </p>
+          </div>
+        </section>
+
+        {/* Use cases */}
+        {useCases.map((uc, idx) => (
+          <section
+            key={idx}
+            className="section"
+            style={{
+              backgroundColor: idx % 2 === 0 ? "var(--warm-cream)" : "var(--off-white)",
+            }}
+          >
+            <div className="container">
+              {/* Section header */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "minmax(0,1.2fr) minmax(0,1fr)",
+                  gap: "clamp(2rem,5vw,5rem)",
+                  alignItems: "end",
+                  paddingBottom: "clamp(2rem,4vw,3.5rem)",
+                  borderBottom: "1px solid var(--rule)",
+                  marginBottom: "clamp(2rem,4vw,3.5rem)",
+                }}
+              >
+                <div>
+                  <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
+                    {uc.number} — {uc.category}
+                  </span>
+                  <h2
+                    className="h-section"
+                    style={{ color: "var(--midnight-ink)", marginTop: "1rem" }}
+                  >
+                    {uc.headline}
+                  </h2>
+                </div>
+                <p
+                  className="body-copy"
+                  style={{ maxWidth: "44ch", justifySelf: "end" }}
+                >
                   {uc.body}
                 </p>
-                <div className="p-4 rounded-xl text-sm mb-4" style={{ backgroundColor: "rgba(15,21,38,0.05)" }}>
-                  <p className="font-semibold mb-1" style={{ color: "rgba(15,21,38,0.5)" }}>Best fit:</p>
-                  <p style={{ color: "rgba(15,21,38,0.7)" }}>{uc.fit}</p>
-                </div>
-                {uc.caseStudy && (
-                  <a href="/work" className="inline-flex items-center gap-1 text-sm font-semibold" style={{ color: "var(--midnight-ink)" }}>
-                    {uc.caseStudy} <ArrowRight size={14} />
-                  </a>
-                )}
               </div>
-              <div className="grid grid-cols-1 gap-6">
-                <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: "rgba(15,21,38,0.4)" }}>What we build</h3>
-                  <ul className="space-y-2">
+
+              {/* Content grid */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))",
+                }}
+              >
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderRight: "1px solid var(--rule)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3 className="label" style={{ color: "var(--slate-mid)", marginBottom: "1.25rem" }}>
+                    What we build
+                  </h3>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                     {uc.builds.map((b, i) => (
-                      <li key={i} className="flex gap-2 text-sm" style={{ color: "rgba(15,21,38,0.7)" }}>
-                        <span className="flex-shrink-0 mt-0.5 text-base" style={{ color: "var(--liquid-gold)" }}>—</span>
+                      <li
+                        key={i}
+                        className="body-copy"
+                        style={{
+                          color: "rgba(15,21,38,0.7)",
+                          display: "flex",
+                          gap: "0.75rem",
+                          marginBottom: "0.65rem",
+                          fontSize: "0.875rem",
+                        }}
+                      >
+                        <span
+                          style={{
+                            flexShrink: 0,
+                            color: "var(--liquid-gold)",
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "1rem",
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          —
+                        </span>
                         {b}
                       </li>
                     ))}
                   </ul>
-                </div>
-                <div>
-                  <h3 className="text-xs font-bold uppercase tracking-wide mb-3" style={{ color: "rgba(15,21,38,0.4)" }}>Outcomes we've measured</h3>
-                  <ul className="space-y-2">
+                </article>
+
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderRight: "1px solid var(--rule)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3 className="label" style={{ color: "var(--slate-mid)", marginBottom: "1.25rem" }}>
+                    Outcomes we've measured
+                  </h3>
+                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.5rem" }}>
                     {uc.outcomes.map((o, i) => (
-                      <li key={i} className="flex gap-2 text-sm" style={{ color: "rgba(15,21,38,0.7)" }}>
-                        <span className="flex-shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}>✓</span>
+                      <li
+                        key={i}
+                        className="body-copy"
+                        style={{
+                          color: "rgba(15,21,38,0.7)",
+                          display: "flex",
+                          gap: "0.75rem",
+                          marginBottom: "0.65rem",
+                          fontSize: "0.875rem",
+                        }}
+                      >
+                        <span
+                          style={{
+                            flexShrink: 0,
+                            width: "1.25rem",
+                            height: "1.25rem",
+                            backgroundColor: "var(--liquid-gold)",
+                            color: "var(--midnight-ink)",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "0.6rem",
+                            fontWeight: 700,
+                            marginTop: "0.2rem",
+                          }}
+                        >
+                          ✓
+                        </span>
                         {o}
                       </li>
                     ))}
                   </ul>
-                </div>
+                </article>
+
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3 className="label" style={{ color: "var(--slate-mid)", marginBottom: "1.25rem" }}>
+                    Best fit
+                  </h3>
+                  <p
+                    className="body-copy"
+                    style={{
+                      color: "rgba(15,21,38,0.7)",
+                      fontSize: "0.875rem",
+                      marginBottom: "1.5rem",
+                    }}
+                  >
+                    {uc.fit}
+                  </p>
+                  {uc.caseStudy && (
+                    <a href="/work" className="cta-link">
+                      {uc.caseStudy} <ArrowRight size={11} />
+                    </a>
+                  )}
+                </article>
               </div>
+            </div>
+          </section>
+        ))}
+
+        {/* Industries */}
+        <section className="section" style={{ backgroundColor: "var(--midnight-ink)" }}>
+          <div className="container">
+            {/* Section header */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0,1.2fr) minmax(0,1fr)",
+                gap: "clamp(2rem,5vw,5rem)",
+                alignItems: "end",
+                paddingBottom: "clamp(2rem,4vw,3.5rem)",
+                borderBottom: "1px solid var(--rule-cream)",
+                marginBottom: "clamp(2rem,4vw,3.5rem)",
+              }}
+            >
+              <div>
+                <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>Industries</span>
+                <h2
+                  className="h-section"
+                  style={{ color: "var(--warm-cream)", marginTop: "1rem" }}
+                >
+                  Every industry has different AI leverage points.{" "}
+                  <em className="gold">Find yours.</em>
+                </h2>
+              </div>
+              <p
+                className="body-copy"
+                style={{
+                  maxWidth: "44ch",
+                  justifySelf: "end",
+                  color: "rgba(245,240,232,0.55)",
+                }}
+              >
+                Industry-specific pages coming soon. In the meantime, book a call and we'll walk through
+                what we'd target first in your sector.
+              </p>
+            </div>
+
+            {/* Industry grid */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(220px,1fr))",
+              }}
+            >
+              {industries.map((ind, i) => (
+                <article
+                  key={i}
+                  style={{
+                    padding: "clamp(1.75rem,2.5vw,2.5rem)",
+                    borderRight: "1px solid var(--rule-cream)",
+                    borderBottom: "1px solid var(--rule-cream)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 400,
+                      fontSize: "1.15rem",
+                      color: "var(--warm-cream)",
+                      marginBottom: "0.35rem",
+                    }}
+                  >
+                    {ind.name}
+                  </h3>
+                  {ind.sub && (
+                    <p className="label" style={{ color: "rgba(245,240,232,0.4)", marginBottom: "0.85rem" }}>
+                      {ind.sub}
+                    </p>
+                  )}
+                  <p className="body-copy" style={{ fontSize: "0.825rem", color: "rgba(245,240,232,0.5)" }}>
+                    {ind.problems}
+                  </p>
+                </article>
+              ))}
             </div>
           </div>
         </section>
-      ))}
 
-      {/* Industries */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-4" style={{ color: "var(--warm-cream)" }}>
-            Every industry has different AI leverage points. Find yours.
-          </h2>
-          <p className="text-base mb-12" style={{ color: "rgba(245,240,232,0.55)" }}>
-            Industry-specific pages coming soon. In the meantime, book a call and we'll walk through what we'd target first in your sector.
-          </p>
-          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {industries.map((ind, i) => (
-              <div
-                key={i}
-                className="p-6 rounded-2xl border"
-                style={{ borderColor: "rgba(245,240,232,0.1)", backgroundColor: "rgba(245,240,232,0.03)" }}
-              >
-                <h3 className="font-bold mb-1" style={{ color: "var(--warm-cream)" }}>{ind.name}</h3>
-                {ind.sub && <p className="text-xs mb-3" style={{ color: "rgba(245,240,232,0.4)" }}>{ind.sub}</p>}
-                <p className="text-xs leading-relaxed" style={{ color: "rgba(245,240,232,0.5)" }}>{ind.problems}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--warm-cream)" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: "var(--midnight-ink)" }}>
-            Tell us the problem. We'll tell you where AI fits — if it does.
-          </h2>
-          <p className="text-lg mb-10" style={{ color: "rgba(15,21,38,0.65)" }}>
-            Some businesses come to us knowing exactly what they want to automate. Most don't. That's fine — finding the right starting point is exactly what the Discovery Sprint is for. We scope the problem, assess the opportunity, and give you an honest recommendation on whether AI is the right answer and where it'll have the most impact.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold transition-all hover:opacity-90"
-              style={{ backgroundColor: "var(--midnight-ink)", color: "var(--warm-cream)" }}
+        {/* CTA */}
+        <section className="section" style={{ backgroundColor: "var(--warm-cream)" }}>
+          <div className="container" style={{ maxWidth: "760px", textAlign: "center" }}>
+            <span className="eyebrow" style={{ marginBottom: "1.5rem", justifyContent: "center" }}>
+              Start here
+            </span>
+            <h2
+              className="h-section"
+              style={{
+                color: "var(--midnight-ink)",
+                marginTop: "1rem",
+                marginBottom: "1.5rem",
+              }}
             >
-              Book a call <ArrowRight size={18} />
-            </a>
-            <a
-              href="/process"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border transition-all hover:opacity-80"
-              style={{ borderColor: "rgba(15,21,38,0.3)", color: "var(--midnight-ink)" }}
+              Tell us the problem. We'll tell you where AI fits — <em className="gold">if it does.</em>
+            </h2>
+            <p
+              className="body-copy"
+              style={{
+                maxWidth: "54ch",
+                margin: "0 auto 2.5rem",
+              }}
             >
-              See how our process works
-            </a>
+              Some businesses come to us knowing exactly what they want to automate. Most don't. That's fine —
+              finding the right starting point is exactly what the Discovery Sprint is for. We scope the problem,
+              assess the opportunity, and give you an honest recommendation on whether AI is the right answer.
+            </p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="/contact" className="cta cta-ink">
+                Book a call <ArrowRight size={14} />
+              </a>
+              <a href="/process" className="cta cta-outline-ink">
+                See how our process works
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

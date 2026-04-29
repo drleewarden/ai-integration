@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "AI Implementation Pricing Australia | Published Rates | Creative Milk",
@@ -34,228 +36,467 @@ const faqs = [
   },
 ];
 
+const phases = [
+  {
+    num: "Phase 01",
+    title: "Discovery Sprint",
+    price: "AUD $5K–$15K",
+    meta: "1–2 weeks · Can stand alone",
+    body: "The Discovery Sprint is a scoped investigation into your specific business problem. We spend 1–2 weeks understanding your processes, your stack, and the opportunity. We come out with a specific system design, agreed success metrics, a go/no-go recommendation, and a fixed-price Phase 2 proposal if we both want to proceed. The plan is yours — no obligation to proceed with us.",
+    priceNote: [
+      "Lower ($5K): single process, clear brief, simple tech stack",
+      "Upper ($15K): multiple processes, complex integrations, larger stakeholder group",
+    ],
+    deliverables: [
+      "Process audit and opportunity map",
+      "Scoped system design",
+      "Agreed success metric",
+      "Go/no-go recommendation with supporting rationale",
+      "Fixed-price Phase 2 proposal (if applicable)",
+      "The plan is yours — no obligation to proceed with us",
+    ],
+  },
+  {
+    num: "Phase 02",
+    title: "Build & Integrate",
+    price: "AUD $30K–$120K",
+    meta: "4–6 weeks · Requires Phase 1",
+    body: "We build the system to the specification from Phase 1. Production-ready, integrated into your existing stack, with change management and team training included as standard. IP transfers to you on completion.",
+    priceNote: [
+      "Lower ($30K): single integration, defined scope, small team",
+      "Upper ($120K): multiple integrations, complex data pipelines, larger team, extensive training",
+    ],
+    deliverables: [
+      "Production AI system running in your stack",
+      "Full IP transfer — code, documentation, model",
+      "Team training and adoption plan (standard)",
+      "30-day post-launch support window",
+      "Outcome measurement framework",
+    ],
+  },
+  {
+    num: "Phase 03",
+    title: "Managed Partnership",
+    price: "AUD $5K–$15K/mo",
+    meta: "Ongoing · Optional",
+    body: "Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against Phase 1 success metrics. Direct access to Craig and Darryn. Typically a 3-month minimum, month-to-month thereafter.",
+    priceNote: [
+      "Lower ($5K/month): monitoring and reporting only, stable system",
+      "Upper ($15K/month): active optimisation, model retraining, expansion planning",
+    ],
+    deliverables: [],
+  },
+];
+
+const reasons = [
+  {
+    num: "01",
+    title: "It respects your time",
+    body: "Professional services buyers make better decisions with real numbers. If our engagement costs are outside your budget, it's better for both of us to know before the first call.",
+  },
+  {
+    num: "02",
+    title: "It signals how we work",
+    body: "Agencies that hide pricing often have flexible pricing — meaning the price depends on what they think you'll pay. We don't work that way. Our prices reflect the scope and complexity of the work.",
+  },
+  {
+    num: "03",
+    title: "It creates better conversations",
+    body: "When you know what things cost, we can have a real conversation about what's worth doing. The first call becomes about the problem — not a quote request.",
+  },
+];
+
 export default function Pricing() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-6" style={{ color: "var(--liquid-gold)" }}>
-            PRICING
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 max-w-3xl leading-tight" style={{ color: "var(--warm-cream)" }}>
-            Most AI agencies won't tell you what it costs. We will.
-          </h1>
-          <p className="text-lg max-w-2xl leading-relaxed" style={{ color: "rgba(245,240,232,0.65)" }}>
-            We publish our pricing because we think hiding it wastes everyone's time. If the numbers don't fit your budget, we'd rather you know now. If they do — let's talk about what we'd build.
-          </p>
-        </div>
-      </section>
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main">
 
-      {/* Phases */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--warm-cream)" }}>
-        <div className="max-w-7xl mx-auto">
-          <p className="text-base mb-12 max-w-2xl" style={{ color: "rgba(15,21,38,0.65)" }}>
-            Every Creative Milk engagement follows the same three-phase architecture. Each phase can stand alone. Most clients proceed through all three.
-          </p>
+        {/* ── Hero ── */}
+        <section
+          className="section"
+          style={{
+            backgroundColor: "var(--midnight-ink)",
+            paddingTop: "clamp(6rem, 12vw, 9rem)",
+          }}
+        >
+          <div className="container">
+            <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>Pricing</p>
+            <h1
+              className="h-display"
+              style={{
+                fontSize: "clamp(2.75rem, 7vw, 6rem)",
+                color: "var(--warm-cream)",
+                maxWidth: "18ch",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Most AI agencies won't tell you what it costs.{" "}
+              <em className="gold">We will.</em>
+            </h1>
+            <p
+              className="body-copy"
+              style={{
+                maxWidth: "52ch",
+                color: "rgba(245,240,232,0.6)",
+                fontSize: "1.05rem",
+                lineHeight: 1.7,
+              }}
+            >
+              We publish our pricing because we think hiding it wastes everyone's time. If the
+              numbers don't fit your budget, we'd rather you know now. If they do — let's talk
+              about what we'd build.
+            </p>
+          </div>
+        </section>
 
-          <div className="space-y-8">
-            {/* Phase 1 */}
-            <div className="rounded-3xl border overflow-hidden" style={{ borderColor: "rgba(15,21,38,0.12)" }}>
-              <div className="px-8 py-6 flex flex-col md:flex-row md:items-center gap-4 justify-between" style={{ backgroundColor: "var(--midnight-ink)" }}>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--liquid-gold)" }}>PHASE 01</p>
-                  <h2 className="text-2xl font-bold" style={{ color: "var(--warm-cream)" }}>Discovery Sprint</h2>
-                </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold" style={{ color: "var(--liquid-gold)" }}>AUD $5K–$15K</p>
-                  <p className="text-sm" style={{ color: "rgba(245,240,232,0.5)" }}>1–2 weeks · Can stand alone</p>
-                </div>
-              </div>
-              <div className="px-8 py-8 grid md:grid-cols-2 gap-8" style={{ backgroundColor: "white" }}>
-                <div>
-                  <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(15,21,38,0.7)" }}>
-                    The Discovery Sprint is a scoped investigation into your specific business problem. We spend 1–2 weeks understanding your processes, your stack, and the opportunity.
-                  </p>
-                  <p className="text-base leading-relaxed" style={{ color: "rgba(15,21,38,0.7)" }}>
-                    We come out with a specific system design, agreed success metrics, a go/no-go recommendation, and a fixed-price Phase 2 proposal if we both want to proceed. The plan is yours — no obligation to proceed with us.
-                  </p>
-                  <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: "rgba(15,21,38,0.04)" }}>
-                    <p className="text-xs font-bold mb-2" style={{ color: "rgba(15,21,38,0.45)" }}>WHAT AFFECTS THE PRICE</p>
-                    <p className="text-sm" style={{ color: "rgba(15,21,38,0.65)" }}>Lower ($5K): single process, clear brief, simple tech stack</p>
-                    <p className="text-sm mt-1" style={{ color: "rgba(15,21,38,0.65)" }}>Upper ($15K): multiple processes, complex integrations, larger stakeholder group</p>
+        {/* ── Phases ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--warm-cream)" }}
+        >
+          <div className="container">
+            <p
+              className="body-copy"
+              style={{
+                maxWidth: "56ch",
+                marginBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+                color: "var(--slate-mid)",
+              }}
+            >
+              Every Creative Milk engagement follows the same three-phase architecture. Each phase
+              can stand alone. Most clients proceed through all three.
+            </p>
+
+            {phases.map((phase, idx) => (
+              <div
+                key={idx}
+                style={{
+                  borderTop: "1px solid var(--rule)",
+                  marginBottom: 0,
+                  overflow: "hidden",
+                }}
+              >
+                {/* Phase header */}
+                <div
+                  style={{
+                    backgroundColor: "var(--midnight-ink)",
+                    padding: "clamp(1.25rem, 2vw, 1.75rem) clamp(1.5rem, 3vw, 2.5rem)",
+                    display: "flex",
+                    flexWrap: "wrap",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "1rem",
+                  }}
+                >
+                  <div>
+                    <p className="eyebrow no-rule" style={{ marginBottom: "0.35rem" }}>
+                      {phase.num}
+                    </p>
+                    <h2
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "clamp(1.4rem, 2.5vw, 2rem)",
+                        fontWeight: 300,
+                        color: "var(--warm-cream)",
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      {phase.title}
+                    </h2>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+                        fontWeight: 300,
+                        color: "var(--liquid-gold)",
+                        lineHeight: 1,
+                        marginBottom: "0.3rem",
+                      }}
+                    >
+                      {phase.price}
+                    </p>
+                    <p
+                      className="label"
+                      style={{ color: "rgba(245,240,232,0.45)" }}
+                    >
+                      {phase.meta}
+                    </p>
                   </div>
                 </div>
-                <ul className="space-y-2">
-                  {[
-                    "Process audit and opportunity map",
-                    "Scoped system design",
-                    "Agreed success metric",
-                    "Go/no-go recommendation with supporting rationale",
-                    "Fixed-price Phase 2 proposal (if applicable)",
-                    "The plan is yours — no obligation to proceed with us",
-                  ].map((item, i) => (
-                    <li key={i} className="flex gap-2 text-sm" style={{ color: "rgba(15,21,38,0.7)" }}>
-                      <span className="flex-shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}>✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
 
-            {/* Phase 2 */}
-            <div className="rounded-3xl border overflow-hidden" style={{ borderColor: "rgba(15,21,38,0.12)" }}>
-              <div className="px-8 py-6 flex flex-col md:flex-row md:items-center gap-4 justify-between" style={{ backgroundColor: "var(--midnight-ink)" }}>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--liquid-gold)" }}>PHASE 02</p>
-                  <h2 className="text-2xl font-bold" style={{ color: "var(--warm-cream)" }}>Build & Integrate</h2>
-                </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold" style={{ color: "var(--liquid-gold)" }}>AUD $30K–$120K</p>
-                  <p className="text-sm" style={{ color: "rgba(245,240,232,0.5)" }}>4–6 weeks · Requires Phase 1</p>
-                </div>
-              </div>
-              <div className="px-8 py-8 grid md:grid-cols-2 gap-8" style={{ backgroundColor: "white" }}>
-                <div>
-                  <p className="text-base leading-relaxed mb-4" style={{ color: "rgba(15,21,38,0.7)" }}>
-                    We build the system to the specification from Phase 1. Production-ready, integrated into your existing stack, with change management and team training included as standard. IP transfers to you on completion.
-                  </p>
-                  <p className="font-semibold text-sm mb-4" style={{ color: "var(--midnight-ink)" }}>
-                    The Phase 2 price is fixed at the end of Phase 1. No surprises.
-                  </p>
-                  <div className="p-4 rounded-xl" style={{ backgroundColor: "rgba(15,21,38,0.04)" }}>
-                    <p className="text-xs font-bold mb-2" style={{ color: "rgba(15,21,38,0.45)" }}>WHAT AFFECTS THE PRICE</p>
-                    <p className="text-sm" style={{ color: "rgba(15,21,38,0.65)" }}>Lower ($30K): single integration, defined scope, small team</p>
-                    <p className="text-sm mt-1" style={{ color: "rgba(15,21,38,0.65)" }}>Upper ($120K): multiple integrations, complex data pipelines, larger team, extensive training</p>
+                {/* Phase body */}
+                <div
+                  style={{
+                    backgroundColor: "white",
+                    padding: "clamp(1.75rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.5rem)",
+                    display: "grid",
+                    gridTemplateColumns: phase.deliverables.length > 0 ? "1fr 1fr" : "1fr 1fr",
+                    gap: "clamp(2rem, 4vw, 3.5rem)",
+                  }}
+                >
+                  <div>
+                    <p
+                      className="body-copy"
+                      style={{ color: "var(--slate-mid)", lineHeight: 1.75, marginBottom: "1.25rem" }}
+                    >
+                      {phase.body}
+                    </p>
+                    {idx === 1 && (
+                      <p
+                        style={{
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.82rem",
+                          fontWeight: 700,
+                          color: "var(--midnight-ink)",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        The Phase 2 price is fixed at the end of Phase 1. No surprises.
+                      </p>
+                    )}
+                    <div
+                      style={{
+                        backgroundColor: "rgba(15,21,38,0.04)",
+                        padding: "1rem 1.25rem",
+                      }}
+                    >
+                      <p
+                        className="label"
+                        style={{ color: "var(--slate-mid)", marginBottom: "0.5rem" }}
+                      >
+                        What affects the price
+                      </p>
+                      {phase.priceNote.map((note, ni) => (
+                        <p
+                          key={ni}
+                          className="body-copy"
+                          style={{
+                            color: "var(--slate-mid)",
+                            marginTop: ni > 0 ? "0.35rem" : 0,
+                          }}
+                        >
+                          {note}
+                        </p>
+                      ))}
+                    </div>
                   </div>
+                  {phase.deliverables.length > 0 ? (
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {phase.deliverables.map((item, di) => (
+                        <li
+                          key={di}
+                          style={{
+                            display: "flex",
+                            gap: "0.75rem",
+                            padding: "0.625rem 0",
+                            borderBottom:
+                              di < phase.deliverables.length - 1
+                                ? "1px solid var(--rule)"
+                                : "none",
+                            alignItems: "flex-start",
+                          }}
+                        >
+                          <span
+                            style={{
+                              flexShrink: 0,
+                              width: "1rem",
+                              height: "1rem",
+                              marginTop: "0.15rem",
+                              backgroundColor: "var(--liquid-gold)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "0.6rem",
+                              color: "var(--midnight-ink)",
+                              fontWeight: 700,
+                            }}
+                          >
+                            ✓
+                          </span>
+                          <span
+                            className="body-copy"
+                            style={{ color: "var(--slate-mid)" }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div />
+                  )}
                 </div>
-                <ul className="space-y-2">
-                  {[
-                    "Production AI system running in your stack",
-                    "Full IP transfer — code, documentation, model",
-                    "Team training and adoption plan (standard)",
-                    "30-day post-launch support window",
-                    "Outcome measurement framework",
-                  ].map((item, i) => (
-                    <li key={i} className="flex gap-2 text-sm" style={{ color: "rgba(15,21,38,0.7)" }}>
-                      <span className="flex-shrink-0 mt-0.5 w-4 h-4 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}>✓</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
               </div>
+            ))}
+            <div style={{ borderTop: "1px solid var(--rule)" }} />
+          </div>
+        </section>
+
+        {/* ── Why we publish ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--midnight-ink)" }}
+        >
+          <div className="container">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.2fr 1fr",
+                gap: "clamp(3rem, 6vw, 6rem)",
+                alignItems: "end",
+                marginBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+                paddingBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+                borderBottom: "1px solid var(--rule-cream)",
+              }}
+            >
+              <h2
+                className="h-section"
+                style={{ color: "var(--warm-cream)" }}
+              >
+                Three reasons we put numbers on the page.
+              </h2>
+              <p
+                className="body-copy"
+                style={{ color: "rgba(245,240,232,0.55)" }}
+              >
+                It's not a bold move. It's just what professional services should look like.
+              </p>
             </div>
 
-            {/* Phase 3 */}
-            <div className="rounded-3xl border overflow-hidden" style={{ borderColor: "rgba(15,21,38,0.12)" }}>
-              <div className="px-8 py-6 flex flex-col md:flex-row md:items-center gap-4 justify-between" style={{ backgroundColor: "var(--midnight-ink)" }}>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest mb-1" style={{ color: "var(--liquid-gold)" }}>PHASE 03</p>
-                  <h2 className="text-2xl font-bold" style={{ color: "var(--warm-cream)" }}>Managed Partnership</h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
+              {reasons.map((r, i) => (
+                <div
+                  key={i}
+                  style={{
+                    padding: "clamp(2rem, 3vw, 3rem)",
+                    borderRight: i < reasons.length - 1
+                      ? "1px solid var(--rule-cream)"
+                      : "none",
+                  }}
+                >
+                  <p
+                    className="eyebrow no-rule"
+                    style={{ marginBottom: "1rem" }}
+                  >
+                    {r.num}
+                  </p>
+                  <h3
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "clamp(1.2rem, 2vw, 1.5rem)",
+                      fontWeight: 300,
+                      color: "var(--warm-cream)",
+                      marginBottom: "0.75rem",
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {r.title}
+                  </h3>
+                  <p
+                    className="body-copy"
+                    style={{ color: "rgba(245,240,232,0.55)" }}
+                  >
+                    {r.body}
+                  </p>
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold" style={{ color: "var(--liquid-gold)" }}>AUD $5K–$15K<span className="text-lg">/mo</span></p>
-                  <p className="text-sm" style={{ color: "rgba(245,240,232,0.5)" }}>Ongoing · Optional</p>
-                </div>
-              </div>
-              <div className="px-8 py-8 grid md:grid-cols-2 gap-8" style={{ backgroundColor: "white" }}>
-                <p className="text-base leading-relaxed" style={{ color: "rgba(15,21,38,0.7)" }}>
-                  Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against Phase 1 success metrics. Direct access to Craig and Darryn. Typically a 3-month minimum, month-to-month thereafter.
-                </p>
-                <div className="p-4 rounded-xl" style={{ backgroundColor: "rgba(15,21,38,0.04)" }}>
-                  <p className="text-xs font-bold mb-2" style={{ color: "rgba(15,21,38,0.45)" }}>WHAT AFFECTS THE PRICE</p>
-                  <p className="text-sm mb-2" style={{ color: "rgba(15,21,38,0.65)" }}>Lower ($5K/month): monitoring and reporting only, stable system</p>
-                  <p className="text-sm" style={{ color: "rgba(15,21,38,0.65)" }}>Upper ($15K/month): active optimisation, model retraining, expansion planning</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Why we publish */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12" style={{ color: "var(--warm-cream)" }}>
-            Three reasons we put numbers on the page.
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                num: "01",
-                title: "It respects your time",
-                body: "Professional services buyers make better decisions with real numbers. If our engagement costs are outside your budget, it's better for both of us to know before the first call.",
-              },
-              {
-                num: "02",
-                title: "It signals how we work",
-                body: "Agencies that hide pricing often have flexible pricing — meaning the price depends on what they think you'll pay. We don't work that way. Our prices reflect the scope and complexity of the work.",
-              },
-              {
-                num: "03",
-                title: "It creates better conversations",
-                body: "When you know what things cost, we can have a real conversation about what's worth doing. The first call becomes about the problem — not a quote request.",
-              },
-            ].map((r, i) => (
+        {/* ── FAQs ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--warm-cream)", borderBottom: "1px solid var(--rule)" }}
+        >
+          <div className="container" style={{ maxWidth: "740px" }}>
+            <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>Common questions</p>
+            <h2
+              className="h-section"
+              style={{ color: "var(--midnight-ink)", marginBottom: "clamp(2rem, 4vw, 3.5rem)" }}
+            >
+              Pricing FAQs
+            </h2>
+            {faqs.map((faq, i) => (
               <div
                 key={i}
-                className="p-8 rounded-3xl border"
-                style={{ borderColor: "rgba(245,240,232,0.1)", backgroundColor: "rgba(245,240,232,0.03)" }}
+                style={{
+                  padding: "1.5rem 0",
+                  borderBottom: "1px solid var(--rule)",
+                }}
               >
-                <p className="text-xs font-bold mb-3" style={{ color: "var(--liquid-gold)" }}>{r.num}</p>
-                <h3 className="text-xl font-bold mb-3" style={{ color: "var(--warm-cream)" }}>{r.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: "rgba(245,240,232,0.6)" }}>{r.body}</p>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.95rem",
+                    fontWeight: 700,
+                    color: "var(--midnight-ink)",
+                    marginBottom: "0.6rem",
+                  }}
+                >
+                  {faq.q}
+                </h3>
+                <p
+                  className="body-copy"
+                  style={{ color: "var(--slate-mid)", lineHeight: 1.75 }}
+                >
+                  {faq.a}
+                </p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* FAQs */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--warm-cream)" }}>
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold mb-10" style={{ color: "var(--midnight-ink)" }}>
-            Common questions
-          </h2>
-          <div className="space-y-8">
-            {faqs.map((faq, i) => (
-              <div key={i} className="pb-8 border-b" style={{ borderColor: "rgba(15,21,38,0.08)" }}>
-                <h3 className="font-bold mb-3" style={{ color: "var(--midnight-ink)" }}>{faq.q}</h3>
-                <p className="text-base leading-relaxed" style={{ color: "rgba(15,21,38,0.7)" }}>{faq.a}</p>
-              </div>
-            ))}
+        {/* ── CTA ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--midnight-ink)" }}
+        >
+          <div
+            className="container"
+            style={{ textAlign: "center", maxWidth: "52ch", marginInline: "auto" }}
+          >
+            <h2
+              className="h-section"
+              style={{ color: "var(--warm-cream)", marginBottom: "1.25rem" }}
+            >
+              Ready to see what we'd build for your budget?
+            </h2>
+            <p
+              className="body-copy"
+              style={{
+                color: "rgba(245,240,232,0.6)",
+                marginBottom: "2.5rem",
+                fontSize: "1rem",
+              }}
+            >
+              Tell us about your problem and your rough budget range. We'll tell you which phase
+              makes sense to start with and what we'd expect to find in a Discovery Sprint.
+            </p>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "0.75rem",
+                justifyContent: "center",
+              }}
+            >
+              <a href="/contact" className="cta cta-gold">
+                Book a call <ArrowRight size={16} />
+              </a>
+              <a href="/process" className="cta cta-outline-cream">
+                See our process
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: "var(--warm-cream)" }}>
-            Ready to see what we'd build for your budget?
-          </h2>
-          <p className="text-lg mb-10" style={{ color: "rgba(245,240,232,0.65)" }}>
-            Tell us about your problem and your rough budget range. We'll tell you which phase makes sense to start with and what we'd expect to find in a Discovery Sprint.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold transition-all hover:opacity-90"
-              style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}
-            >
-              Book a call <ArrowRight size={18} />
-            </a>
-            <a
-              href="/process"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border transition-all hover:opacity-80"
-              style={{ borderColor: "rgba(245,240,232,0.3)", color: "var(--warm-cream)" }}
-            >
-              See our process
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }

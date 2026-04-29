@@ -1,41 +1,542 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────────────────
+   Creative Milk — Design Tokens
+   ───────────────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --midnight-ink: #0F1526;
-  --warm-cream: #F5F0E8;
-  --liquid-gold: #C9A84C;
+  /* Brand palette */
+  --midnight-ink: #0f1526;
+  --midnight-deep: #0a0f1c;
+  --midnight-tint: #1c2340;
+  --warm-cream: #f5f0e8;
+  --off-white: #faf8f4;
+  --milk-white: #fffdf9;
+  --liquid-gold: #c9a84c;
+  --gold-light: #e8c96a;
+  --gold-pale: #f4e9c8;
+  --deep-slate: #2b2e3b;
+  --slate-mid: #4a4e60;
+  --slate-light: #8b8fa8;
+  --forest-signal: #3d7a5f;
+  --forest-light: #5baf89;
+
+  /* Rules / dividers */
+  --rule: rgba(13, 13, 13, 0.1);
+  --rule-strong: rgba(13, 13, 13, 0.18);
+  --rule-cream: rgba(245, 240, 232, 0.08);
+  --rule-cream-strong: rgba(245, 240, 232, 0.18);
+  --rule-gold: rgba(201, 168, 76, 0.25);
+
+  /* Type stacks */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Syne', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'DM Mono', 'Courier New', monospace;
+
+  /* Spacing scale (4pt / 8pt rhythm) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  /* Container */
+  --container-max: 1280px;
+  --container-pad: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur-base: 240ms;
+  --dur-slow: 480ms;
+
+  /* Theme defaults (light) */
+  --background: var(--off-white);
+  --foreground: var(--deep-slate);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+/* ─────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
-.cm-ink { background-color: var(--midnight-ink); }
-.cm-cream { background-color: var(--warm-cream); }
-.cm-gold { color: var(--liquid-gold); }
-.cm-gold-bg { background-color: var(--liquid-gold); }
-.text-cream { color: var(--warm-cream); }
-.text-ink { color: var(--midnight-ink); }
+::selection {
+  background: var(--liquid-gold);
+  color: var(--midnight-ink);
+}
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Focus ring — visible & on-brand */
+:focus-visible {
+  outline: 2px solid var(--liquid-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+button {
+  font-family: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+input,
+textarea {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* ─────────────────────────────────────────────────────
+   Layout utilities
+   ───────────────────────────────────────────────────── */
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.section-tight {
+  padding-block: clamp(3rem, 5vw, 4.5rem);
+}
+
+.rule-top {
+  border-top: 1px solid var(--rule);
+}
+
+.rule-bottom {
+  border-bottom: 1px solid var(--rule);
+}
+
+.rule-top-cream {
+  border-top: 1px solid var(--rule-cream);
+}
+
+.rule-bottom-cream {
+  border-bottom: 1px solid var(--rule-cream);
+}
+
+/* ─────────────────────────────────────────────────────
+   Typography utilities
+   ───────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--liquid-gold);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.eyebrow.no-rule::before {
+  display: none;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--slate-mid);
+}
+
+.h-display {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.h-section {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+}
+
+em.gold {
+  font-style: italic;
+  color: var(--liquid-gold);
+}
+
+em.cream {
+  font-style: italic;
+  color: var(--warm-cream);
+  opacity: 0.7;
+}
+
+.body-copy {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--slate-mid);
+}
+
+.dark .body-copy {
+  color: rgba(245, 240, 232, 0.55);
+}
+
+/* ─────────────────────────────────────────────────────
+   Buttons / CTAs
+   ───────────────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.95rem 1.75rem;
+  min-height: 44px;
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.cta-gold {
+  background: var(--liquid-gold);
+  color: var(--midnight-ink);
+}
+
+.cta-gold:hover {
+  background: var(--gold-light);
+}
+
+.cta-gold:active {
+  transform: translateY(1px);
+}
+
+.cta-ink {
+  background: var(--midnight-ink);
+  color: var(--warm-cream);
+}
+
+.cta-ink:hover {
+  background: var(--deep-slate);
+}
+
+.cta-outline-cream {
+  background: transparent;
+  color: var(--warm-cream);
+  border-color: rgba(245, 240, 232, 0.22);
+}
+
+.cta-outline-cream:hover {
+  border-color: var(--liquid-gold);
+  color: var(--liquid-gold);
+}
+
+.cta-outline-ink {
+  background: transparent;
+  color: var(--midnight-ink);
+  border-color: var(--rule-strong);
+}
+
+.cta-outline-ink:hover {
+  border-color: var(--midnight-ink);
+  background: var(--midnight-ink);
+  color: var(--warm-cream);
+}
+
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--liquid-gold);
+  transition: gap var(--dur-fast) var(--ease-out);
+}
+
+.cta-link:hover {
+  gap: 0.85rem;
+}
+
+/* ─────────────────────────────────────────────────────
+   Form inputs
+   ───────────────────────────────────────────────────── */
+.input-dark {
+  width: 100%;
+  background: rgba(245, 240, 232, 0.04);
+  border: 1px solid var(--rule-cream-strong);
+  padding: 1rem 1.25rem;
+  min-height: 48px;
+  color: var(--warm-cream);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.input-dark::placeholder {
+  color: rgba(245, 240, 232, 0.35);
+}
+
+.input-dark:hover {
+  border-color: rgba(245, 240, 232, 0.28);
+}
+
+.input-dark:focus,
+.input-dark:focus-visible {
+  border-color: var(--liquid-gold);
+  background: rgba(245, 240, 232, 0.06);
+  outline: none;
+}
+
+textarea.input-dark {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────────────────
+   Animations
+   ───────────────────────────────────────────────────── */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-.animate-fadeInUp { animation: fadeInUp 0.8s ease-out forwards; }
-.animate-slideDown { animation: slideDown 0.6s ease-out forwards; }
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes marqueeScroll {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.85s var(--ease-out) both;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.5s var(--ease-out) both;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s var(--ease-out) both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ─────────────────────────────────────────────────────
+   WebGL canvas
+   ───────────────────────────────────────────────────── */
+.webgl-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.webgl-fallback {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 80% 20%, rgba(201, 168, 76, 0.14), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 10% 90%, rgba(61, 122, 95, 0.10), transparent 60%),
+    var(--midnight-ink);
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────────────────
+   Marquee
+   ───────────────────────────────────────────────────── */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 4rem;
+  white-space: nowrap;
+  animation: marqueeScroll 40s linear infinite;
+  will-change: transform;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* ─────────────────────────────────────────────────────
+   Cards (hover via CSS — keeps components server-renderable)
+   ───────────────────────────────────────────────────── */
+.service-card {
+  transition: background var(--dur-base) var(--ease-out);
+}
+.service-card:hover {
+  background: var(--warm-cream);
+}
+.service-card:hover .svc-arrow {
+  transform: translateX(6px);
+}
+
+.work-card {
+  transition: background var(--dur-base) var(--ease-out);
+}
+.work-card:hover {
+  background: rgba(245, 240, 232, 0.025);
+}
+
+.footer-link {
+  color: rgba(245, 240, 232, 0.7);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.footer-link:hover {
+  color: var(--liquid-gold);
+}
+
+/* Skip link — CSS only */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 999;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  width: auto;
+  height: auto;
+  padding: 0.85rem 1.25rem;
+  background: var(--liquid-gold);
+  color: var(--midnight-ink);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  outline: 2px solid var(--midnight-ink);
+  outline-offset: 2px;
+}
+
+/* ─────────────────────────────────────────────────────
+   Responsive helpers
+   ───────────────────────────────────────────────────── */
+.show-md { display: none !important; }
+.hide-md { display: inline-flex; }
+
+@media (max-width: 860px) {
+  .show-md { display: inline-flex !important; }
+  .hide-md { display: none !important; }
+}
+
+/* ─────────────────────────────────────────────────────
+   Reduced motion
+   ───────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .marquee-track {
+    animation: none !important;
+  }
+}

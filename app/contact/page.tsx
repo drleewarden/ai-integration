@@ -1,5 +1,8 @@
 "use client";
 import { useState } from "react";
+import { ArrowRight } from "lucide-react";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 const budgetOptions = [
   "Under $10K",
@@ -94,209 +97,363 @@ export default function Contact() {
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    padding: "14px 18px",
-    borderRadius: "12px",
-    border: "1px solid rgba(15,21,38,0.15)",
-    fontSize: "15px",
-    backgroundColor: "white",
-    color: "var(--midnight-ink)",
-    outline: "none",
-  };
-
   return (
-    <main>
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--warm-cream)" }}>
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-6" style={{ color: "var(--liquid-gold)" }}>
-            BOOK A CALL
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 max-w-2xl leading-tight" style={{ color: "var(--midnight-ink)" }}>
-            Tell us about the problem. We'll tell you if we're the right fit.
-          </h1>
-          <p className="text-lg max-w-xl leading-relaxed mb-16" style={{ color: "rgba(15,21,38,0.65)" }}>
-            We respond within 24 hours with an honest answer: whether we can help, what we'd propose, and what a Discovery Sprint would look like for your specific situation.
-          </p>
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main">
+        {/* Hero — light background */}
+        <section
+          className="section-tight"
+          style={{
+            backgroundColor: "var(--warm-cream)",
+            paddingTop: "clamp(6rem, 12vw, 9rem)",
+          }}
+        >
+          <div className="container">
+            <span className="eyebrow" style={{ marginBottom: "1.5rem" }}>Book a Call</span>
+            <h1
+              className="h-display"
+              style={{
+                color: "var(--midnight-ink)",
+                fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
+                maxWidth: "20ch",
+                marginTop: "1.25rem",
+                marginBottom: "1.25rem",
+              }}
+            >
+              Tell us about the problem.{" "}
+              <em className="gold">We'll tell you if we're the right fit.</em>
+            </h1>
+            <p
+              className="body-copy"
+              style={{ maxWidth: "48ch", marginBottom: 0 }}
+            >
+              We respond within 24 hours with an honest answer: whether we can help, what we'd propose,
+              and what a Discovery Sprint would look like for your specific situation.
+            </p>
+          </div>
+        </section>
 
-          <div className="grid md:grid-cols-2 gap-16">
-            {/* Trust signals + what happens next */}
-            <div>
-              <div className="mb-10">
-                <h2 className="font-bold mb-4" style={{ color: "var(--midnight-ink)" }}>Before you submit</h2>
-                <ul className="space-y-3">
-                  {[
-                    "No NDAs in the first call",
-                    "No vague roadmaps — plain English next steps",
-                    "Response within 24 hours (business days)",
-                    "We'll tell you honestly if we're not the right fit",
-                  ].map((item, i) => (
-                    <li key={i} className="flex gap-3 text-base" style={{ color: "rgba(15,21,38,0.7)" }}>
-                      <span style={{ color: "var(--liquid-gold)", fontWeight: "bold" }}>—</span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
+        {/* Main content — dark background for form */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--midnight-ink)" }}
+        >
+          <div className="container">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "minmax(0,1fr) minmax(0,1.1fr)",
+                gap: "clamp(3rem,6vw,6rem)",
+                alignItems: "start",
+              }}
+            >
+              {/* Left: trust signals + what happens next */}
               <div>
-                <h2 className="font-bold mb-6" style={{ color: "var(--midnight-ink)" }}>What happens after you submit</h2>
-                <div className="space-y-6">
-                  {nextSteps.map((s, i) => (
-                    <div key={i} className="flex gap-4">
-                      <div
-                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
-                        style={{ backgroundColor: "var(--midnight-ink)", color: "var(--warm-cream)" }}
-                      >
-                        {s.step}
-                      </div>
-                      <div>
-                        <p className="font-semibold mb-1" style={{ color: "var(--midnight-ink)" }}>{s.label}</p>
-                        <p className="text-sm leading-relaxed" style={{ color: "rgba(15,21,38,0.65)" }}>{s.body}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Form */}
-            <div>
-              {submitted ? (
+                {/* Trust signals */}
                 <div
-                  className="p-10 rounded-3xl"
-                  style={{ backgroundColor: "var(--midnight-ink)" }}
+                  style={{
+                    paddingBottom: "clamp(2rem,4vw,3rem)",
+                    borderBottom: "1px solid var(--rule-cream)",
+                    marginBottom: "clamp(2rem,4vw,3rem)",
+                  }}
                 >
-                  <h2 className="text-3xl font-bold mb-4" style={{ color: "var(--warm-cream)" }}>
-                    Got it. We'll be in touch within 24 hours.
-                  </h2>
-                  <p className="text-base mb-8" style={{ color: "rgba(245,240,232,0.65)" }}>
-                    Thanks for reaching out. Craig and Darryn will read this today and come back to you with an honest assessment. In the meantime —
-                  </p>
-                  <div className="space-y-4">
-                    <a href="/work" className="block text-sm font-semibold underline" style={{ color: "var(--liquid-gold)" }}>
-                      See our case studies → real outcomes from recent engagements
-                    </a>
-                    <a href="/process" className="block text-sm font-semibold underline" style={{ color: "var(--liquid-gold)" }}>
-                      Read how our process works → what a Discovery Sprint actually looks like
-                    </a>
-                  </div>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {status.type === "error" && (
-                    <div className="p-4 rounded-xl text-sm" style={{ backgroundColor: "rgba(220,53,69,0.1)", color: "#dc3545", border: "1px solid rgba(220,53,69,0.3)" }}>
-                      {status.message}
-                    </div>
-                  )}
-
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: "rgba(15,21,38,0.6)" }}>
-                      Your name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Jane Smith"
-                      style={inputStyle}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: "rgba(15,21,38,0.6)" }}>
-                      Email address *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="jane@company.com.au"
-                      style={inputStyle}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: "rgba(15,21,38,0.6)" }}>
-                      Company name *
-                    </label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      placeholder="Your company"
-                      style={inputStyle}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: "rgba(15,21,38,0.6)" }}>
-                      Tell us about the problem you're trying to solve *
-                    </label>
-                    <textarea
-                      name="problem"
-                      value={formData.problem}
-                      onChange={handleChange}
-                      placeholder="What's the specific operational challenge? What have you tried so far?"
-                      rows={5}
-                      style={{ ...inputStyle, resize: "vertical" }}
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium mb-1.5" style={{ color: "rgba(15,21,38,0.6)" }}>
-                      Budget range <span style={{ color: "rgba(15,21,38,0.4)" }}>(optional — helps us propose the right phase)</span>
-                    </label>
-                    <select
-                      name="budget"
-                      value={formData.budget}
-                      onChange={handleChange}
-                      style={{ ...inputStyle, cursor: "pointer" }}
-                    >
-                      <option value="">Select a range...</option>
-                      {budgetOptions.map((o) => (
-                        <option key={o} value={o}>{o}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={submitting}
-                    className="w-full py-4 rounded-full font-semibold text-base transition-all hover:opacity-90"
+                  <h2
                     style={{
-                      backgroundColor: submitting ? "rgba(201,168,76,0.6)" : "var(--liquid-gold)",
-                      color: "var(--midnight-ink)",
-                      cursor: submitting ? "not-allowed" : "pointer",
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 300,
+                      fontSize: "1.4rem",
+                      color: "var(--warm-cream)",
+                      marginBottom: "1.25rem",
                     }}
                   >
-                    {submitting ? "Sending..." : "Start the conversation →"}
-                  </button>
-                </form>
-              )}
-
-              {/* Alt contact */}
-              {!submitted && (
-                <div className="mt-8 pt-8 border-t" style={{ borderColor: "rgba(15,21,38,0.1)" }}>
-                  <p className="text-sm" style={{ color: "rgba(15,21,38,0.5)" }}>
-                    Prefer email?{" "}
-                    <a href="mailto:hello@creative-milk.com.au" className="underline" style={{ color: "var(--midnight-ink)" }}>
-                      hello@creative-milk.com.au
-                    </a>
-                  </p>
+                    Before you submit
+                  </h2>
+                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    {[
+                      "No NDAs in the first call",
+                      "No vague roadmaps — plain English next steps",
+                      "Response within 24 hours (business days)",
+                      "We'll tell you honestly if we're not the right fit",
+                    ].map((item, i) => (
+                      <li
+                        key={i}
+                        className="body-copy"
+                        style={{
+                          color: "rgba(245,240,232,0.7)",
+                          display: "flex",
+                          gap: "0.75rem",
+                          marginBottom: "0.65rem",
+                        }}
+                      >
+                        <span style={{ color: "var(--liquid-gold)", fontFamily: "var(--font-mono)" }}>—</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              )}
+
+                {/* What happens next */}
+                <div>
+                  <h2
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontWeight: 300,
+                      fontSize: "1.4rem",
+                      color: "var(--warm-cream)",
+                      marginBottom: "1.5rem",
+                    }}
+                  >
+                    What happens after you submit
+                  </h2>
+                  <div>
+                    {nextSteps.map((s, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          display: "grid",
+                          gridTemplateColumns: "2.5rem 1fr",
+                          gap: "1rem",
+                          paddingBottom: "1.5rem",
+                          marginBottom: "1.5rem",
+                          borderBottom: i < nextSteps.length - 1 ? "1px solid var(--rule-cream)" : "none",
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: "2.5rem",
+                            height: "2.5rem",
+                            backgroundColor: "var(--liquid-gold)",
+                            color: "var(--midnight-ink)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "0.7rem",
+                            fontWeight: 700,
+                            flexShrink: 0,
+                          }}
+                        >
+                          {s.step}
+                        </div>
+                        <div>
+                          <p
+                            style={{
+                              fontFamily: "var(--font-sans)",
+                              fontWeight: 700,
+                              fontSize: "0.875rem",
+                              color: "var(--warm-cream)",
+                              marginBottom: "0.4rem",
+                            }}
+                          >
+                            {s.label}
+                          </p>
+                          <p
+                            className="body-copy"
+                            style={{ color: "rgba(245,240,232,0.55)", fontSize: "0.85rem" }}
+                          >
+                            {s.body}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: form */}
+              <div>
+                {submitted ? (
+                  <div
+                    style={{
+                      border: "1px solid var(--rule-cream-strong)",
+                      padding: "clamp(2.5rem,4vw,4rem)",
+                    }}
+                  >
+                    <h2
+                      className="h-section"
+                      style={{
+                        color: "var(--warm-cream)",
+                        marginBottom: "1rem",
+                        fontSize: "clamp(1.75rem,3vw,2.5rem)",
+                      }}
+                    >
+                      Got it. We'll be in touch within 24 hours.
+                    </h2>
+                    <p
+                      className="body-copy"
+                      style={{ color: "rgba(245,240,232,0.65)", marginBottom: "2rem" }}
+                    >
+                      Thanks for reaching out. Craig and Darryn will read this today and come back to you
+                      with an honest assessment. In the meantime —
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                      <a href="/work" className="cta-link">
+                        See our case studies → real outcomes from recent engagements <ArrowRight size={11} />
+                      </a>
+                      <a href="/process" className="cta-link">
+                        Read how our process works → what a Discovery Sprint actually looks like <ArrowRight size={11} />
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    {status.type === "error" && (
+                      <div
+                        style={{
+                          padding: "1rem 1.25rem",
+                          backgroundColor: "rgba(220,53,69,0.12)",
+                          border: "1px solid rgba(220,53,69,0.3)",
+                          color: "#f87171",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: "0.85rem",
+                        }}
+                      >
+                        {status.message}
+                      </div>
+                    )}
+
+                    <div>
+                      <label
+                        className="label"
+                        style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
+                      >
+                        Your name *
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Jane Smith"
+                        className="input-dark"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="label"
+                        style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
+                      >
+                        Email address *
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="jane@company.com.au"
+                        className="input-dark"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="label"
+                        style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
+                      >
+                        Company name *
+                      </label>
+                      <input
+                        type="text"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleChange}
+                        placeholder="Your company"
+                        className="input-dark"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="label"
+                        style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
+                      >
+                        Tell us about the problem you're trying to solve *
+                      </label>
+                      <textarea
+                        name="problem"
+                        value={formData.problem}
+                        onChange={handleChange}
+                        placeholder="What's the specific operational challenge? What have you tried so far?"
+                        rows={5}
+                        className="input-dark"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        className="label"
+                        style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
+                      >
+                        Budget range{" "}
+                        <span style={{ color: "rgba(245,240,232,0.3)" }}>(optional — helps us propose the right phase)</span>
+                      </label>
+                      <select
+                        name="budget"
+                        value={formData.budget}
+                        onChange={handleChange}
+                        className="input-dark"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <option value="">Select a range...</option>
+                        {budgetOptions.map((o) => (
+                          <option key={o} value={o}>{o}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      className="cta cta-gold"
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        opacity: submitting ? 0.6 : 1,
+                        cursor: submitting ? "not-allowed" : "pointer",
+                      }}
+                    >
+                      {submitting ? "Sending..." : <>Start the conversation <ArrowRight size={14} /></>}
+                    </button>
+                  </form>
+                )}
+
+                {/* Alt contact */}
+                {!submitted && (
+                  <div
+                    style={{
+                      marginTop: "2rem",
+                      paddingTop: "1.5rem",
+                      borderTop: "1px solid var(--rule-cream)",
+                    }}
+                  >
+                    <p className="body-copy" style={{ color: "rgba(245,240,232,0.45)", fontSize: "0.85rem" }}>
+                      Prefer email?{" "}
+                      <a
+                        href="mailto:hello@creative-milk.com.au"
+                        style={{
+                          color: "var(--liquid-gold)",
+                          textDecoration: "underline",
+                          textUnderlineOffset: "3px",
+                        }}
+                      >
+                        hello@creative-milk.com.au
+                      </a>
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

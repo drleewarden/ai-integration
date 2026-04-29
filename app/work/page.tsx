@@ -1,5 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Nav from "../components/Nav";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "AI Implementation Case Studies Australia | Real Outcomes | Creative Milk",
@@ -89,128 +91,312 @@ const caseStudies = [
 
 export default function Work() {
   return (
-    <main>
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-7xl mx-auto">
-          <p className="text-xs font-semibold tracking-widest uppercase mb-6" style={{ color: "var(--liquid-gold)" }}>
-            THE WORK
-          </p>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 max-w-3xl leading-tight" style={{ color: "var(--warm-cream)" }}>
-            The proof. Specific numbers. Real systems.
-          </h1>
-          <p className="text-lg max-w-2xl leading-relaxed" style={{ color: "rgba(245,240,232,0.65)" }}>
-            Every project starts with a measurable target. Every case study below reports against that target. No "we improved efficiency" — just the number we agreed, and whether we hit it.
-          </p>
-        </div>
-      </section>
-
-      {/* Case studies */}
-      {caseStudies.map((cs, idx) => (
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main">
+        {/* Hero */}
         <section
-          key={idx}
-          className="py-24 px-4 sm:px-6 lg:px-8"
-          style={{ backgroundColor: idx % 2 === 0 ? "var(--warm-cream)" : "white" }}
+          className="section"
+          style={{
+            backgroundColor: "var(--midnight-ink)",
+            paddingTop: "clamp(6rem, 12vw, 9rem)",
+          }}
         >
-          <div className="max-w-7xl mx-auto">
-            <p className="text-xs font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--liquid-gold)" }}>
-              {cs.eyebrow}
+          <div className="container">
+            <span className="eyebrow" style={{ marginBottom: "1.5rem" }}>The Work</span>
+            <h1
+              className="h-display"
+              style={{
+                color: "var(--warm-cream)",
+                fontSize: "clamp(3rem, 7vw, 6rem)",
+                maxWidth: "16ch",
+                marginTop: "1.25rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              The proof. Specific numbers. <em className="gold">Real systems.</em>
+            </h1>
+            <p
+              className="body-copy"
+              style={{
+                maxWidth: "52ch",
+                color: "rgba(245,240,232,0.65)",
+              }}
+            >
+              Every project starts with a measurable target. Every case study below reports against that target.
+              No "we improved efficiency" — just the number we agreed, and whether we hit it.
             </p>
-            <div className="text-7xl font-bold mb-4" style={{ color: "var(--midnight-ink)" }}>
-              {cs.metric}
-            </div>
-            <h2 className="text-3xl font-bold mb-10 max-w-2xl" style={{ color: "var(--midnight-ink)" }}>
-              {cs.headline}
-            </h2>
+          </div>
+        </section>
 
-            {/* Brief table */}
-            <div className="mb-10 rounded-2xl overflow-hidden border" style={{ borderColor: "rgba(15,21,38,0.1)" }}>
-              {Object.entries(cs.brief).map(([k, v], i) => (
+        {/* Case studies */}
+        {caseStudies.map((cs, idx) => (
+          <section
+            key={idx}
+            className="section"
+            style={{
+              backgroundColor: idx % 2 === 0 ? "var(--warm-cream)" : "var(--off-white)",
+            }}
+          >
+            <div className="container">
+              {/* Section header */}
+              <div
+                style={{
+                  paddingBottom: "clamp(2rem,4vw,3.5rem)",
+                  borderBottom: "1px solid var(--rule)",
+                  marginBottom: "clamp(2rem,4vw,3.5rem)",
+                }}
+              >
+                <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>{cs.eyebrow}</span>
                 <div
-                  key={i}
-                  className="grid grid-cols-2 md:grid-cols-3 border-b last:border-b-0"
-                  style={{ borderColor: "rgba(15,21,38,0.08)", backgroundColor: i % 2 === 0 ? "rgba(15,21,38,0.02)" : "transparent" }}
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 300,
+                    fontSize: "clamp(4rem, 10vw, 8rem)",
+                    lineHeight: 0.9,
+                    letterSpacing: "-0.02em",
+                    color: "var(--liquid-gold)",
+                    margin: "1rem 0 1.25rem",
+                  }}
                 >
-                  <div className="px-5 py-3 text-sm font-medium" style={{ color: "rgba(15,21,38,0.5)" }}>{k}</div>
-                  <div className="px-5 py-3 text-sm md:col-span-2" style={{ color: "var(--midnight-ink)" }}>{v}</div>
+                  {cs.metric}
                 </div>
-              ))}
-            </div>
+                <h2
+                  className="h-section"
+                  style={{ color: "var(--midnight-ink)", maxWidth: "36ch", marginTop: 0 }}
+                >
+                  {cs.headline}
+                </h2>
+              </div>
 
-            <div className="grid md:grid-cols-3 gap-10">
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: "rgba(15,21,38,0.4)" }}>The problem</h3>
-                <p className="text-base leading-relaxed" style={{ color: "rgba(15,21,38,0.7)" }}>{cs.problem}</p>
+              {/* Brief table */}
+              <div
+                style={{
+                  border: "1px solid var(--rule)",
+                  marginBottom: "clamp(2rem,4vw,3.5rem)",
+                  overflow: "hidden",
+                }}
+              >
+                {Object.entries(cs.brief).map(([k, v], i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "minmax(160px, 1fr) 2fr",
+                      borderBottom: i < Object.entries(cs.brief).length - 1 ? "1px solid var(--rule)" : "none",
+                      backgroundColor: i % 2 === 0 ? "rgba(15,21,38,0.025)" : "transparent",
+                    }}
+                  >
+                    <div
+                      className="label"
+                      style={{ padding: "0.85rem 1.25rem", color: "var(--slate-mid)" }}
+                    >
+                      {k}
+                    </div>
+                    <div
+                      className="body-copy"
+                      style={{
+                        padding: "0.85rem 1.25rem",
+                        color: "var(--midnight-ink)",
+                        borderLeft: "1px solid var(--rule)",
+                        fontSize: "0.875rem",
+                      }}
+                    >
+                      {v}
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: "rgba(15,21,38,0.4)" }}>What we built</h3>
-                <p className="text-base leading-relaxed mb-3" style={{ color: "rgba(15,21,38,0.7)" }}>{cs.built}</p>
-                <p className="text-sm font-medium" style={{ color: "rgba(15,21,38,0.5)" }}>
-                  <span className="font-semibold">Key integrations: </span>{cs.integrations}
-                </p>
+
+              {/* Three columns */}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))",
+                }}
+              >
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderRight: "1px solid var(--rule)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3
+                    className="label"
+                    style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}
+                  >
+                    The problem
+                  </h3>
+                  <p className="body-copy" style={{ color: "rgba(15,21,38,0.7)" }}>{cs.problem}</p>
+                </article>
+
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderRight: "1px solid var(--rule)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3
+                    className="label"
+                    style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}
+                  >
+                    What we built
+                  </h3>
+                  <p className="body-copy" style={{ color: "rgba(15,21,38,0.7)", marginBottom: "1rem" }}>
+                    {cs.built}
+                  </p>
+                  <p
+                    className="label"
+                    style={{ color: "var(--slate-mid)" }}
+                  >
+                    <span style={{ fontWeight: 600 }}>Key integrations: </span>{cs.integrations}
+                  </p>
+                </article>
+
+                <article
+                  style={{
+                    padding: "clamp(2rem,3vw,3rem)",
+                    borderBottom: "1px solid var(--rule)",
+                  }}
+                >
+                  <h3
+                    className="label"
+                    style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}
+                  >
+                    The result
+                  </h3>
+                  <ul style={{ listStyle: "none", padding: 0, margin: "0 0 1.5rem" }}>
+                    {cs.results.map((r, i) => (
+                      <li
+                        key={i}
+                        className="body-copy"
+                        style={{
+                          color: "rgba(15,21,38,0.7)",
+                          display: "flex",
+                          gap: "0.75rem",
+                          marginBottom: "0.75rem",
+                        }}
+                      >
+                        <span
+                          style={{
+                            flexShrink: 0,
+                            width: "1.25rem",
+                            height: "1.25rem",
+                            backgroundColor: "var(--liquid-gold)",
+                            color: "var(--midnight-ink)",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: "0.6rem",
+                            fontWeight: 700,
+                            marginTop: "0.2rem",
+                          }}
+                        >
+                          ✓
+                        </span>
+                        {r}
+                      </li>
+                    ))}
+                  </ul>
+                  <div
+                    style={{
+                      borderTop: "1px solid var(--rule)",
+                      paddingTop: "1.25rem",
+                    }}
+                  >
+                    <h4
+                      className="label"
+                      style={{ color: "var(--slate-mid)", marginBottom: "0.5rem" }}
+                    >
+                      What we'd do differently
+                    </h4>
+                    <p className="body-copy" style={{ color: "rgba(15,21,38,0.6)", fontSize: "0.85rem" }}>
+                      {cs.different}
+                    </p>
+                  </div>
+                </article>
               </div>
-              <div>
-                <h3 className="text-sm font-bold uppercase tracking-wide mb-3" style={{ color: "rgba(15,21,38,0.4)" }}>The result</h3>
-                <ul className="space-y-2">
-                  {cs.results.map((r, i) => (
-                    <li key={i} className="text-base leading-relaxed flex gap-2" style={{ color: "rgba(15,21,38,0.7)" }}>
-                      <span className="mt-1 flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-xs" style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}>✓</span>
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6 p-4 rounded-xl" style={{ backgroundColor: "rgba(15,21,38,0.04)" }}>
-                  <h4 className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: "rgba(15,21,38,0.4)" }}>What we'd do differently</h4>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(15,21,38,0.6)" }}>{cs.different}</p>
-                </div>
-              </div>
+            </div>
+          </section>
+        ))}
+
+        {/* More coming */}
+        <section
+          className="section-tight"
+          style={{
+            backgroundColor: "var(--warm-cream)",
+            borderTop: "1px solid var(--rule)",
+          }}
+        >
+          <div className="container" style={{ maxWidth: "680px" }}>
+            <h2
+              className="h-section"
+              style={{
+                color: "var(--midnight-ink)",
+                fontSize: "clamp(1.5rem,3vw,2.25rem)",
+                marginBottom: "1rem",
+              }}
+            >
+              More case studies added as engagements are completed.
+            </h2>
+            <p
+              className="body-copy"
+              style={{ color: "rgba(15,21,38,0.65)", marginBottom: "1.5rem" }}
+            >
+              We don't publish case studies until we've measured the outcome against the metric we agreed in Phase 1.
+              That's why this page grows slowly — and why every number on it is real.
+            </p>
+            <a href="/contact" className="cta-link">
+              Curious whether we've solved a problem like yours? Ask us directly <ArrowRight size={12} />
+            </a>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--midnight-ink)" }}
+        >
+          <div className="container" style={{ maxWidth: "760px", textAlign: "center" }}>
+            <span className="eyebrow" style={{ marginBottom: "1.5rem", justifyContent: "center" }}>
+              Next step
+            </span>
+            <h2
+              className="h-section"
+              style={{
+                color: "var(--warm-cream)",
+                marginTop: "1rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              Ready to be the next case study?
+            </h2>
+            <p
+              className="body-copy"
+              style={{
+                color: "rgba(245,240,232,0.65)",
+                maxWidth: "52ch",
+                margin: "0 auto 2.5rem",
+              }}
+            >
+              Every engagement starts the same way: we agree the metric that defines success before we build anything.
+              If we hit it, you get a result you can point to. If we don't, we stay until we do.
+            </p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <a href="/contact" className="cta cta-gold">
+                Book a call <ArrowRight size={14} />
+              </a>
+              <a href="/process" className="cta cta-outline-cream">
+                See our process
+              </a>
             </div>
           </div>
         </section>
-      ))}
-
-      {/* More coming */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--warm-cream)", borderTop: "1px solid rgba(15,21,38,0.08)" }}>
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl font-bold mb-4" style={{ color: "var(--midnight-ink)" }}>
-            More case studies added as engagements are completed.
-          </h2>
-          <p className="text-base mb-6" style={{ color: "rgba(15,21,38,0.65)" }}>
-            We don't publish case studies until we've measured the outcome against the metric we agreed in Phase 1. That's why this page grows slowly — and why every number on it is real.
-          </p>
-          <a href="/contact" className="text-sm font-semibold underline" style={{ color: "var(--midnight-ink)" }}>
-            If you're curious whether we've worked on a problem similar to yours, ask us directly →
-          </a>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8" style={{ backgroundColor: "var(--midnight-ink)" }}>
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6" style={{ color: "var(--warm-cream)" }}>
-            Ready to be the next case study?
-          </h2>
-          <p className="text-lg mb-10" style={{ color: "rgba(245,240,232,0.65)" }}>
-            Every engagement starts the same way: we agree the metric that defines success before we build anything. If we hit it, you get a result you can point to. If we don't, we stay until we do.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold transition-all hover:opacity-90"
-              style={{ backgroundColor: "var(--liquid-gold)", color: "var(--midnight-ink)" }}
-            >
-              Book a call <ArrowRight size={18} />
-            </a>
-            <a
-              href="/process"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-semibold border transition-all hover:opacity-80"
-              style={{ borderColor: "rgba(245,240,232,0.3)", color: "var(--warm-cream)" }}
-            >
-              See our process
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
+      </main>
+      <Footer />
+    </>
   );
 }

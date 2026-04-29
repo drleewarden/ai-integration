@@ -1,23 +1,32 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import Navigation from "./components/Navigation";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
 export const metadata: Metadata = {
-  title: "AI Consultant Australia | Custom AI Systems That Deliver Outcomes | Creative Milk",
+  title: "Creative Milk — Intelligence that actually works",
   description:
-    "Creative Milk builds custom AI systems for Australian mid-market businesses. Scoped, measured, delivered in 6–8 weeks. 50+ engagements. 95% outcome rate. Book a call.",
+    "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training — measured by outcomes, not deliverables.",
+  metadataBase: new URL("https://creativemilk.ai"),
+  openGraph: {
+    title: "Creative Milk — Intelligence that actually works",
+    description:
+      "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
+    type: "website",
+    siteName: "Creative Milk",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Creative Milk — Intelligence that actually works",
+    description:
+      "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0F1526",
+  colorScheme: "dark light",
 };
 
 export default function RootLayout({
@@ -28,6 +37,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
+          rel="stylesheet"
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-0JX1S9YZ2G"
           strategy="afterInteractive"
@@ -50,7 +69,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className="antialiased">
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-Z7VVQ67K"
@@ -59,32 +78,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        <Navigation />
         {children}
-        <footer style={{ backgroundColor: "var(--midnight-ink)" }} className="py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div>
-              <a href="/" className="text-lg font-bold" style={{ color: "var(--warm-cream)" }}>
-                Creative Milk
-              </a>
-              <p className="text-sm mt-1" style={{ color: "rgba(245,240,232,0.5)" }}>
-                AI implementation partners. Australia.
-              </p>
-            </div>
-            <nav className="flex flex-wrap gap-6 text-sm" style={{ color: "rgba(245,240,232,0.6)" }}>
-              <a href="/what-we-build" className="hover:text-white transition-colors">What We Build</a>
-              <a href="/work" className="hover:text-white transition-colors">Work</a>
-              <a href="/process" className="hover:text-white transition-colors">Process</a>
-              <a href="/pricing" className="hover:text-white transition-colors">Pricing</a>
-              <a href="/insights" className="hover:text-white transition-colors">Insights</a>
-              <a href="/about" className="hover:text-white transition-colors">About</a>
-              <a href="/contact" className="hover:text-white transition-colors">Contact</a>
-            </nav>
-            <p className="text-sm" style={{ color: "rgba(245,240,232,0.4)" }}>
-              © 2026 Creative Milk. All rights reserved.
-            </p>
-          </div>
-        </footer>
       </body>
     </html>
   );
