@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Your AI System Shipped. Now the Real Work Begins — How to Get Your Team to Actually Use It — Creative Milk Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--ink:#0F1526;--cream:#F5F0E8;--gold:#C9A84C;--gold-lt:#E8C96A;--slate:#2B2E3B;--slate-mid:#4A4E60;--slate-light:#8B8FA8;--green:#3D7A5F;--rule:rgba(43,46,59,0.12);--rule-gold:rgba(201,168,76,0.25);--fd:'Cormorant Garamond',Georgia,serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--cream);color:var(--slate);font-family:var(--fs);line-height:1.6}
+.cover{background:var(--ink);color:var(--cream);padding:3rem;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 65%);pointer-events:none}
+.cey{font-family:var(--fm);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem}
+.cey::before{content:'';width:24px;height:1px;background:var(--gold);flex-shrink:0}
+.cover h1{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--cream);margin-bottom:1rem}
+.cover h1 em{font-style:italic;color:var(--gold-lt)}
+.csub{font-family:var(--fs);font-size:.8rem;color:rgba(245,240,232,.55);max-width:540px;line-height:1.65;margin-bottom:1.5rem}
+.cmeta{font-family:var(--fm);font-size:.6rem;color:rgba(245,240,232,.35);letter-spacing:.08em;padding-top:1.5rem;border-top:1px solid rgba(245,240,232,.1)}
+.sec{border-bottom:1px solid var(--rule);padding:2.5rem 3rem}.sec:last-child{border-bottom:none}
+.sey{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+h2{font-family:var(--fd);font-size:1.9rem;font-weight:300;color:var(--ink);margin-bottom:.75rem;line-height:1.05}
+h3{font-family:var(--fs);font-size:.92rem;font-weight:700;color:var(--slate);margin:1.25rem 0 .45rem}
+h4{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-light);margin:.9rem 0 .35rem}
+p{font-family:var(--fs);font-size:.8rem;color:var(--slate-mid);line-height:1.75;margin-bottom:.7rem}p strong{color:var(--slate)}
+.qb{background:var(--ink);padding:1.75rem 2rem;margin:1.25rem 0}
+.qb .ql{font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.6rem}
+.qb p{font-family:var(--fd);font-size:1.35rem;font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:.4rem}
+.qb p em{color:var(--gold-lt)}.qb .qs{font-family:var(--fs);font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;margin-bottom:0}
+.pb{display:grid;grid-template-columns:1fr auto;align-items:center;background:var(--ink);padding:.9rem 1.4rem;margin:1.25rem 0 0}
+.pl{font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.pp{font-family:var(--fd);font-size:1.25rem;font-weight:300;color:var(--cream)}
+.pbd{background:rgba(15,21,38,.04);padding:1.4rem;border-left:2px solid var(--rule-gold);margin-bottom:1rem}.pbd p{font-size:.79rem}
+.sb{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink);border:1px solid rgba(245,240,232,.07);margin:1.25rem 0}
+.sc{padding:1.1rem 1.4rem;border-right:1px solid rgba(245,240,232,.07);text-align:center}.sc:last-child{border-right:none}
+.sv{font-family:var(--fd);font-size:1.7rem;font-weight:300;color:var(--gold-lt);line-height:1}
+.sl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3);margin-top:.25rem}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.76rem}
+th{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);padding:.6rem .9rem;border-bottom:1px solid var(--rule);background:rgba(245,240,232,.65);text-align:left}
+td{padding:.75rem .9rem;border-bottom:1px solid var(--rule);color:var(--slate-mid);line-height:1.5;vertical-align:top}
+tr:last-child td{border-bottom:none}td:first-child{color:var(--slate);font-weight:600}
+tr:nth-child(even) td{background:rgba(245,240,232,.4)}
+ul.bul{list-style:none;padding:0;margin:.5rem 0}
+ul.bul li{font-family:var(--fs);font-size:.79rem;color:var(--slate-mid);padding:.38rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:14px 1fr;gap:.5rem;line-height:1.55}
+ul.bul li:last-child{border-bottom:none}ul.bul li::before{content:'—';font-family:var(--fm);color:var(--gold);font-size:.58rem;padding-top:.05rem}
+.seo{background:rgba(15,21,38,.04);padding:1.4rem;border-left:3px solid var(--gold);margin:1rem 0}.seo p{font-size:.76rem;margin-bottom:.35rem}.seo strong{color:var(--ink)}
+.obj{background:rgba(61,122,95,.07);border-left:3px solid var(--green);padding:.9rem 1.1rem;margin:.9rem 0}.objl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem}.obj p{font-size:.77rem;color:var(--slate);margin-bottom:0}
+.fq{padding:1.1rem 0;border-bottom:1px solid var(--rule)}.fq:last-child{border-bottom:none}.fqq{font-family:var(--fs);font-size:.83rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}.fqa{font-family:var(--fs);font-size:.78rem;color:var(--slate-mid);line-height:1.7}
+.csh{background:var(--ink);padding:1.25rem 1.5rem;margin:1.5rem 0 0;border-left:4px solid var(--gold)}.csn{font-family:var(--fm);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.4rem}.cst{font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--cream);line-height:1.1}.css{font-family:var(--fs);font-size:.72rem;color:rgba(245,240,232,.45);margin-top:.4rem}
+.trow{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--rule)}.trow:last-child{border-bottom:none}.tw{padding:1.1rem 1.25rem;border-right:1px solid var(--rule);background:rgba(15,21,38,.03)}.twl{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}.td{padding:1.1rem 1.25rem}.td p{font-size:.77rem;margin-bottom:0}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);margin:1.25rem 0}.fc{padding:1.4rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}.fc:nth-child(2n){border-right:none}.fc:nth-child(3),.fc:nth-child(4){border-bottom:none}.fn{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}.ft{font-family:var(--fs);font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}.fb{font-family:var(--fs);font-size:.73rem;color:var(--slate-mid);line-height:1.65}.ff{font-family:var(--fm);font-size:.57rem;color:var(--green);letter-spacing:.05em;margin-top:.45rem;border-left:2px solid var(--green);padding-left:.55rem}
+.footer{background:var(--ink);color:rgba(245,240,232,.22);padding:1.4rem 3rem;display:flex;justify-content:space-between;font-family:var(--fm);font-size:.52rem;letter-spacing:.08em}.footer span:first-child{color:var(--gold);letter-spacing:.2em}
+/* Blog */
+.ab{max-width:740px;padding:2.5rem 3rem}.ab h2{font-family:var(--fd);font-size:1.65rem;font-weight:300;color:var(--ink);margin:2rem 0 .6rem;line-height:1.1;border-top:1px solid var(--rule);padding-top:1.5rem}.ab h3{font-family:var(--fs);font-size:.9rem;font-weight:700;color:var(--slate);margin:1.4rem 0 .4rem}.ab p{font-size:.83rem;color:var(--slate-mid);line-height:1.8;margin-bottom:.9rem}.ab ul{margin:.5rem 0 .9rem 1.2rem;color:var(--slate-mid)}.ab li{font-size:.83rem;line-height:1.7;margin-bottom:.3rem}.ab hr{border:none;border-top:1px solid var(--rule);margin:1.5rem 0}.ab strong{color:var(--slate)}.ab em{color:var(--slate-mid)}
+.acta{background:var(--ink);padding:1.75rem 2rem;margin:2rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem}.acta p{color:rgba(245,240,232,.7);font-size:.8rem;margin:0;flex:1}.ctab{font-family:var(--fm);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.3rem;background:var(--gold);color:var(--ink);white-space:nowrap;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="cey">Insights / Article 03</div>
+  <h1 style="font-size:clamp(1.8rem,3.5vw,3rem);max-width:700px;line-height:1.05">Your AI System Shipped. Now the Real Work Begins — How to Get Your Team to Actually Use It</h1>
+  <div class="cmeta">Category: Change Management &nbsp;·&nbsp; Read time: 5 min &nbsp;·&nbsp; Keyword: AI team adoption</div>
+</div>
+<div style="padding:1.25rem 3rem;border-bottom:1px solid var(--rule)"><p style="font-size:.77rem;color:var(--slate-light);font-style:italic;margin:0">Most AI projects don't fail because the technology doesn't work. They fail because the team doesn't adopt it. Here's the adoption framework we use across every Creative Milk engagement.</p></div>
+<div class="ab">
+
+<p><strong>Category:</strong> Change Management</p>
+<p><strong>Cluster:</strong> Change management & team adoption</p>
+<p><strong>Target keyword:</strong> AI team adoption</p>
+<p><strong>Secondary keywords:</strong> AI change management, AI implementation team training, AI adoption strategy</p>
+<p><strong>Estimated read time:</strong> 5 min</p>
+<p><strong>Status:</strong> Priority 1</p>
+<p><strong>Meta description:</strong> Most AI projects don't fail because the technology doesn't work. They fail because the team doesn't adopt it. Here's the adoption framework we use across every Creative Milk engagement.</p>
+
+<hr>
+
+<p>Here's the implementation failure mode nobody in the AI industry talks about honestly.</p>
+
+<p>The system works. The technology does exactly what it was built to do. The integrations are clean. The accuracy is good. The business paid $60,000 and got exactly what they specified.</p>
+
+<p>Three months later, the team has quietly reverted to doing it manually.</p>
+
+<p>This happens more often than the AI industry would like to admit. 67–80% of mid-market firms cite workforce readiness as the primary reason AI investments don't deliver expected ROI. Not technical failure. Not budget overrun. The humans didn't change.</p>
+
+<p>We've seen this failure mode enough times that we've made something unconventional our policy: change management is included as standard in every Creative Milk Phase 2 engagement. Not as an upsell. Not as an optional module. As a basic delivery requirement.</p>
+
+<p>Here's the framework we use.</p>
+
+<hr>
+
+<h2>Why AI adoption fails (and it's not resistance to change)</h2>
+
+<p>The conventional explanation for adoption failure is that people resist change. This is partially true but mostly unhelpful — it frames the problem as a human flaw rather than a system design failure.</p>
+
+<p>The real reasons teams don't adopt AI systems fall into four categories:</p>
+
+<p><strong>They don't trust it yet.</strong> The system gives a wrong answer early and the team writes it off. One bad output in week one can create months of reluctance. Systems that aren't introduced with context about what they do and don't do get judged on their weakest moments.</p>
+
+<p><strong>The workflow change isn't clear.</strong> "We now have an AI that helps with customer queries" is not an instruction. People default to the workflow they know unless the new workflow is explicitly shown to them.</p>
+
+<p><strong>There's no feedback mechanism.</strong> Early-stage AI systems make mistakes. If there's no clear way for the team to flag bad outputs, the system stays broken in ways that could have been fixed in week one. Teams lose confidence in systems they can't improve.</p>
+
+<p><strong>The incentive to use it isn't clear.</strong> People who've been doing a job well for years don't automatically see a new system as help. They may see it as an implied criticism of how they've been working, or as something that's going to make their role more complex before it makes it easier.</p>
+
+<p>None of these are insurmountable. All of them need to be addressed before the system goes live, not after.</p>
+
+<hr>
+
+<h2>The Creative Milk adoption framework</h2>
+
+<p>We build the following into every Phase 2 engagement.</p>
+
+<h3>1. Adoption plan designed alongside the system</h3>
+
+<p>By the time the system goes into testing, there's already a documented adoption plan. It covers: who uses the system, how their current workflow changes, how they flag problems, and who they contact if something doesn't work.</p>
+
+<p>The adoption plan is written in plain English for the users, not the IT team. No technical documentation. No system architecture diagrams. Just: here's what changed, here's what you do now, here's who to call.</p>
+
+<h3>2. "Why this exists" communication</h3>
+
+<p>Before we train anyone, we address the question the team is really asking: why are we doing this?</p>
+
+<p>This communication comes from the business leadership, not from us. We draft it for the client based on the specific problem the system is solving. The message is:</p>
+
+<ul><li>Here's the problem this system is designed to address</li>
+<li>Here's what it does (in plain English)</li>
+<li>Here's what it doesn't do — clear boundaries are critical</li>
+<li>Here's what this means for how your work changes</li>
+<li>Here's what it does not mean for your role</li></ul>
+
+<p>That last point matters more than most leaders realise. If the team suspects the AI system is a precursor to redundancies, adoption will be reluctant regardless of how good the system is. Address it directly.</p>
+
+<h3>3. Hands-on training before go-live</h3>
+
+<p>We run training sessions with the actual users — the people whose workflow changes — before the system is live. Not a demo. A working session where they use the system, ask questions, and encounter its limitations in a low-stakes environment.</p>
+
+<p>Training after go-live is too late. By the time the system is live, people are busy and training feels like an interruption. Training before go-live builds familiarity and surfaces questions that improve the system before it matters.</p>
+
+<h3>4. The feedback loop</h3>
+
+<p>We build a simple feedback mechanism into every system. For customer-facing AI, this means a clear escalation path with notes the system can learn from. For internal workflow AI, it means a mechanism for the team to flag incorrect outputs.</p>
+
+<p>This serves two purposes: it improves the system, and it gives the team a sense of agency over it. People adopt systems they feel they can influence. They resist systems that feel imposed.</p>
+
+<h3>5. 30/60-day adoption measurement</h3>
+
+<p>At 30 days and 60 days post-launch, we look at two things: system output quality (is it hitting the success metrics?) and adoption indicators (is the team using it consistently?). If adoption is lagging the quality metrics, that's a signal that the change management work needs reinforcing — not that the system needs a rebuild.</p>
+
+<p>Adoption measurement is often missing from AI implementations because it's harder to quantify than system performance. But it's the leading indicator of whether the outcome metrics will follow.</p>
+
+<hr>
+
+<h2>The three conversations that change adoption outcomes</h2>
+
+<p>Beyond the formal framework, there are three specific conversations that change adoption outcomes in most engagements.</p>
+
+<p><strong>The "this is not replacing you" conversation.</strong> When the system takes over repeatable work, leadership needs to clearly articulate what the team's work evolves into — not just what it no longer includes. If a support team member goes from handling 40 tier-1 tickets per day to handling 15 complex escalations, that's a better job. Say it explicitly.</p>
+
+<p><strong>The "what counts as a win" conversation.</strong> Teams need to understand what the system's success looks like so they can recognise and reinforce it. If the support team knows the target is 40% ticket volume reduction and they're seeing 35% in week three, that's worth celebrating. The context that makes numbers meaningful comes from leaders, not dashboards.</p>
+
+<p><strong>The "early problems are expected" conversation.</strong> No AI system in week one is as good as it will be in week eight. Teams that are told this upfront treat early errors as calibration. Teams that aren't told this treat early errors as evidence the system doesn't work.</p>
+
+<hr>
+
+<h2>What this looks like in practice</h2>
+
+<p>Across our 50+ engagements, the pattern is clear: engagements where change management is treated as a delivery requirement produce faster outcome attainment than those where it's added after the fact.</p>
+
+<p>Specifically: systems with a pre-go-live adoption plan and hands-on training reach their target metrics 30–45 days faster on average than those without. The system is the same. The outcome is different because the adoption is different.</p>
+
+<p>That's why we build it in from the start. Not as a nicety. As the difference between a system that achieves its metrics and one that doesn't.</p>
+
+<hr>
+
+<p><em>If you're planning an AI implementation and want to make sure adoption is built in from day one, [start with a Discovery Sprint →](/contact). It's where we scope the change management plan alongside the system design.</em></p>
+
+<div class="acta">
+  <p>Creative Milk builds custom AI systems for Australian mid-market businesses. If you're planning an AI project, start with a Discovery Sprint.</p>
+  <a href="/contact" class="ctab">Start with a Discovery Sprint →</a>
+</div>
+</div>
+<div class="footer"><span>Creative Milk</span><span>Insights — Article 03 · April 2026</span></div>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blog Article 05: What Is an AI Agent — And Do I Actually Need One? — Creative Milk Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--ink:#0F1526;--cream:#F5F0E8;--gold:#C9A84C;--gold-lt:#E8C96A;--slate:#2B2E3B;--slate-mid:#4A4E60;--slate-light:#8B8FA8;--green:#3D7A5F;--rule:rgba(43,46,59,0.12);--rule-gold:rgba(201,168,76,0.25);--fd:'Cormorant Garamond',Georgia,serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--cream);color:var(--slate);font-family:var(--fs);line-height:1.6}
+.cover{background:var(--ink);color:var(--cream);padding:3rem;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 65%);pointer-events:none}
+.cey{font-family:var(--fm);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem}
+.cey::before{content:'';width:24px;height:1px;background:var(--gold);flex-shrink:0}
+.cover h1{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--cream);margin-bottom:1rem}
+.cover h1 em{font-style:italic;color:var(--gold-lt)}
+.csub{font-family:var(--fs);font-size:.8rem;color:rgba(245,240,232,.55);max-width:540px;line-height:1.65;margin-bottom:1.5rem}
+.cmeta{font-family:var(--fm);font-size:.6rem;color:rgba(245,240,232,.35);letter-spacing:.08em;padding-top:1.5rem;border-top:1px solid rgba(245,240,232,.1)}
+.sec{border-bottom:1px solid var(--rule);padding:2.5rem 3rem}.sec:last-child{border-bottom:none}
+.sey{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+h2{font-family:var(--fd);font-size:1.9rem;font-weight:300;color:var(--ink);margin-bottom:.75rem;line-height:1.05}
+h3{font-family:var(--fs);font-size:.92rem;font-weight:700;color:var(--slate);margin:1.25rem 0 .45rem}
+h4{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-light);margin:.9rem 0 .35rem}
+p{font-family:var(--fs);font-size:.8rem;color:var(--slate-mid);line-height:1.75;margin-bottom:.7rem}p strong{color:var(--slate)}
+.qb{background:var(--ink);padding:1.75rem 2rem;margin:1.25rem 0}
+.qb .ql{font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.6rem}
+.qb p{font-family:var(--fd);font-size:1.35rem;font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:.4rem}
+.qb p em{color:var(--gold-lt)}.qb .qs{font-family:var(--fs);font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;margin-bottom:0}
+.pb{display:grid;grid-template-columns:1fr auto;align-items:center;background:var(--ink);padding:.9rem 1.4rem;margin:1.25rem 0 0}
+.pl{font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.pp{font-family:var(--fd);font-size:1.25rem;font-weight:300;color:var(--cream)}
+.pbd{background:rgba(15,21,38,.04);padding:1.4rem;border-left:2px solid var(--rule-gold);margin-bottom:1rem}.pbd p{font-size:.79rem}
+.sb{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink);border:1px solid rgba(245,240,232,.07);margin:1.25rem 0}
+.sc{padding:1.1rem 1.4rem;border-right:1px solid rgba(245,240,232,.07);text-align:center}.sc:last-child{border-right:none}
+.sv{font-family:var(--fd);font-size:1.7rem;font-weight:300;color:var(--gold-lt);line-height:1}
+.sl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3);margin-top:.25rem}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.76rem}
+th{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);padding:.6rem .9rem;border-bottom:1px solid var(--rule);background:rgba(245,240,232,.65);text-align:left}
+td{padding:.75rem .9rem;border-bottom:1px solid var(--rule);color:var(--slate-mid);line-height:1.5;vertical-align:top}
+tr:last-child td{border-bottom:none}td:first-child{color:var(--slate);font-weight:600}
+tr:nth-child(even) td{background:rgba(245,240,232,.4)}
+ul.bul{list-style:none;padding:0;margin:.5rem 0}
+ul.bul li{font-family:var(--fs);font-size:.79rem;color:var(--slate-mid);padding:.38rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:14px 1fr;gap:.5rem;line-height:1.55}
+ul.bul li:last-child{border-bottom:none}ul.bul li::before{content:'—';font-family:var(--fm);color:var(--gold);font-size:.58rem;padding-top:.05rem}
+.seo{background:rgba(15,21,38,.04);padding:1.4rem;border-left:3px solid var(--gold);margin:1rem 0}.seo p{font-size:.76rem;margin-bottom:.35rem}.seo strong{color:var(--ink)}
+.obj{background:rgba(61,122,95,.07);border-left:3px solid var(--green);padding:.9rem 1.1rem;margin:.9rem 0}.objl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem}.obj p{font-size:.77rem;color:var(--slate);margin-bottom:0}
+.fq{padding:1.1rem 0;border-bottom:1px solid var(--rule)}.fq:last-child{border-bottom:none}.fqq{font-family:var(--fs);font-size:.83rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}.fqa{font-family:var(--fs);font-size:.78rem;color:var(--slate-mid);line-height:1.7}
+.csh{background:var(--ink);padding:1.25rem 1.5rem;margin:1.5rem 0 0;border-left:4px solid var(--gold)}.csn{font-family:var(--fm);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.4rem}.cst{font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--cream);line-height:1.1}.css{font-family:var(--fs);font-size:.72rem;color:rgba(245,240,232,.45);margin-top:.4rem}
+.trow{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--rule)}.trow:last-child{border-bottom:none}.tw{padding:1.1rem 1.25rem;border-right:1px solid var(--rule);background:rgba(15,21,38,.03)}.twl{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}.td{padding:1.1rem 1.25rem}.td p{font-size:.77rem;margin-bottom:0}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);margin:1.25rem 0}.fc{padding:1.4rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}.fc:nth-child(2n){border-right:none}.fc:nth-child(3),.fc:nth-child(4){border-bottom:none}.fn{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}.ft{font-family:var(--fs);font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}.fb{font-family:var(--fs);font-size:.73rem;color:var(--slate-mid);line-height:1.65}.ff{font-family:var(--fm);font-size:.57rem;color:var(--green);letter-spacing:.05em;margin-top:.45rem;border-left:2px solid var(--green);padding-left:.55rem}
+.footer{background:var(--ink);color:rgba(245,240,232,.22);padding:1.4rem 3rem;display:flex;justify-content:space-between;font-family:var(--fm);font-size:.52rem;letter-spacing:.08em}.footer span:first-child{color:var(--gold);letter-spacing:.2em}
+/* Blog */
+.ab{max-width:740px;padding:2.5rem 3rem}.ab h2{font-family:var(--fd);font-size:1.65rem;font-weight:300;color:var(--ink);margin:2rem 0 .6rem;line-height:1.1;border-top:1px solid var(--rule);padding-top:1.5rem}.ab h3{font-family:var(--fs);font-size:.9rem;font-weight:700;color:var(--slate);margin:1.4rem 0 .4rem}.ab p{font-size:.83rem;color:var(--slate-mid);line-height:1.8;margin-bottom:.9rem}.ab ul{margin:.5rem 0 .9rem 1.2rem;color:var(--slate-mid)}.ab li{font-size:.83rem;line-height:1.7;margin-bottom:.3rem}.ab hr{border:none;border-top:1px solid var(--rule);margin:1.5rem 0}.ab strong{color:var(--slate)}.ab em{color:var(--slate-mid)}
+.acta{background:var(--ink);padding:1.75rem 2rem;margin:2rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem}.acta p{color:rgba(245,240,232,.7);font-size:.8rem;margin:0;flex:1}.ctab{font-family:var(--fm);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.3rem;background:var(--gold);color:var(--ink);white-space:nowrap;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="cey">Insights / Article 05</div>
+  <h1 style="font-size:clamp(1.8rem,3.5vw,3rem);max-width:700px;line-height:1.05">Blog Article 05: What Is an AI Agent — And Do I Actually Need One?</h1>
+  <div class="cmeta">Category: AI Explainers &nbsp;·&nbsp; Read time: 5 min &nbsp;·&nbsp; Keyword: what is an AI agent</div>
+</div>
+<div style="padding:1.25rem 3rem;border-bottom:1px solid var(--rule)"><p style="font-size:.77rem;color:var(--slate-light);font-style:italic;margin:0">AI agents are being sold as the answer to everything right now. Here's a plain-English explanation of what they actually are, when you need one, and when you don't.</p></div>
+<div class="ab">
+
+<p><strong>Category:</strong> AI Explainers</p>
+<p><strong>Cluster:</strong> Plain-English explainers</p>
+<p><strong>Target keyword:</strong> what is an AI agent</p>
+<p><strong>Secondary keywords:</strong> AI agent explained, do I need an AI agent, AI automation agent Australia</p>
+<p><strong>Estimated read time:</strong> 5 min</p>
+<p><strong>Status:</strong> Priority 2</p>
+<p><strong>Meta description:</strong> AI agents are being sold as the answer to everything right now. Here's a plain-English explanation of what they actually are, when you need one, and when you don't.</p>
+
+<hr>
+
+<p>"AI agent" has become one of the most overused phrases in technology marketing. If you've been to a business event in the last 12 months, you've heard someone say their company is building agents. If you've talked to an AI vendor recently, they've almost certainly told you that you need one.</p>
+
+<p>Here's the honest version: an AI agent is a useful technology for specific situations. It's not a universal answer. And whether you need one depends entirely on the problem you're trying to solve.</p>
+
+<hr>
+
+<h2>What an AI agent actually is</h2>
+
+<p>An AI agent is a system that can take actions autonomously to achieve a goal — not just generate text or make a prediction, but actually do things.</p>
+
+<p>The distinction matters. A basic AI system might read a customer email and draft a response for a human to review. An AI agent would read the email, look up the customer's account, check their order history, draft a response, and send it — without a human in the loop.</p>
+
+<p>The defining characteristic of an agent is <strong>autonomy over actions</strong> in service of a goal. It can:</p>
+<ul><li>Decide what information to look up</li>
+<li>Take actions across connected systems</li>
+<li>Handle multi-step tasks that require conditional logic</li>
+<li>Operate without human approval at each step</li></ul>
+
+<hr>
+
+<h2>When you need an agent — and when you don't</h2>
+
+<p>You probably need an agent if:</p>
+<ul><li>The task involves multiple systems and multiple steps with conditional logic</li>
+<li>Speed matters and human-in-the-loop approval is a bottleneck</li>
+<li>The volume of tasks makes human oversight impractical at scale</li>
+<li>The decisions involved are rules-based (can be defined) rather than judgement-based (require human discretion)</li></ul>
+
+<p>You probably don't need an agent if:</p>
+<ul><li>The task is a single-step classification or extraction problem (a simpler AI pipeline is faster and cheaper)</li>
+<li>The decisions involved require human judgement that can't be reliably encoded</li>
+<li>The risk of an incorrect autonomous action is high enough to require human review</li>
+<li>You just want better drafts or summaries (a good LLM with the right prompt is more appropriate)</li></ul>
+
+<p>The sales pitch for agents tends to be that they can do everything. The honest engineering reality is that agents work well for defined, multi-step tasks over connected systems and work poorly for ambiguous, high-stakes decisions that require genuine judgement.</p>
+
+<hr>
+
+<h2>Three examples where agents make sense</h2>
+
+<p><strong>Customer support triage and resolution:</strong> An agent monitors the support queue, classifies incoming tickets, resolves tier-1 queries automatically by querying account data and knowledge bases, and escalates with pre-populated context for anything requiring human attention. Multi-step, multi-system, defined logic. Good agent territory.</p>
+
+<p><strong>Invoice processing:</strong> An agent receives incoming invoices, extracts data, matches against purchase orders, flags discrepancies for human review, and routes approved invoices to the payment system. Structured, rules-based, multi-system. Good agent territory.</p>
+
+<p><strong>Outbound lead follow-up:</strong> An agent monitors a CRM for new lead events, pulls context from the prospect's company and recent activity, generates a personalised follow-up email, and sends it within a defined window. Defined goal, multi-system, time-sensitive. Good agent territory.</p>
+
+<hr>
+
+<h2>Three examples where agents don't make sense</h2>
+
+<p><strong>Complex contract negotiation:</strong> Too many judgement calls. The agent can help with document review and extraction, but the negotiation decisions require human expertise. A simpler AI tool (contract analysis, clause flagging) serves the use case better.</p>
+
+<p><strong>Handling customer complaints about sensitive issues:</strong> Autonomous action on a frustrated customer complaint is a brand risk, not an efficiency gain. AI can assist the human — suggest responses, pull account context — but the agent should hand off, not handle.</p>
+
+<p><strong>Anything where being wrong has serious consequences:</strong> An agent that can autonomously move money, delete records, or take regulatory action needs very careful scoping. For high-consequence actions, human-in-the-loop checkpoints are worth the efficiency cost.</p>
+
+<hr>
+
+<h2>The bottom line</h2>
+
+<p>AI agents are real and useful. They're also widely misrepresented as a universal solution to business efficiency problems.</p>
+
+<p>If someone is pitching you an agent without first asking what specific problem you're trying to solve and what actions the agent would take, be cautious. The pitch is ahead of the problem definition.</p>
+
+<p>The right question isn't "should we build an AI agent?" It's "what task are we trying to automate, and what's the right tool for it?" Sometimes that's an agent. Often it's something simpler, faster to build, and cheaper to maintain.</p>
+
+<hr>
+
+<p><em>Not sure what type of AI is right for your problem? That's exactly what a Discovery Sprint answers. [Book a call →](/contact) and we'll give you a plain-English recommendation.</em></p>
+
+<hr>
+<hr>
+<div class="acta">
+  <p>Creative Milk builds custom AI systems for Australian mid-market businesses. If you're planning an AI project, start with a Discovery Sprint.</p>
+  <a href="/contact" class="ctab">Start with a Discovery Sprint →</a>
+</div>
+</div>
+<div class="footer"><span>Creative Milk</span><span>Insights — Article 05 · April 2026</span></div>
+</body></html>
