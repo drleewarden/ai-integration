@@ -159,6 +159,8 @@ $dataJson | Out-File -FilePath "$outDir\data.json" -Encoding utf8 -NoNewline
 $pageTsx = @"
 import type { Metadata } from "next";
 import data from "./data.json";
+import Nav from "../../components/Nav";
+import Footer from "../../components/Footer";
 
 export const metadata: Metadata = {
   title: "$($pageTitle -replace '"', '\"')",
@@ -167,11 +169,15 @@ export const metadata: Metadata = {
 
 export default function BlogPost() {
   return (
-    <div style={{ paddingTop: "64px" }}>
-      {/* Blog-scoped styles from the original HTML */}
-      <style dangerouslySetInnerHTML={{ __html: data.css }} />
-      <div dangerouslySetInnerHTML={{ __html: data.html }} />
-    </div>
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main" style={{ paddingTop: "68px" }}>
+        <style dangerouslySetInnerHTML={{ __html: data.css }} />
+        <div dangerouslySetInnerHTML={{ __html: data.html }} />
+      </main>
+      <Footer />
+    </>
   );
 }
 "@
@@ -185,22 +191,24 @@ Log "  Wrote: app/insights/$slug/data.json"
 Set-Location $repoDir
 
 # Make sure we're on the right branch
-$currentBranch = git rev-parse --abbrev-ref HEAD 2>&1
+$currentBranch = (git rev-parse --abbrev-ref HEAD)
 if ($currentBranch -ne $branch) {
     Log "Switching to branch $branch (was on $currentBranch)"
-    git checkout $branch 2>&1 | ForEach-Object { Log "  git: $_" }
+    git checkout $branch | ForEach-Object { Log "  git: $_" }
 }
 
-git add "app/insights/$slug" 2>&1 | ForEach-Object { Log "  git: $_" }
+git add "app/insights/$slug"
 if ($LASTEXITCODE -ne 0) { Log "git add failed (exit $LASTEXITCODE)" "ERROR"; exit 1 }
+Log "  git: staged app/insights/$slug"
 
 $shortTitle = if ($title.Length -gt 60) { $title.Substring(0, 57) + "..." } else { $title }
-$commitMsg  = "feat(blog): publish blog-$numStr — $shortTitle"
+$commitMsg  = "feat(blog): publish blog-$numStr -- $shortTitle"
 
-git commit -m $commitMsg 2>&1 | ForEach-Object { Log "  git: $_" }
+git commit -m $commitMsg
 if ($LASTEXITCODE -ne 0) { Log "git commit failed (exit $LASTEXITCODE)" "ERROR"; exit 1 }
+Log "  git: committed"
 
-git push origin $branch 2>&1 | ForEach-Object { Log "  git: $_" }
+git push origin $branch
 if ($LASTEXITCODE -ne 0) { Log "git push failed (exit $LASTEXITCODE)" "ERROR"; exit 1 }
 
 Log "  Pushed blog-$numStr to origin/$branch"

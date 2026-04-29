@@ -1,5 +1,7 @@
 ﻿import type { Metadata } from "next";
 import data from "./data.json";
+import Nav from "../../components/Nav";
+import Footer from "../../components/Footer";
 
 export const metadata: Metadata = {
   title: "Why 80% of AI Implementations Fail — And the 5 Things That Separate the Ones That Don't | Creative Milk Insights",
@@ -8,10 +10,14 @@ export const metadata: Metadata = {
 
 export default function BlogPost() {
   return (
-    <div style={{ paddingTop: "64px" }}>
-      {/* Blog-scoped styles from the original HTML */}
-      <style dangerouslySetInnerHTML={{ __html: data.css }} />
-      <div dangerouslySetInnerHTML={{ __html: data.html }} />
-    </div>
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Nav />
+      <main id="main" style={{ paddingTop: "68px" }}>
+        <style dangerouslySetInnerHTML={{ __html: data.css }} />
+        <div dangerouslySetInnerHTML={{ __html: data.html }} />
+      </main>
+      <Footer />
+    </>
   );
 }
