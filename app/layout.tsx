@@ -3,6 +3,25 @@ import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import "./globals.css";
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant-garamond",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-syne",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-mono",
+});
+
 export const metadata: Metadata = {
   title: "Creative Milk — Intelligence that actually works",
   description:
