@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Blog Article 06: How We Cut Support Ticket Volume by 60% — A Behind-the-Scenes Look — Creative Milk Insights</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"><style>
+:root{--ink:#0F1526;--cream:#F5F0E8;--gold:#C9A84C;--gold-lt:#E8C96A;--slate:#2B2E3B;--slate-mid:#4A4E60;--slate-light:#8B8FA8;--green:#3D7A5F;--rule:rgba(43,46,59,0.12);--rule-gold:rgba(201,168,76,0.25);--fd:'Cormorant Garamond',Georgia,serif;--fs:'Syne',sans-serif;--fm:'DM Mono',monospace}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--cream);color:var(--slate);font-family:var(--fs);line-height:1.6}
+.cover{background:var(--ink);color:var(--cream);padding:3rem;position:relative;overflow:hidden}
+.cover::before{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,0.08) 0%,transparent 65%);pointer-events:none}
+.cey{font-family:var(--fm);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:.75rem}
+.cey::before{content:'';width:24px;height:1px;background:var(--gold);flex-shrink:0}
+.cover h1{font-family:var(--fd);font-size:clamp(2.2rem,4.5vw,4rem);font-weight:300;line-height:.95;letter-spacing:-.02em;color:var(--cream);margin-bottom:1rem}
+.cover h1 em{font-style:italic;color:var(--gold-lt)}
+.csub{font-family:var(--fs);font-size:.8rem;color:rgba(245,240,232,.55);max-width:540px;line-height:1.65;margin-bottom:1.5rem}
+.cmeta{font-family:var(--fm);font-size:.6rem;color:rgba(245,240,232,.35);letter-spacing:.08em;padding-top:1.5rem;border-top:1px solid rgba(245,240,232,.1)}
+.sec{border-bottom:1px solid var(--rule);padding:2.5rem 3rem}.sec:last-child{border-bottom:none}
+.sey{font-family:var(--fm);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem}
+h2{font-family:var(--fd);font-size:1.9rem;font-weight:300;color:var(--ink);margin-bottom:.75rem;line-height:1.05}
+h3{font-family:var(--fs);font-size:.92rem;font-weight:700;color:var(--slate);margin:1.25rem 0 .45rem}
+h4{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--slate-light);margin:.9rem 0 .35rem}
+p{font-family:var(--fs);font-size:.8rem;color:var(--slate-mid);line-height:1.75;margin-bottom:.7rem}p strong{color:var(--slate)}
+.qb{background:var(--ink);padding:1.75rem 2rem;margin:1.25rem 0}
+.qb .ql{font-family:var(--fm);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.6rem}
+.qb p{font-family:var(--fd);font-size:1.35rem;font-weight:300;line-height:1.15;color:var(--cream);margin-bottom:.4rem}
+.qb p em{color:var(--gold-lt)}.qb .qs{font-family:var(--fs);font-size:.78rem;color:rgba(245,240,232,.6);line-height:1.7;margin-bottom:0}
+.pb{display:grid;grid-template-columns:1fr auto;align-items:center;background:var(--ink);padding:.9rem 1.4rem;margin:1.25rem 0 0}
+.pl{font-family:var(--fm);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.pp{font-family:var(--fd);font-size:1.25rem;font-weight:300;color:var(--cream)}
+.pbd{background:rgba(15,21,38,.04);padding:1.4rem;border-left:2px solid var(--rule-gold);margin-bottom:1rem}.pbd p{font-size:.79rem}
+.sb{display:grid;grid-template-columns:repeat(4,1fr);background:var(--ink);border:1px solid rgba(245,240,232,.07);margin:1.25rem 0}
+.sc{padding:1.1rem 1.4rem;border-right:1px solid rgba(245,240,232,.07);text-align:center}.sc:last-child{border-right:none}
+.sv{font-family:var(--fd);font-size:1.7rem;font-weight:300;color:var(--gold-lt);line-height:1}
+.sl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.3);margin-top:.25rem}
+table{width:100%;border-collapse:collapse;margin:1rem 0;font-size:.76rem}
+th{font-family:var(--fm);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--slate-light);padding:.6rem .9rem;border-bottom:1px solid var(--rule);background:rgba(245,240,232,.65);text-align:left}
+td{padding:.75rem .9rem;border-bottom:1px solid var(--rule);color:var(--slate-mid);line-height:1.5;vertical-align:top}
+tr:last-child td{border-bottom:none}td:first-child{color:var(--slate);font-weight:600}
+tr:nth-child(even) td{background:rgba(245,240,232,.4)}
+ul.bul{list-style:none;padding:0;margin:.5rem 0}
+ul.bul li{font-family:var(--fs);font-size:.79rem;color:var(--slate-mid);padding:.38rem 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:14px 1fr;gap:.5rem;line-height:1.55}
+ul.bul li:last-child{border-bottom:none}ul.bul li::before{content:'—';font-family:var(--fm);color:var(--gold);font-size:.58rem;padding-top:.05rem}
+.seo{background:rgba(15,21,38,.04);padding:1.4rem;border-left:3px solid var(--gold);margin:1rem 0}.seo p{font-size:.76rem;margin-bottom:.35rem}.seo strong{color:var(--ink)}
+.obj{background:rgba(61,122,95,.07);border-left:3px solid var(--green);padding:.9rem 1.1rem;margin:.9rem 0}.objl{font-family:var(--fm);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:.3rem}.obj p{font-size:.77rem;color:var(--slate);margin-bottom:0}
+.fq{padding:1.1rem 0;border-bottom:1px solid var(--rule)}.fq:last-child{border-bottom:none}.fqq{font-family:var(--fs);font-size:.83rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}.fqa{font-family:var(--fs);font-size:.78rem;color:var(--slate-mid);line-height:1.7}
+.csh{background:var(--ink);padding:1.25rem 1.5rem;margin:1.5rem 0 0;border-left:4px solid var(--gold)}.csn{font-family:var(--fm);font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(201,168,76,.65);margin-bottom:.4rem}.cst{font-family:var(--fd);font-size:1.5rem;font-weight:300;color:var(--cream);line-height:1.1}.css{font-family:var(--fs);font-size:.72rem;color:rgba(245,240,232,.45);margin-top:.4rem}
+.trow{display:grid;grid-template-columns:130px 1fr;border-bottom:1px solid var(--rule)}.trow:last-child{border-bottom:none}.tw{padding:1.1rem 1.25rem;border-right:1px solid var(--rule);background:rgba(15,21,38,.03)}.twl{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}.td{padding:1.1rem 1.25rem}.td p{font-size:.77rem;margin-bottom:0}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);margin:1.25rem 0}.fc{padding:1.4rem;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}.fc:nth-child(2n){border-right:none}.fc:nth-child(3),.fc:nth-child(4){border-bottom:none}.fn{font-family:var(--fm);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}.ft{font-family:var(--fs);font-size:.8rem;font-weight:700;color:var(--ink);margin-bottom:.35rem}.fb{font-family:var(--fs);font-size:.73rem;color:var(--slate-mid);line-height:1.65}.ff{font-family:var(--fm);font-size:.57rem;color:var(--green);letter-spacing:.05em;margin-top:.45rem;border-left:2px solid var(--green);padding-left:.55rem}
+.footer{background:var(--ink);color:rgba(245,240,232,.22);padding:1.4rem 3rem;display:flex;justify-content:space-between;font-family:var(--fm);font-size:.52rem;letter-spacing:.08em}.footer span:first-child{color:var(--gold);letter-spacing:.2em}
+/* Blog */
+.ab{max-width:740px;padding:2.5rem 3rem}.ab h2{font-family:var(--fd);font-size:1.65rem;font-weight:300;color:var(--ink);margin:2rem 0 .6rem;line-height:1.1;border-top:1px solid var(--rule);padding-top:1.5rem}.ab h3{font-family:var(--fs);font-size:.9rem;font-weight:700;color:var(--slate);margin:1.4rem 0 .4rem}.ab p{font-size:.83rem;color:var(--slate-mid);line-height:1.8;margin-bottom:.9rem}.ab ul{margin:.5rem 0 .9rem 1.2rem;color:var(--slate-mid)}.ab li{font-size:.83rem;line-height:1.7;margin-bottom:.3rem}.ab hr{border:none;border-top:1px solid var(--rule);margin:1.5rem 0}.ab strong{color:var(--slate)}.ab em{color:var(--slate-mid)}
+.acta{background:var(--ink);padding:1.75rem 2rem;margin:2rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem}.acta p{color:rgba(245,240,232,.7);font-size:.8rem;margin:0;flex:1}.ctab{font-family:var(--fm);font-size:.6rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.3rem;background:var(--gold);color:var(--ink);white-space:nowrap;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="cover">
+  <div class="cey">Insights / Article 06</div>
+  <h1 style="font-size:clamp(1.8rem,3.5vw,3rem);max-width:700px;line-height:1.05">Blog Article 06: How We Cut Support Ticket Volume by 60% — A Behind-the-Scenes Look</h1>
+  <div class="cmeta">Category: Behind the Build &nbsp;·&nbsp; Read time: 7 min &nbsp;·&nbsp; Keyword: AI customer support automation</div>
+</div>
+<div style="padding:1.25rem 3rem;border-bottom:1px solid var(--rule)"><p style="font-size:.77rem;color:var(--slate-light);font-style:italic;margin:0">A detailed look at the AI system Creative Milk built for a SaaS customer support platform — the architecture, the integrations, what went wrong, and the 60% ticket reduction outcome.</p></div>
+<div class="ab">
+
+<p><strong>Category:</strong> Behind the Build</p>
+<p><strong>Cluster:</strong> Case study extension</p>
+<p><strong>Target keyword:</strong> AI customer support automation</p>
+<p><strong>Secondary keywords:</strong> AI support ticket reduction, customer support AI Australia, reduce support volume AI</p>
+<p><strong>Estimated read time:</strong> 7 min</p>
+<p><strong>Status:</strong> Priority 2</p>
+<p><strong>Meta description:</strong> A detailed look at the AI system Creative Milk built for a SaaS customer support platform — the architecture, the integrations, what went wrong, and the 60% ticket reduction outcome.</p>
+
+<hr>
+
+<p>This is the longer version of a case study we summarise on our work page. We're publishing it in detail because the specifics matter — both for businesses evaluating whether something similar could work for them, and for the record of how AI systems actually get built.</p>
+
+<hr>
+
+<h2>The situation</h2>
+
+<p>A SaaS customer support platform — about 120 staff, a three-person support team — was handling roughly 800 tickets per week. The business was growing. The support team was not.</p>
+
+<p>Around 70% of incoming tickets were tier-1 queries: password resets, billing questions, feature how-tos, integration troubleshooting that followed defined steps. None of these required the judgement of the support team. All of them were consuming their time.</p>
+
+<p>They had tried a chatbot 18 months earlier. It gave incorrect answers, created escalations that shouldn't have been escalations, and the team quietly stopped routing queries to it after six weeks. When we started the Discovery Sprint, the team's confidence in AI-assisted support was near zero.</p>
+
+<hr>
+
+<h2>What we found in the Discovery Sprint</h2>
+
+<p>Two things stood out from the process mapping work.</p>
+
+<p><strong>First:</strong> 68% of tickets in the previous 90 days were resolvable by a defined, documented answer. We categorised every ticket in their Zendesk queue for that period. Most of what the team was spending their time on was documented somewhere — in the help centre, in internal runbooks, in previous ticket resolutions. The knowledge existed. It wasn't being used at scale.</p>
+
+<p><strong>Second:</strong> The previous chatbot had failed because it was a retrieval system with no understanding of intent. A customer asking "I can't log in" and a customer asking "why won't my account open" are the same question. A simple keyword-matching system treats them as different. The team had been burned by exactly this limitation.</p>
+
+<p>The success metric we agreed: reduce tier-1 ticket volume by 40% within 60 days of launch.</p>
+
+<hr>
+
+<h2>What we built</h2>
+
+<p>The system has three layers.</p>
+
+<p><strong>Layer 1 — Intent classification</strong></p>
+<p>Every incoming ticket is classified by intent before anything else happens. Not by keyword, but by meaning. A ticket saying "I'm getting an error when I try to pay" and a ticket saying "the payment screen keeps crashing" are both billing/payment issues. The classification layer understands that.</p>
+
+<p>We trained the classifier on 90 days of historical tickets, with their eventual resolutions as the training signal. The classifier learned what the support team learned — that certain words, phrases, and patterns map to certain problem types.</p>
+
+<p><strong>Layer 2 — Resolution or escalation</strong></p>
+<p>For classified tier-1 tickets, the system queries a knowledge base we built from the client's existing documentation — help articles, internal runbooks, product documentation, and the 90-day ticket resolution archive. It generates a response, checks it against the ticket intent, and either sends it directly (high-confidence tier-1) or flags it for human review (moderate confidence or any complexity signal).</p>
+
+<p>Clear escalation boundaries were defined in Phase 1 and built into the logic. The system never autonomously handles: billing disputes, account access for suspected fraud, bug reports, or any ticket where the classification confidence is below threshold.</p>
+
+<p><strong>Layer 3 — Human handoff with context</strong></p>
+<p>When a ticket escalates, the support agent receives: the ticket, the intent classification, the knowledge base articles the system queried, and (if it exists) the customer's previous ticket history. The agent starts with context rather than starting from scratch.</p>
+
+<p><strong>Integrations:</strong> Zendesk (ticket ingestion and response), Stripe (billing data for account queries), internal product knowledge base, custom ticket history database.</p>
+
+<hr>
+
+<h2>What went wrong</h2>
+
+<p>The knowledge base took longer than anticipated.</p>
+
+<p>The client's existing documentation was fragmented across four systems: a help centre in Zendesk, internal runbooks in Notion, a legacy wiki, and ticket notes in various states of formality. Consolidating, deduplicating, and quality-checking that documentation took nearly two weeks — we'd scoped one week.</p>
+
+<p>The lesson: we now scope a documentation consolidation phase explicitly in the Discovery Sprint for any knowledge-base-dependent build. It's 3–5 days of defined work that surfaces early. We don't let it become mid-build scope creep.</p>
+
+<p>The second issue: the initial intent classifier was underperforming on a specific query type — integration troubleshooting questions that used technical jargon specific to the client's product. We hadn't included enough technical vocabulary in the training data. Two additional days of retraining resolved it, but it delayed the confidence threshold calibration.</p>
+
+<hr>
+
+<h2>The outcome</h2>
+
+<p>At 60 days post-launch:</p>
+<ul><li>Tier-1 ticket volume: down 60% (target was 40%)</li>
+<li>Average handling time on escalated tickets: down 34% (agents start with pre-populated context)</li>
+<li>Support team NPS: improved (the team reported higher job satisfaction — they were handling interesting problems instead of the same ten questions)</li></ul>
+
+<p>At 90 days:</p>
+<ul><li>The system had processed 3,200 tier-1 tickets autonomously</li>
+<li>Escalation rate from the AI: 12% (lower than expected — the classifier was more accurate than the confidence threshold calibration suggested it would be)</li>
+<li>No significant accuracy complaints from customers — the team tracked negative feedback specifically</li></ul>
+
+<hr>
+
+<h2>What this looks like for other businesses</h2>
+
+<p>Not every business has a support queue that looks like this. The model works when:</p>
+<ul><li>You have a high volume of repeatable queries</li>
+<li>Those queries have documented answers (or you're willing to build the documentation)</li>
+<li>The tier-1/tier-2 distinction is clear and defensible</li>
+<li>Your team is willing to work with the system (not around it)</li></ul>
+
+<p>The last point matters more than most businesses account for. We spent two sessions with the support team before go-live — not training them on the system, but listening to what they were worried about. Their main concern was that the system would give wrong answers and they'd be blamed. We built the escalation threshold specifically to address that concern: when in doubt, the system escalates. The team trusted it more because they knew it would ask for help rather than guess.</p>
+
+<hr>
+
+<p><em>If you're managing a support operation with repeatable query volume, [book a call →](/contact) and we'll tell you whether a system like this makes sense for your situation.</em></p>
+
+<hr>
+<hr>
+<div class="acta">
+  <p>Creative Milk builds custom AI systems for Australian mid-market businesses. If you're planning an AI project, start with a Discovery Sprint.</p>
+  <a href="/contact" class="ctab">Start with a Discovery Sprint →</a>
+</div>
+</div>
+<div class="footer"><span>Creative Milk</span><span>Insights — Article 06 · April 2026</span></div>
+</body></html>

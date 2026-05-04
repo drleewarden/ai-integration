@@ -5,9 +5,12 @@ import { Menu, X } from "lucide-react";
 import { CMWordmark } from "./CMLogo";
 
 const NAV_ITEMS = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
+  { label: "What We Build", href: "/what-we-build" },
+  { label: "Work", href: "/work" },
+  { label: "Process", href: "/process" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Insights", href: "/insights" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Nav() {
@@ -21,7 +24,6 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll when mobile menu open
   useEffect(() => {
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
@@ -61,7 +63,7 @@ export default function Nav() {
         }}
       >
         <a
-          href="#top"
+          href="/"
           aria-label="Creative Milk — home"
           style={{ display: "inline-flex" }}
         >
@@ -99,7 +101,7 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/contact"
             className="cta cta-gold"
             style={{ marginLeft: "1rem" }}
           >
@@ -155,7 +157,7 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/contact"
             onClick={() => setMobileOpen(false)}
             className="cta cta-gold"
             style={{

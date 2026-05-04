@@ -146,17 +146,14 @@ void main() {
 function compileShader(
   gl: WebGL2RenderingContext,
   type: number,
-  source: string,
+  source: string
 ): WebGLShader | null {
   const shader = gl.createShader(type);
   if (!shader) return null;
   gl.shaderSource(shader, source);
   gl.compileShader(shader);
   if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.warn(
-      "[WebGLBackground] shader compile failed:",
-      gl.getShaderInfoLog(shader),
-    );
+    console.warn("[WebGLBackground] shader compile failed:", gl.getShaderInfoLog(shader));
     gl.deleteShader(shader);
     return null;
   }
@@ -171,9 +168,7 @@ export default function WebGLBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduceMotion) {
       // Show fallback gradient, skip WebGL entirely
       if (fallbackRef.current) fallbackRef.current.style.opacity = "1";
@@ -205,10 +200,7 @@ export default function WebGLBackground() {
     gl.attachShader(program, frag);
     gl.linkProgram(program);
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.warn(
-        "[WebGLBackground] program link failed:",
-        gl.getProgramInfoLog(program),
-      );
+      console.warn("[WebGLBackground] program link failed:", gl.getProgramInfoLog(program));
       if (fallbackRef.current) fallbackRef.current.style.opacity = "1";
       return;
     }
@@ -219,7 +211,7 @@ export default function WebGLBackground() {
     gl.bufferData(
       gl.ARRAY_BUFFER,
       new Float32Array([-1, -1, 3, -1, -1, 3]),
-      gl.STATIC_DRAW,
+      gl.STATIC_DRAW
     );
 
     const aPosition = gl.getAttribLocation(program, "a_position");
@@ -227,9 +219,9 @@ export default function WebGLBackground() {
     gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
 
     const uResolution = gl.getUniformLocation(program, "u_resolution");
-    const uTime = gl.getUniformLocation(program, "u_time");
-    const uMouse = gl.getUniformLocation(program, "u_mouse");
-    const uScroll = gl.getUniformLocation(program, "u_scroll");
+    const uTime       = gl.getUniformLocation(program, "u_time");
+    const uMouse      = gl.getUniformLocation(program, "u_mouse");
+    const uScroll     = gl.getUniformLocation(program, "u_scroll");
 
     gl.useProgram(program);
 
@@ -237,8 +229,7 @@ export default function WebGLBackground() {
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.75);
       const w = canvas.clientWidth || canvas.offsetWidth || window.innerWidth;
-      const h =
-        canvas.clientHeight || canvas.offsetHeight || window.innerHeight;
+      const h = canvas.clientHeight || canvas.offsetHeight || window.innerHeight;
       const pw = Math.max(1, Math.floor(w * dpr));
       const ph = Math.max(1, Math.floor(h * dpr));
       if (canvas.width !== pw || canvas.height !== ph) {
@@ -280,7 +271,7 @@ export default function WebGLBackground() {
       ([entry]) => {
         visible = entry.isIntersecting;
       },
-      { threshold: 0.01 },
+      { threshold: 0.01 }
     );
     io.observe(canvas);
 
@@ -292,7 +283,7 @@ export default function WebGLBackground() {
 
     // ── Render loop ────────────────────────────────────────────
     let raf = 0;
-    const start = performance.now();
+    let start = performance.now();
     let last = start;
 
     const render = (now: number) => {
