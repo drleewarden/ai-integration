@@ -269,7 +269,7 @@ describe("/api/send-email", () => {
       expect(data.error).toBe(
         "Failed to send. Please try again or email us directly.",
       );
-      expect(data.details).toBe("Unknown errors");
+      expect(data.details).toBe("Unknown error");
     });
   });
 
