@@ -6,6 +6,7 @@ import { CMWordmark } from "./CMLogo";
 
 const NAV_ITEMS = [
   { label: "What We Build", href: "/what-we-build" },
+  { label: "AI Readiness", href: "/ai-readiness" },
   { label: "Work", href: "/work" },
   { label: "Process", href: "/process" },
   { label: "Pricing", href: "/pricing" },

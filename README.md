@@ -1,36 +1,159 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Creative Milk Website
 
-## Getting Started
+Next.js 15 marketing website for Creative Milk, an AI consulting business. Built with App Router, TypeScript, Tailwind CSS v4, and custom WebGL2 background shader.
 
-First, run the development server:
+## Tech Stack
+
+- **Framework**: Next.js 15.5.15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS v4 (alpha)
+- **Fonts**: Cormorant Garamond, Syne, DM Mono (via next/font)
+- **Email**: Resend API
+- **Database**: Supabase (for AI Readiness assessment)
+- **Deployment**: Vercel
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 22.x (see `.nvmrc`)
+- npm or yarn
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Create a `.env.local` file (see `.env.example` for required variables)
+
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000)
+
+### Development Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev      # Start development server
+npm run build    # Build for production
+npm start        # Run production build locally
+npm run lint     # Run ESLint
+npm test         # Run Jest tests
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Required for production (see `.env.example`):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Email (Contact Form)
+- `RESEND_API_KEY` - Resend API key
+- `RESEND_FROM` - Sender email address (optional, defaults to onboarding@resend.dev)
+- `RESEND_TO` - Recipient email address (optional, defaults to drleewarden@gmail.com)
 
-## Learn More
+### Supabase (AI Readiness Assessment)
+- `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
+- `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
 
-To learn more about Next.js, take a look at the following resources:
+### Site URL (Optional)
+- `NEXT_PUBLIC_SITE_URL` - Full site URL for OpenGraph (Vercel sets VERCEL_URL automatically)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment to Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### First-Time Setup
 
-## Deploy on Vercel
+1. **Connect Repository**
+   - Go to [Vercel Dashboard](https://vercel.com/new)
+   - Import your Git repository
+   - Vercel will auto-detect Next.js
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Configure Environment Variables**
+   - Go to Project Settings → Environment Variables
+   - Add all required variables from `.env.example`
+   - Set for Production, Preview, and Development as needed
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. **Configure Build Settings** (should be auto-detected)
+   - Framework Preset: Next.js
+   - Build Command: `npm run build`
+   - Output Directory: `.next`
+   - Node Version: 22.x (set in Project Settings → General)
+
+4. **Deploy**
+   - Click "Deploy"
+   - Vercel will build and deploy automatically
+
+### Subsequent Deployments
+
+Every push to your main branch will automatically trigger a deployment. Pull requests create preview deployments.
+
+### Manual Deployment
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+## Project Structure
+
+```
+app/
+├── components/          # Shared UI components (Nav, Footer, etc.)
+├── (site)/             # Route group for main site pages
+│   ├── about/
+│   ├── contact/
+│   ├── insights/       # Blog posts
+│   ├── ai-readiness/   # Assessment tool
+│   └── ...
+├── api/                # API routes
+│   ├── send-email/     # Contact form handler
+│   └── readiness/      # AI assessment endpoints
+├── layout.tsx          # Root layout with fonts & metadata
+└── globals.css         # Design system & Tailwind config
+
+lib/                    # Shared utilities
+├── readiness/          # AI assessment logic
+└── supabase/          # Database client
+
+public/                 # Static assets
+```
+
+## Key Features
+
+- **Server-Side Rendering**: Fast page loads with Next.js App Router
+- **Client-Side Interactivity**: React hooks for nav, forms, and WebGL
+- **WebGL Background**: Custom shader with parallax and scroll effects
+- **Contact Form**: Email integration via Resend API
+- **AI Readiness Assessment**: Interactive quiz with Supabase storage
+- **SEO Optimized**: Metadata, OpenGraph, structured data
+- **Analytics**: Google Analytics & Tag Manager integration
+- **Accessibility**: WCAG compliant with semantic HTML
+
+## Design System
+
+Design tokens defined in `app/globals.css`:
+- **Colors**: Midnight Ink, Liquid Gold, Warm Cream
+- **Typography**: Display (Cormorant), UI (Syne), Mono (DM Mono)
+- **Components**: `.eyebrow`, `.h-display`, `.cta`, `.section`
+- **Animations**: CSS animations with reduced-motion support
+
+See `CLAUDE.md` for detailed architecture documentation.
+
+## Browser Support
+
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- WebGL 2.0 support (gracefully degrades to CSS gradient)
+- Reduced-motion preferences respected
+
+## License
+
+Proprietary - Creative Milk

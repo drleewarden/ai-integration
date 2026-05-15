@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
+import BackToTop from "./components/BackToTop";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -102,6 +103,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <BackToTop />
       </body>
     </html>
   );
