@@ -51,10 +51,12 @@ export default function Footer() {
           </div>
           <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {[
-              ["Services", "#services"],
-              ["Work", "#work"],
-              ["Process", "#process"],
-              ["Contact", "#contact"],
+              ["Services", "/#services"],
+              ["Case studies", "/#work"],
+              ["Process", "/#process"],
+              ["Pricing", "/pricing"],
+              ["For professional services", "/for/professional-services"],
+              ["Contact", "/#contact"],
             ].map(([label, href]) => (
               <li key={label} style={{ marginBottom: "0.5rem" }}>
                 <a
@@ -96,7 +98,7 @@ export default function Footer() {
           >
             Use the{" "}
             <a
-              href="#contact"
+              href="/#contact"
               className="footer-link"
               style={{
                 color: "var(--liquid-gold)",

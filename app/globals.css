@@ -195,6 +195,13 @@ textarea {
   color: var(--slate-mid);
 }
 
+@media (max-width: 768px) {
+  .label {
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+}
+
 .h-display {
   font-family: var(--font-display);
   font-weight: 300;

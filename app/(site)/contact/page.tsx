@@ -319,7 +319,7 @@ export default function Contact() {
                         className="label"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
-                        Your name *
+                        Name *
                       </label>
                       <input
                         type="text"
@@ -337,7 +337,7 @@ export default function Contact() {
                         className="label"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
-                        Email address *
+                        Email *
                       </label>
                       <input
                         type="email"
@@ -355,7 +355,7 @@ export default function Contact() {
                         className="label"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
-                        Company name *
+                        Company *
                       </label>
                       <input
                         type="text"
@@ -373,7 +373,7 @@ export default function Contact() {
                         className="label"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
-                        Tell us about the problem you're trying to solve *
+                        Tell us about your project *
                       </label>
                       <textarea
                         name="problem"
@@ -391,8 +391,8 @@ export default function Contact() {
                         className="label"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
-                        Budget range{" "}
-                        <span style={{ color: "rgba(245,240,232,0.3)" }}>(optional — helps us propose the right phase)</span>
+                        Budget{" "}
+                        <span style={{ color: "rgba(245,240,232,0.3)" }}>(optional)</span>
                       </label>
                       <select
                         name="budget"
