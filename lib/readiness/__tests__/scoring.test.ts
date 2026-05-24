@@ -12,7 +12,7 @@
  * the verification script in /tmp/verify_scoring.mjs proves the baseline.
  */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '@jest/globals';
 import { QUESTIONS } from '../questions';
 import {
   SCORE_FLOOR,
