@@ -2,14 +2,14 @@
  * POST /api/readiness/book-call
  *
  * Captures the qualifying info from the Book a Call form. This is the second
- * conversion step — moving the opportunity from new_lead → qualified.
+ * conversion step -- moving the opportunity from new_lead → qualified.
  *
  * Flow:
  *   1. Validate inputs
  *   2. Verify the assessment exists
  *   3. Upsert/enrich the contact (phone, company, suburb, size, role, last name)
  *   4. Ensure an opportunity exists (creating contact + opportunity if needed
- *      — handles the edge case where a reader skipped the playbook step)
+ *      -- handles the edge case where a reader skipped the playbook step)
  *   5. Update the opportunity: stage → qualified, problem_summary set
  *   6. Log activities (contact_form_submitted, stage_changed)
  *
@@ -202,7 +202,7 @@ export async function POST(req: NextRequest) {
   let opportunityId: string | null = assessment.opportunity_id;
   if (!opportunityId) {
     const band = bandByKey(assessment.band as BandKey);
-    const title = `${payload.company} — ${band.label} (${assessment.overall_score}/100)`;
+    const title = `${payload.company} -- ${band.label} (${assessment.overall_score}/100)`;
     const { data: newOpp, error: oErr } = await supabase
       .from('opportunities')
       .insert({
@@ -221,10 +221,10 @@ export async function POST(req: NextRequest) {
     }
     opportunityId = newOpp.id;
   } else {
-    // Opportunity already exists — refresh the title with the company name
-    // we just learned (was previously "Lead — Band (Score/100)").
+    // Opportunity already exists -- refresh the title with the company name
+    // we just learned (was previously "Lead -- Band (Score/100)").
     const band = bandByKey(assessment.band as BandKey);
-    const title = `${payload.company} — ${band.label} (${assessment.overall_score}/100)`;
+    const title = `${payload.company} -- ${band.label} (${assessment.overall_score}/100)`;
     await supabase.from('opportunities').update({ title }).eq('id', opportunityId);
   }
 

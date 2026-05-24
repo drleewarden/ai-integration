@@ -1,17 +1,17 @@
 /**
- * Creative Milk — AI Readiness scoring engine.
+ * Creative Milk -- AI Readiness scoring engine.
  *
  * Pure function. Given a complete set of answers, produces the full
- * AssessmentResult — overall score, pillar scores, tiers, band, focus areas,
+ * AssessmentResult -- overall score, pillar scores, tiers, band, focus areas,
  * strongest pillar, and per-pillar weakness patterns. Everything downstream
  * (result page, playbook composer, email) is driven from this output.
  *
- * Scoring is identical to v5 demo by design — see scoring.test.ts for the
+ * Scoring is identical to v5 demo by design -- see scoring.test.ts for the
  * reconciliation cases.
  *
  * Constants:
- *   FLOOR = 25      — minimum possible score on any pillar or overall
- *   CEILING = 100   — maximum
+ *   FLOOR = 25      -- minimum possible score on any pillar or overall
+ *   CEILING = 100   -- maximum
  *
  *   Raw answer values are (optionIndex + 1), so each question contributes
  *   1–4 points. With 3 questions per pillar, raw pillar totals run 3–12.
@@ -41,11 +41,11 @@ export const SCORE_CEILING = 100;
 /**
  * Tier thresholds for the pillar map (page 3 of the playbook).
  *
- * Deep gap: 25–45 — substantial work needed, this is a focus area
- * Moderate gap: 46–70 — basics in place, room to grow
- * Strong: 71–100 — solid, protect and extend
+ * Deep gap: 25–45 -- substantial work needed, this is a focus area
+ * Moderate gap: 46–70 -- basics in place, room to grow
+ * Strong: 71–100 -- solid, protect and extend
  *
- * These align with the band thresholds without being identical — band is
+ * These align with the band thresholds without being identical -- band is
  * about the whole business, tier is about an individual pillar.
  */
 export const TIER_DEEP_GAP_MAX = 45;
@@ -62,7 +62,7 @@ export function tierForPillarScore(score: number): PillarTier {
 
 /**
  * Validate a set of answers is complete and well-formed for scoring.
- * Throws if invalid — callers should catch and convert to a 400 response.
+ * Throws if invalid -- callers should catch and convert to a 400 response.
  */
 export function validateAnswers(answers: Answers): void {
   for (const q of QUESTIONS) {
@@ -84,11 +84,11 @@ export function validateAnswers(answers: Answers): void {
  * (adds pair patterns q1q2_low, q1q3_low, q2q3_low).
  *
  * Returns:
- *   'q1_low' — the first question in this pillar scored lowest (and is the
+ *   'q1_low' -- the first question in this pillar scored lowest (and is the
  *               unique low)
- *   'q2_low' — second question scored lowest
- *   'q3_low' — third question scored lowest
- *   'composite' — multiple questions tied at the lowest score, or every
+ *   'q2_low' -- second question scored lowest
+ *   'q3_low' -- third question scored lowest
+ *   'composite' -- multiple questions tied at the lowest score, or every
  *                  question is at level 2+ (no meaningful weak spot)
  *
  * Note: q1/q2/q3 here refers to the position within the pillar (1st, 2nd, 3rd
@@ -104,7 +104,7 @@ function classifyWeaknessPattern(
   const minValue = Math.min(...values);
 
   // If the minimum is 2 or 3 (i.e. the reader is doing well across this
-  // pillar), classify as composite — there's no single weak spot to anchor
+  // pillar), classify as composite -- there's no single weak spot to anchor
   // the focus-area copy on. In practice this is rare because we only generate
   // focus-area pages for the lowest 3 pillars, which by definition are weak.
   if (minValue >= 2) return 'composite';
@@ -116,7 +116,7 @@ function classifyWeaknessPattern(
   // when tiedAtMin === 2. See WeaknessPattern docs in types.ts for the spec.
   if (tiedAtMin >= 2) return 'composite';
 
-  // Unique minimum — identify which question position it was in
+  // Unique minimum -- identify which question position it was in
   const minIndex = values.indexOf(minValue);
   return (`q${minIndex + 1}_low`) as WeaknessPattern;
 }

@@ -1,5 +1,5 @@
 /**
- * Creative Milk — AI Readiness library.
+ * Creative Milk -- AI Readiness library.
  * Barrel export. Import from 'lib/readiness' (or '@/lib/readiness' depending
  * on your tsconfig paths).
  */

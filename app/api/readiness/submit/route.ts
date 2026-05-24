@@ -28,12 +28,12 @@ import type { Answers } from '@/lib/readiness/types';
 
 // ── Constants ────────────────────────────────────────────────────────────────
 
-// Reject anything bigger than this — assessment payload is tiny (~300 bytes),
+// Reject anything bigger than this -- assessment payload is tiny (~300 bytes),
 // 4KB is generous. Cheap protection against accidental/malicious large bodies.
 const MAX_BODY_BYTES = 4 * 1024;
 
 // Allowed referer host(s) for soft origin checking. Allows local dev + prod.
-// This is not security (referer is forgeable) — it's noise filtering for
+// This is not security (referer is forgeable) -- it's noise filtering for
 // telemetry. Real abuse protection happens at scoring validation.
 const ALLOWED_REFERRER_HOSTS = new Set<string>([
   'www.creative-milk.com.au',
@@ -152,7 +152,7 @@ export async function POST(req: NextRequest) {
   const refererHost = getRefererHost(req);
   const referrer = refererHost ?? undefined;
 
-  // Soft-warn on unexpected referrers — useful for spam detection in logs,
+  // Soft-warn on unexpected referrers -- useful for spam detection in logs,
   // doesn't block the request (referers can be empty or stripped legitimately).
   if (refererHost && !ALLOWED_REFERRER_HOSTS.has(refererHost)) {
     console.warn(
@@ -187,7 +187,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Log activity (fire-and-forget — log the error but don't fail the request
+  // Log activity (fire-and-forget -- log the error but don't fail the request
   // if activity logging fails; the assessment itself is the canonical record).
   void supabase
     .from('activities')

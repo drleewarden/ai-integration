@@ -1,4 +1,4 @@
-# Your AI System Shipped. Now the Real Work Begins — How to Get Your Team to Actually Use It
+# Your AI System Shipped. Now the Real Work Begins -- How to Get Your Team to Actually Use It
 
 **Category:** Change Management
 **Cluster:** Change management & team adoption
@@ -26,7 +26,7 @@ Here's the framework we use.
 
 ## Why AI adoption fails (and it's not resistance to change)
 
-The conventional explanation for adoption failure is that people resist change. This is partially true but mostly unhelpful — it frames the problem as a human flaw rather than a system design failure.
+The conventional explanation for adoption failure is that people resist change. This is partially true but mostly unhelpful -- it frames the problem as a human flaw rather than a system design failure.
 
 The real reasons teams don't adopt AI systems fall into four categories:
 
@@ -60,7 +60,7 @@ This communication comes from the business leadership, not from us. We draft it 
 
 - Here's the problem this system is designed to address
 - Here's what it does (in plain English)
-- Here's what it doesn't do — clear boundaries are critical
+- Here's what it doesn't do -- clear boundaries are critical
 - Here's what this means for how your work changes
 - Here's what it does not mean for your role
 
@@ -68,7 +68,7 @@ That last point matters more than most leaders realise. If the team suspects the
 
 ### 3. Hands-on training before go-live
 
-We run training sessions with the actual users — the people whose workflow changes — before the system is live. Not a demo. A working session where they use the system, ask questions, and encounter its limitations in a low-stakes environment.
+We run training sessions with the actual users -- the people whose workflow changes -- before the system is live. Not a demo. A working session where they use the system, ask questions, and encounter its limitations in a low-stakes environment.
 
 Training after go-live is too late. By the time the system is live, people are busy and training feels like an interruption. Training before go-live builds familiarity and surfaces questions that improve the system before it matters.
 
@@ -80,7 +80,7 @@ This serves two purposes: it improves the system, and it gives the team a sense 
 
 ### 5. 30/60-day adoption measurement
 
-At 30 days and 60 days post-launch, we look at two things: system output quality (is it hitting the success metrics?) and adoption indicators (is the team using it consistently?). If adoption is lagging the quality metrics, that's a signal that the change management work needs reinforcing — not that the system needs a rebuild.
+At 30 days and 60 days post-launch, we look at two things: system output quality (is it hitting the success metrics?) and adoption indicators (is the team using it consistently?). If adoption is lagging the quality metrics, that's a signal that the change management work needs reinforcing -- not that the system needs a rebuild.
 
 Adoption measurement is often missing from AI implementations because it's harder to quantify than system performance. But it's the leading indicator of whether the outcome metrics will follow.
 
@@ -90,7 +90,7 @@ Adoption measurement is often missing from AI implementations because it's harde
 
 Beyond the formal framework, there are three specific conversations that change adoption outcomes in most engagements.
 
-**The "this is not replacing you" conversation.** When the system takes over repeatable work, leadership needs to clearly articulate what the team's work evolves into — not just what it no longer includes. If a support team member goes from handling 40 tier-1 tickets per day to handling 15 complex escalations, that's a better job. Say it explicitly.
+**The "this is not replacing you" conversation.** When the system takes over repeatable work, leadership needs to clearly articulate what the team's work evolves into -- not just what it no longer includes. If a support team member goes from handling 40 tier-1 tickets per day to handling 15 complex escalations, that's a better job. Say it explicitly.
 
 **The "what counts as a win" conversation.** Teams need to understand what the system's success looks like so they can recognise and reinforce it. If the support team knows the target is 40% ticket volume reduction and they're seeing 35% in week three, that's worth celebrating. The context that makes numbers meaningful comes from leaders, not dashboards.
 

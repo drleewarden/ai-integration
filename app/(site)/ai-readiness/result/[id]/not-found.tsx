@@ -38,7 +38,7 @@ export default function ResultNotFound() {
       >
         <div style={{ textAlign: 'center', maxWidth: '520px' }}>
           <div style={{ marginBottom: '24px' }}>
-            <Label>— Result not found</Label>
+            <Label>-- Result not found</Label>
           </div>
           <h1
             style={{
@@ -60,7 +60,7 @@ export default function ResultNotFound() {
               margin: '0 0 40px',
             }}
           >
-            The link may be wrong, or the result may have been removed. You can take the assessment from scratch — it only takes five minutes.
+            The link may be wrong, or the result may have been removed. You can take the assessment from scratch -- it only takes five minutes.
           </p>
           <Link href="/ai-readiness" style={{ textDecoration: 'none' }}>
             <span style={goldButtonStyle}>Start a new assessment</span>

@@ -47,7 +47,7 @@ const CASE_STUDIES: CaseStudy[] = [
     company: "Melbourne commercial builder",
     headline: "RFIs answered before the site supervisor gets back to the ute.",
     situation:
-      "Site teams stuck waiting on document searches for variations, RFIs, and subbie clarifications — pulled from a 4-year archive of drawings, specs, and emails across three project systems.",
+      "Site teams stuck waiting on document searches for variations, RFIs, and subbie clarifications -- pulled from a 4-year archive of drawings, specs, and emails across three project systems.",
     system:
       "AI assistant trained on the firm's project archive: site staff ask a question by voice or text, get an answer with the source documents linked, and queue any unclear items for the project manager to review.",
     outcome: "60% of site queries resolved without a human; PM workload back to design and program.",
@@ -97,7 +97,7 @@ export default function Work() {
         >
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              03 — Case studies
+              03 -- Case studies
             </span>
             <h2 className="h-section" style={{ marginTop: "1rem" }}>
               Three firms.
@@ -113,7 +113,7 @@ export default function Work() {
               color: "rgba(245,240,232,0.55)",
             }}
           >
-            We measure work in hours reclaimed and decisions improved — not
+            We measure work in hours reclaimed and decisions improved -- not
             features shipped. Here&apos;s what that looks like when it&apos;s
             running in production.
           </p>

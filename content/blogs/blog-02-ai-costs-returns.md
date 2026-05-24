@@ -1,4 +1,4 @@
-# What AI Actually Costs an Australian Business — And What It Returns
+# What AI Actually Costs an Australian Business -- And What It Returns
 
 **Category:** AI Implementation
 **Cluster:** AI ROI
@@ -6,7 +6,7 @@
 **Secondary keywords:** AI ROI Australia, how much does AI consulting cost, AI business investment
 **Estimated read time:** 5 min
 **Status:** Priority 1
-**Meta description:** What does AI implementation actually cost for an Australian mid-market business — and what should you expect in return? A plain-English breakdown with real numbers.
+**Meta description:** What does AI implementation actually cost for an Australian mid-market business -- and what should you expect in return? A plain-English breakdown with real numbers.
 
 ---
 
@@ -14,7 +14,7 @@ The most common question we get from Australian businesses exploring AI is also 
 
 It's a reasonable question that the AI industry has done a poor job of answering clearly. Most agencies either give you a phone number to call or publish testimonials about "transformative outcomes" without a dollar sign anywhere near them.
 
-We publish our pricing because we think opacity wastes everyone's time. This article goes a layer deeper — explaining not just what you'd pay, but how to think about the return, and what factors affect both.
+We publish our pricing because we think opacity wastes everyone's time. This article goes a layer deeper -- explaining not just what you'd pay, but how to think about the return, and what factors affect both.
 
 ---
 
@@ -29,7 +29,7 @@ A scoped investigation into your specific problem. 1–2 weeks. You get a system
 The full system build, integrated into your existing stack. Change management and team training included. IP transfers to you on completion. 4–6 weeks.
 
 **Managed Partnership:** AUD $5,000–$15,000/month
-Ongoing optimisation and strategic advisory. Optional — many clients manage the system themselves after Phase 2.
+Ongoing optimisation and strategic advisory. Optional -- many clients manage the system themselves after Phase 2.
 
 The total investment for a complete engagement (Phase 1 + Phase 2) typically sits between **AUD $35,000 and $135,000** for a mid-market business.
 
@@ -54,7 +54,7 @@ A clean brief, a well-documented process, and a modern tech stack will land you 
 
 ## How to think about the return
 
-ROI from AI is not a single number — it depends on what you built and what it does. But there are three categories of return that show up consistently across engagements:
+ROI from AI is not a single number -- it depends on what you built and what it does. But there are three categories of return that show up consistently across engagements:
 
 ### 1. Labour hours recovered
 
@@ -62,23 +62,23 @@ The clearest ROI category. If your system eliminates or significantly reduces a 
 
 Example: A support team handling 800 tickets per week, where 60% are tier-1 queries (480 tickets) averaging 8 minutes each. That's 64 hours per week of resolvable-by-AI work. At an average fully-loaded cost of AUD $45/hour for a support team member, that's $2,880 per week, or roughly $150,000 per year.
 
-A $60,000 implementation that eliminates that workload pays back in under 6 months — and continues returning $150K+ per year. That's a straightforward ROI calculation that any CFO can follow.
+A $60,000 implementation that eliminates that workload pays back in under 6 months -- and continues returning $150K+ per year. That's a straightforward ROI calculation that any CFO can follow.
 
 ### 2. Revenue generated or protected
 
-For customer-facing AI — recommendations engines, personalisation, retention systems — the return shows up in revenue metrics. A +35% conversion rate lift on a $5M revenue e-commerce business adds $1.75M per year. A customer retention system that reduces churn by 15% in a subscription business protects significant recurring revenue.
+For customer-facing AI -- recommendations engines, personalisation, retention systems -- the return shows up in revenue metrics. A +35% conversion rate lift on a $5M revenue e-commerce business adds $1.75M per year. A customer retention system that reduces churn by 15% in a subscription business protects significant recurring revenue.
 
-These returns are larger but less certain than labour hours saved — they depend on how well the system performs in production and how much of the effect is attributable to the AI.
+These returns are larger but less certain than labour hours saved -- they depend on how well the system performs in production and how much of the effect is attributable to the AI.
 
 ### 3. Risk and error reduction
 
-Document processing systems, compliance flagging, and quality assurance AI reduce the cost of errors. In professional services — accounting, legal, financial advice — a single compliance failure can cost orders of magnitude more than the implementation. This return is real but harder to quantify prospectively.
+Document processing systems, compliance flagging, and quality assurance AI reduce the cost of errors. In professional services -- accounting, legal, financial advice -- a single compliance failure can cost orders of magnitude more than the implementation. This return is real but harder to quantify prospectively.
 
 ---
 
 ## The Discovery Sprint as risk management
 
-The purpose of the Discovery Sprint is partly analytical and partly financial. It's where we assess whether the expected return justifies the build investment — and we give you an honest answer either way.
+The purpose of the Discovery Sprint is partly analytical and partly financial. It's where we assess whether the expected return justifies the build investment -- and we give you an honest answer either way.
 
 At AUD $5,000–$15,000, the Discovery Sprint is the lowest-risk way to find out three things:
 1. What is the AI opportunity in your specific situation?
@@ -93,9 +93,9 @@ If the numbers don't stack up, we tell you that. We'd rather lose a Discovery Sp
 
 Most clients see measurable outcome improvement within 30–60 days of Phase 2 going live. The 95% outcome rate we publish is measured at 60–90 days post-launch.
 
-For labour automation, the return starts immediately and is consistent from day one. For revenue-generating AI (recommendations, conversion optimisation), expect the system to improve over the first 30–60 days as it processes real data — initial returns are real but the system gets better.
+For labour automation, the return starts immediately and is consistent from day one. For revenue-generating AI (recommendations, conversion optimisation), expect the system to improve over the first 30–60 days as it processes real data -- initial returns are real but the system gets better.
 
-For the full engagement cycle — Discovery Sprint, Build, 60-day measurement window — you're typically looking at a 4–5 month timeline from first call to confirmed outcome.
+For the full engagement cycle -- Discovery Sprint, Build, 60-day measurement window -- you're typically looking at a 4–5 month timeline from first call to confirmed outcome.
 
 ---
 

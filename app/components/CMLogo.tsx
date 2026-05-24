@@ -15,7 +15,7 @@ export function CMMark({
       : "var(--midnight-ink)";
 
   // Milk-droplet glyph: round bottom, tapered top, slight off-axis tilt.
-  // Inner cutout forms the "C" for Creative — reads as both a droplet and a C.
+  // Inner cutout forms the "C" for Creative -- reads as both a droplet and a C.
   return (
     <svg
       width={size}

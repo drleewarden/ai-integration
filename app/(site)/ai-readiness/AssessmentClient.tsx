@@ -1,5 +1,5 @@
 /**
- * AssessmentClient — the interactive AI Readiness flow.
+ * AssessmentClient -- the interactive AI Readiness flow.
  *
  * States:
  *   intro       → hero + brief + Start button
@@ -8,7 +8,7 @@
  *   error       → retry option if submission fails
  *
  * On successful submit, redirects to /ai-readiness/result/[id]. The result
- * page is the single source of truth for what to render — the client never
+ * page is the single source of truth for what to render -- the client never
  * shows the score locally.
  *
  * Refactored from CreativeMilkReadiness_v5.jsx. Visual identity preserved
@@ -59,7 +59,7 @@ export default function AssessmentClient() {
       setQuestionIdx((i) => i + 1);
       if (typeof window !== 'undefined') window.scrollTo(0, 0);
     } else {
-      // Last question — submit
+      // Last question -- submit
       await submitAssessment();
     }
   };
@@ -145,7 +145,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
         <Nav />
         <div style={{ maxWidth: '960px', margin: '0 auto', padding: '96px 24px 128px' }}>
           <div style={{ marginBottom: '32px' }}>
-            <Label>— AI Readiness Assessment</Label>
+            <Label>-- AI Readiness Assessment</Label>
           </div>
           <h1
             style={{
@@ -171,7 +171,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
               margin: '0 0 48px',
             }}
           >
-            A five-minute assessment across the five pillars of AI readiness — strategy, data, culture, technology, governance. You&rsquo;ll get a personalised score, a breakdown of where you&rsquo;re strongest and weakest, and a focused 90-day playbook for what to do next.
+            A five-minute assessment across the five pillars of AI readiness -- strategy, data, culture, technology, governance. You&rsquo;ll get a personalised score, a breakdown of where you&rsquo;re strongest and weakest, and a focused 90-day playbook for what to do next.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', marginBottom: '48px' }}>
             {['Free assessment', 'No credit card', '5 minutes'].map((item) => (
@@ -379,7 +379,7 @@ function QuestionScreen({
       <div style={{ maxWidth: '768px', margin: '0 auto', padding: '48px 24px' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <div style={{ marginBottom: '12px' }}>
-            <Label color={C.slateMute}>— Section 2 of 3</Label>
+            <Label color={C.slateMute}>-- Section 2 of 3</Label>
           </div>
           <h2 style={{ ...F.section, fontSize: '40px', lineHeight: 1.1, color: C.ink, margin: 0 }}>
             Your AI Readiness Baseline
@@ -475,7 +475,7 @@ function SubmittingScreen() {
       <HeroBackground />
       <div style={{ position: 'relative', zIndex: 10, textAlign: 'center', padding: '0 24px' }}>
         <div style={{ marginBottom: '24px' }}>
-          <Label>— Scoring your assessment</Label>
+          <Label>-- Scoring your assessment</Label>
         </div>
         <h2
           style={{
@@ -530,7 +530,7 @@ function ErrorScreen({ message, onRetry }: { message: string; onRetry: () => voi
         }}
       >
         <div style={{ marginBottom: '24px' }}>
-          <Label color={C.gold}>— Something went wrong</Label>
+          <Label color={C.gold}>-- Something went wrong</Label>
         </div>
         <h2
           style={{

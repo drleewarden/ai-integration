@@ -6,13 +6,13 @@ import Footer from "../../components/Footer";
 export const metadata: Metadata = {
   title: "Our AI Implementation Process | Discovery Sprint to Managed Partnership | Creative Milk",
   description:
-    "See exactly how Creative Milk delivers AI systems in 6–8 weeks. Discovery Sprint, Build & Integrate, Managed Partnership — with published pricing and a 95% outcome rate.",
+    "See exactly how Creative Milk delivers AI systems in 6–8 weeks. Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
 };
 
 const failureModes = [
   {
     label: "No success metric defined upfront",
-    body: '"We want to use AI" is not a brief. Projects without a measurable target can\'t be declared done — and can\'t be called successful.',
+    body: '"We want to use AI" is not a brief. Projects without a measurable target can\'t be declared done -- and can\'t be called successful.',
   },
   {
     label: "Strategy without implementation",
@@ -49,7 +49,7 @@ const timeline = [
   {
     period: "Week 2–3",
     label: "Decision point",
-    body: "You review the Phase 2 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure — the Discovery Sprint plan is yours regardless.",
+    body: "You review the Phase 2 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure -- the Discovery Sprint plan is yours regardless.",
   },
   {
     period: "Weeks 3–8",
@@ -64,7 +64,7 @@ const timeline = [
   {
     period: "Weeks 8–12",
     label: "30-day support window",
-    body: "We stay close. Any issues, refinements, or adoption questions — we're on it.",
+    body: "We stay close. Any issues, refinements, or adoption questions -- we're on it.",
   },
   {
     period: "Month 3+",
@@ -87,7 +87,7 @@ const phase1Deliverables = [
   ["Process mapping", "Document current workflows and identify AI leverage points"],
   ["Stack audit", "Assess integration feasibility and surface any blockers"],
   ["Success metric definition", "Agree the measurable outcome we'll target"],
-  ["Go/no-go recommendation", "Honest advice — including if we think AI isn't the right answer"],
+  ["Go/no-go recommendation", "Honest advice -- including if we think AI isn't the right answer"],
   ["Phase 2 proposal", "Fixed-price, scoped proposal ready to proceed if you choose"],
 ];
 
@@ -129,7 +129,7 @@ export default function Process() {
                 lineHeight: 1.7,
               }}
             >
-              Most AI projects fail not because the technology doesn't work — but because nobody
+              Most AI projects fail not because the technology doesn't work -- but because nobody
               defined success before they started. We scope every engagement around a measurable
               outcome. That's how we get to 95%.
             </p>
@@ -169,7 +169,7 @@ export default function Process() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.75, alignSelf: "end" }}
               >
                 67–80% of mid-market AI projects fail to deliver their promised ROI. The reasons
-                are predictable — and preventable.
+                are predictable -- and preventable.
               </p>
             </div>
 
@@ -260,7 +260,7 @@ export default function Process() {
                 fontSize: "1rem",
               }}
             >
-              Strategic thinking comes from Craig and Darryn — experienced practitioners who've
+              Strategic thinking comes from Craig and Darryn -- experienced practitioners who've
               built and managed AI systems across 50+ engagements. Execution is accelerated by
               AI-native tooling that compresses delivery timelines without compromising quality.
               Every engagement follows the same architecture: define success → build to spec →
@@ -345,8 +345,8 @@ export default function Process() {
                   skip: we tell you honestly whether the ROI justifies the investment.
                 </p>
                 <p>
-                  Some clients run the Discovery Sprint and find that a simpler solution — not AI
-                  — is the right answer. We'll tell you that. It's not a sales pitch. It's a
+                  Some clients run the Discovery Sprint and find that a simpler solution -- not AI
+                  -- is the right answer. We'll tell you that. It's not a sales pitch. It's a
                   professional assessment.
                 </p>
               </div>
@@ -458,7 +458,7 @@ export default function Process() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  Phase 2 is the build. Everything is defined — the system design, the
+                  Phase 2 is the build. Everything is defined -- the system design, the
                   integrations, the success metrics, the fixed price. We build.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
@@ -470,8 +470,8 @@ export default function Process() {
                   <strong style={{ color: "var(--midnight-ink)" }}>
                     Change management is not optional.
                   </strong>{" "}
-                  Every Phase 2 engagement includes an adoption plan built alongside the system —
-                  not retrofitted after — plus hands-on training sessions with the people who will
+                  Every Phase 2 engagement includes an adoption plan built alongside the system --
+                  not retrofitted after -- plus hands-on training sessions with the people who will
                   use the system daily.
                 </p>
               </div>
@@ -597,9 +597,9 @@ export default function Process() {
                 {[
                   "Monthly performance review against Phase 1 success metrics",
                   "Continuous model optimisation based on real-world data",
-                  "Expansion planning — where to apply AI next as the first system beds in",
+                  "Expansion planning -- where to apply AI next as the first system beds in",
                   "Direct access to Craig and Darryn for questions and strategic decisions",
-                  "Priority support — not a ticketing queue",
+                  "Priority support -- not a ticketing queue",
                 ].map((item, i) => (
                   <li
                     key={i}
@@ -675,7 +675,7 @@ export default function Process() {
               >
                 <p style={{ marginBottom: "1rem" }}>
                   That number means something specific. Before every Phase 2 build, we agree a
-                  measurable target with the client — a specific metric that defines "it worked."
+                  measurable target with the client -- a specific metric that defines "it worked."
                   The 95% is the percentage of engagements where that metric was hit.
                 </p>
                 <p>
@@ -755,7 +755,7 @@ export default function Process() {
                 className="body-copy"
                 style={{ color: "var(--slate-mid)" }}
               >
-                What the timeline actually looks like — week by week.
+                What the timeline actually looks like -- week by week.
               </p>
             </div>
 
@@ -827,7 +827,7 @@ export default function Process() {
               }}
             >
               Start with a Discovery Sprint. We'll map your problem, assess the opportunity, and
-              give you an honest recommendation — including if AI isn't the right answer. Fixed
+              give you an honest recommendation -- including if AI isn't the right answer. Fixed
               price. No surprises. Plain English next steps.
             </p>
             <div

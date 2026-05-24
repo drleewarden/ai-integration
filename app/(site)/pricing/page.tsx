@@ -12,15 +12,15 @@ export const metadata: Metadata = {
 const faqs = [
   {
     q: "Is there flexibility in the pricing?",
-    a: "The price ranges reflect real variation in engagement complexity. A Discovery Sprint for a single process with a clean tech stack costs less than one scoping multiple integrations across a complex stack. Phase 2 pricing is fixed once Phase 1 is complete — no surprises from that point. We don't negotiate on price for the same scope.",
+    a: "The price ranges reflect real variation in engagement complexity. A Discovery Sprint for a single process with a clean tech stack costs less than one scoping multiple integrations across a complex stack. Phase 2 pricing is fixed once Phase 1 is complete -- no surprises from that point. We don't negotiate on price for the same scope.",
   },
   {
     q: "Do we need to do all three phases?",
-    a: "No. Each phase stands alone. The Discovery Sprint is a contained engagement — you get a plan and a recommendation. Phase 2 requires Phase 1 because the scope and fixed price are determined there. Phase 3 is optional — many clients run their system independently after Phase 2.",
+    a: "No. Each phase stands alone. The Discovery Sprint is a contained engagement -- you get a plan and a recommendation. Phase 2 requires Phase 1 because the scope and fixed price are determined there. Phase 3 is optional -- many clients run their system independently after Phase 2.",
   },
   {
     q: "What if the system doesn't hit the success metric?",
-    a: "We define the success metrics together in Phase 1. If Phase 2 doesn't hit them, we stay involved until it does. That's part of what the 95% outcome rate means — we don't declare something done until the outcome is real.",
+    a: "We define the success metrics together in Phase 1. If Phase 2 doesn't hit them, we stay involved until it does. That's part of what the 95% outcome rate means -- we don't declare something done until the outcome is real.",
   },
   {
     q: "Can we start with a smaller engagement?",
@@ -28,11 +28,11 @@ const faqs = [
   },
   {
     q: "What's your capacity?",
-    a: "We take a limited number of engagements at any one time. If we're at capacity, we'll tell you when we can start and give you the option of being on the list. We don't rush engagements to fit more in — that's how 95% outcome rates drop.",
+    a: "We take a limited number of engagements at any one time. If we're at capacity, we'll tell you when we can start and give you the option of being on the list. We don't rush engagements to fit more in -- that's how 95% outcome rates drop.",
   },
   {
     q: "Do you work with businesses outside Melbourne?",
-    a: "Yes. Discovery Sprints are mostly remote — we can run them anywhere. For Phase 2 builds requiring on-site work, we travel. We've worked with businesses across Australia.",
+    a: "Yes. Discovery Sprints are mostly remote -- we can run them anywhere. For Phase 2 builds requiring on-site work, we travel. We've worked with businesses across Australia.",
   },
 ];
 
@@ -42,7 +42,7 @@ const phases = [
     title: "Discovery Sprint",
     price: "AUD $5K–$15K",
     meta: "1–2 weeks · Can stand alone",
-    body: "The Discovery Sprint is a scoped investigation into your specific business problem. We spend 1–2 weeks understanding your processes, your stack, and the opportunity. We come out with a specific system design, agreed success metrics, a go/no-go recommendation, and a fixed-price Phase 2 proposal if we both want to proceed. The plan is yours — no obligation to proceed with us.",
+    body: "The Discovery Sprint is a scoped investigation into your specific business problem. We spend 1–2 weeks understanding your processes, your stack, and the opportunity. We come out with a specific system design, agreed success metrics, a go/no-go recommendation, and a fixed-price Phase 2 proposal if we both want to proceed. The plan is yours -- no obligation to proceed with us.",
     priceNote: [
       "Lower ($5K): single process, clear brief, simple tech stack",
       "Upper ($15K): multiple processes, complex integrations, larger stakeholder group",
@@ -53,7 +53,7 @@ const phases = [
       "Agreed success metric",
       "Go/no-go recommendation with supporting rationale",
       "Fixed-price Phase 2 proposal (if applicable)",
-      "The plan is yours — no obligation to proceed with us",
+      "The plan is yours -- no obligation to proceed with us",
     ],
   },
   {
@@ -68,7 +68,7 @@ const phases = [
     ],
     deliverables: [
       "Production AI system running in your stack",
-      "Full IP transfer — code, documentation, model",
+      "Full IP transfer -- code, documentation, model",
       "Team training and adoption plan (standard)",
       "30-day post-launch support window",
       "Outcome measurement framework",
@@ -97,12 +97,12 @@ const reasons = [
   {
     num: "02",
     title: "It signals how we work",
-    body: "Agencies that hide pricing often have flexible pricing — meaning the price depends on what they think you'll pay. We don't work that way. Our prices reflect the scope and complexity of the work.",
+    body: "Agencies that hide pricing often have flexible pricing -- meaning the price depends on what they think you'll pay. We don't work that way. Our prices reflect the scope and complexity of the work.",
   },
   {
     num: "03",
     title: "It creates better conversations",
-    body: "When you know what things cost, we can have a real conversation about what's worth doing. The first call becomes about the problem — not a quote request.",
+    body: "When you know what things cost, we can have a real conversation about what's worth doing. The first call becomes about the problem -- not a quote request.",
   },
 ];
 
@@ -145,7 +145,7 @@ export default function Pricing() {
               }}
             >
               We publish our pricing because we think hiding it wastes everyone's time. If the
-              numbers don't fit your budget, we'd rather you know now. If they do — let's talk
+              numbers don't fit your budget, we'd rather you know now. If they do -- let's talk
               about what we'd build.
             </p>
           </div>

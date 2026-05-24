@@ -6,7 +6,7 @@
  *
  * NOTE: This file uses inline `style={}` objects rather than CSS classes,
  * matching the v5 demo. If the main site migrates to Tailwind, these can be
- * mechanically translated later — the design is the source of truth, not
+ * mechanically translated later -- the design is the source of truth, not
  * the implementation style.
  */
 

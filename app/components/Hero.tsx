@@ -74,7 +74,7 @@ export default function Hero() {
             marginTop: "2rem",
           }}
         >
-          We build AI systems scoped around your actual business problems —
+          We build AI systems scoped around your actual business problems --
           and we measure success by outcomes, not deliverables.
         </p>
 

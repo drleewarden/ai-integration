@@ -1,5 +1,5 @@
 /**
- * ResultClient — public result view.
+ * ResultClient -- public result view.
  *
  * Renders the score reveal, pillar breakdown, focus areas, and two CTAs:
  *   1. Book a 30-min call (primary)  → opens BookCallModal
@@ -42,24 +42,24 @@ import { BookCallModal } from './BookCallModal';
 // Until then, this small bank ensures the page renders meaningful copy.
 const INTERIM_RECOMMENDATIONS: Record<PillarKey, { low: string; high: string }> = {
   strategy: {
-    low: 'Your AI strategy is informal. The fastest gain: write a one-page point of view on AI for your business — three uses you\u2019ll invest in, one thing you won\u2019t use AI for, and the principle that guides the calls. Most teams skip this step and wonder why their AI work feels scattered.',
-    high: 'You have a clear AI direction. The next move is codifying it — get the strategy out of your head and into something your whole team can reference and contribute to.',
+    low: 'Your AI strategy is informal. The fastest gain: write a one-page point of view on AI for your business -- three uses you\u2019ll invest in, one thing you won\u2019t use AI for, and the principle that guides the calls. Most teams skip this step and wonder why their AI work feels scattered.',
+    high: 'You have a clear AI direction. The next move is codifying it -- get the strategy out of your head and into something your whole team can reference and contribute to.',
   },
   data: {
     low: 'Your AI tools are working with scattered, inconsistent inputs. Before adding new tools, build context packs for your three most common AI use cases. Better inputs = better outputs, without spending a dollar on new software.',
-    high: 'You have decent data foundations. Focus next on connecting your AI tools directly to your knowledge sources — CRM, docs, past work — so context is automatic rather than pasted in.',
+    high: 'You have decent data foundations. Focus next on connecting your AI tools directly to your knowledge sources -- CRM, docs, past work -- so context is automatic rather than pasted in.',
   },
   culture: {
-    low: 'AI capability is uneven across your team — some experimenting, some resistant, no shared baseline. Identify your two most curious team members and give them one hour each per week to lead the rest of the team. Capability spreads when it has a champion.',
-    high: 'Your team is open to AI. The opportunity now is structure — turning enthusiasm into reliable practice. Set up regular share-outs, document what works, and remove the lone-champion risk.',
+    low: 'AI capability is uneven across your team -- some experimenting, some resistant, no shared baseline. Identify your two most curious team members and give them one hour each per week to lead the rest of the team. Capability spreads when it has a champion.',
+    high: 'Your team is open to AI. The opportunity now is structure -- turning enthusiasm into reliable practice. Set up regular share-outs, document what works, and remove the lone-champion risk.',
   },
   technology: {
     low: 'You\u2019re using a few AI tools, mostly at surface level. Pick the one you use most and spend 90 minutes finding three features you don\u2019t currently use. Most teams use 10% of what their AI subscriptions can do.',
-    high: 'Strong technical foundation. The leverage now is integration — connecting your AI tools to each other and to your existing systems so AI work doesn\u2019t live in isolation.',
+    high: 'Strong technical foundation. The leverage now is integration -- connecting your AI tools to each other and to your existing systems so AI work doesn\u2019t live in isolation.',
   },
   governance: {
     low: 'You have no written AI policy. Businesses without one typically discover the gap during an incident, not before. Write a one-page policy this week: what data never goes into AI tools, who\u2019s accountable for AI-generated work, what to do when something feels wrong.',
-    high: 'You have governance in place. Mature it next by adding measurement — track AI use, review outputs periodically, and surface any drift before it becomes a problem.',
+    high: 'You have governance in place. Mature it next by adding measurement -- track AI use, review outputs periodically, and surface any drift before it becomes a problem.',
   },
 };
 
@@ -81,7 +81,7 @@ export default function ResultClient({
   const [emailBusy, setEmailBusy] = useState(false);
   const [copyClicked, setCopyClicked] = useState(false);
 
-  // Animated score reveal — same easing as v5
+  // Animated score reveal -- same easing as v5
   useEffect(() => {
     const target = result.overallScore;
     const duration = 1400;
@@ -99,7 +99,7 @@ export default function ResultClient({
 
   // Focus areas already come ordered lowest-first from the API; we render in
   // that order. We also derive a fully-sorted list for the pillar breakdown
-  // section but in v5's PILLAR_KEYS order (not score order) — design choice
+  // section but in v5's PILLAR_KEYS order (not score order) -- design choice
   // from v5: pillar order is consistent so readers can compare across runs.
   const focusAreaCards = useMemo(
     () =>
@@ -142,7 +142,7 @@ export default function ResultClient({
 
   const handleCopy = async () => {
     try {
-      const shareText = `Just did the Creative Milk AI Readiness assessment. ${result.overallScore}/100 — ${result.band.label}. Worth a read: ${resultUrl}`;
+      const shareText = `Just did the Creative Milk AI Readiness assessment. ${result.overallScore}/100 -- ${result.band.label}. Worth a read: ${resultUrl}`;
       await navigator.clipboard.writeText(shareText);
       setCopyClicked(true);
       setTimeout(() => setCopyClicked(false), 2000);
@@ -180,7 +180,7 @@ export default function ResultClient({
             }}
           >
             <div style={{ marginBottom: '24px' }}>
-              <Label>— Your AI Readiness Score</Label>
+              <Label>-- Your AI Readiness Score</Label>
             </div>
             <div style={{ display: 'inline-block', marginBottom: '24px' }}>
               <div
@@ -239,7 +239,7 @@ export default function ResultClient({
       {/* Pillar breakdown */}
       <div style={{ maxWidth: '960px', margin: '0 auto', padding: '80px 24px' }}>
         <div style={{ marginBottom: '48px' }}>
-          <Label color={C.slateMute}>— Pillar Breakdown</Label>
+          <Label color={C.slateMute}>-- Pillar Breakdown</Label>
           <h2
             style={{
               ...F.section,
@@ -325,7 +325,7 @@ export default function ResultClient({
 
         {/* Focus areas */}
         <div style={{ marginBottom: '80px' }}>
-          <Label color={C.slateMute}>— Where to focus</Label>
+          <Label color={C.slateMute}>-- Where to focus</Label>
           <h2
             style={{
               ...F.section,
@@ -395,7 +395,7 @@ export default function ResultClient({
         </div>
       </div>
 
-      {/* CTA — dark */}
+      {/* CTA -- dark */}
       <div style={{ position: 'relative', background: C.ink, color: C.cream }}>
         <HeroBackground />
         <div
@@ -408,7 +408,7 @@ export default function ResultClient({
           }}
         >
           <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-            <Label>— Next Step</Label>
+            <Label>-- Next Step</Label>
             <h2
               style={{
                 ...F.section,

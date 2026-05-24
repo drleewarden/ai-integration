@@ -115,6 +115,7 @@ When deploying to Vercel, add these environment variables in your Vercel project
 2. Add these variables for **Production**, **Preview**, and **Development**:
    - `NEXT_PUBLIC_SUPABASE_URL` = your Supabase project URL
    - `SUPABASE_SERVICE_ROLE_KEY` = your service role key
+   - `NEXT_PUBLIC_SITE_URL` = your production domain (e.g., `https://www.creative-milk.com.au`)
    - `RESEND_API_KEY` = your Resend API key (for contact form)
 
 ## Troubleshooting

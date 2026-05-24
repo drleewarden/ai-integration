@@ -7,7 +7,7 @@ import NewsletterForm from "../../components/NewsletterForm";
 export const metadata: Metadata = {
   title: "Insights | AI Implementation Articles & Case Studies | Creative Milk",
   description:
-    "Real observations on AI implementation from Creative Milk — why projects fail, what works, and what we've built. No hype. Published regularly.",
+    "Real observations on AI implementation from Creative Milk -- why projects fail, what works, and what we've built. No hype. Published regularly.",
 };
 
 const categoryColors: Record<string, string> = {
@@ -31,7 +31,7 @@ const categoryTextColors: Record<string, string> = {
 const articles = [
   {
     category: "AI Implementation",
-    title: "Why 80% of AI implementations fail — and the four things we do differently",
+    title: "Why 80% of AI implementations fail -- and the four things we do differently",
     description: "The failure modes are predictable. The fixes are specific. Here's what we've learned building AI systems across 50+ engagements.",
     readTime: "8 min read",
     date: "April 2026",
@@ -47,7 +47,7 @@ const articles = [
   },
   {
     category: "AI Implementation",
-    title: "What a Discovery Sprint actually looks like — week by week",
+    title: "What a Discovery Sprint actually looks like -- week by week",
     description: "We hear 'what do you actually do in two weeks?' more than any other question. Here's the honest answer.",
     readTime: "5 min read",
     date: "March 2026",
@@ -311,7 +311,7 @@ export default function Insights() {
                 margin: "0 auto 2.5rem",
               }}
             >
-              No weekly emails. No AI news roundups. Just new articles from Creative Milk when we publish them —
+              No weekly emails. No AI news roundups. Just new articles from Creative Milk when we publish them --
               roughly every two weeks.
             </p>
             <NewsletterForm />

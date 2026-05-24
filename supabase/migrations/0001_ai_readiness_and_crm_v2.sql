@@ -1,5 +1,5 @@
 -- ============================================================================
--- Creative Milk — AI Readiness + CRM schema (v2)
+-- Creative Milk -- AI Readiness + CRM schema (v2)
 -- Migration: 0001_ai_readiness_and_crm_v2.sql
 -- ============================================================================
 --
@@ -16,8 +16,8 @@
 --          stage_changed_at
 --   3. Creates new `readiness_assessments` table
 --   4. Adds contact_id + assessment_id columns to existing `activities` and
---      `documents` tables (non-breaking — both nullable)
---   5. Adds `type` column to `documents` (non-breaking — nullable)
+--      `documents` tables (non-breaking -- both nullable)
+--   5. Adds `type` column to `documents` (non-breaking -- nullable)
 --   6. Creates private storage bucket `playbooks` with RLS policies
 --   7. Adds RLS policies on new tables matching existing CRM idiom:
 --        - "Team can …"   → any signed-in user
@@ -32,7 +32,7 @@
 --     log first (insert a 'stage_changed' activity, then update opportunities).
 --     This isn't enforced by the DB; it's a convention.
 --   - The opportunities.title field stays as the display-name convention. For
---     AI Readiness leads we'll auto-generate "{Company} — {Band} ({Score}/100)".
+--     AI Readiness leads we'll auto-generate "{Company} -- {Band} ({Score}/100)".
 --
 -- BACK-OUT PLAN (if you need to undo this migration):
 --   See the bottom of this file. Strictly reverse order. Test before running.
@@ -126,7 +126,7 @@ alter table public.opportunities
 -- check constraint. We add one here using the canonical set of stages.
 --
 -- We drop the constraint first if it already exists so the migration is
--- idempotent — the constraint name is stable across runs.
+-- idempotent -- the constraint name is stable across runs.
 alter table public.opportunities drop constraint if exists opportunities_stage_check;
 alter table public.opportunities add constraint opportunities_stage_check
   check (stage in ('new_lead','qualified','proposal_sent','discovery_sprint','won','lost'));
@@ -381,7 +381,7 @@ create policy "Team can delete playbooks"
 
 
 -- ============================================================================
--- BACK-OUT (DO NOT RUN — for reference if you ever need to undo this)
+-- BACK-OUT (DO NOT RUN -- for reference if you ever need to undo this)
 -- ============================================================================
 -- Reverse order:
 --   drop policy "Team can view playbooks"     on storage.objects;

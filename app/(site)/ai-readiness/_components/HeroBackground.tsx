@@ -3,7 +3,7 @@
  *
  * In production: imports the WebGLBackground component from the main site's
  * shared components directory. The path below assumes the file lives at
- * `@/components/WebGLBackground` — adjust if your repo organises it
+ * `@/components/WebGLBackground` -- adjust if your repo organises it
  * differently.
  *
  * Falls back to the SVG approximation from the v5 demo if WebGL is
@@ -18,7 +18,7 @@ import React, { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import { C } from './ui';
 
-// Dynamically import to avoid SSR — WebGL needs the browser.
+// Dynamically import to avoid SSR -- WebGL needs the browser.
 //
 // IMPORTANT: This path assumes `WebGLBackground.tsx` already lives at
 // `components/WebGLBackground.tsx` in the main site repo (as confirmed at the

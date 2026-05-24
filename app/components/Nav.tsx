@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: "What We Build", href: "/what-we-build" },
   { label: "AI Readiness", href: "/ai-readiness" },
   { label: "Work", href: "/work" },
+  { label: "Clients", href: "/clients" },
   { label: "Process", href: "/process" },
   { label: "Pricing", href: "/pricing" },
   { label: "Insights", href: "/insights" },
@@ -65,7 +66,7 @@ export default function Nav() {
       >
         <a
           href="/"
-          aria-label="Creative Milk — home"
+          aria-label="Creative Milk -- home"
           style={{ display: "inline-flex" }}
         >
           <CMWordmark variant="cream-on-ink" markSize={28} />

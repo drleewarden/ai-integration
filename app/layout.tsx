@@ -24,12 +24,12 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Creative Milk — Intelligence that actually works",
+  title: "Creative Milk -- Intelligence that actually works",
   description:
-    "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training — measured by outcomes, not deliverables.",
+    "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training -- measured by outcomes, not deliverables.",
   metadataBase: new URL("https://creativemilk.ai"),
   openGraph: {
-    title: "Creative Milk — Intelligence that actually works",
+    title: "Creative Milk -- Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
     type: "website",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Creative Milk — Intelligence that actually works",
+    title: "Creative Milk -- Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
   },

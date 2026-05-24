@@ -1,9 +1,9 @@
 /**
- * Creative Milk — AI Readiness Assessment types
+ * Creative Milk -- AI Readiness Assessment types
  *
  * These types are the contract between the assessment UI, the scoring engine,
  * the playbook composition engine, and persistence (Supabase). Changing any of
- * these shapes ripples through the whole tool — change deliberately.
+ * these shapes ripples through the whole tool -- change deliberately.
  */
 
 // ── Pillars ──────────────────────────────────────────────────────────────────
@@ -85,7 +85,7 @@ export type PillarTiers = Record<PillarKey, PillarTier>;
  * Within a pillar, which of its 3 questions scored lowest. Drives sub-selection
  * of focus-area content (the "what you're getting wrong" variants).
  *
- * 'composite' means multiple questions tied at the lowest score — the reader
+ * 'composite' means multiple questions tied at the lowest score -- the reader
  * is across-the-board weak on this pillar, gets the composite variant.
  *
  * ─── v1.1 EXPANSION PATH ────────────────────────────────────────────────
@@ -103,7 +103,7 @@ export type PillarTiers = Record<PillarKey, PillarTier>;
  *        - tiedAtMin === 1                    → existing single-pattern logic
  *   3. Write pair-variant content for the 2–3 most commonly observed pairs
  *      per pillar (driven by real reader data once the tool has been live
- *      long enough to surface patterns — likely 50+ completions).
+ *      long enough to surface patterns -- likely 50+ completions).
  *   4. Update the composer's content lookup to handle the new keys with
  *      graceful fallback to 'composite' when a specific pair variant
  *      hasn't been written yet. This means we can ship pair variants

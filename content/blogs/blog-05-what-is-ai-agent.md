@@ -1,4 +1,4 @@
-# Blog Article 05: What Is an AI Agent — And Do I Actually Need One?
+# Blog Article 05: What Is an AI Agent -- And Do I Actually Need One?
 
 **Category:** AI Explainers
 **Cluster:** Plain-English explainers
@@ -18,9 +18,9 @@ Here's the honest version: an AI agent is a useful technology for specific situa
 
 ## What an AI agent actually is
 
-An AI agent is a system that can take actions autonomously to achieve a goal — not just generate text or make a prediction, but actually do things.
+An AI agent is a system that can take actions autonomously to achieve a goal -- not just generate text or make a prediction, but actually do things.
 
-The distinction matters. A basic AI system might read a customer email and draft a response for a human to review. An AI agent would read the email, look up the customer's account, check their order history, draft a response, and send it — without a human in the loop.
+The distinction matters. A basic AI system might read a customer email and draft a response for a human to review. An AI agent would read the email, look up the customer's account, check their order history, draft a response, and send it -- without a human in the loop.
 
 The defining characteristic of an agent is **autonomy over actions** in service of a goal. It can:
 - Decide what information to look up
@@ -30,7 +30,7 @@ The defining characteristic of an agent is **autonomy over actions** in service 
 
 ---
 
-## When you need an agent — and when you don't
+## When you need an agent -- and when you don't
 
 You probably need an agent if:
 - The task involves multiple systems and multiple steps with conditional logic
@@ -62,7 +62,7 @@ The sales pitch for agents tends to be that they can do everything. The honest e
 
 **Complex contract negotiation:** Too many judgement calls. The agent can help with document review and extraction, but the negotiation decisions require human expertise. A simpler AI tool (contract analysis, clause flagging) serves the use case better.
 
-**Handling customer complaints about sensitive issues:** Autonomous action on a frustrated customer complaint is a brand risk, not an efficiency gain. AI can assist the human — suggest responses, pull account context — but the agent should hand off, not handle.
+**Handling customer complaints about sensitive issues:** Autonomous action on a frustrated customer complaint is a brand risk, not an efficiency gain. AI can assist the human -- suggest responses, pull account context -- but the agent should hand off, not handle.
 
 **Anything where being wrong has serious consequences:** An agent that can autonomously move money, delete records, or take regulatory action needs very careful scoping. For high-consequence actions, human-in-the-loop checkpoints are worth the efficiency cost.
 

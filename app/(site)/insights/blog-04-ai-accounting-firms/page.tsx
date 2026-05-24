@@ -5,7 +5,7 @@ import Footer from "../../../components/Footer";
 
 export const metadata: Metadata = {
   title: "AI for Accounting Firms: 6 Processes You Can Automate in Under 8 Weeks | Creative Milk Insights",
-  description: "Six specific accounting processes that Australian firms are automating with AI right now — with realistic timelines, costs, and outcomes. A practical guide from Creative Milk.",
+  description: "Six specific accounting processes that Australian firms are automating with AI right now -- with realistic timelines, costs, and outcomes. A practical guide from Creative Milk.",
 };
 
 export default function BlogPost() {

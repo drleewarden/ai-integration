@@ -22,7 +22,7 @@ const nextSteps = [
   {
     step: "2",
     label: "We assess the fit (within 24 hours)",
-    body: "We'll have an initial view on whether we can help and what we'd propose. If we're not the right fit, we'll tell you that too — and point you toward someone who might be.",
+    body: "We'll have an initial view on whether we can help and what we'd propose. If we're not the right fit, we'll tell you that too -- and point you toward someone who might be.",
   },
   {
     step: "3",
@@ -102,7 +102,7 @@ export default function Contact() {
       <a href="#main" className="skip-link">Skip to content</a>
       <Nav />
       <main id="main">
-        {/* Hero — light background */}
+        {/* Hero -- light background */}
         <section
           className="section-tight"
           style={{
@@ -135,7 +135,7 @@ export default function Contact() {
           </div>
         </section>
 
-        {/* Main content — dark background for form */}
+        {/* Main content -- dark background for form */}
         <section
           className="section"
           style={{ backgroundColor: "var(--midnight-ink)" }}
@@ -173,7 +173,7 @@ export default function Contact() {
                   <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                     {[
                       "No NDAs in the first call",
-                      "No vague roadmaps — plain English next steps",
+                      "No vague roadmaps -- plain English next steps",
                       "Response within 24 hours (business days)",
                       "We'll tell you honestly if we're not the right fit",
                     ].map((item, i) => (
@@ -187,7 +187,7 @@ export default function Contact() {
                           marginBottom: "0.65rem",
                         }}
                       >
-                        <span style={{ color: "var(--liquid-gold)", fontFamily: "var(--font-mono)" }}>—</span>
+                        <span style={{ color: "var(--liquid-gold)", fontFamily: "var(--font-mono)" }}>--</span>
                         {item}
                       </li>
                     ))}
@@ -286,7 +286,7 @@ export default function Contact() {
                       style={{ color: "rgba(245,240,232,0.65)", marginBottom: "2rem" }}
                     >
                       Thanks for reaching out. Craig and Darryn will read this today and come back to you
-                      with an honest assessment. In the meantime —
+                      with an honest assessment. In the meantime --
                     </p>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                       <a href="/work" className="cta-link">

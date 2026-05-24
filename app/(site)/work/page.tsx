@@ -13,27 +13,27 @@ const caseStudies = [
   {
     eyebrow: "CASE STUDY 01 · CUSTOMER SUPPORT · 6 WEEKS",
     metric: "−60%",
-    headline: "60% reduction in support ticket volume — in the first month after launch.",
+    headline: "60% reduction in support ticket volume -- in the first month after launch.",
     brief: {
       Industry: "SaaS / Customer Support Platform",
       "Company size": "~120 staff, 3-person support team",
       Engagement: "Discovery Sprint + Build & Integrate",
       Timeline: "6 weeks build",
       "Success metric agreed": "Reduce tier-1 support volume by 40% within 60 days of launch",
-      Outcome: "60% reduction in tier-1 volume — Month 1",
+      Outcome: "60% reduction in tier-1 volume -- Month 1",
     },
     problem:
-      "The support team was handling approximately 800 tickets per week. Roughly 70% were tier-1 queries — password resets, billing questions, feature how-tos — that required no human judgement. The team was buried in work that didn't need them. Response times were blowing out. They'd tried a basic chatbot 18 months earlier. The team hated it because it gave wrong answers and created more escalations than it resolved.",
+      "The support team was handling approximately 800 tickets per week. Roughly 70% were tier-1 queries -- password resets, billing questions, feature how-tos -- that required no human judgement. The team was buried in work that didn't need them. Response times were blowing out. They'd tried a basic chatbot 18 months earlier. The team hated it because it gave wrong answers and created more escalations than it resolved.",
     built:
       "An intelligent triage and resolution layer that sits between the customer and the support queue. The system classifies incoming tickets by type and intent in real time and resolves tier-1 queries directly using a knowledge base we built and maintain. Queries requiring human judgement are passed to the team with a suggested response and relevant context pulled from the customer's account history.",
     integrations: "Zendesk · Stripe (billing data) · Product knowledge base · Account database",
     results: [
       "Tier-1 ticket volume: down 60% in Month 1 (target was 40%)",
       "Average response time on remaining human-handled tickets: down 34%",
-      "Support team NPS: improved — staff reported higher job satisfaction",
+      "Support team NPS: improved -- staff reported higher job satisfaction",
     ],
     different:
-      "The knowledge base we built from scratch took longer than anticipated because the client's existing documentation was fragmented across four systems. We now scope a documentation consolidation phase before any knowledge-base-dependent build — it's 3–5 days of work that saves 2–3 weeks later.",
+      "The knowledge base we built from scratch took longer than anticipated because the client's existing documentation was fragmented across four systems. We now scope a documentation consolidation phase before any knowledge-base-dependent build -- it's 3–5 days of work that saves 2–3 weeks later.",
   },
   {
     eyebrow: "CASE STUDY 02 · E-COMMERCE · 7 WEEKS",
@@ -45,21 +45,21 @@ const caseStudies = [
       Engagement: "Discovery Sprint + Build & Integrate",
       Timeline: "7 weeks build",
       "Success metric agreed": "Increase conversion rate by 15% within 90 days",
-      Outcome: "+35% conversion rate — measured at 90 days",
+      Outcome: "+35% conversion rate -- measured at 90 days",
     },
     problem:
-      "The business was spending heavily on paid acquisition — Google and Meta — but conversion rate had plateaued at around 2.1% for 18 months. The site served the same product grid to every visitor regardless of their browse history, purchase patterns, or intent signals. Return customers — the most valuable segment — were getting no personalisation signal at all.",
+      "The business was spending heavily on paid acquisition -- Google and Meta -- but conversion rate had plateaued at around 2.1% for 18 months. The site served the same product grid to every visitor regardless of their browse history, purchase patterns, or intent signals. Return customers -- the most valuable segment -- were getting no personalisation signal at all.",
     built:
       "A personalised recommendations engine that surfaces product content based on individual customer behaviour, purchase history, and real-time session signals. The system runs three recommendation layers: homepage (based on return-visit behaviour), product page (complementary and frequently-bought-together), and post-purchase (replenishment and adjacent category suggestions served via email trigger).",
     integrations: "Shopify · Klaviyo · Google Analytics 4 · Custom product taxonomy",
     results: [
-      "Conversion rate: from 2.1% to 2.84% — +35% lift (target was 15%)",
+      "Conversion rate: from 2.1% to 2.84% -- +35% lift (target was 15%)",
       "Revenue attributed to recommendations engine in first 90 days: $280K incremental",
       "Email recommendation click-through rate: 4.1× higher than previous static emails",
       "Return customer purchase rate: up 22%",
     ],
     different:
-      "We built the product taxonomy ourselves because the client's existing tagging was inconsistent. In retrospect, we should have run a 2-week taxonomy sprint with the client's merchandising team before building — their product knowledge would have improved model accuracy in the first 30 days.",
+      "We built the product taxonomy ourselves because the client's existing tagging was inconsistent. In retrospect, we should have run a 2-week taxonomy sprint with the client's merchandising team before building -- their product knowledge would have improved model accuracy in the first 30 days.",
   },
   {
     eyebrow: "CASE STUDY 03 · SAAS / ANALYTICS · 5 WEEKS",
@@ -71,12 +71,12 @@ const caseStudies = [
       Engagement: "Discovery Sprint + Build & Integrate",
       Timeline: "5 weeks build",
       "Success metric agreed": "Reduce time spent on weekly reporting by 70%",
-      Outcome: "Reporting time reduced by ~85% — insights delivered 10× faster",
+      Outcome: "Reporting time reduced by ~85% -- insights delivered 10× faster",
     },
     problem:
-      "The analytics team spent roughly 60% of their working week generating standard reports — weekly performance dashboards for internal stakeholders and client-facing reports for 40+ clients. The reports were valuable. The manual process of pulling, formatting, and distributing them was not. The team had the capability to do genuine analytical work. The reporting workload left almost no time for it.",
+      "The analytics team spent roughly 60% of their working week generating standard reports -- weekly performance dashboards for internal stakeholders and client-facing reports for 40+ clients. The reports were valuable. The manual process of pulling, formatting, and distributing them was not. The team had the capability to do genuine analytical work. The reporting workload left almost no time for it.",
     built:
-      "An automated intelligence layer that generates, formats, and distributes standard reports with no human involvement — and surfaces anomalies and insights that previously required an analyst to spot. The system pulls from the client's data warehouse on a schedule, generates plain-English summaries of performance trends, flags statistically significant changes, and distributes formatted reports to the right stakeholder via email and Slack.",
+      "An automated intelligence layer that generates, formats, and distributes standard reports with no human involvement -- and surfaces anomalies and insights that previously required an analyst to spot. The system pulls from the client's data warehouse on a schedule, generates plain-English summaries of performance trends, flags statistically significant changes, and distributes formatted reports to the right stakeholder via email and Slack.",
     integrations: "BigQuery · Looker Studio · Slack · Sendgrid · Client's proprietary data pipeline",
     results: [
       "Time spent on standard reporting: down ~85% (target was 70%)",
@@ -125,7 +125,7 @@ export default function Work() {
               }}
             >
               Every project starts with a measurable target. Every case study below reports against that target.
-              No "we improved efficiency" — just the number we agreed, and whether we hit it.
+              No "we improved efficiency" -- just the number we agreed, and whether we hit it.
             </p>
           </div>
         </section>
@@ -347,7 +347,7 @@ export default function Work() {
               style={{ color: "rgba(15,21,38,0.65)", marginBottom: "1.5rem" }}
             >
               We don't publish case studies until we've measured the outcome against the metric we agreed in Phase 1.
-              That's why this page grows slowly — and why every number on it is real.
+              That's why this page grows slowly -- and why every number on it is real.
             </p>
             <a href="/contact" className="cta-link">
               Curious whether we've solved a problem like yours? Ask us directly <ArrowRight size={12} />

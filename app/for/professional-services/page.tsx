@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 
 export const metadata: Metadata = {
   title:
-    "AI for Accounting, Legal, Consulting & Construction — Creative Milk",
+    "AI for Accounting, Legal, Consulting & Construction -- Creative Milk",
   description:
     "AI integration for Australian professional services and construction firms. Reclaim ten-plus hours a week of billable capacity. Fixed-price 30-Day Pilot, measured by outcome.",
 };
@@ -19,12 +19,12 @@ const PAINS = [
   {
     icon: <FileText size={22} strokeWidth={1.4} />,
     title: "Document intake is the bottleneck",
-    body: "Every new matter, engagement, or job starts with the same drag — extracting numbers from a PDF, sorting attachments, getting data into the system of record. It's where projects stall.",
+    body: "Every new matter, engagement, or job starts with the same drag -- extracting numbers from a PDF, sorting attachments, getting data into the system of record. It's where projects stall.",
   },
   {
     icon: <ShieldCheck size={22} strokeWidth={1.4} />,
     title: "Compliance can't be a side hustle",
-    body: "ATO, ASIC, NCC, state-based licensing — the cost of a single miss outweighs a year of fees. But the people doing it well are the ones you'd rather have on client work.",
+    body: "ATO, ASIC, NCC, state-based licensing -- the cost of a single miss outweighs a year of fees. But the people doing it well are the ones you'd rather have on client work.",
   },
 ];
 
@@ -34,7 +34,7 @@ const USE_CASES = [
     icon: <FileText size={20} strokeWidth={1.4} />,
     title: "Document intake & extraction",
     sectors: "Accounting · Legal · Construction",
-    body: "AI extracts structured data from contracts, invoices, trust statements, BOQs, RFIs, and engagement letters — straight into Xero, MYOB, your practice management system, or your project ledger. The 40-minute manual entry becomes 90 seconds with a human in the loop.",
+    body: "AI extracts structured data from contracts, invoices, trust statements, BOQs, RFIs, and engagement letters -- straight into Xero, MYOB, your practice management system, or your project ledger. The 40-minute manual entry becomes 90 seconds with a human in the loop.",
     win: "20–35 hours per week reclaimed across a 10-person firm",
   },
   {
@@ -42,7 +42,7 @@ const USE_CASES = [
     icon: <ClipboardList size={20} strokeWidth={1.4} />,
     title: "Client & matter onboarding",
     sectors: "Legal · Consulting · Accounting",
-    body: "AI runs the intake conversation, pulls the documents, verifies the IDs, drafts the engagement letter against your templates, and stages it for partner sign-off — before anyone on your team has touched the file.",
+    body: "AI runs the intake conversation, pulls the documents, verifies the IDs, drafts the engagement letter against your templates, and stages it for partner sign-off -- before anyone on your team has touched the file.",
     win: "Onboarding time cut from 4 days to under 24 hours",
   },
   {
@@ -58,7 +58,7 @@ const USE_CASES = [
     icon: <Workflow size={20} strokeWidth={1.4} />,
     title: "Reporting & WIP visibility",
     sectors: "Consulting · Construction · Accounting",
-    body: "Weekly client reports, WIP summaries, variance reports, project status — generated from the data already in your stack. The partner gets a draft Monday morning. The client gets a report that doesn't read like every other consultancy's.",
+    body: "Weekly client reports, WIP summaries, variance reports, project status -- generated from the data already in your stack. The partner gets a draft Monday morning. The client gets a report that doesn't read like every other consultancy's.",
     win: "Half a day per partner per week back on advisory work",
   },
   {
@@ -67,14 +67,14 @@ const USE_CASES = [
     title: "Time capture from communications",
     sectors: "Legal · Consulting · Accounting",
     body: "AI watches your emails, calls, and calendar (with consent), drafts the time entries against the right matter, and stages them for your one-click approval at the end of the day. The leaked hours come back as recovered revenue.",
-    win: "8–15% increase in captured billable hours — pure margin",
+    win: "8–15% increase in captured billable hours -- pure margin",
   },
   {
     number: "06",
     icon: <ShieldCheck size={20} strokeWidth={1.4} />,
     title: "Compliance & quality assurance",
     sectors: "Legal · Construction · Accounting",
-    body: "AI reads every outgoing document against your compliance rules, your engagement terms, and your prior precedent — flagging anything that doesn't match before it goes to the client. A second pair of eyes that doesn't sleep.",
+    body: "AI reads every outgoing document against your compliance rules, your engagement terms, and your prior precedent -- flagging anything that doesn't match before it goes to the client. A second pair of eyes that doesn't sleep.",
     win: "Catch the costly errors at draft, not at audit",
   },
 ];
@@ -148,7 +148,7 @@ export default function ProfessionalServicesPage() {
               }}
             >
               We build AI systems for Australian accounting, legal, consulting,
-              and construction firms — to take the admin off your team and put
+              and construction firms -- to take the admin off your team and put
               the hours back into client work. Fixed-price pilot. Measurable
               outcomes. No black boxes.
             </p>
@@ -255,7 +255,7 @@ export default function ProfessionalServicesPage() {
               >
                 Every professional services and construction firm we&apos;ve
                 worked with is bleeding margin in the same three places. The
-                fix is rarely more people — it&apos;s a system.
+                fix is rarely more people -- it&apos;s a system.
               </p>
             </div>
 
@@ -529,7 +529,7 @@ export default function ProfessionalServicesPage() {
                   We&apos;ll bring the privacy, security, and audit-trail
                   documentation to the discovery call. If your professional
                   body or insurer needs a sign-off, we&apos;ve done the work
-                  before — and we&apos;ll do it again.
+                  before -- and we&apos;ll do it again.
                 </p>
               </div>
             </div>

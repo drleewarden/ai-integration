@@ -63,7 +63,7 @@ describe("Email utility functions", () => {
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0F1526;border:1px solid rgba(245,240,232,0.08);">
 
         <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(245,240,232,0.08);">
-          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">— New enquiry</div>
+          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">-- New enquiry</div>
           <div style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#F5F0E8;letter-spacing:-0.01em;line-height:1.05;">
             Creative <em style="color:#C9A84C;font-style:italic;">Milk</em>
           </div>

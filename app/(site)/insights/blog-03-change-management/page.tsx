@@ -4,7 +4,7 @@ import Nav from "../../../components/Nav";
 import Footer from "../../../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Your AI System Shipped. Now the Real Work Begins — How to Get Your Team to Actually Use It | Creative Milk Insights",
+  title: "Your AI System Shipped. Now the Real Work Begins -- How to Get Your Team to Actually Use It | Creative Milk Insights",
   description: "Most AI projects don't fail because the technology doesn't work. They fail because the team doesn't adopt it. Here's the adoption framework we use across every Creative Milk engagement.",
 };
 

@@ -107,7 +107,7 @@ export default function Footer() {
             >
               contact form
             </a>{" "}
-            — we&apos;ll respond within 24 hours.
+            -- we&apos;ll respond within 24 hours.
           </p>
         </div>
       </div>

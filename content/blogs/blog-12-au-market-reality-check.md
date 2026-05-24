@@ -1,12 +1,12 @@
-# Blog Article 12: The State of AI Adoption in Australian Mid-Market Businesses — 2026 Reality Check
+# Blog Article 12: The State of AI Adoption in Australian Mid-Market Businesses -- 2026 Reality Check
 
 **Category:** Market & Strategy
 **Cluster:** AU market context
 **Target keyword:** AI adoption Australia business 2026
 **Secondary keywords:** AI adoption statistics Australia, Australian business AI, mid-market AI Australia
 **Estimated read time:** 6 min
-**Status:** Priority 3 — strong LinkedIn/PR shareability
-**Meta description:** 64–80% of Australian businesses use some form of AI. Less than 5% have integrated it strategically. What's actually happening — and what it means for mid-market businesses in 2026.
+**Status:** Priority 3 -- strong LinkedIn/PR shareability
+**Meta description:** 64–80% of Australian businesses use some form of AI. Less than 5% have integrated it strategically. What's actually happening -- and what it means for mid-market businesses in 2026.
 
 ---
 
@@ -16,9 +16,9 @@ These numbers are real. They're also misleading if you don't read them carefully
 
 The businesses represented in "64–80% use AI" include businesses that use Grammarly, that have a Siri shortcut on an iPhone, and that have an auto-reply set up on their Gmail. The AI economy headlines are driven by ChatGPT subscriptions, Microsoft Copilot licences, and productivity tools that employees use independently, often without their employer's knowledge.
 
-The number that matters is different: approximately 5% of Australian businesses have achieved strategic AI integration — meaning AI is integrated into their core processes, measured for impact, and actually changing their business outcomes.
+The number that matters is different: approximately 5% of Australian businesses have achieved strategic AI integration -- meaning AI is integrated into their core processes, measured for impact, and actually changing their business outcomes.
 
-That gap — between adoption rhetoric and implementation reality — is where the real story is.
+That gap -- between adoption rhetoric and implementation reality -- is where the real story is.
 
 ---
 
@@ -28,13 +28,13 @@ That gap — between adoption rhetoric and implementation reality — is where t
 There's a meaningful difference between a business that has a ChatGPT team subscription and a business that has rebuilt its customer support workflow around an AI system. The former is a tool purchase. The latter is an integration. Most of the 64–80% are tool purchasers. Almost none of the 64–80% have done the integration work.
 
 **The consultant-to-build gap:**
-The Australian AI consulting market has grown rapidly but unevenly. There are more AI strategists than AI builders. Businesses that have invested in AI strategy — sometimes significant investment — have often found themselves with a roadmap and no implementation partner capable of executing it. The strategy gets shelved. The AI adoption metric goes up (they have an AI strategy!), the outcome doesn't change.
+The Australian AI consulting market has grown rapidly but unevenly. There are more AI strategists than AI builders. Businesses that have invested in AI strategy -- sometimes significant investment -- have often found themselves with a roadmap and no implementation partner capable of executing it. The strategy gets shelved. The AI adoption metric goes up (they have an AI strategy!), the outcome doesn't change.
 
 **Workforce readiness:**
 67–80% of mid-market firms cite workforce readiness as the primary barrier to AI ROI. The technology isn't the bottleneck. Getting teams to change how they work is the bottleneck. Most AI implementations don't account for this adequately.
 
 **The SMB infrastructure gap:**
-Many of Australia's mid-market businesses are running on legacy systems — older ERP platforms, on-premise software, databases that weren't designed for API integration. Connecting AI to these systems is technically possible but requires significantly more integration work than AI vendors typically scope in their sales presentations.
+Many of Australia's mid-market businesses are running on legacy systems -- older ERP platforms, on-premise software, databases that weren't designed for API integration. Connecting AI to these systems is technically possible but requires significantly more integration work than AI vendors typically scope in their sales presentations.
 
 ---
 
@@ -54,14 +54,14 @@ The businesses that have achieved strategic integration share some consistent pa
 
 ## What this means if you're a mid-market business in 2026
 
-The good news: the implementation gap means there's still a meaningful window. If your competitors are in the 95% who haven't achieved integration, getting to the 5% in the next 12–18 months is a material competitive advantage — not a marginal one.
+The good news: the implementation gap means there's still a meaningful window. If your competitors are in the 95% who haven't achieved integration, getting to the 5% in the next 12–18 months is a material competitive advantage -- not a marginal one.
 
 The sobering news: the window is not indefinite. The AU market is growing at 36–51% per year. The quality of available implementation partners is improving. In 12–18 months, the businesses that move now will have compounding AI systems that are 12–18 months ahead of where they started. That lead is hard to close.
 
 **The pragmatic path for a mid-market business:**
 
-1. Define the specific problem you want AI to solve. Not "use AI more" — a specific process, a specific metric.
-2. Assess what type of AI work it requires (automation vs. implementation — these are different markets).
+1. Define the specific problem you want AI to solve. Not "use AI more" -- a specific process, a specific metric.
+2. Assess what type of AI work it requires (automation vs. implementation -- these are different markets).
 3. Vet your partner for delivery capability, not just strategy capability. Ask for production systems, not case studies.
 4. Run a Discovery Sprint before committing to a build. Lock the scope, agree the metric, and know what you're paying before the build starts.
 5. Plan for adoption from day one. The system is half the work. The people who will use it are the other half.

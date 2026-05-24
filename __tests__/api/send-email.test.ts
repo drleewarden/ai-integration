@@ -76,7 +76,7 @@ describe("/api/send-email", () => {
         from: "test@example.com",
         to: "recipient@example.com",
         replyTo: "john@example.com",
-        subject: "New project enquiry — John Doe",
+        subject: "New project enquiry -- John Doe",
         html: expect.stringContaining("John Doe"),
       });
     });
@@ -114,7 +114,7 @@ describe("/api/send-email", () => {
         from: "Creative Milk <onboarding@resend.dev>",
         to: "drleewarden@gmail.com",
         replyTo: "john@example.com",
-        subject: "New project enquiry — John Doe",
+        subject: "New project enquiry -- John Doe",
         html: expect.any(String),
       });
 
@@ -175,7 +175,7 @@ describe("/api/send-email", () => {
 
       expect(response.status).toBe(400);
       expect(data.error).toBe(
-        "Message is too long — please keep it under 5,000 characters.",
+        "Message is too long -- please keep it under 5,000 characters.",
       );
     });
 
@@ -196,7 +196,7 @@ describe("/api/send-email", () => {
         from: expect.any(String),
         to: expect.any(String),
         replyTo: "john@example.com",
-        subject: "New project enquiry — John Doe",
+        subject: "New project enquiry -- John Doe",
         html: expect.stringContaining("John Doe"),
       });
     });

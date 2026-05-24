@@ -10,21 +10,21 @@ const STEPS: Step[] = [
     number: "01",
     title: "Discovery & Strategy",
     description:
-      "We map your business objectives, technical landscape, and AI readiness. The output is a scoped plan with measurable targets — not a vague roadmap.",
-    duration: "1–2 weeks",
+      "We map your business objectives, technical landscape, and AI readiness. The output is a scoped plan with measurable targets -- not a vague roadmap.",
+    duration: "1-2 weeks",
   },
   {
     number: "02",
     title: "Build & Integrate",
     description:
       "Human-architected, agent-accelerated. We build to your stack and your team's capabilities, not ours.",
-    duration: "4–6 weeks",
+    duration: "4-6 weeks",
   },
   {
     number: "03",
     title: "Optimise & Scale",
     description:
-      "We monitor, refine, and scale performance — and we stay until the outcomes are real, not just live.",
+      "We monitor, refine, and scale performance -- and we stay until the outcomes are real, not just live.",
     duration: "Ongoing",
   },
 ];
@@ -49,7 +49,7 @@ export default function Process() {
         >
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              04 — Process
+              04 -- Process
             </span>
             <h2
               className="h-section"
@@ -59,7 +59,7 @@ export default function Process() {
                 maxWidth: "16ch",
               }}
             >
-              How we work —
+              How we work --
               <br />
               <em
                 style={{
@@ -76,7 +76,7 @@ export default function Process() {
             style={{ maxWidth: "44ch", justifySelf: "end" }}
           >
             Three phases, predictable timelines. We tell you up front what we
-            can ship in 6–8 weeks, and we don&apos;t move the goalposts.
+            can ship in 6-8 weeks, and we don&apos;t move the goalposts.
           </p>
         </div>
 

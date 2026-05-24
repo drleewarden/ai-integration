@@ -1,5 +1,5 @@
 /**
- * /ai-readiness — server component shell.
+ * /ai-readiness -- server component shell.
  *
  * Sets page metadata, OpenGraph defaults, and renders the client assessment
  * flow. The flow itself is interactive so lives in AssessmentClient.tsx.

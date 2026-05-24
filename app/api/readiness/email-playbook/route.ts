@@ -2,7 +2,7 @@
  * POST /api/readiness/email-playbook
  *
  * Captures the prospect's email after they've seen their result. This is the
- * first lead-conversion step — turning an anonymous assessment into a named
+ * first lead-conversion step -- turning an anonymous assessment into a named
  * contact + new_lead opportunity in the CRM.
  *
  * Flow:
@@ -17,7 +17,7 @@
  *
  * For now we ack the request and stamp playbook_generated_at = now() as a
  * placeholder. The PDF generation + email send are stubs that fire on
- * playbook_sent_at being NULL — a background job (or the next API call after
+ * playbook_sent_at being NULL -- a background job (or the next API call after
  * Batch 4 lands) will pick these up and complete them.
  *
  * Request body:
@@ -41,7 +41,7 @@ import { bandByKey } from '@/lib/readiness/bands';
 import type { BandKey } from '@/lib/readiness/types';
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-// RFC-5322-ish "good enough" email regex — server-side defence; real validity
+// RFC-5322-ish "good enough" email regex -- server-side defence; real validity
 // is proven by deliverability.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -181,10 +181,10 @@ export async function POST(req: NextRequest) {
 
   if (!opportunityId) {
     const band = bandByKey(assessment.band as BandKey);
-    // Title convention: "Lead — {Band} ({Score}/100)" when we don't yet know
+    // Title convention: "Lead -- {Band} ({Score}/100)" when we don't yet know
     // the company name. Once the contact form fills in company, we can
-    // optionally rewrite this title — for now keep it simple and stable.
-    const title = `Lead — ${band.label} (${assessment.overall_score}/100)`;
+    // optionally rewrite this title -- for now keep it simple and stable.
+    const title = `Lead -- ${band.label} (${assessment.overall_score}/100)`;
 
     const { data: newOpp, error: oInsertErr } = await supabase
       .from('opportunities')
@@ -215,8 +215,8 @@ export async function POST(req: NextRequest) {
       // Placeholder timestamps. Real values get set by the PDF generation
       // job in Batch 4 once the React-PDF template is wired up.
       playbook_generated_at: new Date().toISOString(),
-      // playbook_sent_at intentionally left NULL — set by the email-send job
-      // playbook_storage_path  intentionally left NULL — set by the PDF job
+      // playbook_sent_at intentionally left NULL -- set by the email-send job
+      // playbook_storage_path  intentionally left NULL -- set by the PDF job
     })
     .eq('id', payload.resultId);
 
@@ -230,7 +230,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  // 5. Log activities — fire-and-forget
+  // 5. Log activities -- fire-and-forget
   const activityRows: Array<Record<string, unknown>> = [
     {
       contact_id: contactId,
@@ -262,7 +262,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     message:
-      "We'll send your playbook through in the next few minutes. Check your inbox — and your spam folder, just in case.",
+      "We'll send your playbook through in the next few minutes. Check your inbox -- and your spam folder, just in case.",
   });
 }
 

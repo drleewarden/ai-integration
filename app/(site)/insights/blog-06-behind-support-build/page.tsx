@@ -4,8 +4,8 @@ import Nav from "../../../components/Nav";
 import Footer from "../../../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Blog Article 06: How We Cut Support Ticket Volume by 60% — A Behind-the-Scenes Look | Creative Milk Insights",
-  description: "A detailed look at the AI system Creative Milk built for a SaaS customer support platform — the architecture, the integrations, what went wrong, and the 60% ticket reduction outcome.",
+  title: "Blog Article 06: How We Cut Support Ticket Volume by 60% -- A Behind-the-Scenes Look | Creative Milk Insights",
+  description: "A detailed look at the AI system Creative Milk built for a SaaS customer support platform -- the architecture, the integrations, what went wrong, and the 60% ticket reduction outcome.",
 };
 
 export default function BlogPost() {

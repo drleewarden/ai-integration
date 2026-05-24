@@ -1,5 +1,5 @@
 /**
- * /ai-readiness/result/[id] — server component
+ * /ai-readiness/result/[id] -- server component
  *
  * Fetches the public projection of the assessment via the internal API
  * (which sanitises PII), then renders the result client component. Also
@@ -65,7 +65,7 @@ export async function generateMetadata(
     };
   }
 
-  const title = `${result.overallScore}/100 — ${result.band.label} | Creative Milk AI Readiness`;
+  const title = `${result.overallScore}/100 -- ${result.band.label} | Creative Milk AI Readiness`;
   const description = result.band.description;
 
   const base = await getBaseUrl();
@@ -79,7 +79,7 @@ export async function generateMetadata(
       url: `${base}/ai-readiness/result/${id}`,
       siteName: 'Creative Milk',
       type: 'website',
-      // TODO: dynamic OG image in Batch 2.5 — for now uses static fallback
+      // TODO: dynamic OG image in Batch 2.5 -- for now uses static fallback
     },
     twitter: {
       card: 'summary_large_image',
@@ -87,7 +87,7 @@ export async function generateMetadata(
       description,
     },
     robots: {
-      // Result pages shouldn't be indexed — they're personal and shareable, not SEO assets
+      // Result pages shouldn't be indexed -- they're personal and shareable, not SEO assets
       index: false,
       follow: false,
     },

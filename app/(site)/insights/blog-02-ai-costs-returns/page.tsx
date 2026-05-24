@@ -4,8 +4,8 @@ import Nav from "../../../components/Nav";
 import Footer from "../../../components/Footer";
 
 export const metadata: Metadata = {
-  title: "What AI Actually Costs an Australian Business — And What It Returns | Creative Milk Insights",
-  description: "What does AI implementation actually cost for an Australian mid-market business — and what should you expect in return? A plain-English breakdown with real numbers.",
+  title: "What AI Actually Costs an Australian Business -- And What It Returns | Creative Milk Insights",
+  description: "What does AI implementation actually cost for an Australian mid-market business -- and what should you expect in return? A plain-English breakdown with real numbers.",
 };
 
 export default function BlogPost() {

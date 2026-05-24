@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 export const metadata: Metadata = {
   title: "What AI Can Do For Your Business | Use Cases & Applications | Creative Milk",
   description:
-    "Practical AI applications for Australian businesses — customer support, sales intelligence, operations automation, document processing, and more. Real systems with real outcomes. Creative Milk.",
+    "Practical AI applications for Australian businesses -- customer support, sales intelligence, operations automation, document processing, and more. Real systems with real outcomes. Creative Milk.",
 };
 
 const useCases = [
@@ -14,7 +14,7 @@ const useCases = [
     number: "01",
     category: "Customer Support & Triage",
     headline: "Stop your best people from answering the same question 40 times a day.",
-    body: "Most support queues are 60–70% tier-1 queries — password resets, billing questions, feature how-tos — that follow predictable patterns and require no human judgement. AI handles these end-to-end. What's left for your team is the work that actually needs them.",
+    body: "Most support queues are 60–70% tier-1 queries -- password resets, billing questions, feature how-tos -- that follow predictable patterns and require no human judgement. AI handles these end-to-end. What's left for your team is the work that actually needs them.",
     builds: [
       "Intelligent ticket triage and auto-resolution systems",
       "AI-powered knowledge base with real-time update capability",
@@ -24,7 +24,7 @@ const useCases = [
     outcomes: [
       "60% reduction in tier-1 ticket volume",
       "34% reduction in average handling time on escalated tickets",
-      "Support team NPS improvement — staff report higher satisfaction on complex work",
+      "Support team NPS improvement -- staff report higher satisfaction on complex work",
     ],
     caseStudy: "How we cut support volume 60% for a SaaS platform",
     fit: "Businesses with 500+ tickets/week and a repeating pattern in tier-1 queries",
@@ -33,7 +33,7 @@ const useCases = [
     number: "02",
     category: "Sales & Revenue Intelligence",
     headline: "Stop leaving revenue in the data you already have.",
-    body: "E-commerce businesses are sitting on purchase history, browse behaviour, and session data that most of them never fully use. AI turns that data into personalised product and content experiences that convert at a measurably higher rate — without increasing ad spend.",
+    body: "E-commerce businesses are sitting on purchase history, browse behaviour, and session data that most of them never fully use. AI turns that data into personalised product and content experiences that convert at a measurably higher rate -- without increasing ad spend.",
     builds: [
       "Personalised product recommendation engines (homepage, PDP, post-purchase)",
       "Dynamic pricing models for inventory management and margin optimisation",
@@ -52,7 +52,7 @@ const useCases = [
     number: "03",
     category: "Operations & Workflow Automation",
     headline: "The manual processes that eat your team's week don't have to.",
-    body: "Operations work — data entry, report generation, approval routing, document processing, scheduling — follows rules. Rules can be automated. The question isn't whether it's possible; it's which processes are worth automating first, and in what order they compound.",
+    body: "Operations work -- data entry, report generation, approval routing, document processing, scheduling -- follows rules. Rules can be automated. The question isn't whether it's possible; it's which processes are worth automating first, and in what order they compound.",
     builds: [
       "End-to-end workflow automation for approval, routing, and notification chains",
       "Data entry and form processing automation",
@@ -71,7 +71,7 @@ const useCases = [
     number: "04",
     category: "Data & Reporting Automation",
     headline: "Stop paying your analysts to pull reports. Start paying them to think.",
-    body: "Standard reporting — weekly dashboards, client reports, performance summaries — is valuable. The manual process of generating it is not. AI handles the data pull, the formatting, the distribution, and the anomaly detection. Your analysts focus on what the numbers mean and what to do about them.",
+    body: "Standard reporting -- weekly dashboards, client reports, performance summaries -- is valuable. The manual process of generating it is not. AI handles the data pull, the formatting, the distribution, and the anomaly detection. Your analysts focus on what the numbers mean and what to do about them.",
     builds: [
       "Automated report generation and distribution (scheduled or triggered)",
       "Anomaly detection and intelligent alerting",
@@ -90,7 +90,7 @@ const useCases = [
     number: "05",
     category: "Document Processing & Extraction",
     headline: "Documents are where professional services businesses lose the most time.",
-    body: "Accounting firms, law firms, financial advisers, and construction businesses process enormous volumes of documents — contracts, invoices, applications, compliance forms. Reading, classifying, extracting data from, and routing these documents is skilled but time-consuming work. AI handles the routine volume. Your team handles the judgement calls.",
+    body: "Accounting firms, law firms, financial advisers, and construction businesses process enormous volumes of documents -- contracts, invoices, applications, compliance forms. Reading, classifying, extracting data from, and routing these documents is skilled but time-consuming work. AI handles the routine volume. Your team handles the judgement calls.",
     builds: [
       "Contract review and clause extraction systems",
       "Invoice and purchase order processing automation",
@@ -109,7 +109,7 @@ const useCases = [
     number: "06",
     category: "Knowledge Management & Search",
     headline: "What if every new team member could access the knowledge of your most experienced one?",
-    body: "Growing businesses accumulate knowledge in the heads of their longest-serving people. When those people are unavailable — or when they leave — that knowledge walks out with them. AI knowledge systems capture, organise, and make that expertise accessible to the whole team in real time.",
+    body: "Growing businesses accumulate knowledge in the heads of their longest-serving people. When those people are unavailable -- or when they leave -- that knowledge walks out with them. AI knowledge systems capture, organise, and make that expertise accessible to the whole team in real time.",
     builds: [
       "Internal AI knowledge assistants trained on company documentation and processes",
       "Onboarding acceleration systems (new team members ask, the system answers)",
@@ -207,7 +207,7 @@ export default function WhatWeBuild() {
               >
                 <div>
                   <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                    {uc.number} — {uc.category}
+                    {uc.number} -- {uc.category}
                   </span>
                   <h2
                     className="h-section"
@@ -263,7 +263,7 @@ export default function WhatWeBuild() {
                             lineHeight: 1.4,
                           }}
                         >
-                          —
+                          --
                         </span>
                         {b}
                       </li>
@@ -440,7 +440,7 @@ export default function WhatWeBuild() {
                 marginBottom: "1.5rem",
               }}
             >
-              Tell us the problem. We'll tell you where AI fits — <em className="gold">if it does.</em>
+              Tell us the problem. We'll tell you where AI fits -- <em className="gold">if it does.</em>
             </h2>
             <p
               className="body-copy"
@@ -449,7 +449,7 @@ export default function WhatWeBuild() {
                 margin: "0 auto 2.5rem",
               }}
             >
-              Some businesses come to us knowing exactly what they want to automate. Most don't. That's fine —
+              Some businesses come to us knowing exactly what they want to automate. Most don't. That's fine --
               finding the right starting point is exactly what the Discovery Sprint is for. We scope the problem,
               assess the opportunity, and give you an honest recommendation on whether AI is the right answer.
             </p>

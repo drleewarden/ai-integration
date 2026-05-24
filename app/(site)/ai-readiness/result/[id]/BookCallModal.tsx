@@ -1,5 +1,5 @@
 /**
- * BookCallModal — the Book a 30-min call qualifying form.
+ * BookCallModal -- the Book a 30-min call qualifying form.
  *
  * Captures everything we need for the first conversation: name, email, phone,
  * company, suburb, company size, role, and the open problem-statement field.
@@ -166,7 +166,7 @@ export function BookCallModal({
         ) : (
           <>
             <div style={{ marginBottom: '32px' }}>
-              <Label color={C.gold}>— Book a 30-minute call</Label>
+              <Label color={C.gold}>-- Book a 30-minute call</Label>
               <h2
                 style={{
                   ...F.section,
@@ -303,7 +303,7 @@ export function BookCallModal({
                   onChange={(e) => setProblem(e.target.value)}
                   rows={4}
                   maxLength={2000}
-                  placeholder="Be specific — a real problem we could actually help with."
+                  placeholder="Be specific -- a real problem we could actually help with."
                   style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }}
                 />
               </Field>

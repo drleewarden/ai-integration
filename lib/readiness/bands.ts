@@ -1,5 +1,5 @@
 /**
- * Creative Milk — AI Readiness score bands.
+ * Creative Milk -- AI Readiness score bands.
  *
  * Score thresholds and short band descriptions used on the result page.
  * Longer band-level copy (page 2 "honest read" of the playbook, etc.) lives
@@ -18,7 +18,7 @@ export const BANDS: readonly Band[] = [
     min: 0,
     max: 35,
     description:
-      'You\u2019re at the beginning. That\u2019s a position, not a verdict — and it\u2019s the position with the most upside if you act on it.',
+      'You\u2019re at the beginning. That\u2019s a position, not a verdict -- and it\u2019s the position with the most upside if you act on it.',
   },
   {
     key: 'foundational',
@@ -42,7 +42,7 @@ export const BANDS: readonly Band[] = [
     min: 71,
     max: 85,
     description:
-      'Strong fundamentals. The leverage now is scale — turning individual capability into team capability and codifying what works.',
+      'Strong fundamentals. The leverage now is scale -- turning individual capability into team capability and codifying what works.',
   },
   {
     key: 'ai_leader',
@@ -57,7 +57,7 @@ export const BANDS: readonly Band[] = [
 /**
  * Return the band containing the given score.
  *
- * Scores are clamped to the bands' range — anything below 0 falls into
+ * Scores are clamped to the bands' range -- anything below 0 falls into
  * Starting Out, anything above 100 falls into AI Leader. In practice the
  * scoring engine enforces a 25–100 range, so the clamp is belt-and-braces.
  */

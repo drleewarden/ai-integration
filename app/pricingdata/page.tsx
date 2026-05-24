@@ -4,7 +4,7 @@ import Nav from "../components/Nav";
 import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Pricing — Creative Milk",
+  title: "Pricing -- Creative Milk",
   description:
     "Three ways to engage Creative Milk. Fixed-price 30-Day Pilot, scoped Build engagements, and ongoing AI Ops Residency. Australian pricing, no hidden hours.",
 };
@@ -33,7 +33,7 @@ const TIERS: Tier[] = [
     cadence: "fixed · 30 days",
     pitch: "One problem. One system. One measurable outcome.",
     description:
-      "We scope a single high-leverage workflow, ship it, measure it, and hand it over — in thirty days. If we don't hit the outcome we agreed on, you don't pay the final invoice. No black boxes.",
+      "We scope a single high-leverage workflow, ship it, measure it, and hand it over -- in thirty days. If we don't hit the outcome we agreed on, you don't pay the final invoice. No black boxes.",
     includes: [
       "Discovery session (2 hours, scoped before kickoff)",
       "One production-grade workflow or AI integration",
@@ -74,7 +74,7 @@ const TIERS: Tier[] = [
     cadence: "per month · rolling",
     pitch: "Monthly roadmap. Monthly ship. Quarterly outcome report.",
     description:
-      "Not a support retainer. A residency. Each month we agree on what gets shipped — new workflows, optimisations, integrations — and ship it. Every quarter we publish a report on what changed and what it was worth.",
+      "Not a support retainer. A residency. Each month we agree on what gets shipped -- new workflows, optimisations, integrations -- and ship it. Every quarter we publish a report on what changed and what it was worth.",
     includes: [
       "Monthly planning session and roadmap",
       "One shipped improvement or workflow per month",
@@ -91,7 +91,7 @@ const TIERS: Tier[] = [
 const FAQ = [
   {
     q: "What if the 30-Day Pilot doesn't hit the outcome?",
-    a: "If we don't hit the measurable target we agreed on at kickoff, you don't pay the final 50% invoice. We carry the risk of being right about the scope — you carry the risk of being right about the problem.",
+    a: "If we don't hit the measurable target we agreed on at kickoff, you don't pay the final 50% invoice. We carry the risk of being right about the scope -- you carry the risk of being right about the problem.",
   },
   {
     q: "Why is your pricing public when most agencies hide it?",
@@ -99,7 +99,7 @@ const FAQ = [
   },
   {
     q: "Do you work hourly or on retainer?",
-    a: "We don't sell hours. The Pilot is fixed. The Build is fixed-scope with a ceiling. The Residency is a monthly outcome, not a monthly bucket of hours. Hours are an input — you're paying for the output.",
+    a: "We don't sell hours. The Pilot is fixed. The Build is fixed-scope with a ceiling. The Residency is a monthly outcome, not a monthly bucket of hours. Hours are an input -- you're paying for the output.",
   },
   {
     q: "What stack do you work in?",
@@ -170,7 +170,7 @@ export default function PricingPage() {
                 maxWidth: "54ch",
               }}
             >
-              Three ways to work with us — every one of them fixed, scoped, and
+              Three ways to work with us -- every one of them fixed, scoped, and
               measured by the outcome we agreed on at the start. No hourly
               billing. No moving goalposts. No surprises on the invoice.
             </p>
@@ -247,7 +247,7 @@ export default function PricingPage() {
                 >
                   Most AI consultancies sell hours and hope the outcome
                   follows. We sell the outcome and back it with the only
-                  guarantee that means anything — money.
+                  guarantee that means anything -- money.
                 </p>
                 <p className="body-copy" style={{ maxWidth: "48ch" }}>
                   If your 30-Day Pilot doesn&apos;t hit the measurable target we

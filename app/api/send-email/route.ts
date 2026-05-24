@@ -56,7 +56,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (message.length > 5000) {
       return NextResponse.json(
         {
-          error: "Message is too long — please keep it under 5,000 characters.",
+          error: "Message is too long -- please keep it under 5,000 characters.",
         },
         { status: 400 },
       );
@@ -77,7 +77,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `New project enquiry — ${name}`,
+      subject: `New project enquiry -- ${name}`,
       html,
     });
 
@@ -114,7 +114,7 @@ function renderEmail(fields: {
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0F1526;border:1px solid rgba(245,240,232,0.08);">
 
         <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(245,240,232,0.08);">
-          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">— New enquiry</div>
+          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">-- New enquiry</div>
           <div style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#F5F0E8;letter-spacing:-0.01em;line-height:1.05;">
             Creative <em style="color:#C9A84C;font-style:italic;">Milk</em>
           </div>

@@ -58,9 +58,7 @@ Required for production (see `.env.example`):
 ### Supabase (AI Readiness Assessment)
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL
 - `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key
-
-### Site URL (Optional)
-- `NEXT_PUBLIC_SITE_URL` - Full site URL for OpenGraph (Vercel sets VERCEL_URL automatically)
+- `NEXT_PUBLIC_SITE_URL` - Full production domain (e.g., `https://www.creative-milk.com.au`) - **Required for AI Readiness result pages to work correctly**
 
 ## Deployment to Vercel
 

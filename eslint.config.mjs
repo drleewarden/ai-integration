@@ -22,7 +22,7 @@ const eslintConfig = [
   },
   {
     rules: {
-      // Stylistic rule — apostrophes/quotes in JSX content are fine for a
+      // Stylistic rule -- apostrophes/quotes in JSX content are fine for a
       // copy-heavy marketing site and don't represent a real bug.
       "react/no-unescaped-entities": "off",
       // Self-imposed font loading is intentional in app/layout.tsx; Next's

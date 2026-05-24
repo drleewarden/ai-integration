@@ -1,4 +1,4 @@
-# Blog Article 09: The Difference Between AI Automation and AI Implementation — And Why It Matters for Your Business
+# Blog Article 09: The Difference Between AI Automation and AI Implementation -- And Why It Matters for Your Business
 
 **Category:** AI Explainers
 **Cluster:** Plain-English explainers / Positioning
@@ -6,19 +6,19 @@
 **Secondary keywords:** what is AI implementation, AI automation business, difference AI tools vs AI systems
 **Estimated read time:** 5 min
 **Status:** Priority 3
-**Meta description:** "AI automation" and "AI implementation" get used interchangeably — but they're different things at different price points with different outcomes. Here's what the distinction means for your business.
+**Meta description:** "AI automation" and "AI implementation" get used interchangeably -- but they're different things at different price points with different outcomes. Here's what the distinction means for your business.
 
 ---
 
 Two terms you'll hear constantly from AI vendors right now: automation and implementation. They're often used interchangeably. They're not the same thing, they're not priced the same way, and confusing them is one of the main reasons businesses end up with the wrong partner for what they actually need.
 
-This article explains the distinction clearly — so you can evaluate what type of AI work you actually need, and make sure you're talking to the right people.
+This article explains the distinction clearly -- so you can evaluate what type of AI work you actually need, and make sure you're talking to the right people.
 
 ---
 
 ## AI automation: rules-based, tool-configured
 
-AI automation refers to connecting existing AI tools and SaaS platforms to automate defined workflows. It's typically built using low-code platforms — Zapier, Make, n8n, Workato — and integrates tools that already exist.
+AI automation refers to connecting existing AI tools and SaaS platforms to automate defined workflows. It's typically built using low-code platforms -- Zapier, Make, n8n, Workato -- and integrates tools that already exist.
 
 **Example:** When a new lead submits a form on your website, the automation:
 1. Creates a contact in your CRM
@@ -39,7 +39,7 @@ This is automation. It connects tools that already exist, follows a defined trig
 AI implementation involves building custom AI systems that do things automation can't: understand natural language, classify unstructured data, make decisions based on patterns rather than rules, and improve with use.
 
 **Example:** A customer support AI that:
-1. Reads incoming tickets (natural language — not a form field)
+1. Reads incoming tickets (natural language -- not a form field)
 2. Classifies them by intent (pattern-based, not keyword-based)
 3. Decides whether to resolve, respond with a follow-up question, or escalate
 4. Generates a response that makes sense for this specific ticket
@@ -57,7 +57,7 @@ Ask yourself: can I write down a complete set of rules that would let a non-AI s
 
 If yes, you probably need automation. The logic is defined and implementation is about connecting the tools.
 
-If no — if the system needs to read, understand, or decide — you need AI implementation.
+If no -- if the system needs to read, understand, or decide -- you need AI implementation.
 
 Examples of automation problems:
 - Route customer leads to the right sales rep based on geography
@@ -78,13 +78,13 @@ Automation agencies and AI implementation agencies aren't the same market.
 
 Automation work is well-serviced in Australia. There are dozens of competent agencies who can connect your Zapier stack for a few thousand dollars and deliver real value.
 
-Custom AI implementation — particularly at the mid-market level ($30K–$150K) — is much more sparsely served by practitioners who can actually deliver. Many agencies will say they do "AI implementation" when they mean "automation with AI tools included." The price difference and the outcome difference are significant.
+Custom AI implementation -- particularly at the mid-market level ($30K–$150K) -- is much more sparsely served by practitioners who can actually deliver. Many agencies will say they do "AI implementation" when they mean "automation with AI tools included." The price difference and the outcome difference are significant.
 
 Before engaging any AI partner, ask: is what you're proposing automation (connecting existing tools to a defined workflow), or implementation (building a custom system that makes intelligent decisions)? A good partner will give you a clear answer and tell you which one your problem actually needs.
 
 ---
 
-*Creative Milk does AI implementation — custom systems for problems that can't be solved by connecting existing tools. [See our work →](/work) or [book a call →](/contact) to discuss your specific situation.*
+*Creative Milk does AI implementation -- custom systems for problems that can't be solved by connecting existing tools. [See our work →](/work) or [book a call →](/contact) to discuss your specific situation.*
 
 ---
 ---

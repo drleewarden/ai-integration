@@ -23,7 +23,7 @@ const principles = [
   {
     num: "03",
     title: "The people matter as much as the system",
-    body: "67–80% of mid-market AI projects fail not because the technology doesn't work — but because the team doesn't adopt it. Change management is standard in every engagement. Not optional. Not an upsell.",
+    body: "67–80% of mid-market AI projects fail not because the technology doesn't work -- but because the team doesn't adopt it. Change management is standard in every engagement. Not optional. Not an upsell.",
   },
   {
     num: "04",
@@ -116,7 +116,7 @@ export default function About() {
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
                   The failure wasn't usually the technology. It was the gap between what was
-                  promised and what got built — and the absence of anyone willing to stay
+                  promised and what got built -- and the absence of anyone willing to stay
                   accountable for whether it actually worked.
                 </p>
                 <p>
@@ -158,7 +158,7 @@ export default function About() {
                   padding: "1.5rem",
                 }}
               >
-                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo — Craig</span>
+                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo -- Craig</span>
               </div>
               <div>
                 <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>Co-Founder</p>
@@ -236,7 +236,7 @@ export default function About() {
                     integrates with your tools, and transfers cleanly to your team.
                   </p>
                   <p>
-                    He's also the reason we can deliver in 6–8 weeks. Not because we cut corners —
+                    He's also the reason we can deliver in 6–8 weeks. Not because we cut corners --
                     because he builds systems the right way the first time and uses AI-native
                     tooling throughout the build to compress timelines without compromising quality.
                   </p>
@@ -251,7 +251,7 @@ export default function About() {
                   padding: "1.5rem",
                 }}
               >
-                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo — Darryn</span>
+                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo -- Darryn</span>
               </div>
             </div>
 
@@ -373,7 +373,7 @@ export default function About() {
                   system.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
-                  That's not a feature that scales infinitely — and we know it. We take a limited
+                  That's not a feature that scales infinitely -- and we know it. We take a limited
                   number of engagements at any one time because that's what it takes to deliver a
                   95% outcome rate.
                 </p>

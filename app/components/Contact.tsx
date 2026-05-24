@@ -48,7 +48,7 @@ export default function Contact() {
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right — try again?",
+        message: "That email address doesn't look right -- try again?",
       });
       return;
     }
@@ -135,7 +135,7 @@ export default function Contact() {
       >
         <div>
           <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-            05 — Start a project
+            05 -- Start a project
           </span>
           <h2
             className="h-display"
