@@ -12,3 +12,4 @@ export * from './scoring';
 export * from './composer-types';
 export * from './composer';
 export * from './content-library';
+export * from './playbook-pdf';
