@@ -21,7 +21,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PILLARS } from '@/lib/readiness/pillars';
 import { PILLAR_KEYS } from '@/lib/readiness/types';
-import type { PillarKey } from '@/lib/readiness/types';
+import { getRecommendation } from '@/lib/readiness/recommendations';
 import type { PublicResult } from '@/app/api/readiness/result/[id]/route';
 import Nav from '@/app/components/Nav';
 import {
@@ -37,31 +37,8 @@ import {
 import { HeroBackground } from '../../_components/HeroBackground';
 import { BookCallModal } from './BookCallModal';
 
-// ── Interim focus-area recommendations ──────────────────────────────────────
-// These are placeholders. They get replaced by the content library (Track B).
-// Until then, this small bank ensures the page renders meaningful copy.
-const INTERIM_RECOMMENDATIONS: Record<PillarKey, { low: string; high: string }> = {
-  strategy: {
-    low: 'Your AI strategy is informal. The fastest gain: write a one-page point of view on AI for your business -- three uses you\u2019ll invest in, one thing you won\u2019t use AI for, and the principle that guides the calls. Most teams skip this step and wonder why their AI work feels scattered.',
-    high: 'You have a clear AI direction. The next move is codifying it -- get the strategy out of your head and into something your whole team can reference and contribute to.',
-  },
-  data: {
-    low: 'Your AI tools are working with scattered, inconsistent inputs. Before adding new tools, build context packs for your three most common AI use cases. Better inputs = better outputs, without spending a dollar on new software.',
-    high: 'You have decent data foundations. Focus next on connecting your AI tools directly to your knowledge sources -- CRM, docs, past work -- so context is automatic rather than pasted in.',
-  },
-  culture: {
-    low: 'AI capability is uneven across your team -- some experimenting, some resistant, no shared baseline. Identify your two most curious team members and give them one hour each per week to lead the rest of the team. Capability spreads when it has a champion.',
-    high: 'Your team is open to AI. The opportunity now is structure -- turning enthusiasm into reliable practice. Set up regular share-outs, document what works, and remove the lone-champion risk.',
-  },
-  technology: {
-    low: 'You\u2019re using a few AI tools, mostly at surface level. Pick the one you use most and spend 90 minutes finding three features you don\u2019t currently use. Most teams use 10% of what their AI subscriptions can do.',
-    high: 'Strong technical foundation. The leverage now is integration -- connecting your AI tools to each other and to your existing systems so AI work doesn\u2019t live in isolation.',
-  },
-  governance: {
-    low: 'You have no written AI policy. Businesses without one typically discover the gap during an incident, not before. Write a one-page policy this week: what data never goes into AI tools, who\u2019s accountable for AI-generated work, what to do when something feels wrong.',
-    high: 'You have governance in place. Mature it next by adding measurement -- track AI use, review outputs periodically, and surface any drift before it becomes a problem.',
-  },
-};
+// Focus-area recommendation copy lives in lib/readiness/recommendations.ts so
+// the result page and the emailed playbook render identical text. Edit there.
 
 // ── Component ────────────────────────────────────────────────────────────────
 
@@ -352,8 +329,7 @@ export default function ResultClient({
           </p>
           <div>
             {focusAreaCards.map((p, idx) => {
-              const recoKey = p.score <= 50 ? 'low' : 'high';
-              const reco = INTERIM_RECOMMENDATIONS[p.key][recoKey];
+              const reco = getRecommendation(p.key, p.score);
               return (
                 <div key={p.key} style={{ display: 'flex', gap: '32px', marginBottom: '48px' }}>
                   <div style={{ flexShrink: 0 }}>
