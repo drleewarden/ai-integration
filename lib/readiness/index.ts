@@ -11,3 +11,4 @@ export * from './questions';
 export * from './scoring';
 export * from './composer-types';
 export * from './composer';
+export * from './content-library';
