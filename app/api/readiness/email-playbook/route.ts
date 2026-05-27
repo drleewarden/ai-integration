@@ -3,14 +3,14 @@
  *
  * Captures the prospect's email after they've seen their result. This is the
  * first lead-conversion step -- turning an anonymous assessment into a named
- * contact + new_lead opportunity in the CRM -- AND it sends them their
+ * contact + New Lead opportunity in the CRM -- AND it sends them their
  * playbook email via Resend with the PDF playbook attached.
  *
  * Flow:
  *   1.  Validate the assessment id + email
  *   2.  Upsert the contact (one row per unique email)
  *   3.  Link the contact to the assessment
- *   4.  Create a new_lead opportunity (or reuse existing if reading email again)
+ *   4.  Create a New Lead opportunity (or reuse existing if reading email again)
  *   5.  Link opportunity to the assessment
  *   6.  Generate the PDF playbook from the assessment result
  *   7.  Upload the PDF to Supabase Storage (playbooks bucket)
@@ -160,7 +160,7 @@ export async function POST(req: NextRequest) {
         contact_id: contactId,
         title: `Lead -- ${band.label} (${assessment.overall_score}/100)`,
         source: "ai_readiness",
-        stage: "new_lead",
+        stage: "New Lead",
         readiness_score: assessment.overall_score,
         readiness_band: assessment.band,
       })

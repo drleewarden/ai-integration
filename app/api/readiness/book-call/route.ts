@@ -2,7 +2,7 @@
  * POST /api/readiness/book-call
  *
  * Captures the qualifying info from the Book a Call form. This is the second
- * conversion step -- moving the opportunity from new_lead → qualified.
+ * conversion step -- moving the opportunity from New Lead → Qualified.
  *
  * Flow:
  *   1. Validate inputs
@@ -10,7 +10,7 @@
  *   3. Upsert/enrich the contact (phone, company, suburb, size, role, last name)
  *   4. Ensure an opportunity exists (creating contact + opportunity if needed
  *      -- handles the edge case where a reader skipped the playbook step)
- *   5. Update the opportunity: stage → qualified, problem_summary set
+ *   5. Update the opportunity: stage → Qualified, problem_summary set
  *   6. Log activities (contact_form_submitted, stage_changed)
  *
  * Request body:
@@ -209,7 +209,7 @@ export async function POST(req: NextRequest) {
         contact_id: contactId,
         title,
         source: 'ai_readiness',
-        stage: 'new_lead',
+        stage: 'New Lead',
         readiness_score: assessment.overall_score,
         readiness_band: assessment.band,
       })
@@ -228,11 +228,11 @@ export async function POST(req: NextRequest) {
     await supabase.from('opportunities').update({ title }).eq('id', opportunityId);
   }
 
-  // 5. Move the opportunity to qualified + record problem_summary
+  // 5. Move the opportunity to Qualified + record problem_summary
   const { error: stageErr } = await supabase
     .from('opportunities')
     .update({
-      stage: 'qualified',
+      stage: 'Qualified',
       stage_changed_at: new Date().toISOString(),
       problem_summary: payload.problem,
     })
@@ -273,8 +273,8 @@ export async function POST(req: NextRequest) {
         opportunity_id: opportunityId,
         assessment_id: payload.resultId,
         type: 'stage_changed',
-        description: `Stage changed: new_lead → qualified`,
-        metadata: { from: 'new_lead', to: 'qualified' },
+        description: `Stage changed: New Lead → Qualified`,
+        metadata: { from: 'New Lead', to: 'Qualified' },
       },
     ])
     .then(({ error: actErr }) => {
