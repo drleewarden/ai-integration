@@ -64,7 +64,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const FROM =
       process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
-    const TO = process.env.RESEND_TO ?? "drleewarden@gmail.com";
+    const TO = process.env.RESEND_TO ?? "contact@creative-milk.com.au";
 
     const html = renderEmail({
       name: escapeHtml(name),
@@ -73,13 +73,29 @@ export async function POST(request: Request): Promise<NextResponse> {
       message: escapeHtml(message).replace(/\n/g, "<br>"),
     });
 
-    const data = await resend.emails.send({
+    console.log("[send-email] sending", { from: FROM, to: TO, replyTo: email });
+
+    const { data, error: sendError } = await resend.emails.send({
       from: FROM,
       to: TO,
       replyTo: email,
       subject: `New project enquiry -- ${name}`,
       html,
     });
+
+    if (sendError) {
+      console.error("[send-email] Resend rejected the send:", sendError);
+      return NextResponse.json(
+        {
+          error:
+            "Couldn't deliver the message. Please email us directly at contact@creative-milk.com.au.",
+          details: sendError.message ?? String(sendError),
+        },
+        { status: 502 },
+      );
+    }
+
+    console.log("[send-email] accepted", { id: data?.id });
 
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error: unknown) {

@@ -215,16 +215,39 @@ export default function Contact() {
                   fontSize: "0.85rem",
                   lineHeight: 1.6,
                   display: "flex",
-                  alignItems: "center",
-                  gap: "0.65rem",
+                  flexDirection: "column",
+                  gap: "0.5rem",
                 }}
               >
-                {status.type === "success" ? (
-                  <CheckCircle2 size={18} aria-hidden="true" />
-                ) : (
-                  <AlertCircle size={18} aria-hidden="true" />
+                <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                  {status.type === "success" ? (
+                    <CheckCircle2 size={18} aria-hidden="true" />
+                  ) : (
+                    <AlertCircle size={18} aria-hidden="true" />
+                  )}
+                  <span>{status.message}</span>
+                </div>
+                {status.type === "error" && (
+                  <div
+                    style={{
+                      paddingLeft: "1.65rem",
+                      fontSize: "0.8rem",
+                      color: "rgba(245,240,232,0.7)",
+                    }}
+                  >
+                    Or email us directly at{" "}
+                    <a
+                      href="mailto:contact@creative-milk.com.au?subject=Project%20enquiry"
+                      style={{
+                        color: "var(--liquid-gold)",
+                        borderBottom: "1px solid rgba(201,168,76,0.45)",
+                      }}
+                    >
+                      contact@creative-milk.com.au
+                    </a>
+                    .
+                  </div>
                 )}
-                {status.message}
               </div>
             )}
 
