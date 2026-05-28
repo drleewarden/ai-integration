@@ -53,7 +53,7 @@ Required for production (see `.env.example`):
 ### Email (Contact Form)
 - `RESEND_API_KEY` - Resend API key
 - `RESEND_FROM` - Sender email address (optional, defaults to onboarding@resend.dev)
-- `RESEND_TO` - Recipient email address (optional, defaults to drleewarden@gmail.com)
+- `RESEND_TO` - Recipient email address (optional, defaults to contact@creative-milk.com.au)
 
 ### Supabase (AI Readiness Assessment)
 - `NEXT_PUBLIC_SUPABASE_URL` - Supabase project URL

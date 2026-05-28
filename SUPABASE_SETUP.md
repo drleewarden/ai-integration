@@ -76,8 +76,8 @@ SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
 
 # Optional: Contact form (if you have Resend set up)
 RESEND_API_KEY=your_resend_key_if_you_have_it
-RESEND_FROM=Creative Milk <hello@creativemilk.ai>
-RESEND_TO=drleewarden@gmail.com
+RESEND_FROM=Creative Milk <onboarding@resend.dev>
+RESEND_TO=contact@creative-milk.com.au
 ```
 
 **Replace:**

@@ -112,7 +112,7 @@ describe("/api/send-email", () => {
 
       expect(mockSend).toHaveBeenCalledWith({
         from: "Creative Milk <onboarding@resend.dev>",
-        to: "drleewarden@gmail.com",
+        to: "contact@creative-milk.com.au",
         replyTo: "john@example.com",
         subject: "New project enquiry -- John Doe",
         html: expect.any(String),

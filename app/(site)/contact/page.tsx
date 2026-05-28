@@ -436,14 +436,14 @@ export default function Contact() {
                     <p className="body-copy" style={{ color: "rgba(245,240,232,0.45)", fontSize: "0.85rem" }}>
                       Prefer email?{" "}
                       <a
-                        href="mailto:hello@creative-milk.com.au"
+                        href="mailto:contact@creative-milk.com.au"
                         style={{
                           color: "var(--liquid-gold)",
                           textDecoration: "underline",
                           textUnderlineOffset: "3px",
                         }}
                       >
-                        hello@creative-milk.com.au
+                        contact@creative-milk.com.au
                       </a>
                     </p>
                   </div>

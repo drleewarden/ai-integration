@@ -81,7 +81,7 @@ Contact form uses Resend API:
 Required for production:
 - `RESEND_API_KEY` - Resend API key for email sending
 - `RESEND_FROM` - Email address to send from (optional, defaults to onboarding@resend.dev)
-- `RESEND_TO` - Recipient email address (optional, defaults to drleewarden@gmail.com)
+- `RESEND_TO` - Recipient email address (optional, defaults to contact@creative-milk.com.au)
 
 ## Deployment
 

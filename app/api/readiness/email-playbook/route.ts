@@ -301,7 +301,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     ok: true,
     warning: sendOutcome.warning,
-    message: "We've captured your details. If the playbook doesn't land in your inbox shortly, email hello@creative-milk.com.au and we'll resend it.",
+    message: "We've captured your details. If the playbook doesn't land in your inbox shortly, email contact@creative-milk.com.au and we'll resend it.",
   });
 }
 
@@ -338,7 +338,7 @@ async function sendPlaybookEmails(args: SendArgs): Promise<SendOutcome> {
   }
 
   const FROM = process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
-  const INTERNAL_TO = process.env.RESEND_TO ?? "drleewarden@gmail.com";
+  const INTERNAL_TO = process.env.RESEND_TO ?? "contact@creative-milk.com.au";
   const resend = new Resend(apiKey);
 
   const playbookFields = {
