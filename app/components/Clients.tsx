@@ -77,7 +77,7 @@ function ClientLogo({ client }: { client: Client }) {
       style={{
         width: "100%",
         aspectRatio: "280 / 96",
-        border: "1px solid rgba(247,247,242,0.16)",
+        border: "1px solid var(--rule-cream)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -171,63 +171,81 @@ export default function Clients({
   return (
     <section
       id="clients"
-      className="section-tight"
+      className={standalone ? "section" : "section-tight"}
       aria-labelledby="clients-heading"
       style={{
-        background: "#050505",
-        color: "#f7f7f2",
-        borderTop: "1px solid rgba(247,247,242,0.14)",
-        borderBottom: "1px solid rgba(247,247,242,0.14)",
-        paddingTop: standalone ? "clamp(7rem, 12vw, 9rem)" : undefined,
+        background: "var(--midnight-ink)",
+        color: "var(--warm-cream)",
+        borderTop: standalone ? "none" : "1px solid var(--rule-cream-strong)",
+        borderBottom: "1px solid var(--rule-cream-strong)",
       }}
     >
       <div className="container">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
-            gap: "clamp(2rem, 5vw, 5rem)",
-            alignItems: "end",
-            paddingBottom: "clamp(2rem, 4vw, 3rem)",
-            borderBottom: "1px solid rgba(247,247,242,0.14)",
-          }}
-        >
-          <div>
-            <span
-              className="eyebrow"
-              style={{
-                color: "rgba(247,247,242,0.68)",
-                marginBottom: "1rem",
-              }}
-            >
-              Company Experience
-            </span>
-            <h2
-              id="clients-heading"
-              className="h-section"
-              style={{
-                color: "#f7f7f2",
-                margin: "1rem 0 0",
-                maxWidth: "12ch",
-              }}
-            >
-              Brands We've worked with.
-            </h2>
-          </div>
-          <p
-            className="body-copy"
+        {!standalone && (
+          <div
             style={{
-              color: "rgba(247,247,242,0.62)",
-              margin: 0,
-              maxWidth: "48ch",
-              justifySelf: "end",
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
+              gap: "clamp(2rem, 5vw, 5rem)",
+              alignItems: "end",
+              paddingBottom: "clamp(2rem, 4vw, 3rem)",
+              borderBottom: "1px solid var(--rule-cream-strong)",
             }}
           >
-            Experience across enterprise software, government, insurance,
-            energy, health, retail, and design-led technology teams.
-          </p>
-        </div>
+            <div>
+              <span
+                className="eyebrow"
+                style={{ marginBottom: "1rem" }}
+              >
+                Company Experience
+              </span>
+              <h2
+                id="clients-heading"
+                className="h-section"
+                style={{
+                  color: "var(--warm-cream)",
+                  margin: "1rem 0 0",
+                  maxWidth: "14ch",
+                }}
+              >
+                Companies we&rsquo;ve <em className="gold">worked with.</em>
+              </h2>
+            </div>
+            <p
+              className="body-copy"
+              style={{
+                color: "rgba(245,240,232,0.62)",
+                margin: 0,
+                maxWidth: "48ch",
+                justifySelf: "end",
+              }}
+            >
+              Experience across enterprise software, government, insurance,
+              energy, health, retail, and design-led technology teams.
+            </p>
+          </div>
+        )}
+
+        {standalone && (
+          <h2
+            id="clients-heading"
+            className="sr-only"
+            style={{
+              position: "absolute",
+              width: 1,
+              height: 1,
+              padding: 0,
+              margin: -1,
+              overflow: "hidden",
+              clip: "rect(0,0,0,0)",
+              whiteSpace: "nowrap",
+              border: 0,
+            }}
+          >
+            Selected companies
+          </h2>
+        )}
 
         <div
           style={{
@@ -235,6 +253,8 @@ export default function Clients({
             gridTemplateColumns:
               "repeat(auto-fit, minmax(min(100%, 190px), 1fr))",
             gap: 0,
+            borderTop: "1px solid var(--rule-cream-strong)",
+            borderLeft: "1px solid var(--rule-cream-strong)",
           }}
         >
           {CLIENTS.map((client, index) => (
@@ -242,26 +262,27 @@ export default function Clients({
               key={client.name}
               className="client-tile"
               style={{
-                minHeight: 180,
+                minHeight: 200,
                 padding: "clamp(1.2rem, 2vw, 1.7rem)",
-                borderRight: "1px solid rgba(247,247,242,0.12)",
-                borderBottom: "1px solid rgba(247,247,242,0.12)",
+                borderRight: "1px solid var(--rule-cream-strong)",
+                borderBottom: "1px solid var(--rule-cream-strong)",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
+                position: "relative",
                 animation: `fadeInUp 0.7s var(--ease-out) ${index * 0.05}s both`,
               }}
             >
               <ClientLogo client={client} />
-              <div style={{ paddingTop: "1rem" }}>
+              <div style={{ paddingTop: "1.1rem" }}>
                 <div
                   style={{
                     fontFamily: "var(--font-mono)",
-                    fontSize: "0.58rem",
-                    letterSpacing: "0.14em",
+                    fontSize: "0.6rem",
+                    letterSpacing: "0.15em",
                     textTransform: "uppercase",
-                    color: "rgba(247,247,242,0.42)",
-                    marginBottom: "0.35rem",
+                    color: "var(--liquid-gold)",
+                    marginBottom: "0.45rem",
                   }}
                 >
                   {client.detail}
@@ -270,9 +291,9 @@ export default function Clients({
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 300,
-                    fontSize: "clamp(1.15rem, 1.8vw, 1.45rem)",
+                    fontSize: "clamp(1.2rem, 1.8vw, 1.5rem)",
                     lineHeight: 1.15,
-                    color: "rgba(247,247,242,0.82)",
+                    color: "var(--warm-cream)",
                     margin: 0,
                   }}
                 >
