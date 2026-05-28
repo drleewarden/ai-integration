@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 type FormState = {
   name: string;
@@ -61,6 +62,10 @@ export default function Contact() {
       });
       const data = await res.json();
       if (!res.ok) {
+        pushEvent(EVENTS.CONTACT_FORM_ERROR, {
+          form_id: "contact",
+          reason: "api",
+        });
         setStatus({
           type: "error",
           message:
@@ -69,12 +74,20 @@ export default function Contact() {
         });
         return;
       }
+      pushEvent(EVENTS.CONTACT_FORM_SUBMIT, {
+        form_id: "contact",
+        has_company: Boolean(form.company.trim()),
+      });
       setStatus({
         type: "success",
         message: "Message received. We'll be in touch within 24 hours.",
       });
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
+      pushEvent(EVENTS.CONTACT_FORM_ERROR, {
+        form_id: "contact",
+        reason: "network",
+      });
       setStatus({
         type: "error",
         message: "Network error. Check your connection and try again.",

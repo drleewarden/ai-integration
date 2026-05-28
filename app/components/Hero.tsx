@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import WebGLBackground from "./WebGLBackground";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 const STATS = [
   { value: "50+", label: "Engagements" },
@@ -87,10 +88,28 @@ export default function Hero() {
             marginTop: "2.5rem",
           }}
         >
-          <a href="#contact" className="cta cta-gold">
+          <a
+            href="#contact"
+            className="cta cta-gold"
+            onClick={() =>
+              pushEvent(EVENTS.CTA_CLICK, {
+                cta_label: "book_a_call",
+                cta_location: "hero",
+              })
+            }
+          >
             Book a call <ArrowRight size={14} aria-hidden="true" />
           </a>
-          <a href="#work" className="cta cta-outline-cream">
+          <a
+            href="#work"
+            className="cta cta-outline-cream"
+            onClick={() =>
+              pushEvent(EVENTS.CTA_CLICK, {
+                cta_label: "see_the_work",
+                cta_location: "hero",
+              })
+            }
+          >
             See the work
           </a>
         </div>
