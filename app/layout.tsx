@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import Analytics from "./components/Analytics";
 import BackToTop from "./components/BackToTop";
+import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
   title: "Creative Milk -- Intelligence that actually works",
   description:
     "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training -- measured by outcomes, not deliverables.",
-  metadataBase: new URL("https://creativemilk.ai"),
+  metadataBase: new URL("https://www.creative-milk.com.au"),
   openGraph: {
     title: "Creative Milk -- Intelligence that actually works",
     description:
@@ -94,6 +95,8 @@ export default function RootLayout({
         </Script>
       </head>
       <body className="antialiased">
+        <OrganisationSchema />
+        <WebsiteSchema />
         <Analytics />
         {children}
         <BackToTop />

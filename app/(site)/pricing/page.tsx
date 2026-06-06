@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
+import { PricingSchema, BreadcrumbSchema } from "../../components/Schema";
 
 export const metadata: Metadata = {
   title: "AI Implementation Pricing Australia | Published Rates | Creative Milk",
@@ -109,6 +110,11 @@ const reasons = [
 export default function Pricing() {
   return (
     <>
+      <PricingSchema />
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Pricing', url: '/pricing' },
+      ]} />
       <a href="#main" className="skip-link">Skip to content</a>
       <Nav />
       <main id="main">

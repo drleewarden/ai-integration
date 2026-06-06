@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
+import { ServiceSchema, BreadcrumbSchema } from "../../components/Schema";
 
 export const metadata: Metadata = {
   title: "What AI Can Do For Your Business | Use Cases & Applications | Creative Milk",
@@ -137,6 +138,11 @@ const industries = [
 export default function WhatWeBuild() {
   return (
     <>
+      <ServiceSchema />
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'What We Build', url: '/what-we-build' },
+      ]} />
       <a href="#main" className="skip-link">Skip to content</a>
       <Nav />
       <main id="main">

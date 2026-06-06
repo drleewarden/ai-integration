@@ -12,7 +12,7 @@ export default function BlogPost() {
   return (
     <>
       <a href="#main" className="skip-link">Skip to content</a>
-      <Nav />
+      <Nav forceDark />
       <main id="main" style={{ paddingTop: "68px" }}>
         <style dangerouslySetInnerHTML={{ __html: data.css }} />
         <div dangerouslySetInnerHTML={{ __html: data.html }} />

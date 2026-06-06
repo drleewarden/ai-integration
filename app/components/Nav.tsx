@@ -15,7 +15,7 @@ const NAV_ITEMS = [
   { label: "About", href: "/about" },
 ];
 
-export default function Nav() {
+export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -44,12 +44,12 @@ export default function Nav() {
         top: 0,
         insetInline: 0,
         zIndex: 100,
-        background: scrolled
-          ? "rgba(15, 21, 38, 0.85)"
+        background: (scrolled || forceDark)
+          ? "rgba(15, 21, 38, 0.95)"
           : "transparent",
-        backdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(14px) saturate(140%)" : "none",
-        borderBottom: scrolled
+        backdropFilter: (scrolled || forceDark) ? "blur(14px) saturate(140%)" : "none",
+        WebkitBackdropFilter: (scrolled || forceDark) ? "blur(14px) saturate(140%)" : "none",
+        borderBottom: (scrolled || forceDark)
           ? "1px solid rgba(245,240,232,0.08)"
           : "1px solid transparent",
         transition: "background 280ms var(--ease-out), backdrop-filter 280ms var(--ease-out), border-color 280ms var(--ease-out)",

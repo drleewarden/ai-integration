@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
+import { BreadcrumbSchema } from "../../components/Schema";
 
 export const metadata: Metadata = {
   title: "AI Implementation Case Studies Australia | Real Outcomes | Creative Milk",
@@ -92,6 +93,10 @@ const caseStudies = [
 export default function Work() {
   return (
     <>
+      <BreadcrumbSchema items={[
+        { name: 'Home', url: '/' },
+        { name: 'Work', url: '/work' },
+      ]} />
       <a href="#main" className="skip-link">Skip to content</a>
       <Nav />
       <main id="main">
