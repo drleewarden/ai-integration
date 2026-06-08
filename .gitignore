@@ -43,3 +43,6 @@ next-env.d.ts
 
 # local Claude / Cowork tooling state
 .claude/
+
+# local docs / planning files
+/docs/
