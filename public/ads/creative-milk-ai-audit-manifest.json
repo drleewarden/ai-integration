@@ -1,0 +1,31 @@
+{
+  "campaign": "Creative Milk AI Audit",
+  "character": "Ava Hart",
+  "sourceImage": "public/ava-hart-reference-freckles.png",
+  "files": [
+    {
+      "svg": "public/ads/creative-milk-ai-audit-300x250.svg",
+      "png": "public/ads/creative-milk-ai-audit-300x250.svg.png",
+      "width": 300,
+      "height": 250
+    },
+    {
+      "svg": "public/ads/creative-milk-ai-audit-728x90.svg",
+      "png": "public/ads/creative-milk-ai-audit-728x90.svg.png",
+      "width": 728,
+      "height": 90
+    },
+    {
+      "svg": "public/ads/creative-milk-ai-audit-160x600.svg",
+      "png": "public/ads/creative-milk-ai-audit-160x600.svg.png",
+      "width": 160,
+      "height": 600
+    },
+    {
+      "svg": "public/ads/creative-milk-ai-audit-1080x1080.svg",
+      "png": "public/ads/creative-milk-ai-audit-1080x1080.svg.png",
+      "width": 1080,
+      "height": 1080
+    }
+  ]
+}

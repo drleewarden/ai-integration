@@ -55,6 +55,7 @@ export default function Footer() {
               ["Case studies", "/#work"],
               ["Process", "/#process"],
               ["Pricing", "/pricing"],
+              ["Opportunity cost calculator", "/opportunity-cost"],
               ["For professional services", "/for/professional-services"],
               ["Contact", "/#contact"],
             ].map(([label, href]) => (
