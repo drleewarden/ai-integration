@@ -3,6 +3,7 @@ import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import Analytics from "./components/Analytics";
 import BackToTop from "./components/BackToTop";
+import ConsentBanner from "./components/ConsentBanner";
 import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
 
@@ -100,6 +101,7 @@ export default function RootLayout({
         <Analytics />
         {children}
         <BackToTop />
+        <ConsentBanner />
       </body>
     </html>
   );

@@ -1,4 +1,5 @@
 import { CMWordmark } from "./CMLogo";
+import CookieSettingsLink from "./CookieSettingsLink";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -137,17 +138,26 @@ export default function Footer() {
         >
           © {year} Creative Milk. AI Solutions for Businesses.
         </p>
-        <p
+        <div
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.6rem",
-            letterSpacing: "0.12em",
-            color: "rgba(245,240,232,0.32)",
-            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: "1.25rem",
           }}
         >
-          AI that works.
-        </p>
+          <CookieSettingsLink />
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.12em",
+              color: "rgba(245,240,232,0.32)",
+              margin: 0,
+            }}
+          >
+            AI that works.
+          </p>
+        </div>
       </div>
     </footer>
   );
