@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -7,7 +8,10 @@ export default function NewsletterForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) setSubmitted(true);
+    if (email) {
+      pushEvent(EVENTS.NEWSLETTER_SUBMIT, { form_id: "newsletter" });
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {

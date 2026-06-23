@@ -1,4 +1,7 @@
+"use client";
+
 import { TrendingUp, ArrowRight } from "lucide-react";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 type CaseStudy = {
   sector: string;
@@ -282,6 +285,13 @@ export default function Work() {
                 href={study.href}
                 className="cta-link"
                 aria-label={`Read the full ${study.sector} case study`}
+                onClick={() =>
+                  pushEvent(EVENTS.CTA_CLICK, {
+                    cta_label: "read_case_study",
+                    cta_location: "work_card",
+                    case_study: study.href,
+                  })
+                }
               >
                 Read the full case study{" "}
                 <ArrowRight size={12} aria-hidden="true" />
@@ -315,7 +325,16 @@ export default function Work() {
             Want the version of this for your firm? The pilot tells you in 30
             days whether it ships.
           </p>
-          <a href="/pricing" className="cta cta-gold">
+          <a
+            href="/pricing"
+            className="cta cta-gold"
+            onClick={() =>
+              pushEvent(EVENTS.CTA_CLICK, {
+                cta_label: "see_the_pilot",
+                cta_location: "work_footer",
+              })
+            }
+          >
             See the pilot
             <ArrowRight size={14} aria-hidden="true" />
           </a>

@@ -1,5 +1,7 @@
 "use client";
 
+import { EVENTS, pushEvent } from "../lib/gtm";
+
 export const COOKIE_SETTINGS_EVENT = "cm:open-consent-banner";
 
 export default function CookieSettingsLink() {
@@ -10,6 +12,7 @@ export default function CookieSettingsLink() {
     } catch {
       // Storage may be blocked; banner will still reopen for this session.
     }
+    pushEvent(EVENTS.COOKIE_SETTINGS_OPEN);
     window.dispatchEvent(new Event(COOKIE_SETTINGS_EVENT));
   };
 

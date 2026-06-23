@@ -25,6 +25,12 @@ export const EVENTS = {
   CONTACT_FORM_SUBMIT: "contact_form_submit",
   CONTACT_FORM_ERROR: "contact_form_error",
   CTA_CLICK: "cta_click",
+  WORKSHOP_SIGNUP_SUBMIT: "workshop_signup_submit",
+  WORKSHOP_SIGNUP_ERROR: "workshop_signup_error",
+  NEWSLETTER_SUBMIT: "newsletter_submit",
+  CONSENT_ACCEPT: "consent_accept",
+  CONSENT_DECLINE: "consent_decline",
+  COOKIE_SETTINGS_OPEN: "cookie_settings_open",
 } as const;
 
 export type EventName = (typeof EVENTS)[keyof typeof EVENTS] | (string & {});

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,6 +19,10 @@ export default function BackToTop() {
   }, []);
 
   const scrollToTop = () => {
+    pushEvent(EVENTS.CTA_CLICK, {
+      cta_label: "back_to_top",
+      cta_location: "floating",
+    });
     window.scrollTo({
       top: 0,
       behavior: "smooth",

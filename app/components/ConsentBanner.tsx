@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { grantConsent, denyConsent } from "../lib/gtm";
+import { EVENTS, grantConsent, denyConsent, pushEvent } from "../lib/gtm";
 import { COOKIE_SETTINGS_EVENT } from "./CookieSettingsLink";
 
 const STORAGE_KEY = "cm_consent";
@@ -47,12 +47,14 @@ export default function ConsentBanner() {
 
   const handleAccept = () => {
     grantConsent();
+    pushEvent(EVENTS.CONSENT_ACCEPT);
     writeStoredChoice("granted");
     setVisible(false);
   };
 
   const handleDecline = () => {
     denyConsent();
+    pushEvent(EVENTS.CONSENT_DECLINE);
     writeStoredChoice("denied");
     setVisible(false);
   };
