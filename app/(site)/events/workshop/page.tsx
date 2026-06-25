@@ -225,7 +225,7 @@ export default function WorkshopSignup() {
                   { label: "Time", value: "2:00 PM" },
                   { label: "Format", value: "In person" },
                   { label: "Location", value: "Elwood + St Kilda Neighbourhood Learning Centre (ESNLC)" },
-                  { label: "Price", value: "Free — first 24 seats" },
+                  { label: "Price", value: "$29" },
                   { label: "Seats", value: "24 only" },
                 ].map((item) => (
                   <div key={item.label}>
