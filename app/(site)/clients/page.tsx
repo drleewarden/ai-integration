@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import Nav from "../../components/Nav";
 import Clients from "../../components/Clients";
@@ -27,124 +28,157 @@ export default function ClientsPage() {
       </a>
       <Nav />
       <main id="main">
-        {/* ── Hero ── */}
-        <section
-          className="section"
-          style={{
-            background: "var(--midnight-ink)",
-            color: "var(--warm-cream)",
-            paddingTop: "clamp(7rem, 13vw, 10rem)",
-            paddingBottom: "clamp(3rem, 6vw, 5rem)",
-            borderBottom: "1px solid var(--rule-cream-strong)",
-          }}
-        >
-          <div className="container">
-            <p className="eyebrow" style={{ marginBottom: "1.75rem" }}>
-              Selected Companies
-            </p>
+        {/* ── Background image zone: hero → client tiles ── */}
+        <div style={{ position: "relative", overflow: "hidden" }}>
+          {/* Background image */}
+          <Image
+            src="/images/clients-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            aria-hidden="true"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center 20%",
+              zIndex: 0,
+            }}
+          />
+          {/* Dark overlay for readability */}
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(180deg, rgba(15,21,38,0.72) 0%, rgba(15,21,38,0.65) 50%, rgba(15,21,38,0.80) 100%)",
+              zIndex: 1,
+            }}
+          />
 
-            <h1
-              className="h-display"
-              style={{
-                fontSize: "clamp(2.75rem, 7.5vw, 6.25rem)",
-                color: "var(--warm-cream)",
-                maxWidth: "20ch",
-                marginBottom: "1.5rem",
-              }}
-            >
-              The companies we&rsquo;ve helped{" "}
-              <em className="gold">ship real systems.</em>
-            </h1>
+          {/* ── Hero ── */}
+          <section
+            className="section"
+            style={{
+              position: "relative",
+              zIndex: 2,
+              background: "transparent",
+              color: "var(--warm-cream)",
+              paddingTop: "clamp(7rem, 13vw, 10rem)",
+              paddingBottom: "clamp(3rem, 6vw, 5rem)",
+              borderBottom: "1px solid var(--rule-cream-strong)",
+            }}
+          >
+            <div className="container">
+              <p className="eyebrow" style={{ marginBottom: "1.75rem" }}>
+                Selected Companies
+              </p>
 
-            <p
-              className="body-copy"
-              style={{
-                maxWidth: "58ch",
-                color: "rgba(245,240,232,0.65)",
-                fontSize: "1.05rem",
-                lineHeight: 1.75,
-              }}
-            >
-              A snapshot of work across enterprise software, government,
-              insurance, energy, health, retail, and design-led technology
-              teams. Different sectors, same standard: AI systems with a
-              measurable target before a single line of code gets written.
-            </p>
-          </div>
-        </section>
+              <h1
+                className="h-display"
+                style={{
+                  fontSize: "clamp(2.75rem, 7.5vw, 6.25rem)",
+                  color: "var(--warm-cream)",
+                  maxWidth: "20ch",
+                  marginBottom: "1.5rem",
+                }}
+              >
+                The companies we&rsquo;ve helped{" "}
+                <em className="gold">ship real systems.</em>
+              </h1>
 
-        {/* ── Sector stat strip ── */}
-        <section
-          aria-label="Reach by the numbers"
-          style={{
-            background: "var(--midnight-ink)",
-            color: "var(--warm-cream)",
-            borderBottom: "1px solid var(--rule-cream-strong)",
-          }}
-        >
-          <div className="container">
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns:
-                  "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
-                gap: 0,
-                borderTop: "1px solid var(--rule-cream-strong)",
-              }}
-            >
-              {SECTOR_STATS.map((stat, i) => (
-                <div
-                  key={stat.label}
-                  style={{
-                    padding: "clamp(1.5rem, 3vw, 2.25rem)",
-                    borderRight:
-                      i < SECTOR_STATS.length - 1
-                        ? "1px solid var(--rule-cream-strong)"
-                        : "none",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.4rem",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 300,
-                      fontSize: "clamp(2rem, 3.6vw, 2.85rem)",
-                      lineHeight: 1,
-                      color: "var(--warm-cream)",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: "0.62rem",
-                      letterSpacing: "0.15em",
-                      textTransform: "uppercase",
-                      color: "rgba(245,240,232,0.58)",
-                    }}
-                  >
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
+              <p
+                className="body-copy"
+                style={{
+                  maxWidth: "58ch",
+                  color: "rgba(245,240,232,0.65)",
+                  fontSize: "1.05rem",
+                  lineHeight: 1.75,
+                }}
+              >
+                A snapshot of work across enterprise software, government,
+                insurance, energy, health, retail, and design-led technology
+                teams. Different sectors, same standard: AI systems with a
+                measurable target before a single line of code gets written.
+              </p>
             </div>
-          </div>
-        </section>
+          </section>
 
-        {/* ── Logo grid ── */}
-        <Clients standalone />
+          {/* ── Sector stat strip ── */}
+          <section
+            aria-label="Reach by the numbers"
+            style={{
+              position: "relative",
+              zIndex: 2,
+              background: "transparent",
+              color: "var(--warm-cream)",
+              borderBottom: "1px solid var(--rule-cream-strong)",
+            }}
+          >
+            <div className="container">
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns:
+                    "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
+                  gap: 0,
+                  borderTop: "1px solid var(--rule-cream-strong)",
+                }}
+              >
+                {SECTOR_STATS.map((stat, i) => (
+                  <div
+                    key={stat.label}
+                    style={{
+                      padding: "clamp(1.5rem, 3vw, 2.25rem)",
+                      borderRight:
+                        i < SECTOR_STATS.length - 1
+                          ? "1px solid var(--rule-cream-strong)"
+                          : "none",
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.4rem",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 300,
+                        fontSize: "clamp(2rem, 3.6vw, 2.85rem)",
+                        lineHeight: 1,
+                        color: "var(--warm-cream)",
+                        letterSpacing: "-0.02em",
+                      }}
+                    >
+                      {stat.value}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.62rem",
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: "rgba(245,240,232,0.58)",
+                      }}
+                    >
+                      {stat.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ── Logo grid ── */}
+          <Clients standalone bgTransparent />
+        </div>
 
         {/* ── Closing CTA band ── */}
         <section
           style={{
-            background: "var(--midnight-ink)",
-            color: "var(--warm-cream)",
+            background: "var(--warm-cream)",
+            color: "var(--midnight-ink)",
             padding: "clamp(4rem, 7vw, 6rem) 0",
-            borderBottom: "1px solid var(--rule-cream-strong)",
+            borderBottom: "1px solid rgba(15,21,38,0.12)",
           }}
         >
           <div className="container">
@@ -164,7 +198,7 @@ export default function ClientsPage() {
                 <h2
                   className="h-section"
                   style={{
-                    color: "var(--warm-cream)",
+                    color: "var(--midnight-ink)",
                     margin: 0,
                     maxWidth: "20ch",
                   }}
@@ -186,7 +220,7 @@ export default function ClientsPage() {
                 <p
                   className="body-copy"
                   style={{
-                    color: "rgba(245,240,232,0.65)",
+                    color: "rgba(15,21,38,0.65)",
                     margin: 0,
                   }}
                 >
@@ -207,7 +241,7 @@ export default function ClientsPage() {
                   </Link>
                   <Link
                     href="/work"
-                    className="cta cta-outline-cream"
+                    className="cta cta-outline-ink"
                   >
                     See the work
                   </Link>
@@ -217,7 +251,7 @@ export default function ClientsPage() {
           </div>
         </section>
 
-        <Contact />
+        <Contact variant="cream" />
       </main>
       <Footer />
     </>

@@ -165,8 +165,10 @@ function ClientWordmark({ client }: { client: Client }) {
 
 export default function Clients({
   standalone = false,
+  bgTransparent = false,
 }: {
   standalone?: boolean;
+  bgTransparent?: boolean;
 }) {
   return (
     <section
@@ -174,10 +176,12 @@ export default function Clients({
       className={standalone ? "section" : "section-tight"}
       aria-labelledby="clients-heading"
       style={{
-        background: "var(--midnight-ink)",
+        background: bgTransparent ? "transparent" : "var(--midnight-ink)",
         color: "var(--warm-cream)",
         borderTop: standalone ? "none" : "1px solid var(--rule-cream-strong)",
         borderBottom: "1px solid var(--rule-cream-strong)",
+        position: bgTransparent ? "relative" : undefined,
+        zIndex: bgTransparent ? 2 : undefined,
       }}
     >
       <div className="container">

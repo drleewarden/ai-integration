@@ -361,6 +361,41 @@ textarea.input-dark {
   line-height: 1.6;
 }
 
+.input-light {
+  width: 100%;
+  background: rgba(15, 21, 38, 0.05);
+  border: 1px solid rgba(15, 21, 38, 0.2);
+  padding: 1rem 1.25rem;
+  min-height: 48px;
+  color: var(--midnight-ink);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.input-light::placeholder {
+  color: rgba(15, 21, 38, 0.35);
+}
+
+.input-light:hover {
+  border-color: rgba(15, 21, 38, 0.35);
+}
+
+.input-light:focus,
+.input-light:focus-visible {
+  border-color: var(--liquid-gold);
+  background: rgba(15, 21, 38, 0.08);
+  outline: none;
+}
+
+textarea.input-light {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.6;
+}
+
 /* ─────────────────────────────────────────────────────
    Animations
    ───────────────────────────────────────────────────── */

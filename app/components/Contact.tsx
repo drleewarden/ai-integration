@@ -19,7 +19,8 @@ type Status =
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function Contact() {
+export default function Contact({ variant = "dark" }: { variant?: "dark" | "cream" }) {
+  const isCream = variant === "cream";
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -102,8 +103,8 @@ export default function Contact() {
       id="contact"
       className="section"
       style={{
-        background: "var(--midnight-ink)",
-        color: "var(--warm-cream)",
+        background: isCream ? "var(--warm-cream)" : "var(--midnight-ink)",
+        color: isCream ? "var(--midnight-ink)" : "var(--warm-cream)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -116,8 +117,9 @@ export default function Contact() {
           right: "-10%",
           width: 700,
           height: 700,
-          background:
-            "radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 65%)",
+          background: isCream
+            ? "radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%)"
+            : "radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -129,8 +131,9 @@ export default function Contact() {
           left: "-10%",
           width: 500,
           height: 500,
-          background:
-            "radial-gradient(circle, rgba(61,122,95,0.08) 0%, transparent 65%)",
+          background: isCream
+            ? "radial-gradient(circle, rgba(61,122,95,0.06) 0%, transparent 65%)"
+            : "radial-gradient(circle, rgba(61,122,95,0.08) 0%, transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -154,7 +157,7 @@ export default function Contact() {
             className="h-display"
             style={{
               fontSize: "clamp(2.75rem, 6vw, 5rem)",
-              color: "var(--warm-cream)",
+              color: isCream ? "var(--midnight-ink)" : "var(--warm-cream)",
               margin: "1rem 0 1.5rem",
               maxWidth: "14ch",
             }}
@@ -168,7 +171,7 @@ export default function Contact() {
               fontFamily: "var(--font-sans)",
               fontSize: "0.95rem",
               lineHeight: 1.7,
-              color: "rgba(245,240,232,0.55)",
+              color: isCream ? "rgba(15,21,38,0.6)" : "rgba(245,240,232,0.55)",
               maxWidth: "40ch",
               marginBottom: "2.5rem",
             }}
@@ -189,7 +192,7 @@ export default function Contact() {
               fontFamily: "var(--font-mono)",
               fontSize: "0.7rem",
               letterSpacing: "0.08em",
-              color: "rgba(245,240,232,0.6)",
+              color: isCream ? "rgba(15,21,38,0.6)" : "rgba(245,240,232,0.6)",
             }}
           >
             <li>→ No NDAs in the first call</li>
@@ -278,6 +281,8 @@ export default function Contact() {
               onChange={onChange}
               required
               autoComplete="name"
+              inputClass={isCream ? "input-light" : "input-dark"}
+              labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
             />
             <Field
               label="Email address"
@@ -287,6 +292,8 @@ export default function Contact() {
               onChange={onChange}
               required
               autoComplete="email"
+              inputClass={isCream ? "input-light" : "input-dark"}
+              labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
             />
           </div>
           <Field
@@ -295,6 +302,8 @@ export default function Contact() {
             value={form.company}
             onChange={onChange}
             autoComplete="organization"
+            inputClass={isCream ? "input-light" : "input-dark"}
+            labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
           />
           <Field
             label="Tell us about your project"
@@ -303,6 +312,8 @@ export default function Contact() {
             onChange={onChange}
             required
             multiline
+            inputClass={isCream ? "input-light" : "input-dark"}
+            labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
           />
 
           <button
@@ -336,6 +347,8 @@ function Field({
   required = false,
   multiline = false,
   autoComplete,
+  inputClass = "input-dark",
+  labelColor = "rgba(245,240,232,0.5)",
 }: {
   label: string;
   name: string;
@@ -345,6 +358,8 @@ function Field({
   required?: boolean;
   multiline?: boolean;
   autoComplete?: string;
+  inputClass?: string;
+  labelColor?: string;
 }) {
   const id = `field-${name}`;
   return (
@@ -358,7 +373,7 @@ function Field({
           fontSize: "0.6rem",
           letterSpacing: "0.16em",
           textTransform: "uppercase",
-          color: "rgba(245,240,232,0.5)",
+          color: labelColor,
         }}
       >
         {label}
@@ -376,7 +391,7 @@ function Field({
           onChange={onChange}
           required={required}
           rows={5}
-          className="input-dark"
+          className={inputClass}
           placeholder="A few sentences is plenty."
         />
       ) : (
@@ -388,7 +403,7 @@ function Field({
           onChange={onChange}
           required={required}
           autoComplete={autoComplete}
-          className="input-dark"
+          className={inputClass}
         />
       )}
     </label>
