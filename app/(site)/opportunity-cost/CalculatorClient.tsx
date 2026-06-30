@@ -97,6 +97,13 @@ export default function CalculatorClient() {
           background: ${C.gold}; border: 2px solid ${C.ink}; cursor: pointer;
         }
         .oc-num:focus, .oc-select:focus { outline: none; border-color: ${C.ink}; }
+        /* Inputs panel: static on mobile (stacked layout) so it never covers
+           the results while scrolling; sticky only on the wide two-column
+           layout, offset to clear the fixed nav. */
+        .oc-inputs { position: static; }
+        @media (min-width: 881px) {
+          .oc-inputs { position: sticky; top: 88px; align-self: start; }
+        }
       `}</style>
 
       <Hero />
@@ -133,7 +140,7 @@ export default function CalculatorClient() {
               setDelayMonths={setDelayMonths}
             />
 
-            <ResultsPanel result={result} delayMonths={delayMonths} />
+            <ResultsPanel result={result} />
           </div>
 
           <ProjectionSection result={result} delayMonths={delayMonths} />
@@ -167,7 +174,7 @@ function Hero() {
       <Nav />
       <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '128px 24px 72px' }}>
         <div style={{ marginBottom: '28px' }}>
-          <Label>-- Opportunity Cost Calculator</Label>
+          <Label>-- AI Value Calculator</Label>
         </div>
         <h1
           style={{
@@ -177,14 +184,14 @@ function Hero() {
             letterSpacing: '-0.02em',
             color: C.cream,
             margin: '0 0 28px',
-            maxWidth: '15ch',
+            maxWidth: '16ch',
           }}
         >
-          What is waiting{' '}
+          See what AI could{' '}
           <em style={{ color: C.gold, fontStyle: 'italic', fontWeight: 300 }}>
             actually
           </em>{' '}
-          costing you?
+          be worth to you.
         </h1>
         <p
           style={{
@@ -196,10 +203,10 @@ function Hero() {
             margin: 0,
           }}
         >
-          Every month without the right AI tools in place is value left on the
-          table — hours your team burns on repetitive work, revenue you never
-          capture, errors you keep paying to fix. Enter a few numbers you already
-          know and see the cost of standing still.
+          A few numbers you already know is all it takes to see the time and money
+          the right AI tools could put back into your business — this year, and
+          over the next five. No jargon, no sign-up. Just a grounded sense of
+          what&rsquo;s on the table when you act.
         </p>
       </div>
     </div>
@@ -224,12 +231,11 @@ function InputsPanel(props: {
 }) {
   return (
     <div
+      className="oc-inputs"
       style={{
         background: '#FFFFFF',
         border: `1px solid ${C.border}`,
         padding: '32px',
-        position: 'sticky',
-        top: '24px',
       }}
     >
       <div style={{ marginBottom: '24px' }}>
@@ -275,6 +281,7 @@ function InputsPanel(props: {
           onChange={props.setEmployees}
           step={1}
           min={0}
+          prefix=""
         />
         <NumberField
           label="Avg loaded salary"
@@ -366,39 +373,61 @@ function NumberField({
   onChange,
   step,
   min,
+  prefix = 'A$',
 }: {
   label: string;
   value: number;
   onChange: (n: number) => void;
   step: number;
   min: number;
+  prefix?: string;
 }) {
+  // Keep a local text buffer so the field can be emptied while editing.
+  // Controlling purely on the numeric value coerces '' back to 0, which on
+  // mobile leaves a stuck leading zero in front of whatever you type.
+  const [text, setText] = useState<string>(value ? String(value) : '');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    setText(raw);
+    if (raw.trim() === '') {
+      onChange(0);
+      return;
+    }
+    const n = Number(raw);
+    if (!Number.isNaN(n)) onChange(n);
+  };
+
+  const hasPrefix = prefix !== '';
+
   return (
     <FieldLabel label={label}>
       <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
-        <span
-          style={{
-            position: 'absolute',
-            left: '14px',
-            ...F.ui,
-            fontSize: '14px',
-            color: C.slateMute,
-            pointerEvents: 'none',
-          }}
-        >
-          A$
-        </span>
+        {hasPrefix && (
+          <span
+            style={{
+              position: 'absolute',
+              left: '14px',
+              ...F.ui,
+              fontSize: '14px',
+              color: C.slateMute,
+              pointerEvents: 'none',
+            }}
+          >
+            {prefix}
+          </span>
+        )}
         <input
           className="oc-num"
           type="number"
           inputMode="numeric"
           min={min}
           step={step}
-          value={Number.isFinite(value) ? value : 0}
-          onChange={(e) => onChange(Number(e.target.value))}
+          value={text}
+          onChange={handleChange}
           style={{
             width: '100%',
-            padding: '12px 14px 12px 38px',
+            padding: hasPrefix ? '12px 14px 12px 38px' : '12px 14px',
             background: C.cream,
             border: `1px solid ${C.border}`,
             color: C.slate,
@@ -413,13 +442,7 @@ function NumberField({
 
 // ── Results ──────────────────────────────────────────────────────────────────
 
-function ResultsPanel({
-  result,
-  delayMonths,
-}: {
-  result: CalculatorResult;
-  delayMonths: number;
-}) {
+function ResultsPanel({ result }: { result: CalculatorResult }) {
   return (
     <div>
       {/* Headline */}
@@ -446,18 +469,18 @@ function ResultsPanel({
           }}
         />
         <div style={{ position: 'relative' }}>
-          <Label>-- Cost of delaying {delayMonths} months</Label>
+          <Label>-- What acting now is worth</Label>
           <div
             style={{
               ...F.display,
-              fontSize: 'clamp(48px, 8vw, 84px)',
+              fontSize: 'clamp(44px, 7vw, 76px)',
               lineHeight: 1,
               letterSpacing: '-0.02em',
               color: C.gold,
               margin: '16px 0 12px',
             }}
           >
-            {formatCurrency(result.costOfDelay)}
+            {formatCurrency(result.fiveYearActNow)}
           </div>
           <p
             style={{
@@ -468,11 +491,9 @@ function ResultsPanel({
               margin: 0,
             }}
           >
-            That&rsquo;s roughly{' '}
-            <strong style={{ color: C.cream }}>
-              {formatCurrency(result.costPerWorkingDay)}
-            </strong>{' '}
-            of value forgone every working day you wait.
+            in value your business could capture over the next five years by
+            putting the right AI tools to work — built from time reclaimed,
+            revenue gained and rework removed.
           </p>
         </div>
       </div>
@@ -492,11 +513,11 @@ function ResultsPanel({
         />
         <Stat
           value={formatCompact(result.netAnnualValue)}
-          label="Net value / year"
+          label="Value added / year"
         />
         <Stat
-          value={formatCompact(result.fiveYearGap)}
-          label="5-year gap vs acting now"
+          value={formatCurrency(result.valuePerWorkingDay)}
+          label="Value / working day"
         />
       </div>
 
@@ -665,7 +686,7 @@ function ProjectionSection({
         </div>
       </div>
 
-      <ProjectionChart result={result} />
+      <ProjectionChart result={result} delayMonths={delayMonths} />
 
       <p
         style={{
@@ -677,12 +698,17 @@ function ProjectionSection({
           maxWidth: '70ch',
         }}
       >
-        Delaying doesn&rsquo;t just push the start date back — it leaves you
-        permanently behind. Over five years, waiting {delayMonths} months opens a{' '}
+        The gold line is acting now; the dashed line is starting {delayMonths}{' '}
+        months later. Both reach the same run-rate — but the head start compounds.
+        Over five years that&rsquo;s about{' '}
         <strong style={{ color: C.slate }}>
-          {formatCurrency(result.fiveYearGap)}
+          {formatCurrency(result.fiveYearActNow)}
         </strong>{' '}
-        gap versus moving now.
+        captured, roughly{' '}
+        <strong style={{ color: C.slate }}>
+          {formatCurrency(result.costOfWaiting)}
+        </strong>{' '}
+        more than if you wait.
       </p>
     </div>
   );
@@ -712,19 +738,26 @@ function Legend({
   );
 }
 
-function ProjectionChart({ result }: { result: CalculatorResult }) {
+function ProjectionChart({
+  result,
+  delayMonths,
+}: {
+  result: CalculatorResult;
+  delayMonths: number;
+}) {
   const W = 1000;
-  const H = 320;
-  const padL = 8;
-  const padR = 8;
-  const padB = 28;
-  const padT = 8;
+  const H = 380;
+  const padL = 76;
+  const padR = 92;
+  const padB = 46;
+  const padT = 26;
   const innerW = W - padL - padR;
   const innerH = H - padT - padB;
 
   const points = result.projection;
   const max = Math.max(1, result.fiveYearActNow);
   const lastMonth = points.length;
+  const mono = '"DM Mono", monospace';
 
   const x = (month: number) => padL + ((month - 1) / (lastMonth - 1)) * innerW;
   const y = (value: number) => padT + innerH - (value / max) * innerH;
@@ -740,30 +773,72 @@ function ProjectionChart({ result }: { result: CalculatorResult }) {
   const areaPath = `M ${areaTop.join(' L ')} L ${areaBottom.join(' L ')} Z`;
 
   const yearTicks = [12, 24, 36, 48, 60];
+  const yGrid = [0, 0.25, 0.5, 0.75, 1];
+
+  const actNowEnd = points[points.length - 1].actNow;
+  const delayedEnd = points[points.length - 1].delayed;
+  const delayX = x(Math.max(1, Math.min(delayMonths, lastMonth)));
+
+  // Gap annotation, placed mid-band on the right half of the chart.
+  const annM = 46;
+  const annPt = points[annM - 1];
+  const annX = x(annM);
+  const annY = (y(annPt.actNow) + y(annPt.delayed)) / 2;
 
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
       width="100%"
       role="img"
-      aria-label="Cumulative value over five years: acting now versus delaying"
+      aria-label={`Cumulative value over five years: acting now reaches ${formatCurrency(
+        actNowEnd,
+      )} versus ${formatCurrency(delayedEnd)} if you wait ${delayMonths} months`}
       style={{ display: 'block' }}
     >
-      {/* gridlines */}
-      {[0.25, 0.5, 0.75, 1].map((f) => (
-        <line
-          key={f}
-          x1={padL}
-          x2={W - padR}
-          y1={padT + innerH - f * innerH}
-          y2={padT + innerH - f * innerH}
-          stroke={C.border}
-          strokeWidth={1}
-          strokeDasharray="2 4"
-        />
-      ))}
+      {/* y-axis caption */}
+      <text x={padL} y={12} fontFamily={mono} fontSize={10} fill={C.slateMute} letterSpacing="0.12em">
+        CUMULATIVE VALUE (AUD)
+      </text>
+
+      {/* horizontal gridlines + $ labels */}
+      {yGrid.map((f) => {
+        const gy = padT + innerH - f * innerH;
+        return (
+          <g key={f}>
+            <line
+              x1={padL}
+              x2={W - padR}
+              y1={gy}
+              y2={gy}
+              stroke={C.border}
+              strokeWidth={1}
+              strokeDasharray="2 4"
+            />
+            <text x={padL - 12} y={gy + 4} textAnchor="end" fontFamily={mono} fontSize={11} fill={C.slateMute}>
+              {formatCompact(f * max)}
+            </text>
+          </g>
+        );
+      })}
+
       {/* gap band */}
-      <path d={areaPath} fill="rgba(201,168,76,0.12)" stroke="none" />
+      <path d={areaPath} fill="rgba(201,168,76,0.16)" stroke="none" />
+
+      {/* delay marker: where the "wait" scenario starts climbing */}
+      <line
+        x1={delayX}
+        x2={delayX}
+        y1={padT}
+        y2={padT + innerH}
+        stroke={C.slateMute}
+        strokeWidth={1}
+        strokeDasharray="3 4"
+        opacity={0.45}
+      />
+      <text x={delayX} y={padT - 8} textAnchor="middle" fontFamily={mono} fontSize={10} fill={C.slateMute}>
+        WAIT {delayMonths}MO
+      </text>
+
       {/* delayed curve */}
       <polyline
         points={line('delayed')}
@@ -773,21 +848,55 @@ function ProjectionChart({ result }: { result: CalculatorResult }) {
         strokeDasharray="5 5"
       />
       {/* act-now curve */}
-      <polyline points={line('actNow')} fill="none" stroke={C.gold} strokeWidth={2.5} />
+      <polyline points={line('actNow')} fill="none" stroke={C.gold} strokeWidth={2.75} />
+
+      {/* gap annotation */}
+      <text
+        x={annX}
+        y={annY + 4}
+        textAnchor="middle"
+        fontFamily={mono}
+        fontSize={11}
+        fontWeight={500}
+        fill={C.ink}
+      >
+        +{formatCompact(result.costOfWaiting)} by acting now
+      </text>
+
+      {/* endpoint dots + value labels */}
+      <circle cx={x(lastMonth)} cy={y(actNowEnd)} r={3.5} fill={C.gold} />
+      <text
+        x={x(lastMonth) + 9}
+        y={y(actNowEnd) + 4}
+        fontFamily={mono}
+        fontSize={12}
+        fontWeight={600}
+        fill={C.ink}
+      >
+        {formatCompact(actNowEnd)}
+      </text>
+      <circle cx={x(lastMonth)} cy={y(delayedEnd)} r={3.5} fill={C.slateMute} />
+      <text x={x(lastMonth) + 9} y={y(delayedEnd) + 4} fontFamily={mono} fontSize={12} fill={C.slateMute}>
+        {formatCompact(delayedEnd)}
+      </text>
+
       {/* x-axis year labels */}
       {yearTicks.map((m) => (
         <text
           key={m}
           x={x(m)}
-          y={H - 8}
+          y={H - 12}
           textAnchor="middle"
-          fontFamily='"DM Mono", monospace'
+          fontFamily={mono}
           fontSize={11}
           fill={C.slateMute}
         >
           Yr {m / 12}
         </text>
       ))}
+      <text x={padL + innerW / 2} y={H - 1} textAnchor="middle" fontFamily={mono} fontSize={9} fill={C.slateMute} letterSpacing="0.1em">
+        YEARS FROM TODAY
+      </text>
     </svg>
   );
 }
@@ -859,9 +968,9 @@ function MethodologyNote() {
             <strong style={{ color: C.slate }}>
               {Math.round(IMPLEMENTATION_COST_FRACTION * 100)}%
             </strong>{' '}
-            for tooling, delivery and internal change effort. The cost of delay is
-            the net value forgone across your chosen waiting period, nudged up
-            slightly each month as competitors adopt. Hours are based on{' '}
+            for tooling, delivery and internal change effort. The cost of waiting
+            is simply the net value forgone across the months you delay, and the
+            five-year view shows how that head start compounds. Hours are based on{' '}
             {formatNumber(PRODUCTIVE_HOURS_PER_YEAR)} productive hours per person
             per year.
           </p>
@@ -939,25 +1048,25 @@ function LeversSection() {
   const cards = [
     {
       n: '01',
-      title: 'Productivity you’re renting out',
-      body: 'Your team is capable of high-value work. Every hour spent on tasks software could handle is an hour you’re paying senior rates for junior output. The calculator prices that gap at your real salary load — not a theoretical hourly rate.',
+      title: 'Time your team gets back',
+      body: 'Your people are capable of high-value work. The right AI takes the repetitive tasks off their plate, so the hours you’re already paying for go into the work that actually moves the business. The calculator values that reclaimed time at your real salary load.',
     },
     {
       n: '02',
-      title: 'Revenue that never shows up',
-      body: 'The enquiry you answered a day too late. The customer who didn’t get a same-day response. The capacity you couldn’t free to chase growth. It rarely appears as a loss because no invoice ever lands — which is exactly what makes it so easy to ignore.',
+      title: 'Revenue you’re set up to capture',
+      body: 'Faster responses, same-day follow-ups, capacity freed to chase growth. When your team isn’t buried in busywork, more of the opportunities already in front of you convert — and that shows up as revenue.',
     },
     {
       n: '03',
-      title: 'Rework you’ve normalised',
-      body: 'Errors, re-keying, hunting for the right version of a document. Most businesses have quietly filed this under “the cost of doing business.” It isn’t. It’s the cost of doing business manually — and it’s optional.',
+      title: 'Quality that compounds',
+      body: 'Fewer errors, less re-keying, no more hunting for the right version of a document. Automating the routine lifts accuracy and frees people from fixing avoidable mistakes — so good work happens right the first time.',
     },
   ];
   return (
     <Band bg={C.cream} color={C.slate}>
       <div style={{ maxWidth: '760px', marginBottom: 'clamp(32px, 5vw, 48px)' }}>
-        <BandHeading eyebrow="-- Reading the result" color={C.ink}>
-          Three places inaction quietly shows up on your P&amp;L
+        <BandHeading eyebrow="-- Where the value comes from" color={C.ink}>
+          Three ways the right AI pays you back
         </BandHeading>
         <p
           style={{
@@ -968,9 +1077,9 @@ function LeversSection() {
             margin: '20px 0 0',
           }}
         >
-          The cost of waiting isn’t abstract. It lands in three concrete places
-          every quarter you don’t move. Each lever in the calculator is measuring
-          one of them.
+          The numbers above aren’t abstract. They come from three concrete places
+          in your business — and each lever in the calculator is measuring one of
+          them.
         </p>
       </div>
       <div
@@ -1019,19 +1128,19 @@ function LeversSection() {
 function CompoundingSection() {
   const points = [
     {
-      title: 'The value is non-recoverable',
-      body: 'A month of reclaimed hours you didn’t reclaim is simply gone. There’s no catch-up sprint that gives you back the quarter you spent deciding.',
+      title: 'Value starts the day you go live',
+      body: 'The sooner the right tools are in place, the sooner the time and money start flowing back — and every month of head start counts toward the five-year picture.',
     },
     {
-      title: 'The benchmark keeps moving',
-      body: 'As AI becomes standard in your sector, what was an edge becomes the price of entry. Wait long enough and you’re paying to catch up rather than to lead.',
+      title: 'Early movers set the pace',
+      body: 'Getting comfortable with AI now means you’re shaping how it works in your business while others are still deciding — a lead that’s much easier to build than to buy back later.',
     },
   ];
   return (
     <Band bg={C.ink} color={C.cream}>
       <div style={{ maxWidth: '720px' }}>
-        <BandHeading eyebrow="-- The compounding problem" color={C.cream} eyebrowColor={C.gold}>
-          Delay isn’t a pause. It’s a position you fall behind from.
+        <BandHeading eyebrow="-- Why timing matters" color={C.cream} eyebrowColor={C.gold}>
+          The earlier you start, the more it compounds.
         </BandHeading>
         <p
           style={{
@@ -1042,12 +1151,12 @@ function CompoundingSection() {
             margin: '22px 0 0',
           }}
         >
-          The instinct is to treat “not yet” as a free option — next quarter, next
-          budget cycle, when things calm down. But opportunity cost compounds. Every
-          month, two things happen at once: the value you would have captured is gone
-          for good, and the businesses that did move pull a little further ahead. The
-          chart above models exactly this — the gap between acting now and waiting
-          never closes, because you can’t reclaim the months you sat still.
+          AI value isn’t a one-off — it builds. The hours you reclaim this quarter
+          free your team to improve the next thing, and the one after that.
+          Businesses that start early don’t just bank the savings sooner; they get a
+          head start on the learning curve, and that lead keeps widening. The chart
+          above shows it: moving now puts you on the higher line, and the distance
+          between the two paths keeps growing in your favour.
         </p>
       </div>
       <div
@@ -1097,8 +1206,8 @@ function PlanSection() {
   return (
     <Band bg={C.cream} color={C.slate}>
       <div style={{ maxWidth: '760px' }}>
-        <BandHeading eyebrow="-- What to do with this" color={C.ink}>
-          A number on its own changes nothing. The plan behind it does.
+        <BandHeading eyebrow="-- Turning it into results" color={C.ink}>
+          A number is a great start. A plan is what makes it real.
         </BandHeading>
         <p
           style={{
@@ -1110,9 +1219,10 @@ function PlanSection() {
           }}
         >
           This calculator is deliberately conservative and deliberately general —
-          it’s a directional signal, not a quote. Your real figure depends on where
-          you start: which tasks are genuinely automatable, what your data looks
-          like, and where the fastest, lowest-risk wins actually sit.
+          a grounded starting point, not a quote. The figure for your business
+          depends on where you start: which tasks are genuinely automatable, what
+          your data looks like, and where the fastest, lowest-risk wins actually
+          sit.
         </p>
         <p
           style={{
@@ -1365,9 +1475,9 @@ function buildLeadMessage(inputs: CalculatorInputs, result: CalculatorResult): s
     `Automatable work: ${Math.round(inputs.automatablePct * 100)}%`,
     `Delay horizon: ${inputs.delayMonths} months`,
     '',
-    `Estimated cost of delay: ${formatCurrency(result.costOfDelay)}`,
-    `Net value / year: ${formatCurrency(result.netAnnualValue)}`,
+    `Value added / year: ${formatCurrency(result.netAnnualValue)}`,
+    `Value over 5 years: ${formatCurrency(result.fiveYearActNow)}`,
     `Hours reclaimed / year: ${formatNumber(result.hoursReclaimedPerYear)}`,
-    `5-year gap vs acting now: ${formatCurrency(result.fiveYearGap)}`,
+    `Cost of waiting ${inputs.delayMonths} months: ${formatCurrency(result.costOfWaiting)}`,
   ].join('\n');
 }

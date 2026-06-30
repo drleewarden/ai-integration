@@ -151,8 +151,6 @@ export const PRODUCTIVE_HOURS_PER_YEAR = 1800;
 export const REALISATION_FACTOR = 0.7;
 /** Net haircut for tooling, delivery and internal change-management effort. */
 export const IMPLEMENTATION_COST_FRACTION = 0.2;
-/** Competitive gap widens ~0.5%/month while you wait and rivals adopt. */
-export const MONTHLY_EROSION_RATE = 0.005;
 /** Months to ramp from go-live to full run-rate value. */
 export const RAMP_MONTHS = 4;
 /** Average working days per month. */
@@ -191,9 +189,9 @@ export interface CalculatorResult {
   // Net of realisation + implementation cost
   netAnnualValue: number;
   netMonthlyValue: number;
-  // Cost of delay
-  costOfDelay: number;
-  costPerWorkingDay: number;
+  // Value & timing
+  valuePerWorkingDay: number;
+  costOfWaiting: number;
   hoursReclaimedPerYear: number;
   // Five-year cumulative projection
   projection: ProjectionPoint[];
@@ -246,15 +244,13 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
     grossAnnualValue * REALISATION_FACTOR * (1 - IMPLEMENTATION_COST_FRACTION);
   const netMonthlyValue = netAnnualValue / 12;
 
-  // Cost of delay — cumulative net benefit forgone across the delay window,
-  // amplified slightly each month as competitors pull ahead.
-  let costOfDelay = 0;
-  for (let m = 0; m < delayMonths; m++) {
-    costOfDelay += netMonthlyValue * Math.pow(1 + MONTHLY_EROSION_RATE, m);
-  }
+  // Cost of waiting — the net value forgone across the chosen delay window.
+  // Linear: each month of delay is simply one month of value you don't get
+  // back. (This equals the five-year gap below, so the two stay consistent.)
+  const costOfWaiting = netMonthlyValue * delayMonths;
 
-  const costPerWorkingDay =
-    delayMonths > 0 ? costOfDelay / (delayMonths * WORKING_DAYS_PER_MONTH) : 0;
+  // Value on the table for every working day you're not yet live.
+  const valuePerWorkingDay = netAnnualValue / (WORKING_DAYS_PER_MONTH * 12);
 
   const hoursReclaimedPerYear =
     employees * PRODUCTIVE_HOURS_PER_YEAR * automatable * benchmark.efficiencyGain;
@@ -279,8 +275,8 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
     grossAnnualValue,
     netAnnualValue,
     netMonthlyValue,
-    costOfDelay,
-    costPerWorkingDay,
+    valuePerWorkingDay,
+    costOfWaiting,
     hoursReclaimedPerYear,
     projection,
     fiveYearActNow: actNowCum,

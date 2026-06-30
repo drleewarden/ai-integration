@@ -1,8 +1,8 @@
 /**
  * /opportunity-cost -- server component shell.
  *
- * Sets page metadata and renders the interactive Cost of Delay calculator. The
- * tool itself is client-side (live recompute on every input change) so lives in
+ * Sets page metadata and renders the interactive AI value calculator. The tool
+ * itself is client-side (live recompute on every input change) so lives in
  * CalculatorClient.tsx.
  */
 
@@ -11,21 +11,21 @@ import { BreadcrumbSchema } from '@/app/components/Schema';
 import CalculatorClient from './CalculatorClient';
 
 export const metadata: Metadata = {
-  title: 'AI Opportunity Cost Calculator | Creative Milk',
+  title: 'AI Value Calculator | Creative Milk',
   description:
-    'See what standing still is costing your business. A live Cost of Delay calculator that quantifies the value you forgo for every month without effective AI tools in place.',
+    'See what the right AI tools could be worth to your business — the time reclaimed and revenue gained this year and over the next five. A live, no-sign-up calculator.',
   openGraph: {
-    title: 'AI Opportunity Cost Calculator | Creative Milk',
+    title: 'AI Value Calculator | Creative Milk',
     description:
-      'What is waiting actually costing you? Quantify the cost of delaying AI adoption in your business.',
+      'See what AI could actually be worth to your business — time and money back, this year and over five years.',
     url: 'https://www.creative-milk.com.au/opportunity-cost',
     siteName: 'Creative Milk',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Opportunity Cost Calculator | Creative Milk',
-    description: 'See what every month of delay is costing your business.',
+    title: 'AI Value Calculator | Creative Milk',
+    description: 'See what acting on AI could be worth to your business.',
   },
   alternates: {
     canonical: 'https://www.creative-milk.com.au/opportunity-cost',
@@ -38,7 +38,7 @@ export default function OpportunityCostPage() {
       <BreadcrumbSchema
         items={[
           { name: 'Home', url: '/' },
-          { name: 'Opportunity Cost Calculator', url: '/opportunity-cost' },
+          { name: 'AI Value Calculator', url: '/opportunity-cost' },
         ]}
       />
       <CalculatorClient />
