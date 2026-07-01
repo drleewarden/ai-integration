@@ -64,6 +64,7 @@ export default function RootLayout({
       className={`${cormorantGaramond.variable} ${syne.variable} ${dmMono.variable}`}
     >
       <head>
+        <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
