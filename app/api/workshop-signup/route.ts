@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -9,6 +10,10 @@ interface WorkshopSignupBody {
   name: string;
   email: string;
   businessType: string;
+  /** Honeypot field -- humans never see it, bots fill it. */
+  website?: string;
+  /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
+  formStartedAt?: number;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -24,6 +29,13 @@ function escapeHtml(s: string): string {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
+    // Rate limit: 5 signups per hour per IP
+    const limited = checkRateLimit("workshop-signup", request, {
+      limit: 5,
+      windowMs: 60 * 60_000,
+    });
+    if (limited) return limited;
+
     if (!resend) {
       console.error("[workshop-signup] Resend API key not configured");
       return NextResponse.json(
@@ -33,6 +45,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     const body = (await request.json()) as WorkshopSignupBody;
+
+    // Honeypot / timing check: respond success-shaped, send nothing.
+    if (isLikelyBot(body)) {
+      console.warn("[workshop-signup] honeypot triggered -- dropping submission");
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
     const name = body?.name?.trim() ?? "";
     const email = body?.email?.trim() ?? "";
     const businessType = body?.businessType?.trim() ?? "";
@@ -74,7 +93,6 @@ export async function POST(request: Request): Promise<NextResponse> {
         {
           error:
             "Couldn't save your signup. Please email us directly at contact@creative-milk.com.au.",
-          details: sendError.message ?? String(sendError),
         },
         { status: 502 },
       );
@@ -83,13 +101,8 @@ export async function POST(request: Request): Promise<NextResponse> {
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error: unknown) {
     console.error("[workshop-signup]", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      {
-        error: "Failed to sign up. Please try again or email us directly.",
-        details: errorMessage,
-      },
+      { error: "Failed to sign up. Please try again or email us directly." },
       { status: 500 },
     );
   }

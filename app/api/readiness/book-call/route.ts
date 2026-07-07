@@ -31,6 +31,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabase/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { bandByKey } from '@/lib/readiness/bands';
 import type { BandKey } from '@/lib/readiness/types';
 
@@ -112,6 +113,13 @@ function parseAndValidate(body: unknown): BookCallPayload {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 booking submissions per hour per IP
+  const limited = checkRateLimit('readiness-book-call', req, {
+    limit: 5,
+    windowMs: 60 * 60_000,
+  });
+  if (limited) return limited;
+
   const contentLength = Number(req.headers.get('content-length') ?? '0');
   if (contentLength > MAX_BODY_BYTES) return clientError('Body too large', 413);
 

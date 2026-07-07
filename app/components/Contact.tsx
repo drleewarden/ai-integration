@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { EVENTS, pushEvent } from "../lib/gtm";
 
@@ -28,6 +28,9 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
     message: "",
   });
   const [status, setStatus] = useState<Status>({ type: "idle" });
+  // Anti-spam: hidden honeypot field + time-to-submit, checked server-side.
+  const [honeypot, setHoneypot] = useState("");
+  const formStartedAt = useRef<number>(Date.now());
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -59,7 +62,11 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          website: honeypot,
+          formStartedAt: formStartedAt.current,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -266,6 +273,23 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
                 )}
               </div>
             )}
+
+          {/* Honeypot -- visually hidden from humans, invisible to screen
+              readers, but present in the DOM for naive bots to fill. */}
+          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
+            <label htmlFor="contact-website">
+              Website
+              <input
+                id="contact-website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+              />
+            </label>
+          </div>
 
           <div
             style={{

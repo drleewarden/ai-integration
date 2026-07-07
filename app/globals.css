@@ -66,6 +66,29 @@
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
+
+  /* Brand colors */
+  --color-midnight-ink: var(--midnight-ink);
+  --color-midnight-deep: var(--midnight-deep);
+  --color-midnight-tint: var(--midnight-tint);
+  --color-warm-cream: var(--warm-cream);
+  --color-off-white: var(--off-white);
+  --color-milk-white: var(--milk-white);
+  --color-liquid-gold: var(--liquid-gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-pale: var(--gold-pale);
+  --color-deep-slate: var(--deep-slate);
+  --color-slate-mid: var(--slate-mid);
+  --color-slate-light: var(--slate-light);
+  --color-forest-signal: var(--forest-signal);
+  --color-forest-light: var(--forest-light);
+
+  /* Rules / dividers (exposed as colors so `border-*` works) */
+  --color-rule: var(--rule);
+  --color-rule-strong: var(--rule-strong);
+  --color-rule-cream: var(--rule-cream);
+  --color-rule-cream-strong: var(--rule-cream-strong);
+  --color-rule-gold: var(--rule-gold);
 }
 
 /* ─────────────────────────────────────────────────────

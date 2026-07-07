@@ -4,122 +4,90 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Next.js 15 marketing website for Creative Milk, an AI consulting business. The site is built using the App Router with TypeScript, Tailwind CSS v4 (alpha), and features a custom WebGL2 background shader. It's a server-rendered application with client-side interactivity for navigation, forms, and visual effects.
+Next.js 15 (App Router, TypeScript) marketing and lead-generation site for Creative Milk, an AI consulting business. What began as a single-page site is now a 20+ page application with a Supabase-backed AI Readiness assessment, an opportunity-cost calculator, a blog, transactional email via Resend, and PDF playbook generation.
 
 ## Development Commands
 
 ```bash
-# Development server (runs on http://localhost:3000)
-npm run dev
-
-# Production build
-npm run build
-
-# Start production server
-npm start
-
-# Run ESLint
-npm run lint
+npm run dev          # Dev server on http://localhost:3000
+npm run build        # Production build
+npm start            # Production server
+npm run lint         # ESLint
+npm test             # Jest (watch mode: npm run test:watch)
 ```
 
-## Node Version
-
-- Required: Node.js 22.x (see `.nvmrc` and `package.json` engines)
-- Use `nvm use` to switch to the correct version if you have nvm installed
+Node 22.x required (`.nvmrc`, `package.json` engines).
 
 ## Architecture
 
-### App Structure
+### Routing
 
-The application uses Next.js App Router with a single-page layout:
+- `app/page.tsx` — homepage, composes section components from `app/components/`
+- `app/(site)/(main)/` — standard pages (about, clients, contact, insights index, pricing, process, services, what-we-build, work). **Shared chrome (skip link, Nav, `<main>`, Footer) lives in `app/(site)/(main)/layout.tsx` — pages render sections only.**
+- `app/(site)/(dark-nav)/` — same chrome but `<Nav forceDark />` (solid nav from the top): blog posts (`insights/[slug]`), events/workshop
+- `app/(site)/ai-readiness/` and `app/(site)/opportunity-cost/` — manage their own Nav/Footer inside client components (multi-step flows); intentionally outside the layout groups
+- `app/for/professional-services` — industry vertical landing page
+- `app/pricingdata` — hidden machine-readable pricing page (not in sitemap)
+- `app/sitemap.ts`, `app/robots.ts` — sitemap derives blog URLs from the insights registry
 
-- `app/page.tsx` - Main entry point, composes all section components
-- `app/layout.tsx` - Root layout with metadata, Google Analytics, and font definitions
-- `app/components/` - All UI components (Nav, Hero, Services, Work, Process, Contact, Footer)
-- `app/api/send-email/route.ts` - API route for contact form submissions via Resend
-- `app/globals.css` - Complete design system with CSS custom properties
+### Insights (blog)
 
-### Component Philosophy
+- Content: one JSON file per post in `content/insights/<slug>.json` (metadata + pre-rendered article HTML)
+- Registry: `lib/insights/posts.ts` — imports all post JSONs and exports `posts`, `postBySlug`, `displayTitle`. **Adding a post: add the JSON file, import it in the registry, done.** The `[slug]` route, `/insights` index cards, and sitemap all derive from the registry.
+- Route: `app/(site)/(dark-nav)/insights/[slug]/page.tsx` (static via `generateStaticParams`; shared article stylesheet `post.css` alongside it)
 
-All components are either Server Components (default) or Client Components (marked with `"use client"`). Client components are used for:
-- Interactive navigation (`Nav.tsx`)
-- Form handling (`Contact.tsx`)
-- WebGL rendering (`WebGLBackground.tsx`)
-- Event listeners and state management
+### AI Readiness assessment (primary lead-gen flow)
 
-### Styling System
+- Scoring pipeline in `lib/readiness/`: `questions.ts` (15 questions) → `scoring.ts` (server-side scoring; never trust client scores) → `pillars.ts` / `bands.ts` / `content-library.ts` (recommendation copy) → `composer.ts` + `playbook-pdf.tsx` (PDF via @react-pdf/renderer)
+- Data: Supabase Postgres (`readiness_assessments`, `activities`, `contacts`, opportunities). Server client in `lib/supabase/server.ts` uses the **service-role key — server-side only, never import in client components.**
+- Result pages are noindex and the result API deliberately projects only non-PII fields.
 
-Uses Tailwind CSS v4 alpha with a custom design system defined in `globals.css`:
+### API routes (`app/api/`)
 
-- **Design tokens**: CSS custom properties (`--midnight-ink`, `--liquid-gold`, `--warm-cream`, etc.)
-- **Typography**: Three font families loaded via next/font
-  - Display: Cormorant Garamond (serif, for headings)
-  - Sans: Syne (primary UI font)
-  - Mono: DM Mono (eyebrows, labels, code-style text)
-- **Utility classes**: Custom utilities like `.eyebrow`, `.h-display`, `.cta`, `.section`
-- **Motion**: CSS animations with reduced-motion support
+| Route | Purpose |
+|---|---|
+| `send-email` | Contact form → Resend |
+| `workshop-signup` | Workshop registration → Resend |
+| `readiness/submit` | Score + persist assessment |
+| `readiness/book-call` | Qualification form → contact/opportunity upsert |
+| `readiness/email-playbook` | Generate PDF playbook + email it |
+| `readiness/result/[id]` | Fetch sanitised result (CDN-cached 1h) |
 
-When styling components, prefer inline styles using CSS custom properties to maintain consistency with the design tokens.
+Conventions all routes follow:
+- **Rate limiting** via `lib/rate-limit.ts` (`checkRateLimit(name, req, {limit, windowMs})`) — in-memory per-instance; swap store for Upstash if abuse becomes real
+- **Honeypot**: public forms send a hidden `website` field + `formStartedAt`; routes call `isLikelyBot()` and return a success-shaped response without side effects
+- Body-size guards, strict validation (UUID/email regex, enums), generic client-facing error messages (detail goes to `console.error` only)
 
-### Email Integration
+### Styling
 
-Contact form uses Resend API:
-- Environment variables: `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_TO`
-- Custom HTML email template is inline in `app/api/send-email/route.ts`
-- Form validation on both client and server sides
+Tailwind CSS v4 (alpha) + design system in `app/globals.css` (CSS custom properties: `--midnight-ink`, `--liquid-gold`, `--warm-cream`; utilities: `.eyebrow`, `.h-display`, `.cta`, `.section`). Components prefer inline styles using CSS custom properties. Fonts via next/font: Cormorant Garamond (display), Syne (sans), DM Mono.
 
-### WebGL Background
+Long marketing pages keep copy/data arrays in a sibling `data.ts` (see services/pricing/process). Shared FAQ section: `app/components/FAQ.tsx` (also emits FAQPage JSON-LD).
 
-`WebGLBackground.tsx` is a vanilla WebGL2 implementation (no Three.js):
-- Fragment shader creates domain-warped FBM noise
-- Responsive to mouse movement (parallax) and scroll position
-- Falls back to CSS gradient for reduced-motion users or unsupported browsers
-- Uses IntersectionObserver to pause rendering when off-screen
+### Email & analytics
+
+- Resend for all outbound email; HTML templates inline in the route files
+- GTM with Consent Mode v2 (defaults denied before GTM loads); `ConsentBanner.tsx` + `app/lib/gtm.ts` (`pushEvent`, `EVENTS`)
+- Structured data in `app/components/Schema.tsx` (Organisation/Website in root layout; Pricing/Service/Breadcrumb used per page)
+
+### WebGL background
+
+`WebGLBackground.tsx`: vanilla WebGL2 domain-warped FBM shader (no Three.js). Falls back to CSS gradient for reduced-motion/unsupported browsers; pauses off-screen via IntersectionObserver.
 
 ## Environment Variables
 
-Required for production:
-- `RESEND_API_KEY` - Resend API key for email sending
-- `RESEND_FROM` - Email address to send from (optional, defaults to onboarding@resend.dev)
-- `RESEND_TO` - Recipient email address (optional, defaults to contact@creative-milk.com.au)
+- `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_TO` — email
+- `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` — database (service key is server-only)
 
-## Deployment
+`.env.local` is gitignored; never commit keys.
 
-- Configured for Vercel deployment
-- Node version pinned to 22.x for consistency
-- Next.js performs automatic static optimization where possible
-- Google Analytics and Tag Manager scripts are included in production
+## Testing
+
+Jest + React Testing Library. Existing suites: `lib/readiness/__tests__/scoring.test.ts` (scoring algorithm — keep green, it's the crown jewel), `__tests__/api/send-email.test.ts`, `__tests__/utils/email-utils.test.ts`. Coverage is thin — add tests when touching API routes or scoring.
 
 ## Code Patterns
 
-### Path Aliases
-
-TypeScript is configured with `@/*` path alias mapping to project root:
-```typescript
-"paths": {
-  "@/*": ["./*"]
-}
-```
-
-### Component Imports
-
-Components import other components using relative paths:
-```typescript
-import Nav from "./components/Nav";
-```
-
-### Client-Side State
-
-When client interactivity is needed, components use React hooks:
-- `useState` for local state
-- `useEffect` for side effects (scroll listeners, IntersectionObserver)
-- `useRef` for DOM references
-
-### Accessibility
-
-The codebase follows web accessibility practices:
-- Semantic HTML (`<nav>`, `<section>`, `<main>`)
-- ARIA labels and roles where appropriate
-- Focus-visible styles defined globally
-- Skip link for keyboard navigation
-- Min touch target sizes (44px)
+- Path alias `@/*` → project root; prefer it over deep relative imports
+- Server Components by default; `"use client"` only for forms, nav, WebGL, calculators
+- Accessibility: semantic landmarks, skip link (in the layout groups), ARIA on nav/forms, `prefers-reduced-motion` respected, 44px touch targets
+- Deployed on Vercel; Australian English in all copy

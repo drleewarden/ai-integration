@@ -22,6 +22,7 @@
 
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { scoreAnswers } from '@/lib/readiness/scoring';
 import { getServiceSupabase } from '@/lib/supabase/server';
 import type { Answers } from '@/lib/readiness/types';
@@ -111,6 +112,13 @@ class ClientError extends Error {}
 // ── Handler ─────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 10 assessment submissions per hour per IP
+  const limited = checkRateLimit('readiness-submit', req, {
+    limit: 10,
+    windowMs: 60 * 60_000,
+  });
+  if (limited) return limited;
+
   // Body size guard
   const contentLength = Number(req.headers.get('content-length') ?? '0');
   if (contentLength > MAX_BODY_BYTES) {

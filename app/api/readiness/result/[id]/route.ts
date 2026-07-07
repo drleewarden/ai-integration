@@ -27,6 +27,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabase/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { bandByKey } from '@/lib/readiness/bands';
 import type { BandKey, PillarKey, PillarTier } from '@/lib/readiness/types';
 
@@ -52,9 +53,17 @@ export interface PublicResult {
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function GET(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Generous read limit -- blunts UUID-enumeration scans without touching
+  // legitimate traffic (responses are also CDN-cached for 1h).
+  const limited = checkRateLimit('readiness-result', req, {
+    limit: 60,
+    windowMs: 60_000,
+  });
+  if (limited) return limited;
+
   const { id } = await params;
 
   if (!id || !UUID_RE.test(id)) {

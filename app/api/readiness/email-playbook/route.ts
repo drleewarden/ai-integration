@@ -27,6 +27,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { Resend } from "resend";
 import { getServiceSupabase } from "@/lib/supabase/server";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { bandByKey } from "@/lib/readiness/bands";
 import type { BandKey, PillarKey } from "@/lib/readiness/types";
 import type { AssessmentResult } from "@/lib/readiness/types";
@@ -82,6 +83,14 @@ function parseAndValidate(body: unknown): CapturePayload {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 3 playbook emails per hour per IP -- this route is the most
+  // expensive to abuse (PDF render + outbound email per request).
+  const limited = checkRateLimit("readiness-email-playbook", req, {
+    limit: 3,
+    windowMs: 60 * 60_000,
+  });
+  if (limited) return limited;
+
   if (Number(req.headers.get("content-length") ?? "0") > MAX_BODY_BYTES)
     return clientError("Body too large", 413);
 

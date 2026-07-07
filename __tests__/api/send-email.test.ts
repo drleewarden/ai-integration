@@ -30,6 +30,7 @@ process.env.RESEND_TO = "recipient@example.com";
 // Now import the route and the mocked Resend
 import { POST } from "../../app/api/send-email/route";
 import { Resend } from "resend";
+import { resetRateLimits } from "../../lib/rate-limit";
 
 // Get the mock send function from the mocked Resend constructor
 mockSend = (Resend as any)._mockSend;
@@ -37,6 +38,9 @@ mockSend = (Resend as any)._mockSend;
 describe("/api/send-email", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // All test requests share the same (absent) IP -- clear limiter state so
+    // the per-IP rate limit doesn't 429 later tests.
+    resetRateLimits();
   });
 
   const createRequest = (body: any) => {
@@ -58,10 +62,10 @@ describe("/api/send-email", () => {
 
   describe("Successful email sending", () => {
     it("should send email successfully with all fields", async () => {
+      // Resend v6 returns { data, error }
       mockSend.mockResolvedValueOnce({
-        id: "email-id-123",
-        from: "test@example.com",
-        to: "recipient@example.com",
+        data: { id: "email-id-123" },
+        error: null,
       });
 
       const request = createRequest(validRequestBody);
@@ -84,7 +88,7 @@ describe("/api/send-email", () => {
     it("should send email successfully without company field", async () => {
       mockSend.mockResolvedValueOnce({ id: "email-id-123" });
 
-      const requestBody = { ...validRequestBody };
+      const requestBody: Partial<typeof validRequestBody> = { ...validRequestBody };
       delete requestBody.company;
 
       const request = createRequest(requestBody);
@@ -255,7 +259,8 @@ describe("/api/send-email", () => {
       expect(data.error).toBe(
         "Failed to send. Please try again or email us directly.",
       );
-      expect(data.details).toBe("Resend API error");
+      // Error detail must never leak to the client -- it's logged server-side.
+      expect(data.details).toBeUndefined();
     });
 
     it("should handle unknown errors gracefully", async () => {
@@ -269,7 +274,8 @@ describe("/api/send-email", () => {
       expect(data.error).toBe(
         "Failed to send. Please try again or email us directly.",
       );
-      expect(data.details).toBe("Unknown error");
+      // Error detail must never leak to the client -- it's logged server-side.
+      expect(data.details).toBeUndefined();
     });
   });
 
