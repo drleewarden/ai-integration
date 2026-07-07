@@ -224,6 +224,51 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
   )
 }
 
+// ── BLOG POSTING (used by app/(site)/(dark-nav)/insights/[slug]/page.tsx) ───
+// Dates + publisher entity are what AI search engines (ChatGPT, Perplexity,
+// Google AI Overviews) use to judge freshness and citability.
+interface BlogPostingSchemaProps {
+  title: string
+  description: string
+  slug: string
+  datePublished: string
+  dateModified: string
+  category?: string
+}
+
+export function BlogPostingSchema({
+  title,
+  description,
+  slug,
+  datePublished,
+  dateModified,
+  category,
+}: BlogPostingSchemaProps) {
+  const url = `${BASE_URL}/insights/${slug}`
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    author: { '@id': `${BASE_URL}/#organisation` },
+    publisher: { '@id': `${BASE_URL}/#organisation` },
+    datePublished,
+    dateModified,
+    ...(category && { articleSection: category }),
+    inLanguage: 'en-AU',
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
 // ── 6. CASE STUDY / ARTICLE (use on /work/[slug]/page.tsx) ──────────────────
 interface CaseStudySchemaProps {
   title: string

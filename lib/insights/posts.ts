@@ -24,6 +24,10 @@ export interface InsightPost {
   description: string;
   category: string;
   readTime: string;
+  /** ISO date (YYYY-MM-DD) the article was first published. */
+  datePublished: string;
+  /** ISO date (YYYY-MM-DD) of the last substantive edit. */
+  dateModified: string;
   /** Pre-rendered article body HTML. */
   html: string;
 }
