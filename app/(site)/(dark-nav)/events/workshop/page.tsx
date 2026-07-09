@@ -221,11 +221,11 @@ export default function WorkshopSignup() {
                 }}
               >
                 {[
-                  { label: "Date", value: "Fri 7 Aug 2026" },
+                  { label: "Date", value: "First session Fri 7 Aug 2026" },
                   { label: "Time", value: "3:00 – 5:00 PM" },
                   { label: "Format", value: "In person" },
                   { label: "Location", value: "Elwood + St Kilda Neighbourhood Learning Centre (ESNLC)" },
-                  { label: "Price", value: "$29" },
+                  { label: "Price", value: "$39 ($25 early bird)" },
                   { label: "Seats", value: "24 only" },
                 ].map((item) => (
                   <div key={item.label}>
