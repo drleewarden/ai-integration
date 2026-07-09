@@ -305,6 +305,47 @@ export default function WorkshopSignup() {
                     </a>
                     .
                   </p>
+
+                  <div
+                    style={{
+                      marginTop: "2rem",
+                      paddingTop: "1.5rem",
+                      borderTop: "1px solid rgba(245,240,232,0.12)",
+                    }}
+                  >
+                    <span
+                      className="eyebrow"
+                      style={{
+                        color: "var(--liquid-gold)",
+                        marginBottom: "0.75rem",
+                        display: "block",
+                      }}
+                    >
+                      One quick favour
+                    </span>
+                    <p
+                      className="body-copy"
+                      style={{
+                        color: "rgba(245,240,232,0.7)",
+                        marginBottom: 0,
+                      }}
+                    >
+                      We want everyone to walk out with something they can
+                      actually use. Please send a quick note to{" "}
+                      <a
+                        href="mailto:contact@creative-milk.com.au?subject=Workshop%20--%20a%20workflow%20I%27d%20like%20to%20automate"
+                        style={{
+                          color: "var(--liquid-gold)",
+                          borderBottom: "1px solid rgba(201,168,76,0.45)",
+                        }}
+                      >
+                        contact@creative-milk.com.au
+                      </a>{" "}
+                      with one workflow or repetitive task you'd like to
+                      automate, and we'll shape the live-build around what
+                      the room actually needs.
+                    </p>
+                  </div>
                 </div>
               ) : (
                 <>

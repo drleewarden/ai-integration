@@ -230,9 +230,20 @@ function renderConfirmationEmail(fields: { name: string }): string {
             we'll follow up separately with payment details and the final
             joining information closer to the day.
           </p>
-          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
-            If anything changes on your end, or you have a question in the
-            meantime, just reply to this email.
+
+          <div style="margin-top:28px;padding-top:22px;border-top:1px solid rgba(245,240,232,0.12);">
+            <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px;">One quick favour</div>
+            <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
+              We want everyone to walk out with something they can actually
+              use. Please reply to this email with one workflow or repetitive
+              task you'd like to automate, and we'll shape the live-build
+              around what the room actually needs.
+            </p>
+          </div>
+
+          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:24px 0 20px;">
+            If anything else changes on your end, or you have a question in
+            the meantime, just hit reply.
           </p>
           <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
             Looking forward to having you in the room.<br>
