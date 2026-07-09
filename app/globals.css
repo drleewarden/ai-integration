@@ -384,6 +384,16 @@ textarea.input-dark {
   line-height: 1.6;
 }
 
+/* Windows/Chromium renders <option> popovers with the OS default
+   (white) background, ignoring the <select>'s color/background.
+   Style options explicitly so the dropdown list stays readable on
+   every platform. All selects in the app currently sit on dark
+   surfaces, so we default to the brand dark palette. */
+select option {
+  background-color: var(--midnight-ink);
+  color: var(--warm-cream);
+}
+
 .input-light {
   width: 100%;
   background: rgba(15, 21, 38, 0.05);
@@ -630,6 +640,24 @@ textarea.input-light {
 @media (max-width: 860px) {
   .show-md { display: inline-flex !important; }
   .hide-md { display: none !important; }
+}
+
+/* Workshop hero: 2 columns on desktop, stacks below 900px */
+.workshop-hero-grid {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+}
+.workshop-signup-panel {
+  position: sticky;
+  top: clamp(5.5rem, 9vw, 7rem);
+}
+
+@media (max-width: 900px) {
+  .workshop-hero-grid {
+    grid-template-columns: 1fr;
+  }
+  .workshop-signup-panel {
+    position: static;
+  }
 }
 
 /* ─────────────────────────────────────────────────────

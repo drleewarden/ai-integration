@@ -168,12 +168,11 @@ export default function WorkshopSignup() {
           />
 
           <div
-            className="container"
+            className="container workshop-hero-grid"
             style={{
               position: "relative",
               zIndex: 1,
               display: "grid",
-              gridTemplateColumns: "minmax(0, 1.05fr) minmax(0, 1fr)",
               gap: "clamp(2.5rem, 6vw, 6rem)",
               alignItems: "start",
             }}
@@ -258,9 +257,8 @@ export default function WorkshopSignup() {
 
             {/* Right: signup form */}
             <div
+              className="workshop-signup-panel"
               style={{
-                position: "sticky",
-                top: "clamp(5.5rem, 9vw, 7rem)",
                 border: "1px solid rgba(245,240,232,0.18)",
                 padding: "clamp(2rem, 3.5vw, 3rem)",
                 background: "rgba(15,21,38,0.88)",
