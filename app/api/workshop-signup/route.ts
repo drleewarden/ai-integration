@@ -98,6 +98,24 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    // Auto-reply to the person who signed up. The internal notification has
+    // already succeeded, so any failure here is logged but not surfaced --
+    // we don't want to tell the user the signup failed when we've got it.
+    const { error: confirmError } = await resend.emails.send({
+      from: FROM,
+      to: email,
+      replyTo: TO,
+      subject: "You're on the list -- Creative Milk Workshop, Fri 7 Aug",
+      html: renderConfirmationEmail({ name: safe.name }),
+    });
+
+    if (confirmError) {
+      console.error(
+        "[workshop-signup] confirmation email failed:",
+        confirmError,
+      );
+    }
+
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error: unknown) {
     console.error("[workshop-signup]", error);
@@ -150,6 +168,80 @@ function renderEmail(fields: {
 
         <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">
           Sent from the workshop signup form
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
+}
+
+function renderConfirmationEmail(fields: { name: string }): string {
+  const firstName = fields.name.split(" ")[0] || fields.name;
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>You're on the list -- Creative Milk Workshop</title>
+</head>
+<body style="margin:0;background:#0F1526;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#F5F0E8;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0F1526;padding:40px 20px;">
+    <tr><td align="center">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0F1526;border:1px solid rgba(245,240,232,0.08);">
+
+        <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(245,240,232,0.08);">
+          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">-- You're on the list</div>
+          <div style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#F5F0E8;letter-spacing:-0.01em;line-height:1.05;">
+            Creative <em style="color:#C9A84C;font-style:italic;">Milk</em>
+          </div>
+        </td></tr>
+
+        <tr><td style="padding:32px 40px;">
+          <p style="font-size:16px;line-height:1.6;color:#F5F0E8;margin:0 0 20px;">
+            Hi ${firstName},
+          </p>
+          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
+            Thanks for signing up to the workshop -- your seat's reserved.
+            Here's what you've booked in:
+          </p>
+
+          <div style="margin:28px 0;padding:20px 24px;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;">
+            <div style="margin-bottom:18px;">
+              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Workshop</div>
+              <div style="font-size:15px;color:#F5F0E8;">Automate your business -- put time back in your pocket</div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Date &amp; time</div>
+              <div style="font-size:15px;color:#F5F0E8;">Friday 7 August 2026, 3:00 -- 5:00 PM</div>
+            </div>
+            <div style="margin-bottom:18px;">
+              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Location</div>
+              <div style="font-size:15px;color:#F5F0E8;">Elwood + St Kilda Neighbourhood Learning Centre (ESNLC)</div>
+            </div>
+            <div>
+              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Price</div>
+              <div style="font-size:15px;color:#F5F0E8;">$39 ($25 early bird)</div>
+            </div>
+          </div>
+
+          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
+            <strong style="color:#F5F0E8;">Next step:</strong>
+            we'll follow up separately with payment details and the final
+            joining information closer to the day.
+          </p>
+          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
+            If anything changes on your end, or you have a question in the
+            meantime, just reply to this email.
+          </p>
+          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
+            Looking forward to having you in the room.<br>
+            <span style="color:#F5F0E8;">-- The Creative Milk team</span>
+          </p>
+        </td></tr>
+
+        <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">
+          Creative Milk &middot; contact@creative-milk.com.au
         </td></tr>
 
       </table>
