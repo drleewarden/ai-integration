@@ -29,6 +29,7 @@ export default function WorkshopSignup() {
     name: "",
     email: "",
     businessType: "",
+    workflows: "",
   });
   const [status, setStatus] = useState<Status>({ type: "idle" });
   // Anti-spam: hidden honeypot field + time-to-submit, checked server-side.
@@ -36,7 +37,9 @@ export default function WorkshopSignup() {
   const formStartedAt = useRef<number>(Date.now());
 
   const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >,
   ) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -321,7 +324,7 @@ export default function WorkshopSignup() {
                         display: "block",
                       }}
                     >
-                      One quick favour
+                      Anything to add?
                     </span>
                     <p
                       className="body-copy"
@@ -330,10 +333,11 @@ export default function WorkshopSignup() {
                         marginBottom: 0,
                       }}
                     >
-                      We want everyone to walk out with something they can
-                      actually use. Please send a quick note to{" "}
+                      If you forgot to add any workflows above, or have
+                      specific training you'd like us to cover, please email
+                      us at{" "}
                       <a
-                        href="mailto:contact@creative-milk.com.au?subject=Workshop%20--%20a%20workflow%20I%27d%20like%20to%20automate"
+                        href="mailto:contact@creative-milk.com.au?subject=Workshop%20--%20personalise%20my%20session"
                         style={{
                           color: "var(--liquid-gold)",
                           borderBottom: "1px solid rgba(201,168,76,0.45)",
@@ -341,9 +345,7 @@ export default function WorkshopSignup() {
                       >
                         contact@creative-milk.com.au
                       </a>{" "}
-                      with one workflow or repetitive task you'd like to
-                      automate, and we'll shape the live-build around what
-                      the room actually needs.
+                      and we'll personalise the session for the class.
                     </p>
                   </div>
                 </div>
@@ -481,6 +483,59 @@ export default function WorkshopSignup() {
                           </option>
                         ))}
                       </select>
+                    </label>
+
+                    <label
+                      htmlFor="workflows"
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "0.4rem",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.16em",
+                          textTransform: "uppercase",
+                          color: "rgba(245,240,232,0.5)",
+                        }}
+                      >
+                        Workflows you'd like automated
+                        <span
+                          style={{
+                            marginLeft: "0.4rem",
+                            fontSize: "0.55rem",
+                            letterSpacing: "0.08em",
+                            color: "rgba(245,240,232,0.35)",
+                          }}
+                        >
+                          (optional)
+                        </span>
+                      </span>
+                      <textarea
+                        id="workflows"
+                        name="workflows"
+                        value={form.workflows}
+                        onChange={onChange}
+                        maxLength={2000}
+                        rows={4}
+                        placeholder="e.g. Chasing invoice follow-ups, sorting inbound enquiries, weekly reporting..."
+                        className="input-dark"
+                      />
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.08em",
+                          color: "rgba(245,240,232,0.4)",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        Helps us shape the live-build around what the room
+                        actually needs.
+                      </span>
                     </label>
 
                     <button

@@ -10,6 +10,8 @@ interface WorkshopSignupBody {
   name: string;
   email: string;
   businessType: string;
+  /** Optional -- workflows/tasks the signup would like automated. */
+  workflows?: string;
   /** Honeypot field -- humans never see it, bots fill it. */
   website?: string;
   /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
@@ -55,6 +57,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     const name = body?.name?.trim() ?? "";
     const email = body?.email?.trim() ?? "";
     const businessType = body?.businessType?.trim() ?? "";
+    const workflows = body?.workflows?.trim() ?? "";
 
     if (!name || !email || !businessType) {
       return NextResponse.json(
@@ -68,6 +71,12 @@ export async function POST(request: Request): Promise<NextResponse> {
         { status: 400 },
       );
     }
+    if (workflows.length > 2000) {
+      return NextResponse.json(
+        { error: "Workflows note is too long -- please keep it under 2,000 characters." },
+        { status: 400 },
+      );
+    }
 
     const FROM =
       process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
@@ -77,6 +86,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       name: escapeHtml(name),
       email: escapeHtml(email),
       businessType: escapeHtml(businessType),
+      workflows: workflows ? escapeHtml(workflows).replace(/\n/g, "<br>") : "",
     };
 
     const { data, error: sendError } = await resend.emails.send({
@@ -130,6 +140,7 @@ function renderEmail(fields: {
   name: string;
   email: string;
   businessType: string;
+  workflows: string;
 }): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -160,10 +171,19 @@ function renderEmail(fields: {
             <div style="font-size:16px;"><a href="mailto:${fields.email}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.35);">${fields.email}</a></div>
           </div>
 
-          <div>
+          <div${fields.workflows ? ' style="margin-bottom:24px;"' : ""}>
             <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:6px;">Type of business</div>
             <div style="font-size:16px;color:#F5F0E8;">${fields.businessType}</div>
           </div>
+
+          ${
+            fields.workflows
+              ? `<div>
+                   <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:6px;">Workflows they'd like automated</div>
+                   <div style="font-size:15px;line-height:1.7;color:#F5F0E8;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;padding:16px 20px;">${fields.workflows}</div>
+                 </div>`
+              : ""
+          }
         </td></tr>
 
         <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">
@@ -232,12 +252,12 @@ function renderConfirmationEmail(fields: { name: string }): string {
           </p>
 
           <div style="margin-top:28px;padding-top:22px;border-top:1px solid rgba(245,240,232,0.12);">
-            <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px;">One quick favour</div>
+            <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px;">Anything to add?</div>
             <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
-              We want everyone to walk out with something they can actually
-              use. Please reply to this email with one workflow or repetitive
-              task you'd like to automate, and we'll shape the live-build
-              around what the room actually needs.
+              If you forgot to add any workflows on the signup form, or have
+              specific training you'd like us to cover, please email us at
+              <a href="mailto:contact@creative-milk.com.au?subject=Workshop%20--%20personalise%20my%20session" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.35);">contact@creative-milk.com.au</a>
+              and we'll personalise the session for the class.
             </p>
           </div>
 
