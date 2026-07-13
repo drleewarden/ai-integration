@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/work`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/insights`, lastModified: SITE_UPDATED, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${BASE_URL}/contact`, lastModified: SITE_UPDATED, changeFrequency: 'yearly', priority: 0.6 },
+    { url: `${BASE_URL}/privacy`, lastModified: SITE_UPDATED, changeFrequency: 'yearly', priority: 0.3 },
 
     // ── Industry verticals ───────────────────────────────────────
     { url: `${BASE_URL}/for/professional-services`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
