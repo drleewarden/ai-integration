@@ -46,3 +46,9 @@ next-env.d.ts
 
 # local docs / planning files
 /docs/
+
+# local one-off files (setup guides, signed contracts, tooling locks)
+/creative-milk-agents_setup-guide_v1.pdf
+/ts-amd-c-signed.pdf
+/ts-and-c-signed-image.pdf
+/skills-lock.json
