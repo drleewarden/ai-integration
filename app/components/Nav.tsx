@@ -54,6 +54,11 @@ const NAV_GROUPS: NavGroup[] = [
         href: "/events/workshop",
         blurb: "Upcoming live session",
       },
+      {
+        label: "Melbourne Workshop",
+        href: "/events/workshop-melbourne",
+        blurb: "Melbourne · 7 Aug — for small business owners",
+      },
     ],
   },
   {
