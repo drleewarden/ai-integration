@@ -640,7 +640,7 @@ export default function WorkshopMelbourne() {
             }}
           >
             <Image
-              src="/images/darryn.jpg"
+              src="/images/darryn.webp"
               alt="Darryn Lee-Warden"
               fill
               sizes="(max-width: 700px) 60vw, 260px"
