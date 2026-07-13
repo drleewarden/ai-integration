@@ -3,7 +3,6 @@ import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import Analytics from "./components/Analytics";
 import BackToTop from "./components/BackToTop";
-import ConsentBanner from "./components/ConsentBanner";
 import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
 
@@ -76,22 +75,22 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/*
-          Consent Mode v2 defaults. Must land before GTM loads or they are
-          ignored. A future cookie banner calls `grantConsent()` /
-          `denyConsent()` from `app/lib/gtm.ts` to update.
+          Consent Mode v2 defaults. Tracking storage granted by default —
+          the /privacy page discloses what is collected and how to opt out
+          via browser controls.
         */}
         <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('consent', 'default', {
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              analytics_storage: 'denied',
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+              analytics_storage: 'granted',
               functionality_storage: 'granted',
-              security_storage: 'granted',
-              wait_for_update: 500
+              personalization_storage: 'granted',
+              security_storage: 'granted'
             });
           `}
         </Script>
@@ -125,7 +124,6 @@ export default function RootLayout({
         <Analytics />
         {children}
         <BackToTop />
-        <ConsentBanner />
       </body>
     </html>
   );

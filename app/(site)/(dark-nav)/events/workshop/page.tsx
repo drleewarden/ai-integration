@@ -35,6 +35,7 @@ export default function WorkshopSignup() {
   // Anti-spam: hidden honeypot field + time-to-submit, checked server-side.
   const [honeypot, setHoneypot] = useState("");
   const formStartedAt = useRef<number>(Date.now());
+  const hasStartedRef = useRef(false);
 
   const onChange = (
     e: React.ChangeEvent<
@@ -42,6 +43,13 @@ export default function WorkshopSignup() {
     >,
   ) => {
     const { name, value } = e.target;
+    if (!hasStartedRef.current) {
+      hasStartedRef.current = true;
+      pushEvent(EVENTS.WORKSHOP_SIGNUP_START, {
+        form_id: "workshop",
+        first_field: name,
+      });
+    }
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -101,6 +109,7 @@ export default function WorkshopSignup() {
       pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
         form_id: "workshop",
         business_type: form.businessType,
+        has_workflow: Boolean(form.workflows.trim()),
       });
     } catch {
       setStatus({

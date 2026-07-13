@@ -262,6 +262,36 @@ em.cream {
   color: rgba(245, 240, 232, 0.55);
 }
 
+.policy-prose p {
+  margin: 0 0 1rem;
+}
+
+.policy-prose ul {
+  margin: 0 0 1rem;
+  padding-left: 1.25rem;
+}
+
+.policy-prose li {
+  margin-bottom: 0.5rem;
+}
+
+.policy-prose a {
+  color: var(--midnight-ink);
+  border-bottom: 1px solid rgba(15, 21, 38, 0.35);
+  text-decoration: none;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.policy-prose a:hover {
+  border-bottom-color: var(--liquid-gold);
+  color: var(--liquid-gold);
+}
+
+.policy-prose strong {
+  color: var(--midnight-ink);
+  font-weight: 600;
+}
+
 /* ─────────────────────────────────────────────────────
    Buttons / CTAs
    ───────────────────────────────────────────────────── */
