@@ -25,6 +25,7 @@ export const EVENTS = {
   CONTACT_FORM_SUBMIT: "contact_form_submit",
   CONTACT_FORM_ERROR: "contact_form_error",
   CTA_CLICK: "cta_click",
+  WORKSHOP_SIGNUP_START: "workshop_signup_start",
   WORKSHOP_SIGNUP_SUBMIT: "workshop_signup_submit",
   WORKSHOP_SIGNUP_ERROR: "workshop_signup_error",
   NEWSLETTER_SUBMIT: "newsletter_submit",

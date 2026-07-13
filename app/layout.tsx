@@ -76,9 +76,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
         {/*
-          Consent Mode v2 defaults. Must land before GTM loads or they are
-          ignored. A future cookie banner calls `grantConsent()` /
-          `denyConsent()` from `app/lib/gtm.ts` to update.
+          Consent Mode v2 defaults with Advanced mode enabled — declined
+          visitors still send anonymous cookieless pings so GA4 can model
+          aggregate traffic. `ConsentBanner` calls `grantConsent()` /
+          `denyConsent()` from `app/lib/gtm.ts` when the user chooses.
         */}
         <Script id="consent-default" strategy="beforeInteractive">
           {`
@@ -93,6 +94,8 @@ export default function RootLayout({
               security_storage: 'granted',
               wait_for_update: 500
             });
+            gtag('set', 'ads_data_redaction', true);
+            gtag('set', 'url_passthrough', true);
           `}
         </Script>
       </head>
