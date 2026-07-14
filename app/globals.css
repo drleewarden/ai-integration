@@ -683,10 +683,36 @@ textarea.input-light {
 
 @media (max-width: 900px) {
   .workshop-hero-grid {
-    grid-template-columns: 1fr;
+    /* minmax(0, …) so a wide child (e.g. nowrap CTA) can't blow the track out past the viewport */
+    grid-template-columns: minmax(0, 1fr);
   }
   .workshop-signup-panel {
     position: static;
+  }
+}
+
+/* Workshop content grids: 2 columns on desktop, stack below 700px */
+.workshop-instructor-grid {
+  grid-template-columns: minmax(180px, 260px) 1fr;
+}
+.workshop-agenda-row {
+  grid-template-columns: minmax(120px, 160px) 1fr;
+}
+.workshop-guarantee-grid {
+  grid-template-columns: auto 1fr;
+}
+
+@media (max-width: 700px) {
+  .workshop-instructor-grid,
+  .workshop-agenda-row,
+  .workshop-guarantee-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .workshop-instructor-grid > div:first-child {
+    max-width: 280px;
+  }
+  .workshop-agenda-row {
+    gap: 0.5rem;
   }
 }
 

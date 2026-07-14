@@ -554,6 +554,9 @@ export default function WorkshopMelbourne() {
                       marginTop: "0.25rem",
                       opacity: isSubmitting ? 0.6 : 1,
                       cursor: isSubmitting ? "not-allowed" : "pointer",
+                      // Long label clips on narrow phones if it can't wrap
+                      whiteSpace: "normal",
+                      textAlign: "center",
                     }}
                   >
                     {isSubmitting
@@ -622,10 +625,9 @@ export default function WorkshopMelbourne() {
         }}
       >
         <div
-          className="container"
+          className="container workshop-instructor-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "minmax(180px, 260px) 1fr",
             gap: "clamp(2rem, 5vw, 4rem)",
             alignItems: "center",
           }}
@@ -731,7 +733,7 @@ export default function WorkshopMelbourne() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
               gap: "clamp(2rem, 4vw, 3rem)",
             }}
           >
@@ -901,9 +903,9 @@ export default function WorkshopMelbourne() {
             ].map((row) => (
               <li
                 key={row.time}
+                className="workshop-agenda-row"
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "minmax(120px, 160px) 1fr",
                   gap: "clamp(1.5rem, 4vw, 3rem)",
                   padding: "clamp(1.5rem, 2.5vw, 2rem) 0",
                   borderBottom: "1px solid var(--rule)",
@@ -964,10 +966,9 @@ export default function WorkshopMelbourne() {
         }}
       >
         <div
-          className="container"
+          className="container workshop-guarantee-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "auto 1fr",
             gap: "clamp(2rem, 4vw, 3rem)",
             alignItems: "center",
             maxWidth: "820px",
@@ -1047,7 +1048,12 @@ export default function WorkshopMelbourne() {
           <a
             href="#reserve"
             className="cta cta-dark"
-            style={{ display: "inline-flex", justifyContent: "center" }}
+            style={{
+              display: "inline-flex",
+              justifyContent: "center",
+              whiteSpace: "normal",
+              textAlign: "center",
+            }}
           >
             Reserve my seat — $25 early bird
             <ArrowRight size={14} aria-hidden="true" />
