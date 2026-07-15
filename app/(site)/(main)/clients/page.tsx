@@ -6,7 +6,7 @@ import Clients from "@/app/components/Clients";
 import Contact from "@/app/components/Contact";
 
 export const metadata: Metadata = {
-  title: "Clients | Creative Milk",
+  title: "Clients We've Worked With | Creative Milk",
   description:
     "Companies Creative Milk has worked with across software, government, insurance, energy, health, retail, and design-led technology teams.",
 };
@@ -25,7 +25,7 @@ export default function ClientsPage() {
         <div style={{ position: "relative", overflow: "hidden" }}>
           {/* Background image */}
           <Image
-            src="/images/clients-hero.png"
+            src="/images/clients-hero.webp"
             alt=""
             fill
             priority

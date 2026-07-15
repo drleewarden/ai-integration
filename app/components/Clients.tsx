@@ -90,6 +90,7 @@ function ClientLogo({ client }: { client: Client }) {
         alt={`${client.name} logo`}
         width={280}
         height={96}
+        loading="eager"
         className="client-logo-image"
         style={{
           width: "100%",

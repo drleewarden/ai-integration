@@ -29,7 +29,8 @@ export default function NewsletterForm() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Your email address"
-        className="flex-1 px-5 py-3 rounded-full text-sm focus:outline-none"
+        aria-label="Your email address"
+        className="flex-1 px-5 py-3 rounded-full text-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--liquid-gold)]"
         style={{
           backgroundColor: "rgba(245,240,232,0.1)",
           border: "1px solid rgba(245,240,232,0.2)",

@@ -13,7 +13,7 @@ import CalculatorClient from './CalculatorClient';
 export const metadata: Metadata = {
   title: 'AI Value Calculator | Creative Milk',
   description:
-    'See what the right AI tools could be worth to your business — the time reclaimed and revenue gained this year and over the next five. A live, no-sign-up calculator.',
+    'See what the right AI tools could be worth to your business — time reclaimed and revenue gained, this year and over five. A live, no-sign-up calculator.',
   openGraph: {
     title: 'AI Value Calculator | Creative Milk',
     description:
@@ -21,11 +21,15 @@ export const metadata: Metadata = {
     url: 'https://www.creative-milk.com.au/opportunity-cost',
     siteName: 'Creative Milk',
     type: 'website',
+    // Defining openGraph replaces the root layout's, so re-declare the
+    // file-convention image explicitly.
+    images: ['/opengraph-image'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'AI Value Calculator | Creative Milk',
     description: 'See what acting on AI could be worth to your business.',
+    images: ['/twitter-image'],
   },
   alternates: {
     canonical: 'https://www.creative-milk.com.au/opportunity-cost',

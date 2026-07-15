@@ -41,11 +41,15 @@ export async function generateMetadata({
       publishedTime: post.datePublished,
       modifiedTime: post.dateModified,
       section: post.category,
+      // Defining openGraph here replaces the root layout's, so the
+      // file-convention opengraph-image must be re-declared explicitly.
+      images: ["/opengraph-image"],
     },
     twitter: {
       card: "summary_large_image",
       title: displayTitle(post),
       description: post.description,
+      images: ["/twitter-image"],
     },
   };
 }

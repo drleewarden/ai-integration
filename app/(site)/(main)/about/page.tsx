@@ -2,9 +2,9 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "About Creative Milk | AI Implementation Partners | Craig & Darryn",
+  title: "About Creative Milk | AI Implementation Partners",
   description:
-    "Creative Milk is an Australian AI implementation agency founded by Craig and Darryn. We build custom AI systems that deliver measurable outcomes. Two founders. Direct accountability.",
+    "Creative Milk is an Australian AI implementation agency founded by Craig and Darryn. Custom AI systems, measurable outcomes, direct founder accountability.",
 };
 
 const principles = [

@@ -28,8 +28,11 @@ const dmMono = DM_Mono({
 export const metadata: Metadata = {
   title: "Creative Milk -- Intelligence that actually works",
   description:
-    "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training -- measured by outcomes, not deliverables.",
+    "Creative Milk builds AI systems scoped around your actual business problems -- strategy, custom builds, integration, and training, measured by outcomes.",
   metadataBase: new URL("https://www.creative-milk.com.au"),
+  // Relative canonical resolves against each route's own path, giving every
+  // page a self-referencing canonical unless it overrides it.
+  alternates: { canonical: "./" },
   openGraph: {
     title: "Creative Milk -- Intelligence that actually works",
     description:
@@ -64,16 +67,6 @@ export default function RootLayout({
     >
       <head>
         <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
         {/*
           Consent Mode v2 defaults. Tracking storage granted by default —
           the /privacy page discloses what is collected and how to opt out

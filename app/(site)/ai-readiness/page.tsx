@@ -11,7 +11,7 @@ import AssessmentClient from './AssessmentClient';
 export const metadata: Metadata = {
   title: 'AI Readiness Assessment | Creative Milk',
   description:
-    'Find out how AI-ready your business really is. A five-minute assessment across the five pillars of AI readiness, with a personalised score and a 90-day playbook.',
+    'Find out how AI-ready your business is. A five-minute assessment across the five pillars of AI readiness, with a personal score and a 90-day playbook.',
   openGraph: {
     title: 'AI Readiness Assessment | Creative Milk',
     description:
@@ -19,11 +19,15 @@ export const metadata: Metadata = {
     url: 'https://www.creative-milk.com.au/ai-readiness',
     siteName: 'Creative Milk',
     type: 'website',
+    // Defining openGraph replaces the root layout's, so re-declare the
+    // file-convention image explicitly.
+    images: ['/opengraph-image'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'AI Readiness Assessment | Creative Milk',
     description: 'How AI-ready is your business? Find out in five minutes.',
+    images: ['/twitter-image'],
   },
   alternates: {
     canonical: 'https://www.creative-milk.com.au/ai-readiness',

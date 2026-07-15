@@ -312,12 +312,14 @@ export default function Contact() {
                     <div>
                       <label
                         className="label"
+                        htmlFor="contact-name"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
                         Name *
                       </label>
                       <input
                         type="text"
+                        id="contact-name"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -330,12 +332,14 @@ export default function Contact() {
                     <div>
                       <label
                         className="label"
+                        htmlFor="contact-email"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
                         Email *
                       </label>
                       <input
                         type="email"
+                        id="contact-email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -348,12 +352,14 @@ export default function Contact() {
                     <div>
                       <label
                         className="label"
+                        htmlFor="contact-company"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
                         Company *
                       </label>
                       <input
                         type="text"
+                        id="contact-company"
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
@@ -366,11 +372,13 @@ export default function Contact() {
                     <div>
                       <label
                         className="label"
+                        htmlFor="contact-problem"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
                         Tell us about your project *
                       </label>
                       <textarea
+                        id="contact-problem"
                         name="problem"
                         value={formData.problem}
                         onChange={handleChange}
@@ -384,12 +392,14 @@ export default function Contact() {
                     <div>
                       <label
                         className="label"
+                        htmlFor="contact-budget"
                         style={{ color: "rgba(245,240,232,0.55)", display: "block", marginBottom: "0.5rem" }}
                       >
                         Budget{" "}
                         <span style={{ color: "rgba(245,240,232,0.3)" }}>(optional)</span>
                       </label>
                       <select
+                        id="contact-budget"
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}

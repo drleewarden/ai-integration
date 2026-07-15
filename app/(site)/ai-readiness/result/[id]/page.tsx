@@ -80,11 +80,13 @@ export async function generateMetadata(
       siteName: 'Creative Milk',
       type: 'website',
       // TODO: dynamic OG image in Batch 2.5 -- for now uses static fallback
+      images: ['/opengraph-image'],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
+      images: ['/twitter-image'],
     },
     robots: {
       // Result pages shouldn't be indexed -- they're personal and shareable, not SEO assets

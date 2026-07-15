@@ -29,7 +29,7 @@ const CASE_STUDIES: CaseStudy[] = [
     metric: "−72%",
     metricLabel: "BAS prep time",
     timeBack: "32 hrs / cycle",
-    href: "/work/sydney-accounting",
+    href: "/work",
   },
   {
     sector: "Legal · 8 staff",
@@ -43,7 +43,7 @@ const CASE_STUDIES: CaseStudy[] = [
     metric: "4× faster",
     metricLabel: "client onboarding",
     timeBack: "74 hrs / matter",
-    href: "/work/brisbane-legal",
+    href: "/work",
   },
   {
     sector: "Construction · 22 staff",
@@ -57,7 +57,7 @@ const CASE_STUDIES: CaseStudy[] = [
     metric: "−60%",
     metricLabel: "PM interruptions",
     timeBack: "18 hrs / PM / wk",
-    href: "/work/melbourne-construction",
+    href: "/work",
   },
 ];
 
@@ -284,7 +284,7 @@ export default function Work() {
               <a
                 href={study.href}
                 className="cta-link"
-                aria-label={`Read the full ${study.sector} case study`}
+                aria-label={`Read the full case study — ${study.sector}`}
                 onClick={() =>
                   pushEvent(EVENTS.CTA_CLICK, {
                     cta_label: "read_case_study",

@@ -140,7 +140,7 @@ export default function WorkshopSignup() {
         >
           {/* Full-bleed background image */}
           <Image
-            src="/images/workshop-hero.png"
+            src="/images/workshop-hero.webp"
             alt=""
             fill
             priority
@@ -391,24 +391,24 @@ export default function WorkshopSignup() {
                       gap: "1.25rem",
                     }}
                   >
-                    {/* Honeypot -- hidden from humans and screen readers,
-                        present in the DOM for naive bots to fill. */}
+                    {/* Honeypot -- visually hidden from humans, present in
+                        the DOM for naive bots to fill. Not aria-hidden (a
+                        focusable control inside aria-hidden is an a11y
+                        violation); the label tells screen-reader users to
+                        skip it instead. */}
                     <div
-                      aria-hidden="true"
                       style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}
                     >
-                      <label htmlFor="workshop-website">
-                        Website
-                        <input
-                          id="workshop-website"
-                          name="website"
-                          type="text"
-                          tabIndex={-1}
-                          autoComplete="off"
-                          value={honeypot}
-                          onChange={(e) => setHoneypot(e.target.value)}
-                        />
-                      </label>
+                      <label htmlFor="workshop-website">Leave this field blank</label>
+                      <input
+                        id="workshop-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={honeypot}
+                        onChange={(e) => setHoneypot(e.target.value)}
+                      />
                     </div>
 
                     {status.type === "error" && (
@@ -449,15 +449,15 @@ export default function WorkshopSignup() {
                       required
                     />
 
-                    <label
-                      htmlFor="businessType"
+                    <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         gap: "0.4rem",
                       }}
                     >
-                      <span
+                      <label
+                        htmlFor="businessType"
                         style={{
                           fontFamily: "var(--font-mono)",
                           fontSize: "0.6rem",
@@ -475,7 +475,7 @@ export default function WorkshopSignup() {
                         >
                           *
                         </span>
-                      </span>
+                      </label>
                       <select
                         id="businessType"
                         name="businessType"
@@ -492,17 +492,17 @@ export default function WorkshopSignup() {
                           </option>
                         ))}
                       </select>
-                    </label>
+                    </div>
 
-                    <label
-                      htmlFor="workflows"
+                    <div
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         gap: "0.4rem",
                       }}
                     >
-                      <span
+                      <label
+                        htmlFor="workflows"
                         style={{
                           fontFamily: "var(--font-mono)",
                           fontSize: "0.6rem",
@@ -522,7 +522,7 @@ export default function WorkshopSignup() {
                         >
                           (optional)
                         </span>
-                      </span>
+                      </label>
                       <textarea
                         id="workflows"
                         name="workflows"
@@ -545,7 +545,7 @@ export default function WorkshopSignup() {
                         Helps us shape the live-build around what the room
                         actually needs.
                       </span>
-                    </label>
+                    </div>
 
                     <button
                       type="submit"
@@ -730,11 +730,9 @@ function Field({
 }) {
   const id = `field-${name}`;
   return (
-    <label
-      htmlFor={id}
-      style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
-    >
-      <span
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+      <label
+        htmlFor={id}
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.6rem",
@@ -749,7 +747,7 @@ function Field({
             *
           </span>
         )}
-      </span>
+      </label>
       <input
         id={id}
         name={name}
@@ -760,6 +758,6 @@ function Field({
         autoComplete={autoComplete}
         className="input-dark"
       />
-    </label>
+    </div>
   );
 }

@@ -176,7 +176,7 @@ export default function WorkshopMelbourne() {
         }}
       >
         <Image
-          src="/images/workshop-hero.png"
+          src="/images/workshop-hero.webp"
           alt=""
           fill
           priority
@@ -483,9 +483,10 @@ export default function WorkshopMelbourne() {
                     gap: "1.25rem",
                   }}
                 >
-                  {/* Honeypot -- hidden from humans/screen readers */}
+                  {/* Honeypot -- visually hidden from humans; label tells
+                      screen-reader users to skip it (aria-hidden on a
+                      focusable control is an a11y violation) */}
                   <div
-                    aria-hidden="true"
                     style={{
                       position: "absolute",
                       left: "-9999px",
@@ -493,18 +494,16 @@ export default function WorkshopMelbourne() {
                       overflow: "hidden",
                     }}
                   >
-                    <label htmlFor="workshop-website">
-                      Website
-                      <input
-                        id="workshop-website"
-                        name="website"
-                        type="text"
-                        tabIndex={-1}
-                        autoComplete="off"
-                        value={honeypot}
-                        onChange={(e) => setHoneypot(e.target.value)}
-                      />
-                    </label>
+                    <label htmlFor="workshop-website">Leave this field blank</label>
+                    <input
+                      id="workshop-website"
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
                   </div>
 
                   {status.type === "error" && (
