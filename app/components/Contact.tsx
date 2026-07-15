@@ -274,21 +274,21 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
               </div>
             )}
 
-          {/* Honeypot -- visually hidden from humans, invisible to screen
-              readers, but present in the DOM for naive bots to fill. */}
-          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
-            <label htmlFor="contact-website">
-              Website
-              <input
-                id="contact-website"
-                name="website"
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                value={honeypot}
-                onChange={(e) => setHoneypot(e.target.value)}
-              />
-            </label>
+          {/* Honeypot -- visually hidden from humans but present in the DOM
+              for naive bots to fill. Not aria-hidden (a focusable control
+              inside aria-hidden is an a11y violation); the label tells
+              screen-reader users to skip it instead. */}
+          <div style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
+            <label htmlFor="contact-website">Leave this field blank</label>
+            <input
+              id="contact-website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
           </div>
 
           <div
@@ -387,11 +387,9 @@ function Field({
 }) {
   const id = `field-${name}`;
   return (
-    <label
-      htmlFor={id}
-      style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
-    >
-      <span
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+      <label
+        htmlFor={id}
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.6rem",
@@ -406,7 +404,7 @@ function Field({
             *
           </span>
         )}
-      </span>
+      </label>
       {multiline ? (
         <textarea
           id={id}
@@ -430,6 +428,6 @@ function Field({
           className={inputClass}
         />
       )}
-    </label>
+    </div>
   );
 }

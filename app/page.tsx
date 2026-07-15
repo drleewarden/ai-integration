@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "Creative Milk -- Intelligence that actually works",
   description:
-    "Creative Milk builds custom AI systems for Australian businesses -- scoped around your specific problem, measured by outcomes you can point to. No buzzwords. No black boxes.",
+    "Creative Milk builds custom AI systems for Australian businesses -- scoped around your specific problem, measured by outcomes you can point to.",
 };
 
 export default function CreativeMilkSite() {

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title:
     "AI for Accounting, Legal, Consulting & Construction -- Creative Milk",
   description:
-    "AI integration for Australian professional services and construction firms. Reclaim ten-plus hours a week of billable capacity. Fixed-price 30-Day Pilot, measured by outcome.",
+    "AI integration for Australian professional services and construction firms. Reclaim 10+ hours a week of billable capacity with a fixed-price 30-Day Pilot.",
 };
 
 const PAINS = [

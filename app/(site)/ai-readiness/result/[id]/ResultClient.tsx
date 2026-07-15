@@ -137,7 +137,7 @@ export default function ResultClient({
     <div style={{ background: C.cream, color: C.slate }}>
       <AiReadinessFontLink />
       <style>{`
-        body { margin: 0; font-family: Syne, sans-serif; }
+        body { margin: 0; font-family: var(--font-syne), Syne, sans-serif; }
         * { box-sizing: border-box; }
         button { font-family: inherit; }
         input, select, textarea { font-family: inherit; }

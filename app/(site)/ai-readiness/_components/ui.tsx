@@ -31,24 +31,24 @@ export const C = {
 // ── Typography presets ───────────────────────────────────────────────────────
 export const F = {
   display: {
-    fontFamily: '"Cormorant Garamond", "Cormorant", Georgia, serif',
+    fontFamily: 'var(--font-cormorant-garamond), "Cormorant Garamond", "Cormorant", Georgia, serif',
     fontWeight: 300,
   },
   section: {
-    fontFamily: '"Cormorant Garamond", "Cormorant", Georgia, serif',
+    fontFamily: 'var(--font-cormorant-garamond), "Cormorant Garamond", "Cormorant", Georgia, serif',
     fontWeight: 400,
   },
   ui: {
-    fontFamily: 'Syne, "Helvetica Neue", Arial, sans-serif',
+    fontFamily: 'var(--font-syne), Syne, "Helvetica Neue", Arial, sans-serif',
     fontWeight: 400,
   },
   label: {
-    fontFamily: '"DM Mono", "JetBrains Mono", ui-monospace, monospace',
+    fontFamily: 'var(--font-dm-mono), "DM Mono", "JetBrains Mono", ui-monospace, monospace',
     textTransform: 'uppercase' as const,
     letterSpacing: '0.15em',
   },
   cta: {
-    fontFamily: 'Syne, sans-serif',
+    fontFamily: 'var(--font-syne), Syne, sans-serif',
     fontWeight: 700,
     textTransform: 'uppercase' as const,
     letterSpacing: '0.12em',
@@ -393,13 +393,8 @@ export function SiteNav({ onDark = true }: { onDark?: boolean }) {
 }
 
 // ── Font import block ────────────────────────────────────────────────────────
-// Inlined so /ai-readiness works standalone before the main site's global
-// font setup is wired. Once the main site loads these fonts globally, this
-// component can be removed.
+// Fonts are self-hosted globally via next/font in app/layout.tsx; this
+// component is kept only so existing call sites don't break.
 export function AiReadinessFontLink() {
-  return (
-    <style>{`
-      @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap');
-    `}</style>
-  );
+  return null;
 }

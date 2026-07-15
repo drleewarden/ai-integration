@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { failureModes, stats, timeline, phase2Deliverables, phase1Deliverables } from "./data";
 
 export const metadata: Metadata = {
-  title: "Our AI Implementation Process | Discovery Sprint to Managed Partnership | Creative Milk",
+  title: "Our AI Implementation Process | Creative Milk",
   description:
-    "See exactly how Creative Milk delivers AI systems in 6–8 weeks. Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
+    "How Creative Milk delivers AI systems in 6-8 weeks: Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
 };
 
 export default function Process() {

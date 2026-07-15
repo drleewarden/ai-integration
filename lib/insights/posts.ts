@@ -41,12 +41,13 @@ export function postBySlug(slug: string): InsightPost | undefined {
 }
 
 /**
- * Human-facing title for cards and headings: strips the "| Creative Milk
- * Insights" SEO suffix and any "Blog Article NN:" working prefix.
+ * Human-facing title for cards and headings: strips the "| Creative Milk"
+ * / "| Creative Milk Insights" SEO suffix and any "Blog Article NN:"
+ * working prefix.
  */
 export function displayTitle(post: InsightPost): string {
   return post.title
-    .replace(/\s*\|\s*Creative Milk Insights\s*$/i, "")
+    .replace(/\s*\|\s*Creative Milk( Insights)?\s*$/i, "")
     .replace(/^Blog Article \d+:\s*/i, "")
     .trim();
 }

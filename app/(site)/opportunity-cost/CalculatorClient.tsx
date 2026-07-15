@@ -79,7 +79,7 @@ export default function CalculatorClient() {
     <div style={{ background: C.cream, color: C.slate, minHeight: '100vh' }}>
       <AiReadinessFontLink />
       <style>{`
-        body { margin: 0; font-family: Syne, sans-serif; }
+        body { margin: 0; font-family: var(--font-syne), Syne, sans-serif; }
         * { box-sizing: border-box; }
         button, input, select { font-family: inherit; }
         input[type=range].oc-slider {
@@ -97,6 +97,8 @@ export default function CalculatorClient() {
           background: ${C.gold}; border: 2px solid ${C.ink}; cursor: pointer;
         }
         .oc-num:focus, .oc-select:focus { outline: none; border-color: ${C.ink}; }
+        .oc-num:focus-visible, .oc-select:focus-visible { box-shadow: 0 0 0 2px ${C.gold}; }
+        input[type=range].oc-slider:focus-visible { outline: 2px solid ${C.ink}; outline-offset: 4px; }
         /* Inputs panel: static on mobile (stacked layout) so it never covers
            the results while scrolling; sticky only on the wide two-column
            layout, offset to clear the fixed nav. */
@@ -1395,6 +1397,7 @@ function LeadCapture({
             className="oc-num"
             type="text"
             placeholder="Your name"
+            aria-label="Your name"
             value={name}
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
@@ -1404,6 +1407,7 @@ function LeadCapture({
             className="oc-num"
             type="email"
             placeholder="Work email"
+            aria-label="Work email"
             value={email}
             autoComplete="email"
             onChange={(e) => setEmail(e.target.value)}

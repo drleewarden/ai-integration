@@ -7,7 +7,7 @@ import { PricingSchema, BreadcrumbSchema } from "@/app/components/Schema";
 export const metadata: Metadata = {
   title: "AI Implementation Pricing Australia | Published Rates | Creative Milk",
   description:
-    "Creative Milk publishes AI implementation pricing. Discovery Sprint from AUD $5K. Build & Integrate from $30K. Managed Partnership from $5K/month. No hidden fees.",
+    "Published AI implementation pricing: Discovery Sprint from AUD $5K, Build & Integrate from $30K, Managed Partnership from $5K/month. No hidden fees.",
 };
 
 export default function Pricing() {

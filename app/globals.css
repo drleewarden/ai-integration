@@ -27,10 +27,11 @@
   --rule-cream-strong: rgba(245, 240, 232, 0.18);
   --rule-gold: rgba(201, 168, 76, 0.25);
 
-  /* Type stacks */
-  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
-  --font-sans: 'Syne', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'DM Mono', 'Courier New', monospace;
+  /* Type stacks — primary families come from next/font (self-hosted) via
+     the variables set on <html> in app/layout.tsx */
+  --font-display: var(--font-cormorant-garamond), 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-syne), 'Syne', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: var(--font-dm-mono), 'DM Mono', 'Courier New', monospace;
 
   /* Spacing scale (4pt / 8pt rhythm) */
   --space-1: 0.25rem;

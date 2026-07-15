@@ -101,14 +101,18 @@ export default function AssessmentClient() {
 
   return (
     <div style={{ background: C.cream, color: C.slate, minHeight: '100vh' }}>
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
       <AiReadinessFontLink />
       <style>{`
-        body { margin: 0; font-family: Syne, sans-serif; }
+        body { margin: 0; font-family: var(--font-syne), Syne, sans-serif; }
         * { box-sizing: border-box; }
         button { font-family: inherit; }
         input { font-family: inherit; }
       `}</style>
 
+      <main id="main">
       {stage === 'intro' && <IntroScreen onStart={() => setStage('quiz')} />}
 
       {stage === 'quiz' && (
@@ -131,6 +135,7 @@ export default function AssessmentClient() {
           onRetry={submitAssessment}
         />
       )}
+      </main>
     </div>
   );
 }
