@@ -48,7 +48,7 @@ const makeReq = (body: string, sig: string | null = "sig") => {
     method: "POST",
     headers,
     text: async () => body,
-  } as any;
+  } as unknown as import("next/server").NextRequest;
 };
 
 describe("POST /api/stripe/webhook", () => {
