@@ -39,6 +39,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/ai-readiness`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/opportunity-cost`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/events/workshop`, lastModified: SITE_UPDATED, changeFrequency: 'weekly', priority: 0.7 },
+
+    // ── Members area ──────────────────────────────────────────────
+    { url: `${BASE_URL}/members/upgrade`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.6 },
   ]
 
   const insightPosts: MetadataRoute.Sitemap = posts.map((post) => ({
