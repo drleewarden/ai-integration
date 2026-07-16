@@ -1,15 +1,40 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
+import Analytics from "./components/Analytics";
+import BackToTop from "./components/BackToTop";
+import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
 
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-cormorant-garamond",
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-syne",
+});
+
+const dmMono = DM_Mono({
+  subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  variable: "--font-dm-mono",
+});
+
 export const metadata: Metadata = {
-  title: "Creative Milk — Intelligence that actually works",
+  title: "Creative Milk -- Intelligence that actually works",
   description:
-    "Creative Milk builds AI systems scoped around your actual business problems. Strategy, custom solutions, integration, training — measured by outcomes, not deliverables.",
-  metadataBase: new URL("https://creativemilk.ai"),
+    "Creative Milk builds AI systems scoped around your actual business problems -- strategy, custom builds, integration, and training, measured by outcomes.",
+  metadataBase: new URL("https://www.creative-milk.com.au"),
+  // Relative canonical resolves against each route's own path, giving every
+  // page a self-referencing canonical unless it overrides it.
+  alternates: { canonical: "./" },
   openGraph: {
-    title: "Creative Milk — Intelligence that actually works",
+    title: "Creative Milk -- Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
     type: "website",
@@ -17,7 +42,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Creative Milk — Intelligence that actually works",
+    title: "Creative Milk -- Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
   },
@@ -41,48 +66,57 @@ export default function RootLayout({
       className={`${cormorantGaramond.variable} ${syne.variable} ${dmMono.variable}`}
     >
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-0JX1S9YZ2G"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
+        {/*
+          Consent Mode v2 defaults. Tracking storage granted by default —
+          the /privacy page discloses what is collected and how to opt out
+          via browser controls.
+        */}
+        <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-0JX1S9YZ2G');
-          `}
-        </Script>
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-Z7VVQ67K');
+            gtag('consent', 'default', {
+              ad_storage: 'granted',
+              ad_user_data: 'granted',
+              ad_personalization: 'granted',
+              analytics_storage: 'granted',
+              functionality_storage: 'granted',
+              personalization_storage: 'granted',
+              security_storage: 'granted'
+            });
           `}
         </Script>
       </head>
       <body className="antialiased">
+        <Script id="meta-pixel" strategy="afterInteractive">
+          {`
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '2179507452620533');
+            fbq('track', 'PageView');
+          `}
+        </Script>
         <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-Z7VVQ67K"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src="https://www.facebook.com/tr?id=2179507452620533&ev=PageView&noscript=1"
+            alt=""
           />
         </noscript>
+        <OrganisationSchema />
+        <WebsiteSchema />
+        <Analytics />
         {children}
+        <BackToTop />
       </body>
     </html>
   );

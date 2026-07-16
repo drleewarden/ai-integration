@@ -14,21 +14,21 @@ const SERVICES: Service[] = [
     number: "01",
     title: "AI Strategy & Roadmap",
     description:
-      "We scope every engagement around a specific business problem. That means defining what success looks like before we start — not after we've shipped.",
+      "We scope every engagement around a specific business problem. That means defining what success looks like before we start -- not after we've shipped.",
   },
   {
     icon: <Zap size={22} strokeWidth={1.4} />,
     number: "02",
     title: "Custom AI Solutions",
     description:
-      "Purpose-built models and systems that solve your actual challenges — not generic tools retrofitted to your problem.",
+      "Purpose-built models and systems that solve your actual challenges -- not generic tools retrofitted to your problem.",
   },
   {
     icon: <Target size={22} strokeWidth={1.4} />,
     number: "03",
     title: "Implementation & Integration",
     description:
-      "Seamless integration into your existing workflows. We measure success by hours recovered and decisions improved — not features shipped.",
+      "Seamless integration into your existing workflows. We measure success by hours recovered and decisions improved -- not features shipped.",
   },
   {
     icon: <Users size={22} strokeWidth={1.4} />,
@@ -59,7 +59,7 @@ export default function Services() {
         >
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              02 — Services
+              02 -- Services
             </span>
             <h2
               className="h-section"
@@ -75,7 +75,7 @@ export default function Services() {
             style={{ maxWidth: "44ch", justifySelf: "end" }}
           >
             Comprehensive AI solutions scoped to your unique business context.
-            We don&apos;t sell tools — we build systems that run.
+            We don&apos;t sell tools -- we build systems that run.
           </p>
         </div>
 

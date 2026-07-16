@@ -1,12 +1,12 @@
 /**
- * Creative Milk — Playbook composer.
+ * Creative Milk -- Playbook composer.
  *
  * Pure function. Given an AssessmentResult and a CompositionContext, returns
  * a PlaybookComposition: a complete description of every content block the
  * PDF needs, with deterministic content-library keys.
  *
  * Determinism: same inputs always produce the same composition. No
- * randomness. No LLM calls. Fully reproducible — we can regenerate any
+ * randomness. No LLM calls. Fully reproducible -- we can regenerate any
  * historical playbook by re-running the composer with the original answers.
  *
  * Where personalisation comes from:
@@ -68,10 +68,10 @@ function citedClaimKeyForPillar(pillar: PillarKey): string {
 
 /**
  * Build the share text used on page 11.
- * Voice: matches brand mini-doc — direct, specific, no exclamation marks.
+ * Voice: matches brand mini-doc -- direct, specific, no exclamation marks.
  */
 function buildShareText(score: number, url: string): string {
-  return `Just did the Creative Milk AI Readiness assessment. We scored ${score}/100. Worth a read — ${url}`;
+  return `Just did the Creative Milk AI Readiness assessment. We scored ${score}/100. Worth a read -- ${url}`;
 }
 
 // ── Page composers ────────────────────────────────────────────────────────
@@ -137,7 +137,7 @@ function composeFocusAreas(result: AssessmentResult): FocusAreaComposition[] {
  * Starting kit: weeks 1–3 anchored to the 3 focus areas (lowest pillars
  * first), weeks 3–4 anchored to the 2 strongest pillars (lighter touch).
  *
- * Note that weeks 3 has TWO actions in our spec — we resolve this by
+ * Note that weeks 3 has TWO actions in our spec -- we resolve this by
  * giving week 3 the third focus area and week 4 the two strongest pillars
  * as a paired "reinforce" action. Adjusting to the cleanest weekly layout:
  *   W1 = focus area #1 (lowest)
@@ -151,7 +151,7 @@ function composeFocusAreas(result: AssessmentResult): FocusAreaComposition[] {
  * playbook closing on page 11. We keep 4 weeks to stay disciplined.
  *
  * If you prefer 5 actions across 4 weeks (W3 doubles up), say the word
- * and I'll switch to that layout — the keys are independent of the
+ * and I'll switch to that layout -- the keys are independent of the
  * week layout.
  */
 function composeStartingKit(result: AssessmentResult): StartingKitComposition {
@@ -178,7 +178,7 @@ function composeStartingKit(result: AssessmentResult): StartingKitComposition {
       weekNumber: 4,
       pillar: result.strongestPillar,
       // For strongest pillar we use a "reinforce" variant rather than a
-      // pattern-specific one — they're doing well, the action is about
+      // pattern-specific one -- they're doing well, the action is about
       // protecting and extending, not fixing.
       contentKey: `kit:${result.strongestPillar}:reinforce`,
       isPrimary: false,
@@ -191,7 +191,7 @@ function composeTraps(result: AssessmentResult) {
   return {
     bandKey: result.band.key,
     strongestPillar: result.strongestPillar,
-    // Composer doesn't pick the trap keys directly — the content library
+    // Composer doesn't pick the trap keys directly -- the content library
     // exposes a function that picks 2 from the band library and 2 from the
     // strongest-pillar library, with deduplication. This keeps the composer
     // pure of content concerns. Stored here is the *selection input*; the

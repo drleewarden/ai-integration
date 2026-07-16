@@ -9,6 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+package-lock.json
 
 # testing
 /coverage
@@ -39,3 +40,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local Claude / Cowork tooling state
+.claude/
+
+# local docs / planning files
+/docs/
+
+# local one-off files (setup guides, signed contracts, tooling locks)
+/creative-milk-agents_setup-guide_v1.pdf
+/ts-amd-c-signed.pdf
+/ts-and-c-signed-image.pdf
+/skills-lock.json

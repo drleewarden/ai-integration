@@ -51,10 +51,13 @@ export default function Footer() {
           </div>
           <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {[
-              ["Services", "#services"],
-              ["Work", "#work"],
-              ["Process", "#process"],
-              ["Contact", "#contact"],
+              ["Services", "/#services"],
+              ["Case studies", "/#work"],
+              ["Process", "/#process"],
+              ["Pricing", "/pricing"],
+              ["Opportunity cost calculator", "/opportunity-cost"],
+              ["For professional services", "/for/professional-services"],
+              ["Contact", "/#contact"],
             ].map(([label, href]) => (
               <li key={label} style={{ marginBottom: "0.5rem" }}>
                 <a
@@ -96,7 +99,7 @@ export default function Footer() {
           >
             Use the{" "}
             <a
-              href="#contact"
+              href="/#contact"
               className="footer-link"
               style={{
                 color: "var(--liquid-gold)",
@@ -105,7 +108,7 @@ export default function Footer() {
             >
               contact form
             </a>{" "}
-            — we&apos;ll respond within 24 hours.
+            -- we&apos;ll respond within 24 hours.
           </p>
         </div>
       </div>
@@ -134,17 +137,40 @@ export default function Footer() {
         >
           © {year} Creative Milk. AI Solutions for Businesses.
         </p>
-        <p
+        <div
           style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: "0.6rem",
-            letterSpacing: "0.12em",
-            color: "rgba(245,240,232,0.32)",
-            margin: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: "1.25rem",
           }}
         >
-          AI that works.
-        </p>
+          <a
+            href="/privacy"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.12em",
+              color: "rgba(245,240,232,0.45)",
+              margin: 0,
+              textDecoration: "none",
+              borderBottom: "1px solid rgba(245,240,232,0.18)",
+              paddingBottom: "1px",
+            }}
+          >
+            Privacy
+          </a>
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.6rem",
+              letterSpacing: "0.12em",
+              color: "rgba(245,240,232,0.32)",
+              margin: 0,
+            }}
+          >
+            AI that works.
+          </p>
+        </div>
       </div>
     </footer>
   );

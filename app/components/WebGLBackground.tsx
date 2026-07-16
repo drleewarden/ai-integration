@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Creative Milk hero background.
- * Vanilla WebGL2 fragment shader — no three.js dependency.
+ * Vanilla WebGL2 fragment shader -- no three.js dependency.
  *
  * Effect: domain-warped fbm noise creating slow-flowing liquid striations
  * in midnight ink, with sparse liquid-gold filaments and a soft vignette.
@@ -87,7 +87,7 @@ void main() {
   // Mouse parallax (very subtle)
   vec2 mouse = u_mouse * 0.06;
 
-  // Domain-warped fbm — milk-like flowing curves
+  // Domain-warped fbm -- milk-like flowing curves
   vec2 q = vec2(
     fbm(p * 1.4 + vec2(0.0, t) + mouse),
     fbm(p * 1.4 + vec2(5.2, t * 0.8) - mouse)
@@ -101,19 +101,19 @@ void main() {
   float f = fbm(p * 2.0 + 4.0 * r);
   f = smoothstep(-0.6, 0.9, f);
 
-  // Base midnight gradient — deeper at bottom, slightly tinted top-right
+  // Base midnight gradient -- deeper at bottom, slightly tinted top-right
   vec3 base = mix(INK_DEEP, INK_TINT, smoothstep(0.0, 1.0, uv.y));
   base = mix(base, INK, 0.4);
 
   // Cool desaturated mid layer driven by warp field
   vec3 col = mix(INK_DEEP, base, f);
 
-  // Gold filaments — narrow band of high warp intensity
+  // Gold filaments -- narrow band of high warp intensity
   float fil = smoothstep(0.55, 0.78, f) * (1.0 - smoothstep(0.78, 0.92, f));
   fil *= 0.9;
   col += GOLD * fil * 0.55;
 
-  // Sparse gold highlights — peaks of secondary warp
+  // Sparse gold highlights -- peaks of secondary warp
   float peaks = smoothstep(0.72, 0.95, length(r) * 0.5 + f * 0.5);
   col += GOLD_LITE * peaks * 0.25;
 
@@ -132,7 +132,7 @@ void main() {
   float vig = 1.0 - dot(vuv, vuv) * 1.4;
   col *= clamp(vig, 0.65, 1.0);
 
-  // Scroll fade — content takes over as user scrolls
+  // Scroll fade -- content takes over as user scrolls
   float scrollFade = 1.0 - clamp(u_scroll * 1.2, 0.0, 0.7);
   col = mix(INK_DEEP, col, scrollFade);
 
@@ -205,7 +205,7 @@ export default function WebGLBackground() {
       return;
     }
 
-    // Fullscreen triangle (covers viewport with one tri — faster than quad)
+    // Fullscreen triangle (covers viewport with one tri -- faster than quad)
     const buffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
     gl.bufferData(
@@ -265,7 +265,7 @@ export default function WebGLBackground() {
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
 
-    // ── Visibility — pause when off-screen / tab hidden ────────
+    // ── Visibility -- pause when off-screen / tab hidden ────────
     let visible = true;
     const io = new IntersectionObserver(
       ([entry]) => {

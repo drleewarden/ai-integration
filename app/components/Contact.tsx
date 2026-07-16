@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { EVENTS, pushEvent } from "../lib/gtm";
 
 type FormState = {
   name: string;
@@ -18,7 +19,8 @@ type Status =
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export default function Contact() {
+export default function Contact({ variant = "dark" }: { variant?: "dark" | "cream" }) {
+  const isCream = variant === "cream";
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -26,6 +28,9 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState<Status>({ type: "idle" });
+  // Anti-spam: hidden honeypot field + time-to-submit, checked server-side.
+  const [honeypot, setHoneypot] = useState("");
+  const formStartedAt = useRef<number>(Date.now());
 
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -48,7 +53,7 @@ export default function Contact() {
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right — try again?",
+        message: "That email address doesn't look right -- try again?",
       });
       return;
     }
@@ -57,10 +62,18 @@ export default function Contact() {
       const res = await fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          ...form,
+          website: honeypot,
+          formStartedAt: formStartedAt.current,
+        }),
       });
       const data = await res.json();
       if (!res.ok) {
+        pushEvent(EVENTS.CONTACT_FORM_ERROR, {
+          form_id: "contact",
+          reason: "api",
+        });
         setStatus({
           type: "error",
           message:
@@ -69,12 +82,20 @@ export default function Contact() {
         });
         return;
       }
+      pushEvent(EVENTS.CONTACT_FORM_SUBMIT, {
+        form_id: "contact",
+        has_company: Boolean(form.company.trim()),
+      });
       setStatus({
         type: "success",
         message: "Message received. We'll be in touch within 24 hours.",
       });
       setForm({ name: "", email: "", company: "", message: "" });
     } catch {
+      pushEvent(EVENTS.CONTACT_FORM_ERROR, {
+        form_id: "contact",
+        reason: "network",
+      });
       setStatus({
         type: "error",
         message: "Network error. Check your connection and try again.",
@@ -89,8 +110,8 @@ export default function Contact() {
       id="contact"
       className="section"
       style={{
-        background: "var(--midnight-ink)",
-        color: "var(--warm-cream)",
+        background: isCream ? "var(--warm-cream)" : "var(--midnight-ink)",
+        color: isCream ? "var(--midnight-ink)" : "var(--warm-cream)",
         position: "relative",
         overflow: "hidden",
       }}
@@ -103,8 +124,9 @@ export default function Contact() {
           right: "-10%",
           width: 700,
           height: 700,
-          background:
-            "radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 65%)",
+          background: isCream
+            ? "radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 65%)"
+            : "radial-gradient(circle, rgba(201,168,76,0.10) 0%, transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -116,8 +138,9 @@ export default function Contact() {
           left: "-10%",
           width: 500,
           height: 500,
-          background:
-            "radial-gradient(circle, rgba(61,122,95,0.08) 0%, transparent 65%)",
+          background: isCream
+            ? "radial-gradient(circle, rgba(61,122,95,0.06) 0%, transparent 65%)"
+            : "radial-gradient(circle, rgba(61,122,95,0.08) 0%, transparent 65%)",
           pointerEvents: "none",
         }}
       />
@@ -135,13 +158,13 @@ export default function Contact() {
       >
         <div>
           <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-            05 — Start a project
+            05 -- Start a project
           </span>
           <h2
             className="h-display"
             style={{
               fontSize: "clamp(2.75rem, 6vw, 5rem)",
-              color: "var(--warm-cream)",
+              color: isCream ? "var(--midnight-ink)" : "var(--warm-cream)",
               margin: "1rem 0 1.5rem",
               maxWidth: "14ch",
             }}
@@ -155,7 +178,7 @@ export default function Contact() {
               fontFamily: "var(--font-sans)",
               fontSize: "0.95rem",
               lineHeight: 1.7,
-              color: "rgba(245,240,232,0.55)",
+              color: isCream ? "rgba(15,21,38,0.6)" : "rgba(245,240,232,0.55)",
               maxWidth: "40ch",
               marginBottom: "2.5rem",
             }}
@@ -176,7 +199,7 @@ export default function Contact() {
               fontFamily: "var(--font-mono)",
               fontSize: "0.7rem",
               letterSpacing: "0.08em",
-              color: "rgba(245,240,232,0.6)",
+              color: isCream ? "rgba(15,21,38,0.6)" : "rgba(245,240,232,0.6)",
             }}
           >
             <li>→ No NDAs in the first call</li>
@@ -215,18 +238,58 @@ export default function Contact() {
                   fontSize: "0.85rem",
                   lineHeight: 1.6,
                   display: "flex",
-                  alignItems: "center",
-                  gap: "0.65rem",
+                  flexDirection: "column",
+                  gap: "0.5rem",
                 }}
               >
-                {status.type === "success" ? (
-                  <CheckCircle2 size={18} aria-hidden="true" />
-                ) : (
-                  <AlertCircle size={18} aria-hidden="true" />
+                <div style={{ display: "flex", alignItems: "center", gap: "0.65rem" }}>
+                  {status.type === "success" ? (
+                    <CheckCircle2 size={18} aria-hidden="true" />
+                  ) : (
+                    <AlertCircle size={18} aria-hidden="true" />
+                  )}
+                  <span>{status.message}</span>
+                </div>
+                {status.type === "error" && (
+                  <div
+                    style={{
+                      paddingLeft: "1.65rem",
+                      fontSize: "0.8rem",
+                      color: "rgba(245,240,232,0.7)",
+                    }}
+                  >
+                    Or email us directly at{" "}
+                    <a
+                      href="mailto:contact@creative-milk.com.au?subject=Project%20enquiry"
+                      style={{
+                        color: "var(--liquid-gold)",
+                        borderBottom: "1px solid rgba(201,168,76,0.45)",
+                      }}
+                    >
+                      contact@creative-milk.com.au
+                    </a>
+                    .
+                  </div>
                 )}
-                {status.message}
               </div>
             )}
+
+          {/* Honeypot -- visually hidden from humans but present in the DOM
+              for naive bots to fill. Not aria-hidden (a focusable control
+              inside aria-hidden is an a11y violation); the label tells
+              screen-reader users to skip it instead. */}
+          <div style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
+            <label htmlFor="contact-website">Leave this field blank</label>
+            <input
+              id="contact-website"
+              name="website"
+              type="text"
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+            />
+          </div>
 
           <div
             style={{
@@ -242,6 +305,8 @@ export default function Contact() {
               onChange={onChange}
               required
               autoComplete="name"
+              inputClass={isCream ? "input-light" : "input-dark"}
+              labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
             />
             <Field
               label="Email address"
@@ -251,6 +316,8 @@ export default function Contact() {
               onChange={onChange}
               required
               autoComplete="email"
+              inputClass={isCream ? "input-light" : "input-dark"}
+              labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
             />
           </div>
           <Field
@@ -259,6 +326,8 @@ export default function Contact() {
             value={form.company}
             onChange={onChange}
             autoComplete="organization"
+            inputClass={isCream ? "input-light" : "input-dark"}
+            labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
           />
           <Field
             label="Tell us about your project"
@@ -267,6 +336,8 @@ export default function Contact() {
             onChange={onChange}
             required
             multiline
+            inputClass={isCream ? "input-light" : "input-dark"}
+            labelColor={isCream ? "rgba(15,21,38,0.5)" : "rgba(245,240,232,0.5)"}
           />
 
           <button
@@ -300,6 +371,8 @@ function Field({
   required = false,
   multiline = false,
   autoComplete,
+  inputClass = "input-dark",
+  labelColor = "rgba(245,240,232,0.5)",
 }: {
   label: string;
   name: string;
@@ -309,20 +382,20 @@ function Field({
   required?: boolean;
   multiline?: boolean;
   autoComplete?: string;
+  inputClass?: string;
+  labelColor?: string;
 }) {
   const id = `field-${name}`;
   return (
-    <label
-      htmlFor={id}
-      style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}
-    >
-      <span
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+      <label
+        htmlFor={id}
         style={{
           fontFamily: "var(--font-mono)",
           fontSize: "0.6rem",
           letterSpacing: "0.16em",
           textTransform: "uppercase",
-          color: "rgba(245,240,232,0.5)",
+          color: labelColor,
         }}
       >
         {label}
@@ -331,7 +404,7 @@ function Field({
             *
           </span>
         )}
-      </span>
+      </label>
       {multiline ? (
         <textarea
           id={id}
@@ -340,7 +413,7 @@ function Field({
           onChange={onChange}
           required={required}
           rows={5}
-          className="input-dark"
+          className={inputClass}
           placeholder="A few sentences is plenty."
         />
       ) : (
@@ -352,9 +425,9 @@ function Field({
           onChange={onChange}
           required={required}
           autoComplete={autoComplete}
-          className="input-dark"
+          className={inputClass}
         />
       )}
-    </label>
+    </div>
   );
 }

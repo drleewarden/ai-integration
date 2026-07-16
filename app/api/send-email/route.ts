@@ -1,5 +1,6 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
 
 // Initialize Resend only when API key is available
 const resend = process.env.RESEND_API_KEY
@@ -11,6 +12,10 @@ interface ConsultationRequestBody {
   email: string;
   company?: string;
   message: string;
+  /** Honeypot field -- humans never see it, bots fill it. */
+  website?: string;
+  /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
+  formStartedAt?: number;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,6 +31,13 @@ function escapeHtml(s: string): string {
 
 export async function POST(request: Request): Promise<NextResponse> {
   try {
+    // Rate limit: 5 sends per 10 minutes per IP
+    const limited = checkRateLimit("send-email", request, {
+      limit: 5,
+      windowMs: 10 * 60_000,
+    });
+    if (limited) return limited;
+
     // Check if Resend is properly configured
     if (!resend) {
       console.error("[send-email] Resend API key not configured");
@@ -36,6 +48,13 @@ export async function POST(request: Request): Promise<NextResponse> {
     }
 
     const body = (await request.json()) as ConsultationRequestBody;
+
+    // Honeypot / timing check: respond success-shaped, send nothing.
+    if (isLikelyBot(body)) {
+      console.warn("[send-email] honeypot triggered -- dropping submission");
+      return NextResponse.json({ success: true }, { status: 200 });
+    }
+
     const name = body?.name?.trim() ?? "";
     const email = body?.email?.trim() ?? "";
     const company = body?.company?.trim() ?? "";
@@ -56,7 +75,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (message.length > 5000) {
       return NextResponse.json(
         {
-          error: "Message is too long — please keep it under 5,000 characters.",
+          error: "Message is too long -- please keep it under 5,000 characters.",
         },
         { status: 400 },
       );
@@ -64,7 +83,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     const FROM =
       process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
-    const TO = process.env.RESEND_TO ?? "drleewarden@gmail.com";
+    const TO = process.env.RESEND_TO ?? "contact@creative-milk.com.au";
 
     const html = renderEmail({
       name: escapeHtml(name),
@@ -73,24 +92,34 @@ export async function POST(request: Request): Promise<NextResponse> {
       message: escapeHtml(message).replace(/\n/g, "<br>"),
     });
 
-    const data = await resend.emails.send({
+    console.log("[send-email] sending", { from: FROM, to: TO, replyTo: email });
+
+    const { data, error: sendError } = await resend.emails.send({
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `New project enquiry — ${name}`,
+      subject: `New project enquiry -- ${name}`,
       html,
     });
+
+    if (sendError) {
+      console.error("[send-email] Resend rejected the send:", sendError);
+      return NextResponse.json(
+        {
+          error:
+            "Couldn't deliver the message. Please email us directly at contact@creative-milk.com.au.",
+        },
+        { status: 502 },
+      );
+    }
+
+    console.log("[send-email] accepted", { id: data?.id });
 
     return NextResponse.json({ success: true, data }, { status: 200 });
   } catch (error: unknown) {
     console.error("[send-email]", error);
-    const errorMessage =
-      error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      {
-        error: "Failed to send. Please try again or email us directly.",
-        details: errorMessage,
-      },
+      { error: "Failed to send. Please try again or email us directly." },
       { status: 500 },
     );
   }
@@ -114,7 +143,7 @@ function renderEmail(fields: {
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0F1526;border:1px solid rgba(245,240,232,0.08);">
 
         <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(245,240,232,0.08);">
-          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">— New enquiry</div>
+          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">-- New enquiry</div>
           <div style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#F5F0E8;letter-spacing:-0.01em;line-height:1.05;">
             Creative <em style="color:#C9A84C;font-style:italic;">Milk</em>
           </div>

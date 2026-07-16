@@ -155,7 +155,7 @@ New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 # data.json
 $dataJson | Out-File -FilePath "$outDir\data.json" -Encoding utf8 -NoNewline
 
-# page.tsx — metadata is hardcoded for Next.js static analysis
+# page.tsx -- metadata is hardcoded for Next.js static analysis
 $pageTsx = @"
 import type { Metadata } from "next";
 import data from "./data.json";

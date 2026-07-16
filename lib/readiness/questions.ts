@@ -1,8 +1,8 @@
 /**
- * Creative Milk — AI Readiness assessment questions.
+ * Creative Milk -- AI Readiness assessment questions.
  *
  * 15 questions, 3 per pillar, 4 options each. Extracted verbatim from the v5
- * demo (CreativeMilkReadiness_v5.jsx) — do not edit text without also
+ * demo (CreativeMilkReadiness_v5.jsx) -- do not edit text without also
  * updating the demo or you'll break the visual approval baseline.
  *
  * Option ordering is meaningful: index 0 is the lowest score (1 raw point),
@@ -29,10 +29,10 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'strategy',
     text: 'How confident are you in identifying AI opportunities in your work?',
     options: [
-      "Not confident — I don't see how AI applies to my work",
-      'Somewhat confident — I can see a few obvious uses',
-      'Confident — I regularly identify potential AI applications',
-      'Very confident — I actively propose and evaluate AI initiatives',
+      "Not confident -- I don't see how AI applies to my work",
+      'Somewhat confident -- I can see a few obvious uses',
+      'Confident -- I regularly identify potential AI applications',
+      'Very confident -- I actively propose and evaluate AI initiatives',
     ],
   },
   {
@@ -40,7 +40,7 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'strategy',
     text: 'How do you approach evaluating whether AI is the right solution for a task?',
     options: [
-      "I don't evaluate — I use AI for everything or nothing",
+      "I don't evaluate -- I use AI for everything or nothing",
       'I try AI and see if it helps',
       'I consider task complexity, data needs, and risks',
       'I systematically assess ROI, feasibility, and alignment with goals',
@@ -75,10 +75,10 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'data',
     text: 'How confident are you in preparing and structuring data for AI use?',
     options: [
-      "Not confident — I don't know what AI needs",
-      'Somewhat confident — I can provide basic information',
-      'Confident — I understand context, formatting, and prompt structure',
-      'Very confident — I can optimise data inputs for best AI outputs',
+      "Not confident -- I don't know what AI needs",
+      'Somewhat confident -- I can provide basic information',
+      'Confident -- I understand context, formatting, and prompt structure',
+      'Very confident -- I can optimise data inputs for best AI outputs',
     ],
   },
 
@@ -88,10 +88,10 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'culture',
     text: 'How would you describe your attitude toward AI adoption in your work?',
     options: [
-      'Resistant — I prefer traditional methods',
-      "Cautious — I'll use AI if required but prefer not to",
-      "Open — I'm willing to learn and experiment",
-      'Enthusiastic — I actively seek AI solutions and encourage others',
+      'Resistant -- I prefer traditional methods',
+      "Cautious -- I'll use AI if required but prefer not to",
+      "Open -- I'm willing to learn and experiment",
+      'Enthusiastic -- I actively seek AI solutions and encourage others',
     ],
   },
   {
@@ -134,10 +134,10 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'technology',
     text: 'How confident are you in writing effective prompts for AI tools?',
     options: [
-      "Not confident — I don't know how to communicate with AI",
-      'Somewhat confident — I can get basic results',
-      'Confident — I can craft prompts that get good results',
-      'Very confident — I can optimise prompts for specific outcomes and iterate effectively',
+      "Not confident -- I don't know how to communicate with AI",
+      'Somewhat confident -- I can get basic results',
+      'Confident -- I can craft prompts that get good results',
+      'Very confident -- I can optimise prompts for specific outcomes and iterate effectively',
     ],
   },
   {
@@ -180,10 +180,10 @@ export const QUESTIONS: readonly Question[] = [
     pillar: 'governance',
     text: 'How confident are you in identifying and escalating AI-related risks?',
     options: [
-      "Not confident — I don't know what risks to look for",
-      'Somewhat confident — I can spot obvious problems',
-      'Confident — I can identify common AI risks and know when to escalate',
-      'Very confident — I systematically assess risks and have clear escalation paths',
+      "Not confident -- I don't know what risks to look for",
+      'Somewhat confident -- I can spot obvious problems',
+      'Confident -- I can identify common AI risks and know when to escalate',
+      'Very confident -- I systematically assess risks and have clear escalation paths',
     ],
   },
 ];

@@ -2,15 +2,15 @@
  * POST /api/readiness/book-call
  *
  * Captures the qualifying info from the Book a Call form. This is the second
- * conversion step — moving the opportunity from new_lead → qualified.
+ * conversion step -- moving the opportunity from New Lead → Qualified.
  *
  * Flow:
  *   1. Validate inputs
  *   2. Verify the assessment exists
  *   3. Upsert/enrich the contact (phone, company, suburb, size, role, last name)
  *   4. Ensure an opportunity exists (creating contact + opportunity if needed
- *      — handles the edge case where a reader skipped the playbook step)
- *   5. Update the opportunity: stage → qualified, problem_summary set
+ *      -- handles the edge case where a reader skipped the playbook step)
+ *   5. Update the opportunity: stage → Qualified, problem_summary set
  *   6. Log activities (contact_form_submitted, stage_changed)
  *
  * Request body:
@@ -31,6 +31,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getServiceSupabase } from '@/lib/supabase/server';
+import { checkRateLimit } from '@/lib/rate-limit';
 import { bandByKey } from '@/lib/readiness/bands';
 import type { BandKey } from '@/lib/readiness/types';
 
@@ -112,6 +113,13 @@ function parseAndValidate(body: unknown): BookCallPayload {
 }
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 booking submissions per hour per IP
+  const limited = checkRateLimit('readiness-book-call', req, {
+    limit: 5,
+    windowMs: 60 * 60_000,
+  });
+  if (limited) return limited;
+
   const contentLength = Number(req.headers.get('content-length') ?? '0');
   if (contentLength > MAX_BODY_BYTES) return clientError('Body too large', 413);
 
@@ -202,14 +210,14 @@ export async function POST(req: NextRequest) {
   let opportunityId: string | null = assessment.opportunity_id;
   if (!opportunityId) {
     const band = bandByKey(assessment.band as BandKey);
-    const title = `${payload.company} — ${band.label} (${assessment.overall_score}/100)`;
+    const title = `${payload.company} -- ${band.label} (${assessment.overall_score}/100)`;
     const { data: newOpp, error: oErr } = await supabase
       .from('opportunities')
       .insert({
         contact_id: contactId,
         title,
         source: 'ai_readiness',
-        stage: 'new_lead',
+        stage: 'New Lead',
         readiness_score: assessment.overall_score,
         readiness_band: assessment.band,
       })
@@ -221,18 +229,18 @@ export async function POST(req: NextRequest) {
     }
     opportunityId = newOpp.id;
   } else {
-    // Opportunity already exists — refresh the title with the company name
-    // we just learned (was previously "Lead — Band (Score/100)").
+    // Opportunity already exists -- refresh the title with the company name
+    // we just learned (was previously "Lead -- Band (Score/100)").
     const band = bandByKey(assessment.band as BandKey);
-    const title = `${payload.company} — ${band.label} (${assessment.overall_score}/100)`;
+    const title = `${payload.company} -- ${band.label} (${assessment.overall_score}/100)`;
     await supabase.from('opportunities').update({ title }).eq('id', opportunityId);
   }
 
-  // 5. Move the opportunity to qualified + record problem_summary
+  // 5. Move the opportunity to Qualified + record problem_summary
   const { error: stageErr } = await supabase
     .from('opportunities')
     .update({
-      stage: 'qualified',
+      stage: 'Qualified',
       stage_changed_at: new Date().toISOString(),
       problem_summary: payload.problem,
     })
@@ -273,8 +281,8 @@ export async function POST(req: NextRequest) {
         opportunity_id: opportunityId,
         assessment_id: payload.resultId,
         type: 'stage_changed',
-        description: `Stage changed: new_lead → qualified`,
-        metadata: { from: 'new_lead', to: 'qualified' },
+        description: `Stage changed: New Lead → Qualified`,
+        metadata: { from: 'New Lead', to: 'Qualified' },
       },
     ])
     .then(({ error: actErr }) => {

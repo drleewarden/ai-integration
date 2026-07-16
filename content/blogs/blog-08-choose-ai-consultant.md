@@ -1,4 +1,4 @@
-# Blog Article 08: How to Choose an AI Consultant in Australia — 7 Questions to Ask Before You Sign Anything
+# Blog Article 08: How to Choose an AI Consultant in Australia -- 7 Questions to Ask Before You Sign Anything
 
 **Category:** AI Implementation
 **Cluster:** Competitor comparison / decision stage
@@ -12,15 +12,15 @@
 
 The Australian AI consulting market has grown faster than the quality controls have. There are excellent practitioners building real systems that deliver measurable outcomes. There are also a significant number of agencies selling AI strategy, AI expertise, and AI transformation with limited evidence of delivery capability behind the pitch.
 
-This article gives you seven questions to ask any AI partner before you sign an engagement. We've written it from the perspective of what we'd want a potential client to ask us — and what the right answers look like.
+This article gives you seven questions to ask any AI partner before you sign an engagement. We've written it from the perspective of what we'd want a potential client to ask us -- and what the right answers look like.
 
 ---
 
-## 1. Can you show me a production system you've delivered — not a case study, a system?
+## 1. Can you show me a production system you've delivered -- not a case study, a system?
 
 Case studies are written to sell. What you want to see is evidence of delivery: a working system, in a client's production environment, doing what it was built to do.
 
-Ask for: a demonstration of a live system, or a technical description of a recent build specific enough that you could verify it. Specifics matter — integrations used, architecture decisions made, problems encountered. A vague case study about "transformative outcomes" for an unnamed client in an unnamed industry is not evidence.
+Ask for: a demonstration of a live system, or a technical description of a recent build specific enough that you could verify it. Specifics matter -- integrations used, architecture decisions made, problems encountered. A vague case study about "transformative outcomes" for an unnamed client in an unnamed industry is not evidence.
 
 **What the right answer looks like:** A specific, demonstrable description of a recent system. Ideally, the ability to talk to the client who uses it.
 
@@ -68,7 +68,7 @@ Ask: who owns the code, the model, and the documentation? Does the system run on
 
 ---
 
-## 6. Is change management included — or is it an add-on?
+## 6. Is change management included -- or is it an add-on?
 
 67–80% of AI implementations fail because the team doesn't adopt the system. Any partner who doesn't include change management as a standard delivery component is optimising for delivery, not for outcomes.
 
@@ -80,9 +80,9 @@ Ask specifically: what does your change management approach look like? Who is re
 
 ## 7. Do you publish your pricing?
 
-This isn't just about transparency — it's a signal about how the firm operates.
+This isn't just about transparency -- it's a signal about how the firm operates.
 
-Agencies that don't publish pricing are often pricing based on what they think you'll pay, not what the work costs. That's not necessarily bad-faith — it's how much of the consulting industry works. But it creates incentives that don't align with your interests.
+Agencies that don't publish pricing are often pricing based on what they think you'll pay, not what the work costs. That's not necessarily bad-faith -- it's how much of the consulting industry works. But it creates incentives that don't align with your interests.
 
 Agencies that publish pricing have to compete on the quality and outcomes of their work, not on their ability to read a client's budget.
 
@@ -94,13 +94,13 @@ Agencies that publish pricing have to compete on the quality and outcomes of the
 
 Since we wrote this list, it's fair to ask how we'd answer each one:
 
-1. Yes — see the case studies on our work page, with specific system descriptions and outcome numbers.
+1. Yes -- see the case studies on our work page, with specific system descriptions and outcome numbers.
 2. Craig and Darryn. Named in every proposal. The two founders are on every engagement.
 3. We define the success metric in Phase 1 before we build anything. It goes into the engagement agreement.
 4. We stay involved until the metric is hit.
 5. Full IP transfer on completion. Built on your infrastructure. Your team trained to maintain it.
 6. Change management is standard in every Phase 2 engagement. Not optional, not an add-on.
-7. Yes — our pricing is on our website.
+7. Yes -- our pricing is on our website.
 
 ---
 

@@ -12,7 +12,7 @@
  * the verification script in /tmp/verify_scoring.mjs proves the baseline.
  */
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it } from '@jest/globals';
 import { QUESTIONS } from '../questions';
 import {
   SCORE_FLOOR,
@@ -29,7 +29,7 @@ const allAnswers = (value: number) =>
 
 // Tests -------------------------------------------------------------------
 
-describe('scoreAnswers — reconciliation against v5 demo', () => {
+describe('scoreAnswers -- reconciliation against v5 demo', () => {
   it('floor: every answer at level 0 still yields 25 across the board', () => {
     const r = scoreAnswers(allAnswers(0));
     expect(r.overallScore).toBe(SCORE_FLOOR);
@@ -103,7 +103,7 @@ describe('scoreAnswers — reconciliation against v5 demo', () => {
   });
 });
 
-describe('scoreAnswers — derived fields', () => {
+describe('scoreAnswers -- derived fields', () => {
   it('overall is exactly the mean of pillar scores (rounded)', () => {
     // Edge: pillar scores 100, 50, 75, 75, 25 → mean 65
     const answers = {
@@ -164,7 +164,7 @@ describe('scoreAnswers — derived fields', () => {
   });
 });
 
-describe('scoreAnswers — weakness patterns', () => {
+describe('scoreAnswers -- weakness patterns', () => {
   it('identifies q1_low (first question in pillar) when uniquely lowest', () => {
     // Data pillar: q4=0, q5=2, q6=2 → q1_low (q4 is position 1 in data pillar)
     const answers = {
@@ -218,7 +218,7 @@ describe('scoreAnswers — weakness patterns', () => {
   });
 });
 
-describe('scoreAnswers — input validation', () => {
+describe('scoreAnswers -- input validation', () => {
   it('throws if any answer is missing', () => {
     const partial = { ...allAnswers(2) };
     delete (partial as Record<string, number>)['q5'];

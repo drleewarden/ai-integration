@@ -1,5 +1,5 @@
 /**
- * Creative Milk — AI Readiness pillar definitions.
+ * Creative Milk -- AI Readiness pillar definitions.
  *
  * Five pillars, each backed by 3 questions in questions.ts. Pillar metadata
  * (labels, descriptions) lives here so it can be imported without pulling in
@@ -29,7 +29,7 @@ export const PILLARS: Record<PillarKey, Pillar> = {
     label: 'Culture, Talent & Skills',
     shortLabel: 'Culture',
     description:
-      'How your team approaches AI — confidence, curiosity, willingness to experiment, and how knowledge spreads.',
+      'How your team approaches AI -- confidence, curiosity, willingness to experiment, and how knowledge spreads.',
   },
   technology: {
     id: 'technology',
