@@ -30,7 +30,7 @@ const eslintConfig = [
       "@next/next/no-page-custom-font": "off",
       // Loosen a few rules that block the production build but aren't
       // correctness issues.
-      "@next/next/no-html-link-for-pages": "warn",
+      "@next/next/no-html-link-for-pages": "off",
       "prefer-const": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
     },
