@@ -1,0 +1,8 @@
+.members-article h2 {
+  font-family: var(--font-display, serif);
+  margin: 2rem 0 0.75rem;
+}
+.members-article p {
+  line-height: 1.7;
+  margin: 0 0 1rem;
+}
