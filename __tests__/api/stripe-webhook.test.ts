@@ -16,12 +16,20 @@ jest.mock("../../lib/stripe", () => ({
 
 const mockUpdate = jest.fn();
 const mockEq = jest.fn();
+const mockSelect = jest
+  .fn()
+  .mockResolvedValue({ data: [{ id: "u1" }], error: null });
 jest.mock("../../lib/supabase/server", () => ({
   getServiceSupabase: () => ({
     from: () => ({
       update: (...a: unknown[]) => {
         mockUpdate(...a);
-        return { eq: (...e: unknown[]) => { mockEq(...e); return Promise.resolve({ error: null }); } };
+        return {
+          eq: (...e: unknown[]) => {
+            mockEq(...e);
+            return { select: (...s: unknown[]) => mockSelect(...s) };
+          },
+        };
       },
     }),
   }),
@@ -44,7 +52,10 @@ const makeReq = (body: string, sig: string | null = "sig") => {
 };
 
 describe("POST /api/stripe/webhook", () => {
-  beforeEach(() => jest.clearAllMocks());
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockSelect.mockResolvedValue({ data: [{ id: "u1" }], error: null });
+  });
 
   it("400 when signature header missing", async () => {
     const res = await POST(makeReq("{}", null));
@@ -115,5 +126,22 @@ describe("POST /api/stripe/webhook", () => {
     const res = await POST(makeReq("{}"));
     expect(res.status).toBe(200);
     expect(mockUpdate).not.toHaveBeenCalled();
+  });
+
+  it("subscription.updated with zero matching rows still 200s and logs a warning", async () => {
+    mockSelect.mockResolvedValue({ data: [], error: null });
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    mockConstructEvent.mockReturnValue({
+      type: "customer.subscription.updated",
+      data: { object: { id: "sub_1", status: "active", customer: "cus_missing" } },
+    });
+    const res = await POST(makeReq("{}"));
+    expect(res.status).toBe(200);
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringContaining(
+        "no member_profiles row matched stripe_customer_id=cus_missing",
+      ),
+    );
+    consoleErrorSpy.mockRestore();
   });
 });

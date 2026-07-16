@@ -21,6 +21,10 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 
 const PRO_STATUSES = new Set(["active", "trialing"]);
 
+// Voluntary cancellations keep Stripe status "active" (with cancel_at_period_end
+// set) until the current period ends, so members stay pro until then. "past_due"
+// (a failed payment) intentionally downgrades immediately -- do not add a grace
+// period here without an explicit product decision.
 function tierFor(status: string): "free" | "pro" {
   return PRO_STATUSES.has(status) ? "pro" : "free";
 }
@@ -62,16 +66,23 @@ export async function POST(req: NextRequest) {
         const subscription = await getStripe().subscriptions.retrieve(
           subscriptionId,
         );
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("member_profiles")
           .update({
             tier: tierFor(subscription.status),
             subscription_status: subscription.status,
             stripe_subscription_id: subscriptionId,
-            stripe_customer_id: customerId ?? null,
+            // Never overwrite an existing stripe_customer_id with null.
+            ...(customerId ? { stripe_customer_id: customerId } : {}),
           })
-          .eq("id", userId);
+          .eq("id", userId)
+          .select("id");
         if (error) console.error("[stripe/webhook] checkout update failed:", error);
+        if (!error && (!data || data.length === 0)) {
+          console.error(
+            `[stripe/webhook] no member_profiles row matched id=${userId} — tier not updated`,
+          );
+        }
         break;
       }
 
@@ -82,15 +93,21 @@ export async function POST(req: NextRequest) {
           typeof subscription.customer === "string"
             ? subscription.customer
             : subscription.customer.id;
-        const { error } = await supabase
+        const { data, error } = await supabase
           .from("member_profiles")
           .update({
             tier: tierFor(subscription.status),
             subscription_status: subscription.status,
             stripe_subscription_id: subscription.id,
           })
-          .eq("stripe_customer_id", customerId);
+          .eq("stripe_customer_id", customerId)
+          .select("id");
         if (error) console.error("[stripe/webhook] subscription update failed:", error);
+        if (!error && (!data || data.length === 0)) {
+          console.error(
+            `[stripe/webhook] no member_profiles row matched stripe_customer_id=${customerId} — tier not updated`,
+          );
+        }
         break;
       }
 
