@@ -15,11 +15,32 @@ import { createServerClient } from "@supabase/ssr";
 import { membersRedirectPath } from "@/lib/members/route-guard";
 
 export async function middleware(request: NextRequest) {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  // Fail closed when Supabase isn't configured. Without a URL + anon key,
+  // createServerClient() throws and 500s every /members request. We can't
+  // authenticate anyone in that state, so treat visitors as logged out and
+  // let membersRedirectPath() bounce gated paths to /login (public pages,
+  // e.g. /members/upgrade, still resolve). Surfaces the misconfiguration
+  // in the server logs instead of an opaque crash.
+  if (!supabaseUrl || !supabaseAnonKey) {
+    console.error(
+      "[members] Supabase env missing (NEXT_PUBLIC_SUPABASE_URL / " +
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY). Treating /members visitors as " +
+        "unauthenticated.",
+    );
+    const redirectTo = membersRedirectPath(request.nextUrl.pathname, false);
+    return redirectTo
+      ? NextResponse.redirect(new URL(redirectTo, request.url))
+      : NextResponse.next({ request });
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseAnonKey,
     {
       cookies: {
         getAll() {
