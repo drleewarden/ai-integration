@@ -47,6 +47,13 @@ export async function middleware(request: NextRequest) {
     user !== null,
   );
   if (redirectTo) {
+    // Known trade-off: cookies refreshed by setAll() above were applied to
+    // `response`, but we discard it here and build a brand-new redirect
+    // response instead, so those refreshed cookies are not re-applied to it
+    // (this mirrors the Supabase ssr reference pattern). Worst case, a
+    // session-invalidation event leaves stale cookies on the client until
+    // the next request re-runs this middleware -- not an auth bypass, since
+    // getUser() above already re-validated the session for this request.
     return NextResponse.redirect(new URL(redirectTo, request.url));
   }
 

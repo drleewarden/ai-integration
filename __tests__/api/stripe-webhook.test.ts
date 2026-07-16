@@ -96,13 +96,21 @@ describe("POST /api/stripe/webhook", () => {
     expect(mockEq).toHaveBeenCalledWith("id", "u1");
   });
 
-  it("subscription.updated with past_due downgrades to free", async () => {
+  it("subscription.updated with past_due downgrades to free using a fresh retrieve", async () => {
+    mockRetrieve.mockResolvedValueOnce({
+      id: "sub_1",
+      status: "past_due",
+      customer: "cus_1",
+    });
     mockConstructEvent.mockReturnValue({
       type: "customer.subscription.updated",
-      data: { object: { id: "sub_1", status: "past_due", customer: "cus_1" } },
+      // Stale event payload still says "active" -- the handler must not
+      // trust it and should re-fetch the subscription instead.
+      data: { object: { id: "sub_1", status: "active", customer: "cus_1" } },
     });
     const res = await POST(makeReq("{}"));
     expect(res.status).toBe(200);
+    expect(mockRetrieve).toHaveBeenCalledWith("sub_1");
     expect(mockUpdate).toHaveBeenCalledWith(
       expect.objectContaining({ tier: "free", subscription_status: "past_due" }),
     );

@@ -4,22 +4,28 @@ One-time dashboard tasks that code cannot do. Complete in order.
 
 ## 1. Supabase
 
-1. **Pre-flight (critical):** run the two verification queries at the top of
-   `supabase/migrations/0002_members_area.sql` (team users all have profiles
-   rows; no auto-profiles trigger on auth.users).
+1. **Pre-flight (critical):** run the three verification queries (a, b, c)
+   at the top of `supabase/migrations/0002_members_area.sql` (team users
+   all have profiles rows; no auto-profiles trigger on auth.users; no
+   pre-0001 CRM policy still trusts bare "authenticated").
 2. Run `supabase/migrations/0002_members_area.sql` in the SQL editor.
-3. Auth → Providers: enable **Email** (magic link + password) and **Google**.
+3. **Do not enable the Email or Google providers below (i.e. do not let
+   members sign up) until the check-(c) policy sweep is complete.** Any
+   pre-0001 policy still granting "authenticated" full access (e.g.
+   `using (true)`) would give brand-new members access to CRM data the
+   moment they sign up.
+4. Auth → Providers: enable **Email** (magic link + password) and **Google**.
    Google needs an OAuth client from Google Cloud Console
    (APIs & Services → Credentials → OAuth client ID → Web application), with
    authorised redirect URI: `https://<project-ref>.supabase.co/auth/v1/callback`.
-4. Auth → URL Configuration: set Site URL to
+5. Auth → URL Configuration: set Site URL to
    `https://www.creative-milk.com.au`, add redirect URLs:
    `https://www.creative-milk.com.au/auth/callback`,
    `http://localhost:3000/auth/callback`.
-5. Storage: confirm the private `member-files` bucket exists (created by the
+6. Storage: confirm the private `member-files` bucket exists (created by the
    migration). Upload seed file to
    `ai-policy-template/ai-policy-template-v1.zip`.
-6. Settings → API: copy the **anon public** key.
+7. Settings → API: copy the **anon public** key.
 
 ## 2. Stripe
 

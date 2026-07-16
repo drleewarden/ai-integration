@@ -10,15 +10,11 @@ import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import { Resend } from "resend";
 import { getServiceSupabase } from "@/lib/supabase/server";
-
-function safeNext(next: string | null): string {
-  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
-  return "/members";
-}
+import { safeNext } from "@/lib/members/safe-next";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
-  const next = safeNext(req.nextUrl.searchParams.get("next"));
+  const next = safeNext(req.nextUrl.searchParams.get("next"), req.url);
 
   if (!code) {
     return NextResponse.redirect(new URL("/login?error=1", req.url));

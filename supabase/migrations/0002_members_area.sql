@@ -27,13 +27,18 @@
 --        where tgrelid = 'auth.users'::regclass and not tgisinternal;
 --      -> if a profiles-creating trigger exists, scope it before applying.
 --   c. Pre-0001 CRM tables (opportunities, activities, documents, ...) have
---      policies that exist only in the live DB. List every policy that
---      still trusts bare "authenticated":
---        select schemaname, tablename, policyname, qual
+--      policies that exist only in the live DB. List EVERY policy granted
+--      to the "authenticated" role -- not just ones that reference
+--      auth.role() in their expression:
+--        select schemaname, tablename, policyname, roles, qual, with_check
 --        from pg_policies
---        where qual like '%auth.role()%' or with_check like '%auth.role()%';
---      -> recreate each hit with public.is_team_member(), same pattern as
---         below, BEFORE members can sign up.
+--        where 'authenticated' = any(roles);
+--      -> EVERY hit must be reviewed by hand. A policy like `using (true)`
+--         grants any authenticated user (including new public members)
+--         full access and won't contain the string "auth.role()", so a
+--         text search for that string alone would miss it. Recreate each
+--         policy that should be team-only with public.is_team_member(),
+--         same pattern as below, BEFORE members can sign up.
 -- ============================================================================
 
 -- ── Helper: team membership check ──────────────────────────────────────────
@@ -123,6 +128,13 @@ create trigger member_profiles_set_updated_at
   before update on public.member_profiles
   for each row execute function public.set_updated_at();
 
+-- Backfill: users created before this migration (e.g. the team) get a row
+-- too. Without this, a pre-existing user could pay via Stripe and the
+-- checkout/webhook updates would match zero rows -- money taken, no tier.
+insert into public.member_profiles (id, email)
+select id, coalesce(email, '') from auth.users
+on conflict (id) do nothing;
+
 -- ── 3. auto-create profile on signup ────────────────────────────────────────
 create or replace function public.handle_new_member()
 returns trigger
@@ -132,7 +144,7 @@ set search_path = public
 as $$
 begin
   insert into public.member_profiles (id, email)
-  values (new.id, new.email)
+  values (new.id, coalesce(new.email, ''))
   on conflict (id) do nothing;
   return new;
 end;

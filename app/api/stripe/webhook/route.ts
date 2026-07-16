@@ -8,6 +8,8 @@
  * Events:
  *   checkout.session.completed      -> tier pro (status from subscription)
  *   customer.subscription.updated   -> pro iff status active|trialing
+ *                                      (re-fetched fresh from Stripe --
+ *                                       delivery order isn't guaranteed)
  *   customer.subscription.deleted   -> tier free
  *
  * Always 200 for verified events (Stripe retries non-2xx); processing
@@ -86,7 +88,35 @@ export async function POST(req: NextRequest) {
         break;
       }
 
-      case "customer.subscription.updated":
+      case "customer.subscription.updated": {
+        const subscription = event.data.object as Stripe.Subscription;
+        const customerId =
+          typeof subscription.customer === "string"
+            ? subscription.customer
+            : subscription.customer.id;
+        // Stripe doesn't guarantee webhook delivery order -- a stale
+        // retried event could wrongly downgrade a member who has since
+        // recovered. Re-fetch the subscription so we always act on its
+        // current status rather than trusting the event payload.
+        const fresh = await getStripe().subscriptions.retrieve(subscription.id);
+        const { data, error } = await supabase
+          .from("member_profiles")
+          .update({
+            tier: tierFor(fresh.status),
+            subscription_status: fresh.status,
+            stripe_subscription_id: fresh.id,
+          })
+          .eq("stripe_customer_id", customerId)
+          .select("id");
+        if (error) console.error("[stripe/webhook] subscription update failed:", error);
+        if (!error && (!data || data.length === 0)) {
+          console.error(
+            `[stripe/webhook] no member_profiles row matched stripe_customer_id=${customerId} — tier not updated`,
+          );
+        }
+        break;
+      }
+
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
         const customerId =

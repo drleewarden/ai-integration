@@ -9,18 +9,23 @@ export default function CheckoutButton() {
   async function checkout() {
     setBusy(true);
     setError(null);
-    const res = await fetch("/api/members/checkout", { method: "POST" });
-    if (res.status === 401) {
-      window.location.assign("/login?next=%2Fmembers%2Fupgrade");
-      return;
-    }
-    const body = await res.json().catch(() => null);
-    if (!res.ok || !body?.url) {
+    try {
+      const res = await fetch("/api/members/checkout", { method: "POST" });
+      if (res.status === 401) {
+        window.location.assign("/login?next=%2Fmembers%2Fupgrade");
+        return;
+      }
+      const body = await res.json().catch(() => null);
+      if (!res.ok || !body?.url) {
+        setError("Could not start checkout. Please try again.");
+        setBusy(false);
+        return;
+      }
+      window.location.assign(body.url);
+    } catch {
       setError("Could not start checkout. Please try again.");
       setBusy(false);
-      return;
     }
-    window.location.assign(body.url);
   }
 
   return (

@@ -10,12 +10,7 @@
  */
 import { useState } from "react";
 import { getBrowserSupabase } from "@/lib/supabase/browser";
-
-// Only ever redirect within our own site.
-function safeNext(next: string | null): string {
-  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
-  return "/members";
-}
+import { safeNext } from "@/lib/members/safe-next";
 
 export default function AuthForm({
   mode,
@@ -34,7 +29,7 @@ export default function AuthForm({
     | { state: "error"; message: string }
   >({ state: "idle" });
 
-  const target = safeNext(next);
+  const target = safeNext(next, window.location.origin);
   const callback = () =>
     `${window.location.origin}/auth/callback?next=${encodeURIComponent(target)}`;
 

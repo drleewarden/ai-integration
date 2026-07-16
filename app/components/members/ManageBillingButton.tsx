@@ -9,14 +9,19 @@ export default function ManageBillingButton() {
   async function open() {
     setBusy(true);
     setError(null);
-    const res = await fetch("/api/members/portal", { method: "POST" });
-    const body = await res.json().catch(() => null);
-    if (!res.ok || !body?.url) {
+    try {
+      const res = await fetch("/api/members/portal", { method: "POST" });
+      const body = await res.json().catch(() => null);
+      if (!res.ok || !body?.url) {
+        setError("Could not open billing. Please try again.");
+        setBusy(false);
+        return;
+      }
+      window.location.assign(body.url);
+    } catch {
       setError("Could not open billing. Please try again.");
       setBusy(false);
-      return;
     }
-    window.location.assign(body.url);
   }
 
   return (
