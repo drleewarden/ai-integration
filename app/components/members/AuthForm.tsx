@@ -29,9 +29,12 @@ export default function AuthForm({
     | { state: "error"; message: string }
   >({ state: "idle" });
 
-  const target = safeNext(next, window.location.origin);
+  // These read `window`, so they must stay out of the render path — this is a
+  // client component but Next.js still server-renders it, where `window` is
+  // undefined. They're only ever called from the click/submit handlers below.
+  const target = () => safeNext(next, window.location.origin);
   const callback = () =>
-    `${window.location.origin}/auth/callback?next=${encodeURIComponent(target)}`;
+    `${window.location.origin}/auth/callback?next=${encodeURIComponent(target())}`;
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -76,7 +79,7 @@ export default function AuthForm({
       setStatus({ state: "sent" }); // confirmation email path
       return;
     }
-    window.location.assign(target);
+    window.location.assign(target());
   }
 
   async function google() {
@@ -102,13 +105,15 @@ export default function AuthForm({
       <button
         type="button"
         onClick={google}
-        className="cta"
-        style={{ width: "100%", marginBottom: "1rem", minHeight: 44 }}
+        className="cta cta-outline-ink"
+        style={{ width: "100%", marginBottom: "1.5rem", justifyContent: "center" }}
       >
         Continue with Google
       </button>
 
-      <label htmlFor="auth-email">Email</label>
+      <label htmlFor="auth-email" style={{ display: "block", marginBottom: "0.4rem" }}>
+        Email
+      </label>
       <input
         id="auth-email"
         type="email"
@@ -116,12 +121,17 @@ export default function AuthForm({
         autoComplete="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        style={{ width: "100%", minHeight: 44 }}
+        className="input-light"
       />
 
       {usePassword && (
         <>
-          <label htmlFor="auth-password">Password</label>
+          <label
+            htmlFor="auth-password"
+            style={{ display: "block", margin: "1rem 0 0.4rem" }}
+          >
+            Password
+          </label>
           <input
             id="auth-password"
             type="password"
@@ -130,7 +140,7 @@ export default function AuthForm({
             autoComplete={mode === "signup" ? "new-password" : "current-password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ width: "100%", minHeight: 44 }}
+            className="input-light"
           />
         </>
       )}
@@ -143,9 +153,9 @@ export default function AuthForm({
 
       <button
         type="submit"
-        className="cta"
+        className="cta cta-gold"
         disabled={status.state === "sending"}
-        style={{ width: "100%", marginTop: "1rem", minHeight: 44 }}
+        style={{ width: "100%", marginTop: "1.5rem", justifyContent: "center" }}
       >
         {status.state === "sending"
           ? "One moment…"
