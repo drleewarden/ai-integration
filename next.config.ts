@@ -4,7 +4,9 @@ import type { NextConfig } from "next";
  * CSP allows the current marketing stack: GTM, GA4, Meta Pixel, and Google
  * ads endpoints GTM commonly loads. If a new tag is added in GTM and its
  * domain isn't listed here, it will be blocked — extend script-src/connect-src.
- * Supabase is only accessed server-side, so no client CSP entry is needed.
+ * The members area uses the Supabase JS client in the browser (auth: magic
+ * link, password, Google OAuth token exchange), so *.supabase.co must be in
+ * connect-src or those calls fail with "Failed to fetch".
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
@@ -12,7 +14,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net https://*.doubleclick.net",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net https://*.doubleclick.net",
   "frame-src https://www.googletagmanager.com https://*.doubleclick.net",
   "frame-ancestors 'self'",
   "base-uri 'self'",
