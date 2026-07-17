@@ -2,6 +2,7 @@ import type { ComponentType } from "react";
 import type { ToolComponentKey } from "@/lib/members/items";
 import RoiQuickCheck from "./RoiQuickCheck";
 import WebsiteHealthCheck from "./WebsiteHealthCheck";
+import OpportunityFinder from "./OpportunityFinder";
 
 /**
  * Maps registry componentKey -> client component. Adding a tool item:
@@ -11,4 +12,5 @@ import WebsiteHealthCheck from "./WebsiteHealthCheck";
 export const TOOL_COMPONENTS: Record<ToolComponentKey, ComponentType> = {
   "roi-quick-check": RoiQuickCheck,
   "website-health-check": WebsiteHealthCheck,
+  "opportunity-finder": OpportunityFinder,
 };
