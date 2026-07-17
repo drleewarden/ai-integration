@@ -12,6 +12,7 @@
 import aiPolicyTemplate from "@/content/members/ai-policy-template";
 import roiQuickCheck from "@/content/members/roi-quick-check";
 import automationPlaybook from "@/content/members/automation-playbook";
+import websiteHealthCheck from "@/content/members/website-health-check";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -34,7 +35,10 @@ export interface DownloadItem extends MemberItemBase {
 }
 
 /** Keys map to entries in TOOL_COMPONENTS (app/components/members/tools). */
-export const TOOL_COMPONENT_KEYS = ["roi-quick-check"] as const;
+export const TOOL_COMPONENT_KEYS = [
+  "roi-quick-check",
+  "website-health-check",
+] as const;
 export type ToolComponentKey = (typeof TOOL_COMPONENT_KEYS)[number];
 
 export interface ToolItem extends MemberItemBase {
@@ -54,6 +58,7 @@ export const items: MemberItem[] = [
   aiPolicyTemplate,
   roiQuickCheck,
   automationPlaybook,
+  websiteHealthCheck,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
 
 export function itemBySlug(slug: string): MemberItem | undefined {
