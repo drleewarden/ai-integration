@@ -37,12 +37,31 @@ export default async function MemberItemPage({
   const allowed = canAccess(item.tier, tier);
 
   return (
-    <article className="section" style={{ maxWidth: 720, margin: "0 auto" }}>
-      <p className="eyebrow">
-        <Link href="/members">← Library</Link>
-      </p>
-      <h1 className="h-display">{item.title}</h1>
-      <p>{item.description}</p>
+    <article className="section">
+      <div className="container">
+        <div style={{ maxWidth: 720, marginInline: "auto" }}>
+          <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
+            <Link href="/members">← Library</Link>
+          </p>
+          <h1
+            className="h-display"
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
+              marginBottom: "1rem",
+            }}
+          >
+            {item.title}
+          </h1>
+          <p
+            style={{
+              color: "var(--slate-mid)",
+              fontSize: "1.125rem",
+              lineHeight: 1.6,
+              marginBottom: "2.5rem",
+            }}
+          >
+            {item.description}
+          </p>
 
       {!allowed ? (
         <LockedPreview title={item.title} />
@@ -65,6 +84,8 @@ export default async function MemberItemPage({
           dangerouslySetInnerHTML={{ __html: item.html }}
         />
       )}
+        </div>
+      </div>
     </article>
   );
 }

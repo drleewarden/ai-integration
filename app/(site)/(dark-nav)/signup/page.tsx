@@ -14,20 +14,36 @@ export default async function SignupPage({
 }) {
   const { next } = await searchParams;
   return (
-    <section className="section" style={{ maxWidth: 420, margin: "0 auto" }}>
-      <p className="eyebrow">Members</p>
-      <h1 className="h-display">Create your free account</h1>
-      <p>
-        Free tools, plugins and guides for Australian small businesses — no
-        card required.
-      </p>
-      <AuthForm mode="signup" next={next ?? null} />
-      <p style={{ marginTop: "1.5rem" }}>
-        Already a member?{" "}
-        <Link href={`/login${next ? `?next=${encodeURIComponent(next)}` : ""}`}>
-          Sign in
-        </Link>
-      </p>
+    <section className="section">
+      <div className="container">
+        <div style={{ maxWidth: 420, marginInline: "auto" }}>
+          <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
+            Members
+          </p>
+          <h1
+            className="h-display"
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+              marginBottom: "1rem",
+            }}
+          >
+            Create your free account
+          </h1>
+          <p style={{ color: "var(--slate-mid)", marginBottom: "2rem" }}>
+            Free tools, plugins and guides for Australian small businesses —
+            no card required.
+          </p>
+          <AuthForm mode="signup" next={next ?? null} />
+          <p style={{ marginTop: "1.5rem" }}>
+            Already a member?{" "}
+            <Link
+              href={`/login${next ? `?next=${encodeURIComponent(next)}` : ""}`}
+            >
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </div>
     </section>
   );
 }
