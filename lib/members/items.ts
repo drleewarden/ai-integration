@@ -14,6 +14,10 @@ import roiQuickCheck from "@/content/members/roi-quick-check";
 import automationPlaybook from "@/content/members/automation-playbook";
 import websiteHealthCheck from "@/content/members/website-health-check";
 import opportunityFinder from "@/content/members/opportunity-finder";
+import guideLeadFollowUp from "@/content/members/guide-lead-follow-up";
+import guideInvoiceReminders from "@/content/members/guide-invoice-reminders";
+import guideReviewRequests from "@/content/members/guide-review-requests";
+import promptPackMarketing from "@/content/members/prompt-pack-marketing";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -62,6 +66,10 @@ export const items: MemberItem[] = [
   automationPlaybook,
   websiteHealthCheck,
   opportunityFinder,
+  guideLeadFollowUp,
+  guideInvoiceReminders,
+  guideReviewRequests,
+  promptPackMarketing,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
 
 export function itemBySlug(slug: string): MemberItem | undefined {
