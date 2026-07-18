@@ -6,6 +6,12 @@ import OpportunityFinder from "./OpportunityFinder";
 import ToolStackPicker from "./ToolStackPicker";
 import EmailTimeAudit from "./EmailTimeAudit";
 import CostBenefitWorkbench from "./CostBenefitWorkbench";
+import {
+  LeadLeakAudit,
+  ReviewHealthCheck,
+  GettingPaidAudit,
+  QuoteTurnaroundAudit,
+} from "./audits";
 
 /**
  * Maps registry componentKey -> client component. Adding a tool item:
@@ -19,4 +25,8 @@ export const TOOL_COMPONENTS: Record<ToolComponentKey, ComponentType> = {
   "tool-stack-picker": ToolStackPicker,
   "email-time-audit": EmailTimeAudit,
   "cost-benefit-workbench": CostBenefitWorkbench,
+  "lead-leak-audit": LeadLeakAudit,
+  "review-health-check": ReviewHealthCheck,
+  "getting-paid-audit": GettingPaidAudit,
+  "quote-turnaround-audit": QuoteTurnaroundAudit,
 };

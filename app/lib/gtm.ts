@@ -29,6 +29,7 @@ export const EVENTS = {
   WORKSHOP_SIGNUP_SUBMIT: "workshop_signup_submit",
   WORKSHOP_SIGNUP_ERROR: "workshop_signup_error",
   NEWSLETTER_SUBMIT: "newsletter_submit",
+  AUDIT_CARD_CLICK: "audit_card_click",
   CONSENT_ACCEPT: "consent_accept",
   CONSENT_DECLINE: "consent_decline",
   COOKIE_SETTINGS_OPEN: "cookie_settings_open",

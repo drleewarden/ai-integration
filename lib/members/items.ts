@@ -28,6 +28,10 @@ import aiImplementationRoadmap from "@/content/members/ai-implementation-roadmap
 import promptPackSales from "@/content/members/prompt-pack-sales";
 import costBenefitWorkbench from "@/content/members/cost-benefit-workbench";
 import monthlyAiBriefing from "@/content/members/monthly-ai-briefing";
+import leadLeakAudit from "@/content/members/lead-leak-audit";
+import reviewHealthCheck from "@/content/members/review-health-check";
+import gettingPaidAudit from "@/content/members/getting-paid-audit";
+import quoteTurnaroundAudit from "@/content/members/quote-turnaround-audit";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -57,6 +61,10 @@ export const TOOL_COMPONENT_KEYS = [
   "tool-stack-picker",
   "email-time-audit",
   "cost-benefit-workbench",
+  "lead-leak-audit",
+  "review-health-check",
+  "getting-paid-audit",
+  "quote-turnaround-audit",
 ] as const;
 export type ToolComponentKey = (typeof TOOL_COMPONENT_KEYS)[number];
 
@@ -93,7 +101,19 @@ export const items: MemberItem[] = [
   promptPackSales,
   costBenefitWorkbench,
   monthlyAiBriefing,
+  leadLeakAudit,
+  reviewHealthCheck,
+  gettingPaidAudit,
+  quoteTurnaroundAudit,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
+
+/** The four public-facing self-audits advertised on /tools. */
+export const AUDIT_SLUGS = [
+  "lead-leak-audit",
+  "review-health-check",
+  "getting-paid-audit",
+  "quote-turnaround-audit",
+] as const;
 
 export function itemBySlug(slug: string): MemberItem | undefined {
   return items.find((i) => i.slug === slug);
