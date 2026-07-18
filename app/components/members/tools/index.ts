@@ -3,6 +3,9 @@ import type { ToolComponentKey } from "@/lib/members/items";
 import RoiQuickCheck from "./RoiQuickCheck";
 import WebsiteHealthCheck from "./WebsiteHealthCheck";
 import OpportunityFinder from "./OpportunityFinder";
+import ToolStackPicker from "./ToolStackPicker";
+import EmailTimeAudit from "./EmailTimeAudit";
+import CostBenefitWorkbench from "./CostBenefitWorkbench";
 
 /**
  * Maps registry componentKey -> client component. Adding a tool item:
@@ -13,4 +16,7 @@ export const TOOL_COMPONENTS: Record<ToolComponentKey, ComponentType> = {
   "roi-quick-check": RoiQuickCheck,
   "website-health-check": WebsiteHealthCheck,
   "opportunity-finder": OpportunityFinder,
+  "tool-stack-picker": ToolStackPicker,
+  "email-time-audit": EmailTimeAudit,
+  "cost-benefit-workbench": CostBenefitWorkbench,
 };

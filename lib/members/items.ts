@@ -18,6 +18,16 @@ import guideLeadFollowUp from "@/content/members/guide-lead-follow-up";
 import guideInvoiceReminders from "@/content/members/guide-invoice-reminders";
 import guideReviewRequests from "@/content/members/guide-review-requests";
 import promptPackMarketing from "@/content/members/prompt-pack-marketing";
+import toolStackPicker from "@/content/members/tool-stack-picker";
+import guideMeetingActions from "@/content/members/guide-meeting-actions";
+import dataSafetyChecklist from "@/content/members/data-safety-checklist";
+import emailTimeAudit from "@/content/members/email-time-audit";
+import promptPackCustomerService from "@/content/members/prompt-pack-customer-service";
+import clientOnboardingKit from "@/content/members/client-onboarding-kit";
+import aiImplementationRoadmap from "@/content/members/ai-implementation-roadmap";
+import promptPackSales from "@/content/members/prompt-pack-sales";
+import costBenefitWorkbench from "@/content/members/cost-benefit-workbench";
+import monthlyAiBriefing from "@/content/members/monthly-ai-briefing";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -44,6 +54,9 @@ export const TOOL_COMPONENT_KEYS = [
   "roi-quick-check",
   "website-health-check",
   "opportunity-finder",
+  "tool-stack-picker",
+  "email-time-audit",
+  "cost-benefit-workbench",
 ] as const;
 export type ToolComponentKey = (typeof TOOL_COMPONENT_KEYS)[number];
 
@@ -70,6 +83,16 @@ export const items: MemberItem[] = [
   guideInvoiceReminders,
   guideReviewRequests,
   promptPackMarketing,
+  toolStackPicker,
+  guideMeetingActions,
+  dataSafetyChecklist,
+  emailTimeAudit,
+  promptPackCustomerService,
+  clientOnboardingKit,
+  aiImplementationRoadmap,
+  promptPackSales,
+  costBenefitWorkbench,
+  monthlyAiBriefing,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
 
 export function itemBySlug(slug: string): MemberItem | undefined {

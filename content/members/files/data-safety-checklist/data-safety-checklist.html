@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Data Safety Checklist for AI Tools — Creative Milk</title>
+<style>
+  body { font-family: Georgia, 'Times New Roman', serif; max-width: 720px; margin: 2rem auto; padding: 0 1.25rem; color: #1a1a2e; line-height: 1.6; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin-bottom: 0.25rem; }
+  h2 { font-size: 1.25rem; margin-top: 2.25rem; border-bottom: 2px solid #c9a227; padding-bottom: 0.35rem; }
+  h3 { font-size: 1.05rem; margin-top: 1.5rem; }
+  .meta { color: #666; font-size: 0.9rem; margin-bottom: 1.5rem; }
+  .note { background: #faf6e9; border-left: 4px solid #c9a227; padding: 0.75rem 1rem; font-size: 0.95rem; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { padding-left: 1.9rem; position: relative; margin-bottom: 0.6rem; }
+  ul.check li::before { content: ""; position: absolute; left: 0; top: 0.3rem; width: 0.9rem; height: 0.9rem; border: 2px solid #1a1a2e; border-radius: 3px; }
+  .redflags { background: #fdf0ee; border-left: 4px solid #b3352b; padding: 0.75rem 1rem; font-size: 0.95rem; }
+  table { border-collapse: collapse; width: 100%; margin-top: 1rem; font-size: 0.95rem; }
+  th, td { border: 1px solid #ccc; padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; }
+  th { background: #f4f1e8; }
+  footer { margin-top: 2.5rem; font-size: 0.85rem; color: #666; font-style: italic; }
+  @media print { body { margin: 0.5cm auto; } h2 { break-after: avoid; } }
+</style>
+</head>
+<body>
+<h1>Data Safety Checklist for AI Tools</h1>
+<p class="meta">Creative Milk — Members Library · v1 (July 2026)</p>
+
+<p>Use this checklist twice: once when evaluating a new AI tool, and once when writing the rules your team follows every day. It pairs with the AI Usage Policy Template in the members library.</p>
+<p class="note">This checklist is general guidance for Australian small businesses, not legal advice. If you handle health, financial or children's data, get specific advice for your obligations.</p>
+
+<h2>Part 1 — Before you adopt any AI tool (vendor checks)</h2>
+<p>Tick every box before the tool touches real business data.</p>
+<ul class="check">
+  <li><strong>Training use.</strong> Does the vendor use your inputs to train their models? Look for a plain statement, and for business plans that turn it off by default. If you can't find the answer in ten minutes, that is the answer.</li>
+  <li><strong>Data retention.</strong> How long are your prompts and files kept? Can you delete them? Is there a retention setting you control?</li>
+  <li><strong>Where the data lives.</strong> Which country hosts the data? If you have customers in the EU/UK or contracts that require Australian hosting, confirm the tool can comply.</li>
+  <li><strong>Access within the vendor.</strong> Can vendor staff read your data? Under what circumstances (support, abuse review)?</li>
+  <li><strong>Business vs consumer plan.</strong> Consumer (free) tiers almost always have weaker data terms than business tiers of the same product. Check the terms for the tier you'll actually use.</li>
+  <li><strong>Security basics.</strong> Does the vendor publish a security page? Do they support two-factor authentication and (if you have staff) centralised account management?</li>
+  <li><strong>Exit.</strong> Can you export your data and delete the account cleanly if you leave?</li>
+</ul>
+<p class="redflags"><strong>Red flags that mean stop:</strong> no privacy policy or one that hasn't been updated in years · training on your data with no opt-out · no way to delete your data · the tool is free with no visible business model (you are the product).</p>
+
+<h2>Part 2 — Everyday rules for you and your team</h2>
+<p>Print this section. Stick it near the desks.</p>
+
+<h3>Never paste into an AI tool</h3>
+<ul class="check">
+  <li>Passwords, API keys, or anything that grants access to a system</li>
+  <li>Full payment card numbers or bank login details — ever, in any tool</li>
+  <li>Tax file numbers, Medicare numbers, passport or licence numbers</li>
+  <li>Health information about an identifiable person</li>
+  <li>Anything covered by a client confidentiality agreement, unless the tool is approved for it in writing</li>
+</ul>
+
+<h3>De-identify before pasting</h3>
+<ul class="check">
+  <li>Customer or staff names → "the customer", "a team member"</li>
+  <li>Email addresses and phone numbers → remove or replace with placeholders</li>
+  <li>Addresses → suburb-level only, if location matters at all</li>
+  <li>Unique details that identify someone even without a name (e.g. "our only client in Ballarat")</li>
+</ul>
+
+<h3>Fine to use freely</h3>
+<ul class="check">
+  <li>Your own marketing copy, website text and public documents</li>
+  <li>Generic business questions and drafting ("write a follow-up email for a quote")</li>
+  <li>Aggregated numbers that don't identify anyone ("revenue grew 12%")</li>
+  <li>Anything already published</li>
+</ul>
+
+<h2>Part 3 — Set the house rules (15 minutes, once)</h2>
+<ul class="check">
+  <li>Write down the <strong>approved tools list</strong> — which AI tools the business uses, on which plan, and for what. Three lines per tool is plenty.</li>
+  <li>Name <strong>one owner</strong> — the person who approves new tools and reviews the list twice a year.</li>
+  <li>Agree the <strong>de-identify rule</strong> above with everyone who uses AI tools, including contractors.</li>
+  <li>Add the <strong>payment-details rule</strong>: any change to bank or payment details, however it arrives, is verified by phone on a number you already had. AI-written scam emails no longer contain typos.</li>
+  <li>Decide <strong>what happens on a mistake</strong> — if someone pastes something they shouldn't have: tell the owner same-day, delete the conversation/thread if the tool allows it, and note what happened. No blame; the goal is that people report fast.</li>
+</ul>
+
+<h2>Quick reference card</h2>
+<table>
+  <tr><th>Situation</th><th>Rule</th></tr>
+  <tr><td>New AI tool looks useful</td><td>Part 1 checks first, then owner approves</td></tr>
+  <tr><td>Drafting with client context</td><td>De-identify names and contact details</td></tr>
+  <tr><td>Anything with credentials or card numbers</td><td>Never</td></tr>
+  <tr><td>Email asks to change payment details</td><td>Phone verification, known number</td></tr>
+  <tr><td>Pasted something you shouldn't have</td><td>Tell the owner today, delete the thread</td></tr>
+</table>
+
+<footer>Creative Milk · creativemilk.com.au — you're welcome to adapt this for your own business; please don't republish it.</footer>
+</body>
+</html>
