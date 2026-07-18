@@ -47,13 +47,43 @@ export default async function MembersPage() {
             marginTop: "3rem",
           }}
         >
-          {items.map((item) => (
-            <ItemCard
-              key={item.slug}
-              item={item}
-              locked={!canAccess(item.tier, tier)}
-            />
-          ))}
+          {items
+            .filter((item) => item.tier === "free")
+            .map((item) => (
+              <ItemCard
+                key={item.slug}
+                item={item}
+                locked={!canAccess(item.tier, tier)}
+              />
+            ))}
+        </div>
+
+        <p className="eyebrow" style={{ margin: "4rem 0 0" }}>
+          Pro
+        </p>
+        <h2
+          className="h-section"
+          style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", margin: "0.5rem 0 0" }}
+        >
+          {tier === "pro" ? "Included in your plan" : "Unlock with Pro"}
+        </h2>
+        <div
+          style={{
+            display: "grid",
+            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+            marginTop: "2rem",
+          }}
+        >
+          {items
+            .filter((item) => item.tier === "pro")
+            .map((item) => (
+              <ItemCard
+                key={item.slug}
+                item={item}
+                locked={!canAccess(item.tier, tier)}
+              />
+            ))}
         </div>
       </div>
     </section>
