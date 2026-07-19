@@ -14,16 +14,32 @@ export default async function LoginPage({
 }) {
   const { next } = await searchParams;
   return (
-    <section className="section" style={{ maxWidth: 420, margin: "0 auto" }}>
-      <p className="eyebrow">Members</p>
-      <h1 className="h-display">Sign in</h1>
-      <AuthForm mode="login" next={next ?? null} />
-      <p style={{ marginTop: "1.5rem" }}>
-        New here?{" "}
-        <Link href={`/signup${next ? `?next=${encodeURIComponent(next)}` : ""}`}>
-          Create a free account
-        </Link>
-      </p>
+    <section className="section">
+      <div className="container">
+        <div style={{ maxWidth: 420, marginInline: "auto" }}>
+          <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
+            Members
+          </p>
+          <h1
+            className="h-display"
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+              marginBottom: "2rem",
+            }}
+          >
+            Sign in
+          </h1>
+          <AuthForm mode="login" next={next ?? null} />
+          <p style={{ marginTop: "1.5rem" }}>
+            New here?{" "}
+            <Link
+              href={`/signup${next ? `?next=${encodeURIComponent(next)}` : ""}`}
+            >
+              Create a free account
+            </Link>
+          </p>
+        </div>
+      </div>
     </section>
   );
 }

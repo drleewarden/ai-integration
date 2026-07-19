@@ -12,6 +12,26 @@
 import aiPolicyTemplate from "@/content/members/ai-policy-template";
 import roiQuickCheck from "@/content/members/roi-quick-check";
 import automationPlaybook from "@/content/members/automation-playbook";
+import websiteHealthCheck from "@/content/members/website-health-check";
+import opportunityFinder from "@/content/members/opportunity-finder";
+import guideLeadFollowUp from "@/content/members/guide-lead-follow-up";
+import guideInvoiceReminders from "@/content/members/guide-invoice-reminders";
+import guideReviewRequests from "@/content/members/guide-review-requests";
+import promptPackMarketing from "@/content/members/prompt-pack-marketing";
+import toolStackPicker from "@/content/members/tool-stack-picker";
+import guideMeetingActions from "@/content/members/guide-meeting-actions";
+import dataSafetyChecklist from "@/content/members/data-safety-checklist";
+import emailTimeAudit from "@/content/members/email-time-audit";
+import promptPackCustomerService from "@/content/members/prompt-pack-customer-service";
+import clientOnboardingKit from "@/content/members/client-onboarding-kit";
+import aiImplementationRoadmap from "@/content/members/ai-implementation-roadmap";
+import promptPackSales from "@/content/members/prompt-pack-sales";
+import costBenefitWorkbench from "@/content/members/cost-benefit-workbench";
+import monthlyAiBriefing from "@/content/members/monthly-ai-briefing";
+import leadLeakAudit from "@/content/members/lead-leak-audit";
+import reviewHealthCheck from "@/content/members/review-health-check";
+import gettingPaidAudit from "@/content/members/getting-paid-audit";
+import quoteTurnaroundAudit from "@/content/members/quote-turnaround-audit";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -34,7 +54,18 @@ export interface DownloadItem extends MemberItemBase {
 }
 
 /** Keys map to entries in TOOL_COMPONENTS (app/components/members/tools). */
-export const TOOL_COMPONENT_KEYS = ["roi-quick-check"] as const;
+export const TOOL_COMPONENT_KEYS = [
+  "roi-quick-check",
+  "website-health-check",
+  "opportunity-finder",
+  "tool-stack-picker",
+  "email-time-audit",
+  "cost-benefit-workbench",
+  "lead-leak-audit",
+  "review-health-check",
+  "getting-paid-audit",
+  "quote-turnaround-audit",
+] as const;
 export type ToolComponentKey = (typeof TOOL_COMPONENT_KEYS)[number];
 
 export interface ToolItem extends MemberItemBase {
@@ -54,7 +85,35 @@ export const items: MemberItem[] = [
   aiPolicyTemplate,
   roiQuickCheck,
   automationPlaybook,
+  websiteHealthCheck,
+  opportunityFinder,
+  guideLeadFollowUp,
+  guideInvoiceReminders,
+  guideReviewRequests,
+  promptPackMarketing,
+  toolStackPicker,
+  guideMeetingActions,
+  dataSafetyChecklist,
+  emailTimeAudit,
+  promptPackCustomerService,
+  clientOnboardingKit,
+  aiImplementationRoadmap,
+  promptPackSales,
+  costBenefitWorkbench,
+  monthlyAiBriefing,
+  leadLeakAudit,
+  reviewHealthCheck,
+  gettingPaidAudit,
+  quoteTurnaroundAudit,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
+
+/** The four public-facing self-audits advertised on /tools. */
+export const AUDIT_SLUGS = [
+  "lead-leak-audit",
+  "review-health-check",
+  "getting-paid-audit",
+  "quote-turnaround-audit",
+] as const;
 
 export function itemBySlug(slug: string): MemberItem | undefined {
   return items.find((i) => i.slug === slug);

@@ -626,6 +626,88 @@ textarea.input-light {
   opacity: 1;
 }
 
+.member-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--milk-white);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: var(--space-6);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.member-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--liquid-gold), var(--gold-light));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-slow) var(--ease-out);
+  pointer-events: none;
+}
+.member-card:hover,
+.member-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--rule-gold);
+  box-shadow:
+    0 14px 32px rgba(15, 21, 38, 0.1),
+    0 3px 10px rgba(15, 21, 38, 0.06);
+}
+.member-card:hover::before,
+.member-card:focus-visible::before {
+  transform: scaleX(1);
+}
+.member-card h2 {
+  margin: var(--space-1) 0 0;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+.member-card-desc {
+  margin: 0;
+  color: var(--slate-mid);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.member-card-open {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-light);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.member-card:hover .member-card-open {
+  color: var(--liquid-gold);
+}
+.member-card-open .mc-arrow {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.member-card:hover .mc-arrow {
+  transform: translateX(6px);
+}
+.member-card-pill {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 0.05rem 0.55rem;
+  border: 1px solid var(--rule-gold);
+  border-radius: 999px;
+  color: var(--liquid-gold);
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);
