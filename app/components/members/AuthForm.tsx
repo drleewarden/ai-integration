@@ -84,10 +84,19 @@ export default function AuthForm({
 
   async function google() {
     const supabase = getBrowserSupabase();
-    await supabase.auth.signInWithOAuth({
+    // signInWithOAuth normally navigates away; an error here (e.g. provider
+    // not enabled) would otherwise fail silently, leaving a dead button.
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: callback() },
     });
+    if (error) {
+      setStatus({
+        state: "error",
+        message:
+          "Could not start Google sign-in. Please try again or sign in with email.",
+      });
+    }
   }
 
   if (status.state === "sent") {
