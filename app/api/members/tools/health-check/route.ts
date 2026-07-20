@@ -1,38 +1,18 @@
 /**
  * POST /api/members/tools/health-check  { url: string }
  *
- * Members-only single-page website audit. Fetches the page server-side and
- * runs lib/members/tools/health-check over it.
- *
- * SSRF defences (in order):
- *  1. validateAuditUrl — https-only, no IPs/localhost/ports/credentials
- *  2. DNS lookup — every resolved address must be public (isPrivateIp)
- *  3. fetch with redirect:"manual" — each redirect hop re-runs 1 and 2
- *  4. 10s timeout, 2MB response cap
+ * Members-only single-page website audit. Fetches the page server-side via
+ * the shared SSRF-defended fetch (lib/members/tools/audit-fetch) and runs
+ * lib/members/tools/health-check over it.
  */
 import { NextResponse } from "next/server";
-import { lookup } from "node:dns/promises";
-import {
-  validateAuditUrl,
-  isPrivateIp,
-} from "@/lib/members/tools/health-check-url";
+import { fetchAuditTarget } from "@/lib/members/tools/audit-fetch";
 import { runHealthChecks } from "@/lib/members/tools/health-check";
 import { getMemberProfile } from "@/lib/supabase/auth-server";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const MAX_BODY_BYTES = 4_096;
 const MAX_HTML_BYTES = 2_000_000;
-const FETCH_TIMEOUT_MS = 10_000;
-const MAX_REDIRECTS = 3;
-
-async function assertPublicHost(hostname: string): Promise<boolean> {
-  try {
-    const records = await lookup(hostname, { all: true });
-    return records.length > 0 && records.every((r) => !isPrivateIp(r.address));
-  } catch {
-    return false;
-  }
-}
 
 /** Reads at most MAX_HTML_BYTES from the response body. */
 async function readCapped(
@@ -99,79 +79,16 @@ export async function POST(req: Request) {
     );
   }
 
-  const validated = validateAuditUrl(body.url);
-  if (!validated.ok) {
-    return NextResponse.json({ error: validated.reason }, { status: 400 });
-  }
-
-  // Follow up to MAX_REDIRECTS hops manually, re-validating each target so
-  // a redirect can't bounce the fetch into private address space.
-  let current = validated.url;
-  let response: Response | null = null;
-  try {
-    for (let hop = 0; hop <= MAX_REDIRECTS; hop++) {
-      if (!(await assertPublicHost(current.hostname))) {
-        return NextResponse.json(
-          { error: "That site could not be checked." },
-          { status: 400 },
-        );
-      }
-      const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-      let res: Response;
-      try {
-        res = await fetch(current.href, {
-          redirect: "manual",
-          signal: controller.signal,
-          headers: {
-            "user-agent":
-              "CreativeMilk-HealthCheck/1.0 (+https://creativemilk.com.au)",
-          },
-        });
-      } finally {
-        clearTimeout(timer);
-      }
-      if (res.status >= 300 && res.status < 400) {
-        const loc = res.headers.get("location");
-        if (!loc || hop === MAX_REDIRECTS) {
-          return NextResponse.json(
-            { error: "That site redirected too many times." },
-            { status: 400 },
-          );
-        }
-        const next = validateAuditUrl(new URL(loc, current).href);
-        if (!next.ok) {
-          return NextResponse.json({ error: next.reason }, { status: 400 });
-        }
-        current = next.url;
-        continue;
-      }
-      if (!res.ok) {
-        return NextResponse.json(
-          { error: `The site responded with status ${res.status}.` },
-          { status: 400 },
-        );
-      }
-      response = res;
-      break;
-    }
-  } catch (err) {
-    console.error("[members/health-check] fetch failed:", err);
+  const result = await fetchAuditTarget(body.url);
+  if (!result.ok) {
     return NextResponse.json(
-      { error: "That site could not be reached." },
-      { status: 400 },
+      { error: result.error },
+      { status: result.status },
     );
   }
 
-  if (!response) {
-    return NextResponse.json(
-      { error: "That site could not be checked." },
-      { status: 400 },
-    );
-  }
-
-  const { html, bytes } = await readCapped(response);
+  const { html, bytes } = await readCapped(result.response);
   const report = runHealthChecks(html, bytes);
 
-  return NextResponse.json({ finalUrl: current.href, ...report });
+  return NextResponse.json({ finalUrl: result.finalUrl, ...report });
 }
