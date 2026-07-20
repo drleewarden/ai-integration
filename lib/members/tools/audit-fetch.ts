@@ -8,6 +8,13 @@
  *  3. fetch with redirect:"manual" — max 3 hops, each hop re-runs 1 and 2
  *  4. 10s timeout per hop
  *
+ * Accepted residual risk: the DNS pre-check (2) and fetch's own resolution
+ * are separate lookups, so a low-TTL rebinding attacker could pass the check
+ * yet have fetch connect to a private address. Accepted because the routes
+ * are members-only and rate-limited, response bodies are never echoed, and
+ * closing it would need connect-time IP pinning via a custom dispatcher —
+ * disproportionate to this weak oracle. Revisit if responses ever get echoed.
+ *
  * Error strings are user-facing and deliberately generic — no hostnames,
  * DNS details or stack traces ever reach the client. Both tools return
  * these same strings so their error copy stays consistent.

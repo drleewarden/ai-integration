@@ -4,6 +4,7 @@
  * Members-only single-page website audit. Fetches the page server-side via
  * the shared SSRF-defended fetch (lib/members/tools/audit-fetch) and runs
  * lib/members/tools/health-check over it.
+ * This route additionally caps the fetched body at 2MB (readCapped).
  */
 import { NextResponse } from "next/server";
 import { fetchAuditTarget } from "@/lib/members/tools/audit-fetch";

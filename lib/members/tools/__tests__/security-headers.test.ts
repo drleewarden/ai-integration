@@ -169,17 +169,15 @@ describe("runSecurityChecks", () => {
     });
   });
 
-  it("scores equal-weighted: 4 passes of 8 rounds to 50", () => {
-    // hsts + csp + clickjacking (via csp? no — csp default-src only) …
-    // build precisely: hsts, csp, nosniff pass + cookies/disclosure free
-    // passes = 5 of 8 → 63. Use explicit construction instead:
+  it("scores equal-weighted: 2 passes of 8 rounds to 25", () => {
     const h = new Headers({
       "strict-transport-security": "max-age=1",
       "content-security-policy": "default-src 'self'",
     });
     h.append("set-cookie", "a=1"); // fails cookies
     h.set("x-powered-by", "PHP/8.1"); // fails disclosure
-    // passes: hsts, csp — plus none of clickjacking/nosniff/referrer/permissions
+    // passes: hsts + csp only — clickjacking needs frame-ancestors or XFO,
+    // and nosniff/referrer/permissions are absent.
     expect(runSecurityChecks(h).score).toBe(25);
   });
 });
