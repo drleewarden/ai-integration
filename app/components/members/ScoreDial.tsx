@@ -10,6 +10,8 @@ import {
 import CountUp from "@/app/components/motion/CountUp";
 import { useReducedMotion } from "@/app/components/motion/useReducedMotion";
 
+const DIAL_SWEEP_MS = 1100;
+
 /**
  * Animated ring for a 0-100 score. The ring sweeps in via a CSS transition
  * on stroke-dashoffset while the number counts up; both settle on the same
@@ -23,10 +25,14 @@ export default function ScoreDial({ score }: { score: number }) {
   );
 
   useEffect(() => {
+    if (reduced) {
+      setOffset(dialOffset(score));
+      return;
+    }
     // One frame at the empty state so the transition has a start point.
     const raf = requestAnimationFrame(() => setOffset(dialOffset(score)));
     return () => cancelAnimationFrame(raf);
-  }, [score]);
+  }, [score, reduced]);
 
   return (
     <div
@@ -34,6 +40,7 @@ export default function ScoreDial({ score }: { score: number }) {
       aria-label={`Health score ${score} out of 100`}
       style={{ position: "relative", width: 128, height: 128 }}
     >
+      {/* Outer role="img" aria-label is the single accessible name; everything inside (including CountUp's sr-only span) is intentionally pruned. */}
       <div aria-hidden="true">
         <svg viewBox="0 0 120 120" width={128} height={128}>
           <circle
@@ -56,7 +63,9 @@ export default function ScoreDial({ score }: { score: number }) {
             strokeDashoffset={offset}
             transform="rotate(-90 60 60)"
             style={{
-              transition: "stroke-dashoffset 1.1s var(--ease-out)",
+              transition: reduced
+                ? "none"
+                : `stroke-dashoffset ${DIAL_SWEEP_MS}ms var(--ease-out)`,
             }}
           />
         </svg>
@@ -71,7 +80,7 @@ export default function ScoreDial({ score }: { score: number }) {
             fontSize: "1.9rem",
           }}
         >
-          <CountUp value={score} durationMs={1100} />
+          <CountUp value={score} durationMs={DIAL_SWEEP_MS} />
         </p>
       </div>
     </div>
