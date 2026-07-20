@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import type { AuditConfig } from "@/lib/members/tools/audits/types";
 import { defaultAnswers } from "@/lib/members/tools/audits/types";
+import BandMeter from "./BandMeter";
 
 /**
  * Generic engine for the config-driven business audits. All model logic
@@ -77,6 +78,8 @@ export default function AuditTool({ config }: { config: AuditConfig }) {
       ))}
 
       <div
+        key={result.band}
+        className="result-pop"
         role="status"
         aria-live="polite"
         style={{
@@ -97,6 +100,7 @@ export default function AuditTool({ config }: { config: AuditConfig }) {
         <p className="eyebrow no-rule" style={{ margin: "0.25rem 0 1rem" }}>
           {result.headlineLabel}
         </p>
+        <BandMeter band={result.band} />
         <p style={{ margin: "0 0 1rem" }}>{result.verdict}</p>
         <p style={{ margin: 0 }}>
           {config.remediation.copy}{" "}

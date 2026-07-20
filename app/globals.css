@@ -799,6 +799,51 @@ textarea.input-light {
   opacity: 0;
 }
 
+/* Audit band meter: gradient severity track with a sliding marker. */
+.band-meter {
+  position: relative;
+  height: 6px;
+  margin: 1rem 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--forest-signal),
+    var(--liquid-gold),
+    #c0392b
+  );
+  opacity: 0.9;
+}
+
+.band-meter-marker {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--milk-white);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 4px rgba(15, 21, 38, 0.25);
+  transition:
+    left var(--dur-base) var(--ease-out),
+    background var(--dur-base) linear;
+}
+
+/* Result panel pop when the audit band changes. */
+@keyframes resultPop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.result-pop {
+  animation: resultPop var(--dur-base) var(--ease-out) both;
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);
