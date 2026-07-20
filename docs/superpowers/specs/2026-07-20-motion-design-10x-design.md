@@ -96,12 +96,20 @@ The members area is a product surface — native scroll, no Lenis, no parallax.
 
 ## 6. Rollout phases
 
+**Decision (2026-07-20): implementation starts with the members section
+(phase 4 below), delivered as its own plan. Landing-page phases follow in
+later plans.** Because members uses native scroll and micro-interactions
+only, its foundation needs are just the motion tokens and a reduced-motion
+hook — Lenis and ScrollTrigger are not pulled in until the landing-page
+phases.
+
 1. **Foundation** — MotionProvider (Lenis + GSAP), motion tokens, primitives.
 2. **Homepage** — hero, marquee, cards, pinned Process, section transitions,
    footer reveal.
 3. **Inner landing pages** — services, pricing, process, what-we-build,
    `/for/professional-services`, `/tools` showcase.
 4. **Members polish** — dashboard cards, tool result animations, auth.
+   *(current scope)*
 5. **QA** — performance/a11y audit, reduced-motion sweep, mobile pass.
 
 ## Testing
