@@ -6,6 +6,7 @@ import OpportunityFinder from "./OpportunityFinder";
 import ToolStackPicker from "./ToolStackPicker";
 import EmailTimeAudit from "./EmailTimeAudit";
 import CostBenefitWorkbench from "./CostBenefitWorkbench";
+import SecurityHeadersAudit from "./SecurityHeadersAudit";
 import {
   LeadLeakAudit,
   ReviewHealthCheck,
@@ -29,4 +30,5 @@ export const TOOL_COMPONENTS: Record<ToolComponentKey, ComponentType> = {
   "review-health-check": ReviewHealthCheck,
   "getting-paid-audit": GettingPaidAudit,
   "quote-turnaround-audit": QuoteTurnaroundAudit,
+  "security-headers-audit": SecurityHeadersAudit,
 };
