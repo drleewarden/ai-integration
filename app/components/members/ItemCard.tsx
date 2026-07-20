@@ -10,12 +10,18 @@ const TYPE_LABEL: Record<MemberItem["type"], string> = {
 export default function ItemCard({
   item,
   locked,
+  index = 0,
 }: {
   item: MemberItem;
   locked: boolean;
+  index?: number;
 }) {
   return (
-    <Link href={`/members/${item.slug}`} className="member-card">
+    <Link
+      href={`/members/${item.slug}`}
+      className="member-card member-card-enter"
+      style={{ "--stagger-i": index } as React.CSSProperties}
+    >
       <p className="eyebrow" style={{ margin: 0 }}>
         {TYPE_LABEL[item.type]}
         {item.tier === "pro" && (

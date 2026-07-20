@@ -708,6 +708,54 @@ textarea.input-light {
   color: var(--liquid-gold);
 }
 
+/* Card entrance: staggered rise on first paint. Stagger is capped at 8
+   slots so deep grids don't wait seconds for the last row. */
+@keyframes memberCardEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.member-card-enter {
+  animation: memberCardEnter var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(min(var(--stagger-i, 0), 8) * 60ms);
+}
+
+/* Gold sheen sweep across the card face on hover/focus. ::before is taken
+   by the top gold rule, so the sheen lives on ::after. */
+@keyframes sheenSweep {
+  from {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(230%) skewX(-18deg);
+  }
+}
+
+.member-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-130%) skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(232, 201, 106, 0.14) 50%,
+    transparent 58%
+  );
+  pointer-events: none;
+}
+
+.member-card:hover::after,
+.member-card:focus-visible::after {
+  animation: sheenSweep 0.9s var(--ease-out) 1;
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);

@@ -49,11 +49,12 @@ export default async function MembersPage() {
         >
           {items
             .filter((item) => item.tier === "free")
-            .map((item) => (
+            .map((item, i) => (
               <ItemCard
                 key={item.slug}
                 item={item}
                 locked={!canAccess(item.tier, tier)}
+                index={i}
               />
             ))}
         </div>
@@ -77,11 +78,12 @@ export default async function MembersPage() {
         >
           {items
             .filter((item) => item.tier === "pro")
-            .map((item) => (
+            .map((item, i) => (
               <ItemCard
                 key={item.slug}
                 item={item}
                 locked={!canAccess(item.tier, tier)}
+                index={i}
               />
             ))}
         </div>
