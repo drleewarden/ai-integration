@@ -722,6 +722,8 @@ textarea.input-light {
 }
 
 .member-card-enter {
+  /* Fill-mode must stay `backwards` (never `both`/`forwards`): a filling
+     animation holds `transform` forever and masks the :hover lift. */
   animation: memberCardEnter var(--dur-slow) var(--ease-out) backwards;
   animation-delay: calc(min(var(--stagger-i, 0), 8) * 60ms);
 }
