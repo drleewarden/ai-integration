@@ -101,7 +101,7 @@ export default function AuthForm({
 
   if (status.state === "sent") {
     return (
-      <p role="status" style={{ color: "var(--warm-cream)" }}>
+      <p role="status" className="animate-fadeInUp" style={{ color: "var(--warm-cream)" }}>
         Check your inbox — we've sent you a link to{" "}
         {usePassword && mode === "signup" ? "confirm your account" : "sign in"}
         .
@@ -155,14 +155,14 @@ export default function AuthForm({
       )}
 
       {status.state === "error" && (
-        <p role="alert" style={{ color: "#c0392b" }}>
+        <p role="alert" className="animate-slideDown" style={{ color: "#c0392b" }}>
           {status.message}
         </p>
       )}
 
       <button
         type="submit"
-        className="cta cta-gold"
+        className={`cta cta-gold${status.state === "sending" ? " btn-busy" : ""}`}
         disabled={status.state === "sending"}
         style={{ width: "100%", marginTop: "1.5rem", justifyContent: "center" }}
       >

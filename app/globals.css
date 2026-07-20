@@ -844,6 +844,17 @@ textarea.input-light {
   animation: resultPop var(--dur-base) var(--ease-out) both;
 }
 
+/* Submit-in-flight pulse for auth/checkout buttons. */
+@keyframes busyPulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.btn-busy {
+  animation: busyPulse 1.2s ease-in-out infinite;
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);
