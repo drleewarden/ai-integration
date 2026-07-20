@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import ScoreDial from "@/app/components/members/ScoreDial";
 
 interface Check {
   id: string;
@@ -87,10 +88,19 @@ export default function WebsiteHealthCheck() {
 
       {report && (
         <div role="status" aria-live="polite" style={{ marginTop: "1.5rem" }}>
-          <p>
-            Health score for <strong>{report.finalUrl}</strong>:{" "}
-            <strong style={{ fontSize: "1.5rem" }}>{report.score}/100</strong>
-          </p>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "1.25rem",
+              flexWrap: "wrap",
+            }}
+          >
+            <ScoreDial score={report.score} />
+            <p style={{ margin: 0 }}>
+              Health score for <strong>{report.finalUrl}</strong>
+            </p>
+          </div>
           {report.failed.length > 0 ? (
             <>
               <h3>Fix these first</h3>
