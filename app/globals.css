@@ -722,7 +722,7 @@ textarea.input-light {
 }
 
 .member-card-enter {
-  animation: memberCardEnter var(--dur-slow) var(--ease-out) both;
+  animation: memberCardEnter var(--dur-slow) var(--ease-out) backwards;
   animation-delay: calc(min(var(--stagger-i, 0), 8) * 60ms);
 }
 
@@ -753,7 +753,7 @@ textarea.input-light {
 
 .member-card:hover::after,
 .member-card:focus-visible::after {
-  animation: sheenSweep 0.9s var(--ease-out) 1;
+  animation: sheenSweep calc(var(--dur-slow) * 2) var(--ease-out) 1;
 }
 
 .footer-link {
