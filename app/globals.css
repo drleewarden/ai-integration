@@ -758,6 +758,47 @@ textarea.input-light {
   animation: sheenSweep calc(var(--dur-slow) * 2) var(--ease-out) 1;
 }
 
+/* Locked Pro content gate: a slow gold shimmer that parts (fades) on
+   hover, hinting the content is one step away. */
+@keyframes lockedShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.locked-preview {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--liquid-gold);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.locked-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(232, 201, 106, 0.12) 50%,
+    transparent 65%
+  );
+  background-size: 200% 100%;
+  animation: lockedShimmer 3.2s linear infinite;
+  transition: opacity var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+
+.locked-preview:hover::before,
+.locked-preview:focus-within::before {
+  opacity: 0;
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);

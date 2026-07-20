@@ -6,14 +6,7 @@ import Link from "next/link";
  */
 export default function LockedPreview({ title }: { title: string }) {
   return (
-    <div
-      style={{
-        border: "1px solid var(--liquid-gold)",
-        borderRadius: 12,
-        padding: "2rem",
-        textAlign: "center",
-      }}
-    >
+    <div className="locked-preview">
       <p className="eyebrow" style={{ color: "var(--liquid-gold)" }}>
         Pro members only
       </p>
@@ -21,7 +14,11 @@ export default function LockedPreview({ title }: { title: string }) {
       <p>
         Unlock every guide, tool and download for $29/month. Cancel any time.
       </p>
-      <Link href="/members/upgrade" className="cta" style={{ minHeight: 44, display: "inline-block" }}>
+      <Link
+        href="/members/upgrade"
+        className="cta"
+        style={{ minHeight: 44, display: "inline-block" }}
+      >
         Upgrade to Pro
       </Link>
     </div>
