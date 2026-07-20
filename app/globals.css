@@ -759,13 +759,21 @@ textarea.input-light {
 }
 
 /* Locked Pro content gate: a slow gold shimmer that parts (fades) on
-   hover, hinting the content is one step away. */
+   hover, hinting the content is one step away. Transform-based (not
+   background-position) so the browser can composite it on the GPU
+   instead of repainting every frame — this runs infinitely on any
+   locked Pro page it's visible on. The layer is 3x the container width
+   (inset: 0 -100%), so translateX(33.4%) / translateX(-33.4%) — each
+   ~1x container width, since transform percentages are relative to the
+   element's own box — slide the gradient across a ~2x-container-width
+   range, the same sweep distance as the old 200%→-200% background-position
+   (relative to a 200%-wide background), just expressed as a transform. */
 @keyframes lockedShimmer {
   from {
-    background-position: 200% 0;
+    transform: translateX(33.4%);
   }
   to {
-    background-position: -200% 0;
+    transform: translateX(-33.4%);
   }
 }
 
@@ -781,14 +789,13 @@ textarea.input-light {
 .locked-preview::before {
   content: '';
   position: absolute;
-  inset: 0;
+  inset: 0 -100%;
   background: linear-gradient(
     105deg,
     transparent 35%,
     rgba(232, 201, 106, 0.12) 50%,
     transparent 65%
   );
-  background-size: 200% 100%;
   animation: lockedShimmer 3.2s linear infinite;
   transition: opacity var(--dur-base) var(--ease-out);
   pointer-events: none;
@@ -954,6 +961,7 @@ textarea.input-light {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
