@@ -13,6 +13,6 @@ export function countAt(
   durationMs: number,
 ): number {
   if (durationMs <= 0) return target;
-  const t = Math.min(elapsedMs / durationMs, 1);
+  const t = Math.min(Math.max(elapsedMs, 0) / durationMs, 1);
   return Math.round(target * easeOutExpo(t));
 }

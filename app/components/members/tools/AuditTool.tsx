@@ -78,8 +78,6 @@ export default function AuditTool({ config }: { config: AuditConfig }) {
       ))}
 
       <div
-        key={result.band}
-        className="result-pop"
         role="status"
         aria-live="polite"
         style={{
@@ -91,32 +89,37 @@ export default function AuditTool({ config }: { config: AuditConfig }) {
           background: "var(--milk-white)",
         }}
       >
-        <p
-          className="h-display"
-          style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", margin: 0 }}
-        >
-          {result.headlineValue}
-        </p>
-        <p className="eyebrow no-rule" style={{ margin: "0.25rem 0 1rem" }}>
-          {result.headlineLabel}
-        </p>
-        <BandMeter band={result.band} />
-        <p style={{ margin: "0 0 1rem" }}>{result.verdict}</p>
-        <p style={{ margin: 0 }}>
-          {config.remediation.copy}{" "}
-          <Link href={`/members/${config.remediation.slug}`}>
-            {config.remediation.isPro ? "See the Pro guide →" : "Open the free guide →"}
-          </Link>
-        </p>
-        <p
-          style={{
-            margin: "1rem 0 0",
-            fontSize: "0.8rem",
-            color: "var(--slate-light)",
-          }}
-        >
-          {result.assumptions}
-        </p>
+        {/* Keyed on band so the pop-in animation replays when the band
+            changes, without remounting the live region above (which would
+            risk the announcement being dropped by screen readers). */}
+        <div key={result.band} className="result-pop">
+          <p
+            className="h-display"
+            style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", margin: 0 }}
+          >
+            {result.headlineValue}
+          </p>
+          <p className="eyebrow no-rule" style={{ margin: "0.25rem 0 1rem" }}>
+            {result.headlineLabel}
+          </p>
+          <BandMeter band={result.band} />
+          <p style={{ margin: "0 0 1rem" }}>{result.verdict}</p>
+          <p style={{ margin: 0 }}>
+            {config.remediation.copy}{" "}
+            <Link href={`/members/${config.remediation.slug}`}>
+              {config.remediation.isPro ? "See the Pro guide →" : "Open the free guide →"}
+            </Link>
+          </p>
+          <p
+            style={{
+              margin: "1rem 0 0",
+              fontSize: "0.8rem",
+              color: "var(--slate-light)",
+            }}
+          >
+            {result.assumptions}
+          </p>
+        </div>
       </div>
     </div>
   );

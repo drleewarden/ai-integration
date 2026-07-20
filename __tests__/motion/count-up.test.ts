@@ -34,4 +34,8 @@ describe("countAt", () => {
   it("returns integers", () => {
     expect(Number.isInteger(countAt(88, 333, 900))).toBe(true);
   });
+
+  it("clamps negative elapsed time to the start value", () => {
+    expect(countAt(88, -16, 900)).toBe(0);
+  });
 });
