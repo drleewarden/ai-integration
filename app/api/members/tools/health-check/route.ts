@@ -72,7 +72,9 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
-  if (typeof body.url !== "string") {
+  // JSON.parse can return null or a primitive — optional chaining keeps
+  // malformed bodies on the generic 400 path instead of a thrown 500.
+  if (typeof body?.url !== "string") {
     return NextResponse.json(
       { error: "Please enter a valid URL." },
       { status: 400 },

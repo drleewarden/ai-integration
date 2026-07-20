@@ -84,6 +84,18 @@ describe("POST /api/members/tools/security-headers", () => {
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
+  it("400s when the body is JSON null", async () => {
+    const res = await POST(makeReq("null"));
+    expect(res.status).toBe(400);
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
+  it("400s when the body is a JSON primitive", async () => {
+    const res = await POST(makeReq("42"));
+    expect(res.status).toBe(400);
+    expect(global.fetch).not.toHaveBeenCalled();
+  });
+
   it("returns a scored report for a well-configured site", async () => {
     const res = await POST(makeReq({ url: "https://example.com" }));
     expect(res.status).toBe(200);
