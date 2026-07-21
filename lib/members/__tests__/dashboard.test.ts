@@ -47,6 +47,12 @@ describe("formatRelativeTime", () => {
       "just now",
     );
   });
+
+  it("switches to the date format at exactly 30 days", () => {
+    expect(formatRelativeTime("2026-06-21T10:00:00.000Z", NOW)).toBe(
+      "21 June 2026",
+    );
+  });
 });
 
 describe("buildActivityFeed", () => {
@@ -95,6 +101,15 @@ describe("buildActivityFeed", () => {
     expect(feed[0].host).toBeNull();
     expect(feed[1].score).toBeNull();
     expect(feed[1].host).toBeNull();
+  });
+
+  it("does not let skipped rows consume cap slots", () => {
+    const rows = [
+      row({ id: "gone", item_slug: "gone-item" }),
+      ...Array.from({ length: 5 }, (_, i) => row({ id: `k${i}` })),
+    ];
+    const feed = buildActivityFeed(rows, resolveTitle, NOW);
+    expect(feed.map((f) => f.id)).toEqual(["k0", "k1", "k2", "k3", "k4"]);
   });
 });
 
