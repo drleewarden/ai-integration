@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function MembersPage() {
+export default async function MembersLibraryPage() {
   const member = await getMemberProfile();
   // Middleware guarantees a session, but belt-and-braces:
   const tier = member?.profile.tier ?? null;
