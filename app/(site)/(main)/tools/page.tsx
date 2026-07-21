@@ -6,13 +6,16 @@ import PublicAuditCard from "@/app/components/PublicAuditCard";
 export const metadata: Metadata = {
   title: "Free Business Audits | Creative Milk",
   description:
-    "Four free self-audits for Australian small businesses: find out what slow replies, stale reviews, overdue invoices and slow quotes are actually costing you.",
+    "Free self-audits for Australian small businesses: find out what slow replies, stale reviews, overdue invoices and slow quotes are costing you — and whether your website is protecting your customers.",
 };
 
 export default function ToolsPage() {
   const audits = AUDIT_SLUGS.map(
     (slug) => items.find((item) => item.slug === slug)!,
   );
+  const securityAudit = items.find(
+    (item) => item.slug === "security-headers-audit",
+  )!;
 
   return (
     <section className="section">
@@ -31,9 +34,10 @@ export default function ToolsPage() {
           Find out what your business is leaking
         </h1>
         <p style={{ color: "var(--slate-mid)", maxWidth: "52ch" }}>
-          Four quick self-audits — each one takes about two minutes and puts a
-          dollar figure on a leak most small businesses never measure. Free
-          with a members account, no card required.
+          Five quick checks — four put a dollar figure on a leak most small
+          businesses never measure, and one scores how well your website
+          protects your customers. Free with a members account, no card
+          required.
         </p>
 
         <div
@@ -52,6 +56,11 @@ export default function ToolsPage() {
               description={item.description}
             />
           ))}
+          <PublicAuditCard
+            slug={securityAudit.slug}
+            title={securityAudit.title}
+            description={securityAudit.description}
+          />
         </div>
 
         <p style={{ marginTop: "3rem", color: "var(--slate-mid)" }}>

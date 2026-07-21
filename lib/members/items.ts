@@ -32,6 +32,7 @@ import leadLeakAudit from "@/content/members/lead-leak-audit";
 import reviewHealthCheck from "@/content/members/review-health-check";
 import gettingPaidAudit from "@/content/members/getting-paid-audit";
 import quoteTurnaroundAudit from "@/content/members/quote-turnaround-audit";
+import securityHeadersAudit from "@/content/members/security-headers-audit";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -65,6 +66,7 @@ export const TOOL_COMPONENT_KEYS = [
   "review-health-check",
   "getting-paid-audit",
   "quote-turnaround-audit",
+  "security-headers-audit",
 ] as const;
 export type ToolComponentKey = (typeof TOOL_COMPONENT_KEYS)[number];
 
@@ -105,6 +107,7 @@ export const items: MemberItem[] = [
   reviewHealthCheck,
   gettingPaidAudit,
   quoteTurnaroundAudit,
+  securityHeadersAudit,
 ].sort((a, b) => (a.dateAdded < b.dateAdded ? 1 : -1));
 
 /** The four public-facing self-audits advertised on /tools. */
