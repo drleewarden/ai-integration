@@ -8,7 +8,11 @@
 import { NextResponse } from "next/server";
 import { fetchAuditTarget } from "@/lib/members/tools/audit-fetch";
 import { runSecurityChecks } from "@/lib/members/tools/security-headers";
-import { getMemberProfile } from "@/lib/supabase/auth-server";
+import {
+  getAuthServerSupabase,
+  getMemberProfile,
+} from "@/lib/supabase/auth-server";
+import { recordActivity } from "@/lib/members/activity";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const MAX_BODY_BYTES = 4_096;
@@ -64,5 +68,14 @@ export async function POST(req: Request) {
   }
 
   const report = runSecurityChecks(result.response.headers);
+
+  // Best-effort dashboard activity; anon-key client so RLS applies, and the
+  // summary stores the hostname only — never the full audited URL.
+  await recordActivity(await getAuthServerSupabase(), member.user.id, {
+    slug: "security-headers-audit",
+    kind: "tool_run",
+    summary: { score: report.score, host: new URL(result.finalUrl).hostname },
+  });
+
   return NextResponse.json({ finalUrl: result.finalUrl, ...report });
 }
