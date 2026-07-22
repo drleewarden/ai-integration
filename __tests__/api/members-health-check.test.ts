@@ -4,8 +4,12 @@
  */
 import { resetRateLimits } from "../../lib/rate-limit";
 
+const mockInsert = jest.fn();
 jest.mock("../../lib/supabase/auth-server", () => ({
   getMemberProfile: jest.fn(),
+  getAuthServerSupabase: jest.fn(async () => ({
+    from: () => ({ insert: (...args: unknown[]) => mockInsert(...args) }),
+  })),
 }));
 jest.mock("node:dns/promises", () => ({
   lookup: jest.fn(),
@@ -35,7 +39,11 @@ describe("POST /api/members/tools/health-check", () => {
   beforeEach(() => {
     resetRateLimits();
     jest.clearAllMocks();
-    mockProfile.mockResolvedValue({ profile: { tier: "free" } });
+    mockProfile.mockResolvedValue({
+      user: { id: "u1" },
+      profile: { tier: "free" },
+    });
+    mockInsert.mockResolvedValue({ error: null });
     mockLookup.mockResolvedValue([{ address: "93.184.216.34", family: 4 }]);
     global.fetch = jest.fn().mockResolvedValue(
       new Response(HTML, {
@@ -50,6 +58,7 @@ describe("POST /api/members/tools/health-check", () => {
     const res = await POST(makeReq({ url: "https://example.com" }));
     expect(res.status).toBe(401);
     expect(global.fetch).not.toHaveBeenCalled();
+    expect(mockInsert).not.toHaveBeenCalled();
   });
 
   it("400s on an invalid URL", async () => {
@@ -87,5 +96,26 @@ describe("POST /api/members/tools/health-check", () => {
     );
     const res = await POST(makeReq({ url: "https://example.com" }));
     expect(res.status).toBe(400);
+  });
+
+  it("records a tool_run activity after a successful audit", async () => {
+    const res = await POST(makeReq({ url: "https://example.com" }));
+    expect(res.status).toBe(200);
+    expect(mockInsert).toHaveBeenCalledWith({
+      member_id: "u1",
+      item_slug: "website-health-check",
+      kind: "tool_run",
+      summary: { score: expect.any(Number), host: "example.com" },
+    });
+  });
+
+  it("still returns the report when the activity insert throws", async () => {
+    const errorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    mockInsert.mockRejectedValue(new Error("db down"));
+    const res = await POST(makeReq({ url: "https://example.com" }));
+    expect(res.status).toBe(200);
+    errorSpy.mockRestore();
   });
 });

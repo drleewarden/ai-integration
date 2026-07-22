@@ -12,8 +12,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { itemBySlug } from "@/lib/members/items";
 import { canAccess } from "@/lib/members/access";
-import { getMemberProfile } from "@/lib/supabase/auth-server";
+import {
+  getAuthServerSupabase,
+  getMemberProfile,
+} from "@/lib/supabase/auth-server";
 import { getServiceSupabase } from "@/lib/supabase/server";
+import { recordActivity } from "@/lib/members/activity";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 const SIGNED_URL_TTL_SECONDS = 60;
@@ -65,6 +69,14 @@ export async function GET(
       { status: 500 },
     );
   }
+
+  // Best-effort dashboard activity, recorded only after a URL was actually
+  // issued. Anon-key client (RLS) — the service client above never touches
+  // member_activity.
+  await recordActivity(await getAuthServerSupabase(), member.user.id, {
+    slug: item.slug,
+    kind: "download",
+  });
 
   return NextResponse.redirect(data.signedUrl, 302);
 }

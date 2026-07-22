@@ -41,7 +41,7 @@ export default async function MemberItemPage({
       <div className="container">
         <div style={{ maxWidth: 720, marginInline: "auto" }}>
           <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
-            <Link href="/members">← Library</Link>
+            <Link href="/members/library">← Library</Link>
           </p>
           <h1
             className="h-display"

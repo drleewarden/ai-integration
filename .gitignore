@@ -44,6 +44,9 @@ next-env.d.ts
 # local Claude / Cowork tooling state
 .claude/
 
+# project-scoped agent skills (install shared skills globally instead)
+/.agents/
+
 # local docs / planning files
 /docs/
 

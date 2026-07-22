@@ -10,8 +10,12 @@
 import { NextRequest } from "next/server";
 
 const mockGetMemberProfile = jest.fn();
+const mockInsert = jest.fn();
 jest.mock("../../lib/supabase/auth-server", () => ({
   getMemberProfile: (...args: unknown[]) => mockGetMemberProfile(...args),
+  getAuthServerSupabase: jest.fn(async () => ({
+    from: () => ({ insert: (...args: unknown[]) => mockInsert(...args) }),
+  })),
 }));
 
 const mockCreateSignedUrl = jest.fn();
@@ -68,6 +72,7 @@ describe("GET /api/members/download/[slug]", () => {
       data: { signedUrl: "https://signed.example.com/file.zip" },
       error: null,
     });
+    mockInsert.mockResolvedValue({ error: null });
   });
 
   it("401 for anonymous", async () => {
@@ -105,5 +110,27 @@ describe("GET /api/members/download/[slug]", () => {
     mockCreateSignedUrl.mockResolvedValue({ data: null, error: { message: "boom" } });
     const res = await GET(makeReq("ai-policy-template"), ctx("ai-policy-template"));
     expect(res.status).toBe(500);
+    expect(mockInsert).not.toHaveBeenCalled();
+  });
+
+  it("records a download activity after issuing the signed URL", async () => {
+    mockGetMemberProfile.mockResolvedValue(member("free"));
+    const res = await GET(makeReq("ai-policy-template"), ctx("ai-policy-template"));
+    expect(res.status).toBe(302);
+    expect(mockInsert).toHaveBeenCalledWith({
+      member_id: "u1",
+      item_slug: "ai-policy-template",
+      kind: "download",
+      summary: null,
+    });
+  });
+
+  it("still redirects when the activity insert throws", async () => {
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    mockGetMemberProfile.mockResolvedValue(member("free"));
+    mockInsert.mockRejectedValue(new Error("db down"));
+    const res = await GET(makeReq("ai-policy-template"), ctx("ai-policy-template"));
+    expect(res.status).toBe(302);
+    errorSpy.mockRestore();
   });
 });

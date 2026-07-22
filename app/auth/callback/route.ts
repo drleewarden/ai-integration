@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
             <p>G'day,</p>
             <p>Your free Creative Milk members account is live. Your library of
             tools, plugins and guides is here:</p>
-            <p><a href="https://www.creative-milk.com.au/members">Open your library</a></p>
+            <p><a href="https://www.creative-milk.com.au/members/library">Open your library</a></p>
             <p>Everything marked <strong>Pro</strong> is part of the $29/month
             plan — upgrade any time from your account page.</p>
             <p>— The Creative Milk team</p>

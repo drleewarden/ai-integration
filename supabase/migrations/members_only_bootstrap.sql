@@ -117,3 +117,32 @@ on conflict (id) do nothing;
 -- The AI Readiness CRM (contacts, opportunities, readiness_assessments, ...)
 -- is intentionally NOT created here -- see 0001/0002 when you rebuild it.
 -- ============================================================================
+
+-- ── Member activity (dashboard feed) ────────────────────────────────────────
+-- Server-recorded tool runs and downloads. summary holds only
+-- { "score": <int>, "host": "<hostname>" } for audits; null for downloads.
+
+create table if not exists public.member_activity (
+  id uuid primary key default gen_random_uuid(),
+  member_id uuid not null references auth.users (id) on delete cascade,
+  item_slug text not null,
+  kind text not null check (kind in ('tool_run', 'download')),
+  summary jsonb,
+  created_at timestamptz not null default now()
+);
+
+create index if not exists member_activity_member_created_idx
+  on public.member_activity (member_id, created_at desc);
+
+-- RLS: members see and write only their own rows. No update/delete policies.
+alter table public.member_activity enable row level security;
+
+drop policy if exists "Members can view own activity" on public.member_activity;
+create policy "Members can view own activity"
+  on public.member_activity for select to authenticated
+  using (member_id = auth.uid());
+
+drop policy if exists "Members can insert own activity" on public.member_activity;
+create policy "Members can insert own activity"
+  on public.member_activity for insert to authenticated
+  with check (member_id = auth.uid());

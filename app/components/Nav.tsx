@@ -67,7 +67,7 @@ const NAV_GROUPS: NavGroup[] = [
       {
         label: "Members",
         href: "/members",
-        blurb: "Free tools, plugins and guides",
+        blurb: "Your dashboard, tools and guides",
       },
     ],
   },
