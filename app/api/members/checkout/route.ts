@@ -16,9 +16,10 @@ import { checkRateLimit } from "@/lib/rate-limit";
 const SITE_URL = "https://www.creative-milk.com.au";
 
 function baseUrl(req: NextRequest): string {
-  return process.env.NODE_ENV === "development"
-    ? req.nextUrl.origin
-    : SITE_URL;
+  const isProduction = process.env.VERCEL_ENV
+    ? process.env.VERCEL_ENV === "production"
+    : process.env.NODE_ENV === "production";
+  return isProduction ? SITE_URL : req.nextUrl.origin;
 }
 
 export async function POST(req: NextRequest) {
