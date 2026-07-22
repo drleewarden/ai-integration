@@ -45,6 +45,11 @@ const NAV_GROUPS: NavGroup[] = [
         blurb: "Calculator — what's the delay costing you?",
       },
       {
+        label: "Free Business Audits",
+        href: "/tools",
+        blurb: "What's leaking — leads, reviews, cashflow, quotes?",
+      },
+      {
         label: "Insights",
         href: "/insights",
         blurb: "Articles and field notes",
@@ -58,6 +63,11 @@ const NAV_GROUPS: NavGroup[] = [
         label: "Melbourne Workshop",
         href: "/events/workshop-melbourne",
         blurb: "Melbourne · 7 Aug — for small business owners",
+      },
+      {
+        label: "Members",
+        href: "/members",
+        blurb: "Your dashboard, tools and guides",
       },
     ],
   },

@@ -626,6 +626,242 @@ textarea.input-light {
   opacity: 1;
 }
 
+.member-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  background: var(--milk-white);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: var(--space-6);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out);
+}
+.member-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--liquid-gold), var(--gold-light));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur-slow) var(--ease-out);
+  pointer-events: none;
+}
+.member-card:hover,
+.member-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: var(--rule-gold);
+  box-shadow:
+    0 14px 32px rgba(15, 21, 38, 0.1),
+    0 3px 10px rgba(15, 21, 38, 0.06);
+}
+.member-card:hover::before,
+.member-card:focus-visible::before {
+  transform: scaleX(1);
+}
+.member-card h2 {
+  margin: var(--space-1) 0 0;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+.member-card-desc {
+  margin: 0;
+  color: var(--slate-mid);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.member-card-open {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-light);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.member-card:hover .member-card-open {
+  color: var(--liquid-gold);
+}
+.member-card-open .mc-arrow {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.member-card:hover .mc-arrow {
+  transform: translateX(6px);
+}
+.member-card-pill {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 0.05rem 0.55rem;
+  border: 1px solid var(--rule-gold);
+  border-radius: 999px;
+  color: var(--liquid-gold);
+}
+
+/* Card entrance: staggered rise on first paint. Stagger is capped at 8
+   slots so deep grids don't wait seconds for the last row. */
+@keyframes memberCardEnter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.member-card-enter {
+  /* Fill-mode must stay `backwards` (never `both`/`forwards`): a filling
+     animation holds `transform` forever and masks the :hover lift. */
+  animation: memberCardEnter var(--dur-slow) var(--ease-out) backwards;
+  animation-delay: calc(min(var(--stagger-i, 0), 8) * 60ms);
+}
+
+/* Gold sheen sweep across the card face on hover/focus. ::before is taken
+   by the top gold rule, so the sheen lives on ::after. */
+@keyframes sheenSweep {
+  from {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(230%) skewX(-18deg);
+  }
+}
+
+.member-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-130%) skewX(-18deg);
+  background: linear-gradient(
+    105deg,
+    transparent 42%,
+    rgba(232, 201, 106, 0.14) 50%,
+    transparent 58%
+  );
+  pointer-events: none;
+}
+
+.member-card:hover::after,
+.member-card:focus-visible::after {
+  animation: sheenSweep calc(var(--dur-slow) * 2) var(--ease-out) 1;
+}
+
+/* Locked Pro content gate: a slow gold shimmer that parts (fades) on
+   hover, hinting the content is one step away. Transform-based (not
+   background-position) so the browser can composite it on the GPU
+   instead of repainting every frame — this runs infinitely on any
+   locked Pro page it's visible on. The layer is 3x the container width
+   (inset: 0 -100%), so translateX(33.4%) / translateX(-33.4%) — each
+   ~1x container width, since transform percentages are relative to the
+   element's own box — slide the gradient across a ~2x-container-width
+   range, the same sweep distance as the old 200%→-200% background-position
+   (relative to a 200%-wide background), just expressed as a transform. */
+@keyframes lockedShimmer {
+  from {
+    transform: translateX(33.4%);
+  }
+  to {
+    transform: translateX(-33.4%);
+  }
+}
+
+.locked-preview {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--liquid-gold);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.locked-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0 -100%;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(232, 201, 106, 0.12) 50%,
+    transparent 65%
+  );
+  animation: lockedShimmer 3.2s linear infinite;
+  transition: opacity var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+
+.locked-preview:hover::before,
+.locked-preview:focus-within::before {
+  opacity: 0;
+}
+
+/* Audit band meter: gradient severity track with a sliding marker. */
+.band-meter {
+  position: relative;
+  height: 6px;
+  margin: 1rem 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--forest-signal),
+    var(--liquid-gold),
+    #c0392b
+  );
+  opacity: 0.9;
+}
+
+.band-meter-marker {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--milk-white);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 1px 4px rgba(15, 21, 38, 0.25);
+  transition:
+    left var(--dur-base) var(--ease-out),
+    background var(--dur-base) linear;
+}
+
+/* Result panel pop when the audit band changes. */
+@keyframes resultPop {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.result-pop {
+  animation: resultPop var(--dur-base) var(--ease-out) both;
+}
+
+/* Submit-in-flight pulse for auth/checkout buttons. */
+@keyframes busyPulse {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.btn-busy {
+  animation: busyPulse 1.2s ease-in-out infinite;
+}
+
 .footer-link {
   color: rgba(245, 240, 232, 0.7);
   transition: color var(--dur-fast) var(--ease-out);
@@ -725,6 +961,7 @@ textarea.input-light {
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
