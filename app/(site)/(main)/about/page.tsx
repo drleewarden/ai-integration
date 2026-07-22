@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -239,14 +240,18 @@ export default function About() {
               </div>
               <div
                 style={{
+                  position: "relative",
                   aspectRatio: "1 / 1",
-                  backgroundColor: "rgba(15,21,38,0.05)",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: "1.5rem",
+                  overflow: "hidden",
                 }}
               >
-                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo -- Darryn</span>
+                <Image
+                  src="/images/darryn.webp"
+                  alt="Darryn Lee-Warden, Co-Founder of Creative Milk"
+                  fill
+                  sizes="(max-width: 700px) 90vw, 420px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
             </div>
 
@@ -378,6 +383,87 @@ export default function About() {
                   outcome from day one, that's exactly what we are.
                 </p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Coming up: workshops ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--off-white)", borderBottom: "1px solid var(--rule)" }}
+        >
+          <div className="container">
+            <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>Coming up</p>
+            <h2
+              className="h-section"
+              style={{ color: "var(--midnight-ink)", marginBottom: "clamp(2rem, 4vw, 3rem)" }}
+            >
+              Workshops
+            </h2>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 260px), 1fr))",
+                gap: "clamp(1.5rem, 4vw, 4rem)",
+                alignItems: "center",
+                padding: "clamp(1.5rem, 3vw, 2.5rem)",
+                border: "1px solid var(--rule)",
+                backgroundColor: "var(--warm-cream)",
+              }}
+            >
+              <div>
+                <h3
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(1.35rem, 2.4vw, 1.75rem)",
+                    fontWeight: 300,
+                    color: "var(--midnight-ink)",
+                    marginBottom: "0.5rem",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  Automate your business — put time back in your pocket.
+                </h3>
+                <p className="body-copy" style={{ color: "var(--slate-mid)", maxWidth: "48ch" }}>
+                  A 2-hour, in-person workshop for Melbourne small business owners. Build one
+                  working AI-assisted workflow, live, and leave with the pattern to build the
+                  next one yourself.
+                </p>
+              </div>
+              <dl style={{ margin: 0, display: "grid", gap: "0.75rem" }}>
+                {[
+                  { label: "Date", value: "Mon 17 August" },
+                  { label: "Time", value: "4:00 – 6:00 PM" },
+                  { label: "Where", value: "Melbourne · in person" },
+                ].map((item) => (
+                  <div key={item.label}>
+                    <dt
+                      className="label"
+                      style={{ color: "var(--slate-mid)", marginBottom: "0.2rem" }}
+                    >
+                      {item.label}
+                    </dt>
+                    <dd
+                      style={{
+                        margin: 0,
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.95rem",
+                        color: "var(--midnight-ink)",
+                      }}
+                    >
+                      {item.value}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              <a
+                href="/events/workshop-melbourne"
+                className="cta cta-gold"
+                style={{ justifySelf: "start" }}
+              >
+                Save a seat <ArrowRight size={16} />
+              </a>
             </div>
           </div>
         </section>
