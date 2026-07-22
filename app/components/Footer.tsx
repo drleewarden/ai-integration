@@ -57,7 +57,7 @@ export default function Footer() {
               ["Pricing", "/pricing"],
               ["Opportunity cost calculator", "/opportunity-cost"],
               ["For professional services", "/for/professional-services"],
-              ["Contact", "/#contact"],
+              ["Contact", "/contact"],
             ].map(([label, href]) => (
               <li key={label} style={{ marginBottom: "0.5rem" }}>
                 <a
@@ -99,7 +99,7 @@ export default function Footer() {
           >
             Use the{" "}
             <a
-              href="/#contact"
+              href="/contact"
               className="footer-link"
               style={{
                 color: "var(--liquid-gold)",

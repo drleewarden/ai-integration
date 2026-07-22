@@ -161,7 +161,7 @@ export default function ProfessionalServicesPage() {
                 marginTop: "2.5rem",
               }}
             >
-              <a href="/#contact" className="cta cta-gold">
+              <a href="/contact" className="cta cta-gold">
                 Book a pilot call <ArrowRight size={14} aria-hidden="true" />
               </a>
               <a href="/pricing" className="cta cta-outline-cream">
@@ -578,7 +578,7 @@ export default function ProfessionalServicesPage() {
                 justifyContent: "center",
               }}
             >
-              <a href="/#contact" className="cta cta-ink">
+              <a href="/contact" className="cta cta-ink">
                 Book a pilot call <ArrowRight size={14} aria-hidden="true" />
               </a>
               <a href="/pricing" className="cta cta-outline-ink">
