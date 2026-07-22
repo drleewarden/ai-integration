@@ -13,6 +13,13 @@ import { checkRateLimit } from "@/lib/rate-limit";
 
 const SITE_URL = "https://www.creative-milk.com.au";
 
+function baseUrl(req: NextRequest): string {
+  const isProduction = process.env.VERCEL_ENV
+    ? process.env.VERCEL_ENV === "production"
+    : process.env.NODE_ENV === "production";
+  return isProduction ? SITE_URL : req.nextUrl.origin;
+}
+
 export async function POST(req: NextRequest) {
   const limited = checkRateLimit("members-portal", req, {
     limit: 5,
@@ -34,9 +41,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getStripe().billingPortal.sessions.create({
       customer: member.profile.stripe_customer_id,
-      return_url: `${
-        process.env.NODE_ENV === "development" ? req.nextUrl.origin : SITE_URL
-      }/members/account`,
+      return_url: `${baseUrl(req)}/members/account`,
     });
     return NextResponse.json({ url: session.url }, { status: 200 });
   } catch (err) {
