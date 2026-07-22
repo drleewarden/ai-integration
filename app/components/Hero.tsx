@@ -89,7 +89,7 @@ export default function Hero() {
           }}
         >
           <a
-            href="#contact"
+            href="/contact"
             className="cta cta-gold"
             onClick={() =>
               pushEvent(EVENTS.CTA_CLICK, {

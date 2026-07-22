@@ -23,8 +23,8 @@ Node 22.x required (`.nvmrc`, `package.json` engines).
 ### Routing
 
 - `app/page.tsx` — homepage, composes section components from `app/components/`
-- `app/(site)/(main)/` — standard pages (about, clients, contact, insights index, pricing, process, services, what-we-build, work). **Shared chrome (skip link, Nav, `<main>`, Footer) lives in `app/(site)/(main)/layout.tsx` — pages render sections only.**
-- `app/(site)/(dark-nav)/` — same chrome but `<Nav forceDark />` (solid nav from the top): blog posts (`insights/[slug]`), events/workshop
+- `app/(site)/(main)/` — standard pages (about, clients, insights index, pricing, process, services, what-we-build, work). **Shared chrome (skip link, Nav, `<main>`, Footer) lives in `app/(site)/(main)/layout.tsx` — pages render sections only.**
+- `app/(site)/(dark-nav)/` — same chrome but `<Nav forceDark />` (solid nav from the top): blog posts (`insights/[slug]`), events/workshop, contact
 - `app/(site)/ai-readiness/` and `app/(site)/opportunity-cost/` — manage their own Nav/Footer inside client components (multi-step flows); intentionally outside the layout groups
 - `app/for/professional-services` — industry vertical landing page
 - `app/pricingdata` — hidden machine-readable pricing page (not in sitemap)

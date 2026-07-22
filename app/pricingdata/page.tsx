@@ -43,7 +43,7 @@ const TIERS: Tier[] = [
     ],
     outcomes: "Hours reclaimed per week · turnaround time cut · admin removed",
     ideal: "First AI engagement · sceptical buyers · founders who want proof before scale",
-    cta: { label: "Book a pilot call", href: "/#contact" },
+    cta: { label: "Book a pilot call", href: "/contact" },
     featured: true,
   },
   {
@@ -64,7 +64,7 @@ const TIERS: Tier[] = [
     ],
     outcomes: "Process replaced end-to-end · headcount avoided · capacity unlocked",
     ideal: "Post-pilot expansion · teams of 10–250 · operations-led businesses",
-    cta: { label: "Discuss a build", href: "/#contact" },
+    cta: { label: "Discuss a build", href: "/contact" },
   },
   {
     number: "03",
@@ -84,7 +84,7 @@ const TIERS: Tier[] = [
     ],
     outcomes: "Compounding improvement · operational leverage · stay ahead of the field",
     ideal: "Post-build maintenance · operationally-mature teams · businesses scaling AI",
-    cta: { label: "Talk about residency", href: "/#contact" },
+    cta: { label: "Talk about residency", href: "/contact" },
   },
 ];
 
@@ -356,7 +356,7 @@ export default function PricingPage() {
               Most pilots start within two weeks of the discovery call. Slots
               are limited because we run two at a time.
             </p>
-            <a href="/#contact" className="cta cta-ink">
+            <a href="/contact" className="cta cta-ink">
               Book a pilot call <ArrowRight size={14} aria-hidden="true" />
             </a>
           </div>
