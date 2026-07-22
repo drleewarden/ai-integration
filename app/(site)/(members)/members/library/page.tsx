@@ -68,6 +68,42 @@ export default async function MembersLibraryPage() {
         >
           {tier === "pro" ? "Included in your plan" : "Unlock with Pro"}
         </h2>
+        <p
+          style={{
+            color: "var(--slate-mid)",
+            maxWidth: "48ch",
+            margin: "1rem 0 0",
+          }}
+        >
+          Practical help to turn your AI ideas into working systems.
+        </p>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "1.5rem",
+            maxWidth: "56rem",
+            marginTop: "1.75rem",
+          }}
+        >
+          <div style={{ borderTop: "2px solid var(--liquid-gold)", paddingTop: "1rem" }}>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>
+              Monthly one-on-one
+            </h3>
+            <p style={{ color: "var(--slate-mid)", margin: 0 }}>
+              Get 30 minutes of focused, one-on-one help to build an agentic
+              workflow, solve an implementation problem, or work through a
+              broader AI question.
+            </p>
+          </div>
+          <div style={{ borderTop: "2px solid var(--liquid-gold)", paddingTop: "1rem" }}>
+            <h3 style={{ fontSize: "1rem", marginBottom: "0.5rem" }}>Online support</h3>
+            <p style={{ color: "var(--slate-mid)", margin: 0 }}>
+              Submit support tickets between sessions for guidance,
+              troubleshooting, or a second set of eyes when you need it.
+            </p>
+          </div>
+        </div>
         <div
           style={{
             display: "grid",
