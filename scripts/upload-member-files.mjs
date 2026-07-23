@@ -66,8 +66,17 @@ let failed = false;
 for (const slug of slugs) {
   const zipName = `${slug}-${VERSION}.zip`;
   const zipPath = path.join(tmp, zipName);
-  // -j flattens paths so the zip contains just the files, no folder nesting
-  execFileSync("zip", ["-j", "-q", zipPath, ...readdirSync(path.join(FILES_DIR, slug)).map((f) => path.join(FILES_DIR, slug, f))]);
+  const srcDir = path.join(FILES_DIR, slug);
+  const entries = readdirSync(srcDir, { withFileTypes: true });
+  if (entries.some((e) => e.isDirectory())) {
+    // Nested sources (e.g. skills with checks/, templates/) keep their
+    // structure: the archive contains a single <slug>/ folder so it unzips
+    // cleanly into ~/.claude/skills/.
+    execFileSync("zip", ["-r", "-q", zipPath, slug], { cwd: FILES_DIR });
+  } else {
+    // -j flattens paths so the zip contains just the files, no folder nesting
+    execFileSync("zip", ["-j", "-q", zipPath, ...entries.map((e) => path.join(srcDir, e.name))]);
+  }
 
   const storagePath = `${slug}/${zipName}`;
   const { error } = await supabase.storage
