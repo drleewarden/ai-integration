@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { MemberItem, MemberTier } from "@/lib/members/items";
 import type { ActivityFeedItem } from "@/lib/members/dashboard";
 import ItemCard from "@/app/components/members/ItemCard";
+import DashboardFlow from "@/app/components/members/DashboardFlow";
 
 export interface DashboardViewProps {
   name: string;
@@ -38,6 +39,7 @@ export default function DashboardView({
         <span className="aurora-blob b1" />
         <span className="aurora-blob b2" />
         <span className="aurora-blob b3" />
+        <DashboardFlow />
       </div>
       <div className="container" style={{ position: "relative" }}>
         <div
