@@ -77,6 +77,24 @@ export function buildActivityFeed(
   return feed;
 }
 
+/**
+ * OAuth profile photo from Supabase `user_metadata` (Google sign-in sets
+ * both `avatar_url` and `picture`). Metadata is user-influenced input, so
+ * only https URLs are accepted — never let javascript:/data: values reach
+ * an <img src>.
+ */
+export function avatarFromMetadata(
+  metadata: Record<string, unknown> | null | undefined,
+): string | null {
+  for (const key of ["avatar_url", "picture"]) {
+    const value = metadata?.[key];
+    if (typeof value === "string" && /^https:\/\/\S+$/i.test(value.trim())) {
+      return value.trim();
+    }
+  }
+  return null;
+}
+
 export function greetingName(
   displayName: string | null,
   email: string,

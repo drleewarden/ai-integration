@@ -4,6 +4,7 @@
  */
 import {
   ACTIVITY_FEED_LIMIT,
+  avatarFromMetadata,
   buildActivityFeed,
   formatRelativeTime,
   greetingName,
@@ -125,5 +126,40 @@ describe("greetingName", () => {
 
   it("falls back to 'there' when both are empty", () => {
     expect(greetingName(null, "")).toBe("there");
+  });
+});
+
+describe("avatarFromMetadata", () => {
+  it("prefers avatar_url, then picture", () => {
+    expect(
+      avatarFromMetadata({
+        avatar_url: "https://lh3.googleusercontent.com/a/photo=s96-c",
+        picture: "https://example.com/other.png",
+      }),
+    ).toBe("https://lh3.googleusercontent.com/a/photo=s96-c");
+    expect(
+      avatarFromMetadata({ picture: "https://example.com/other.png" }),
+    ).toBe("https://example.com/other.png");
+  });
+
+  it("rejects non-https and non-string values", () => {
+    expect(avatarFromMetadata({ avatar_url: "http://insecure.example" })).toBeNull();
+    expect(
+      avatarFromMetadata({ avatar_url: "javascript:alert(1)" }),
+    ).toBeNull();
+    expect(avatarFromMetadata({ avatar_url: "data:image/png;base64,x" })).toBeNull();
+    expect(avatarFromMetadata({ avatar_url: 42 })).toBeNull();
+    expect(avatarFromMetadata({})).toBeNull();
+    expect(avatarFromMetadata(null)).toBeNull();
+    expect(avatarFromMetadata(undefined)).toBeNull();
+  });
+
+  it("trims whitespace and rejects URLs with embedded spaces", () => {
+    expect(
+      avatarFromMetadata({ avatar_url: "  https://example.com/a.png  " }),
+    ).toBe("https://example.com/a.png");
+    expect(
+      avatarFromMetadata({ avatar_url: "https://example.com/a b.png" }),
+    ).toBeNull();
   });
 });
