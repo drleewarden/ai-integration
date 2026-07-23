@@ -28,11 +28,11 @@ out vec4 outColor;
 uniform vec2  u_resolution;
 uniform float u_time;
 
-// Brand greens (+ a whisper of gold)
-const vec3 MINT   = vec3(0.804, 0.929, 0.867);   // pale mint
-const vec3 LEAF   = vec3(0.357, 0.686, 0.537);   // #5BAF89 forest-light
-const vec3 FOREST = vec3(0.239, 0.478, 0.373);   // #3D7A5F forest-signal
-const vec3 GOLD   = vec3(0.910, 0.788, 0.416);   // #E8C96A
+// Home-hero palette: liquid gold, cream, midnight
+const vec3 CREAM     = vec3(0.957, 0.914, 0.784);   // #F4E9C8 gold-pale
+const vec3 GOLD      = vec3(0.788, 0.659, 0.298);   // #C9A84C liquid-gold
+const vec3 INK_TINT  = vec3(0.110, 0.137, 0.251);   // #1C2340 midnight-tint
+const vec3 GOLD_LITE = vec3(0.910, 0.788, 0.416);   // #E8C96A
 
 // 2D simplex-ish gradient noise (Inigo Quilez style)
 vec2 hash2(vec2 p) {
@@ -74,6 +74,12 @@ void main() {
   vec2 p  = uv;
   p.x *= u_resolution.x / u_resolution.y;
 
+  // The canvas spans the whole (very tall) section, so normalise to a
+  // fixed ~1400px feature scale instead of canvas height — otherwise one
+  // noise band blankets the entire viewport as a flat wash.
+  float px_scale = u_resolution.y / 1400.0;
+  p *= px_scale;
+
   float t = u_time * 0.05;
 
   // Air current: the whole field slides gently sideways while the warp
@@ -102,14 +108,14 @@ void main() {
   // field — sparse streamlines, not an all-over wash.
   float ribbonA = smoothstep(0.52, 0.60, f) * (1.0 - smoothstep(0.60, 0.68, f));
   float ribbonB = smoothstep(0.70, 0.77, f) * (1.0 - smoothstep(0.77, 0.85, f));
-  acc += LEAF * (ribbonA * 0.16);
-  a += ribbonA * 0.16;
-  acc += MINT * (ribbonB * 0.14);
-  a += ribbonB * 0.14;
+  acc += GOLD * (ribbonA * 0.11);
+  a += ribbonA * 0.11;
+  acc += GOLD_LITE * (ribbonB * 0.10);
+  a += ribbonB * 0.10;
 
-  // A whisper of deeper forest where the warp is strongest, for body.
-  float body = smoothstep(0.6, 1.0, length(r) * 0.6) * 0.03;
-  acc += FOREST * body;
+  // A whisper of midnight where the warp is strongest, for body.
+  float body = smoothstep(0.6, 1.0, length(r) * 0.6) * 0.025;
+  acc += INK_TINT * body;
   a += body;
 
   // Drifting lights: three soft orbs riding the wind on sine paths.
@@ -122,16 +128,17 @@ void main() {
       0.5 + 0.24 * sin(u_time * (0.10 + fi * 0.035) + phase)
     );
     lp.x *= u_resolution.x / u_resolution.y;
+    lp *= px_scale; // same normalised space as p
     float d = length(p - lp);
     float orb  = exp(-d * d * 46.0) * 0.30;   // tight core
     float halo = exp(-d * d * 7.0) * 0.10;    // wide bloom
-    acc += MINT * orb + LEAF * halo;
+    acc += GOLD_LITE * orb + GOLD * halo;
     a += orb + halo;
   }
 
-  // The faintest gold shimmer on the very peaks, tying into the brand.
+  // The brightest gold on the very peaks of the warp field.
   float shimmer = smoothstep(0.88, 0.98, f) * 0.05;
-  acc += GOLD * shimmer;
+  acc += GOLD_LITE * shimmer;
   a += shimmer;
 
   // Fade at the section's top and bottom edges so the canvas never ends
@@ -141,7 +148,7 @@ void main() {
   a *= mask;
 
   // Cap total coverage, scaling rgb with it to keep the tint colour true.
-  float capped = min(a, 0.5);
+  float capped = min(a, 0.35);
   acc *= capped / max(a, 1e-4);
 
   outColor = vec4(acc, capped);

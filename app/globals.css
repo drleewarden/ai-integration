@@ -1005,7 +1005,7 @@ textarea.input-light {
   min-height: 240px;
   bottom: -6%;
   right: 18%;
-  background: radial-gradient(circle, rgba(91, 175, 137, 0.28), transparent 70%);
+  background: radial-gradient(circle, rgba(244, 233, 200, 0.75), transparent 70%);
   animation-duration: 30s;
   animation-delay: -16s;
 }
