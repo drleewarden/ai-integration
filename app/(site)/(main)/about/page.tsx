@@ -147,14 +147,18 @@ export default function About() {
             >
               <div
                 style={{
+                  position: "relative",
                   aspectRatio: "1 / 1",
-                  backgroundColor: "rgba(15,21,38,0.05)",
-                  display: "flex",
-                  alignItems: "flex-end",
-                  padding: "1.5rem",
+                  overflow: "hidden",
                 }}
               >
-                <span className="label" style={{ color: "rgba(15,21,38,0.35)" }}>Photo -- Craig</span>
+                <Image
+                  src="/images/craig.webp"
+                  alt="Craig, Co-Founder of Creative Milk"
+                  fill
+                  sizes="(max-width: 700px) 90vw, 420px"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <div>
                 <p className="eyebrow" style={{ marginBottom: "0.75rem" }}>Co-Founder</p>

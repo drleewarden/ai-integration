@@ -1,0 +1,100 @@
+/* AI-Native Readiness report — print stylesheet.
+   Inline this file in a <style> tag of the standalone HTML report. */
+
+:root {
+  --ink: #0f1526;      /* midnight ink */
+  --cream: #f5f0e8;    /* warm cream */
+  --gold: #c9a84c;     /* liquid gold */
+  --pass: #2e7d4f;
+  --partial: #a8842f;  /* darkened gold for text contrast */
+  --fail: #b3402a;
+}
+
+@page { margin: 18mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font: 11pt/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 720pt;
+  padding: 24pt;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+h1 { font-size: 24pt; margin: 0 0 4pt; }
+h2 {
+  font-size: 15pt;
+  margin: 28pt 0 8pt;
+  padding-bottom: 4pt;
+  border-bottom: 2pt solid var(--gold);
+}
+h3 { font-size: 12pt; margin: 16pt 0 4pt; }
+
+.level-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 4pt;
+  padding: 3pt 10pt;
+  margin: 6pt 0 14pt;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10pt 0;
+  font-size: 10pt;
+}
+th {
+  text-align: left;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 5pt 8pt;
+}
+td {
+  padding: 5pt 8pt;
+  border-bottom: 0.5pt solid rgba(15, 21, 38, 0.2);
+  vertical-align: top;
+}
+
+.score-pass { color: var(--pass); font-weight: 700; }
+.score-partial { color: var(--partial); font-weight: 700; }
+.score-fail { color: var(--fail); font-weight: 700; }
+
+.finding {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 12pt;
+  padding: 10pt 12pt;
+  background: rgba(255, 255, 255, 0.55);
+  border-left: 3pt solid var(--gold);
+  border-radius: 0 4pt 4pt 0;
+}
+.finding h3 { margin-top: 0; }
+
+ol li, ul li { margin-bottom: 5pt; }
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 9.5pt;
+  background: rgba(15, 21, 38, 0.07);
+  padding: 1pt 4pt;
+  border-radius: 3pt;
+}
+
+footer {
+  margin-top: 32pt;
+  padding-top: 8pt;
+  border-top: 0.5pt solid rgba(15, 21, 38, 0.3);
+  font-size: 8.5pt;
+  color: rgba(15, 21, 38, 0.65);
+}

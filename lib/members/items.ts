@@ -9,6 +9,7 @@
  * Supabase Storage bucket at the item's storagePath.
  */
 
+import aiNativeReadiness from "@/content/members/ai-native-readiness";
 import aiPolicyTemplate from "@/content/members/ai-policy-template";
 import roiQuickCheck from "@/content/members/roi-quick-check";
 import automationPlaybook from "@/content/members/automation-playbook";
@@ -84,6 +85,7 @@ export interface GuideItem extends MemberItemBase {
 export type MemberItem = DownloadItem | ToolItem | GuideItem;
 
 export const items: MemberItem[] = [
+  aiNativeReadiness,
   aiPolicyTemplate,
   roiQuickCheck,
   automationPlaybook,
