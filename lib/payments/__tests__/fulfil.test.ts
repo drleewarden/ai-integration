@@ -254,4 +254,50 @@ describe("fulfilWorkshopPayment", () => {
     );
     consoleErrorSpy.mockRestore();
   });
+
+  it("still sends the alert when the confirmation email THROWS", async () => {
+    const { supabase } = makeSupabase({ row: { ...ROW } });
+    const sendEmail = jest
+      .fn()
+      .mockRejectedValueOnce(new Error("socket hang up"))
+      .mockResolvedValueOnce({ error: null });
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    await expect(
+      fulfilWorkshopPayment({
+        session: makeSession(ROW.id),
+        supabase,
+        sendEmail,
+        from,
+        internalTo,
+      }),
+    ).resolves.toBe(true);
+    expect(sendEmail).toHaveBeenCalledTimes(2);
+    expect(sendEmail).toHaveBeenLastCalledWith(
+      expect.objectContaining({ to: internalTo }),
+    );
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("returns true (no webhook retry) when both email sends throw", async () => {
+    const { supabase } = makeSupabase({ row: { ...ROW } });
+    const sendEmail = jest.fn().mockRejectedValue(new Error("network down"));
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    // The row is already paid at this point -- a retry would be an
+    // idempotent no-op that can't resend, so this must stay terminal.
+    await expect(
+      fulfilWorkshopPayment({
+        session: makeSession(ROW.id),
+        supabase,
+        sendEmail,
+        from,
+        internalTo,
+      }),
+    ).resolves.toBe(true);
+    expect(sendEmail).toHaveBeenCalledTimes(2);
+    consoleErrorSpy.mockRestore();
+  });
 });
