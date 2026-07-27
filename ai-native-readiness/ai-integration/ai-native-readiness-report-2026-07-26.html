@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI-Native Readiness Report — ai-integration</title>
+<style>
+/* AI-Native Readiness report — print stylesheet.
+   Inline this file in a <style> tag of the standalone HTML report. */
+
+:root {
+  --ink: #0f1526;      /* midnight ink */
+  --cream: #f5f0e8;    /* warm cream */
+  --gold: #c9a84c;     /* liquid gold */
+  --pass: #2e7d4f;
+  --partial: #a8842f;  /* darkened gold for text contrast */
+  --fail: #b3402a;
+}
+
+@page { margin: 18mm; }
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font: 11pt/1.55 -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0 auto;
+  max-width: 720pt;
+  padding: 24pt;
+}
+
+h1, h2, h3 {
+  font-family: Georgia, "Times New Roman", serif;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+h1 { font-size: 24pt; margin: 0 0 4pt; }
+h2 {
+  font-size: 15pt;
+  margin: 28pt 0 8pt;
+  padding-bottom: 4pt;
+  border-bottom: 2pt solid var(--gold);
+}
+h3 { font-size: 12pt; margin: 16pt 0 4pt; }
+
+.level-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  border-radius: 4pt;
+  padding: 3pt 10pt;
+  margin: 6pt 0 14pt;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10pt 0;
+  font-size: 10pt;
+}
+th {
+  text-align: left;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 5pt 8pt;
+}
+td {
+  padding: 5pt 8pt;
+  border-bottom: 0.5pt solid rgba(15, 21, 38, 0.2);
+  vertical-align: top;
+}
+
+.score-pass { color: var(--pass); font-weight: 700; }
+.score-partial { color: var(--partial); font-weight: 700; }
+.score-fail { color: var(--fail); font-weight: 700; }
+
+.finding {
+  break-inside: avoid;
+  page-break-inside: avoid;
+  margin: 0 0 12pt;
+  padding: 10pt 12pt;
+  background: rgba(255, 255, 255, 0.55);
+  border-left: 3pt solid var(--gold);
+  border-radius: 0 4pt 4pt 0;
+}
+.finding h3 { margin-top: 0; }
+
+ol li, ul li { margin-bottom: 5pt; }
+
+code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 9.5pt;
+  background: rgba(15, 21, 38, 0.07);
+  padding: 1pt 4pt;
+  border-radius: 3pt;
+}
+
+footer {
+  margin-top: 32pt;
+  padding-top: 8pt;
+  border-top: 0.5pt solid rgba(15, 21, 38, 0.3);
+  font-size: 8.5pt;
+  color: rgba(15, 21, 38, 0.65);
+}
+</style>
+</head>
+<body>
+
+<h1>AI-Native Readiness Report — ai-integration</h1>
+<span class="level-badge">Level 1 — Assisted</span>
+
+<table>
+  <tr><td><strong>Repository</strong></td><td>drleewarden/ai-integration</td></tr>
+  <tr><td><strong>URL</strong></td><td>local path (<code>/Users/darrynlee-warden/Documents/DEV/ai-integration</code>)</td></tr>
+  <tr><td><strong>Branch</strong></td><td>feat/cta-boxes (1 styling commit ahead of main; shared checkout, audited in place)</td></tr>
+  <tr><td><strong>Commit</strong></td><td><code>b0ddd23</code></td></tr>
+  <tr><td><strong>Audited</strong></td><td>2026-07-26</td></tr>
+  <tr><td><strong>Audited by</strong></td><td>ai-native-readiness v1</td></tr>
+</table>
+
+<section>
+<h2>Executive summary</h2>
+<p><strong>Level 1 — Assisted.</strong>
+The fundamentals an agent needs day-to-day are genuinely strong — strict TypeScript, a fast 253-test suite that runs green, clean PR-based history, and rich agent context files (CLAUDE.md, AGENTS.md). What holds the repo back is that nothing <em>enforces</em> any of it: there is no CI at all, so lint and tests are never run on a proposed change, and the two files a fresh clone needs for determinism — a lockfile and the env template — are both deliberately gitignored. A single small CI workflow plus committing <code>package-lock.json</code> and an env template would lift this repo to Level 2.</p>
+<p>A check scored <strong>Partial</strong> still counts toward the level — Partials are the improvement backlog, not blockers. Only a <strong>Fail</strong> holds a level back.</p>
+</section>
+
+<section>
+<h2>Scorecard</h2>
+<table>
+  <tr><th>Check</th><th>Level</th><th>Score</th></tr>
+  <tr><td>R1 — Version control hygiene</td><td>1</td><td class="score-pass">Pass</td></tr>
+  <tr><td>R2 — One-command build and test</td><td>1</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R3 — Navigable structure</td><td>1</td><td class="score-pass">Pass</td></tr>
+  <tr><td>R4 — Docs an agent can use</td><td>1</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R5 — Reviewable change flow</td><td>1</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R6 — Linting and formatting</td><td>2</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R7 — Type safety</td><td>2</td><td class="score-pass">Pass</td></tr>
+  <tr><td>R8 — Meaningful test suite</td><td>2</td><td class="score-pass">Pass</td></tr>
+  <tr><td>R9 — Continuous integration</td><td>2</td><td class="score-fail">Fail</td></tr>
+  <tr><td>R10 — Reproducible environment</td><td>2</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R11 — Dependency currency</td><td>2</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R12 — Automated deployment path</td><td>3</td><td class="score-pass">Pass</td></tr>
+  <tr><td>R13 — Safe failure and rollback</td><td>3</td><td class="score-partial">Partial</td></tr>
+  <tr><td>R14 — Production observability</td><td>3</td><td class="score-fail">Fail</td></tr>
+</table>
+</section>
+
+<section>
+<h2>The level ladder</h2>
+<table>
+  <tr><th>Level</th><th>Name</th><th>Requires</th><th>Status</th></tr>
+  <tr><td>1</td><td>Assisted</td><td>R1–R5 all ≥ Partial</td><td class="score-pass">✓ reached</td></tr>
+  <tr><td>2</td><td>Collaborative</td><td>Level 1 + R6–R11 all ≥ Partial</td><td class="score-fail">✗ blocked by R9 (no CI)</td></tr>
+  <tr><td>3</td><td>Autonomous</td><td>Level 2 + R12–R14 all ≥ Partial</td><td class="score-fail">✗ blocked by R14 (no observability)</td></tr>
+</table>
+</section>
+
+<section>
+<h2>Findings</h2>
+
+<div class="finding">
+<h3>R1 — Version control hygiene · <span class="score-pass">Pass</span></h3>
+<p><strong>Evidence:</strong> Incremental, intent-bearing conventional-commit history (<code>feat(members): member_activity table with RLS</code>); every recent change lands via PR (#4–#20); secret scan of tracked content clean, no <code>.env</code> files tracked, <code>.gitignore</code> covers env/build/deps/<code>.pem</code>. Branch protection is off (GitHub API returns 404), but a consistent PR-merge flow substitutes per this check's bar.</p>
+</div>
+
+<div class="finding">
+<h3>R2 — One-command build and test · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> <code>npm run build</code> → exit 0 (full Next.js production build, 40+ routes) and <code>npx jest --ci</code> → exit 0 (30 suites, 253 tests, 2.2s), exactly as documented in package.json/README/CLAUDE.md.</p>
+<p><strong>Gap:</strong> <code>package-lock.json</code> is explicitly gitignored, so no machine — including an agent sandbox or CI — can reproduce the dependency tree the build was verified against. Commit a lockfile.</p>
+</div>
+
+<div class="finding">
+<h3>R3 — Navigable structure · <span class="score-pass">Pass</span></h3>
+<p><strong>Evidence:</strong> Textbook App Router layout: route groups <code>(main)</code>/<code>(dark-nav)</code>/<code>(members)</code> own shared chrome, API routes are one-directory-one-purpose, domain logic lives in <code>lib/</code> (the readiness scoring pipeline is fully isolated), content in <code>content/insights/*.json</code>. The two largest files (CalculatorClient.tsx at 1,487 lines, workshop-melbourne at 1,182) are copy-heavy page JSX, not tangled core logic.</p>
+</div>
+
+<div class="finding">
+<h3>R4 — Docs an agent can use · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> README covers setup/run/test accurately for named scripts; CLAUDE.md (93 lines) and AGENTS.md (127 lines) encode architecture, conventions, env vars and security gotchas — exactly the context files this check wants.</p>
+<p><strong>Gap:</strong> README directs newcomers to <code>.env.example</code>, but that file is untracked (swallowed by the <code>.env*</code> gitignore pattern) — a fresh clone hits a dead reference immediately. CLAUDE.md also describes the test suite as "thin" (3 suites) when 30 suites exist. Track the env template under a name the ignore pattern misses (e.g. <code>env.example</code>) and refresh the testing section.</p>
+</div>
+
+<div class="finding">
+<h3>R5 — Reviewable change flow · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> All recent work merges via PRs; many are small and focused (+7/−2, +11/−11).</p>
+<p><strong>Gap:</strong> Several PRs are unreviewably large (#17: +10,246/−9; #11: +4,357) and there's no PR template or CODEOWNERS (no <code>.github/</code> directory exists). For agent contributions, large self-merged PRs are where mistakes slip through — cap PR size and add a template with a checklist.</p>
+</div>
+
+<div class="finding">
+<h3>R6 — Linting and formatting · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> ESLint 9 flat config with next/core-web-vitals + TypeScript rules; tracked code is near-clean (only 4 files flagged; 24 of 28 flagged files are untracked <code>.claude/worktrees/</code> leftovers).</p>
+<p><strong>Gap:</strong> The documented <code>npm run lint</code> exits 1 as-run because local worktree copies aren't ignored, no formatter is configured, and nothing enforces lint anywhere (no CI, no pre-commit hooks). Add <code>.claude/</code> to ESLint ignores and put lint in the CI gate.</p>
+</div>
+
+<div class="finding">
+<h3>R7 — Type safety · <span class="score-pass">Pass</span></h3>
+<p><strong>Evidence:</strong> <code>strict: true</code> TypeScript across ~27k lines with near-zero escape hatches (1 suppression comment, 3 loose <code>any</code>s in app/lib); type-checking runs on every <code>next build</code>, which passed clean.</p>
+</div>
+
+<div class="finding">
+<h3>R8 — Meaningful test suite · <span class="score-pass">Pass</span></h3>
+<p><strong>Evidence:</strong> 30 suites / 253 tests / 381 assertions, green in 2.2 seconds. Coverage lands where it matters: the readiness scoring pipeline (the business-critical algorithm), members access rules, and the API surface (send-email, stripe-webhook, members-download, security-headers). Real behavioural assertions throughout.</p>
+</div>
+
+<div class="finding">
+<h3>R9 — Continuous integration · <span class="score-fail">Fail</span></h3>
+<p><strong>Evidence:</strong> There is no <code>.github/</code> directory and no CI config of any kind. All 14+ merged PRs landed with no automated build/lint/test verdict — Vercel's deploy build is the only machine check, and it runs <em>after</em> merge.</p>
+<p><strong>Gap:</strong> This is the single blocker for Level 2. One GitHub Actions workflow running <code>npm ci && npm run lint && npx jest --ci && npm run build</code> on every PR closes it.</p>
+</div>
+
+<div class="finding">
+<h3>R10 — Reproducible environment · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> Runtime pinned twice (<code>.nvmrc</code>, <code>engines: 22.x</code>); env vars are thoroughly documented in a well-commented <code>.env.example</code> and listed in CLAUDE.md/AGENTS.md.</p>
+<p><strong>Gap:</strong> The <code>.env.example</code> file itself is untracked and there is no committed lockfile — a fresh clone (which is all an agent sandbox ever is) gets the right Node but a floating dependency tree and no env template file.</p>
+</div>
+
+<div class="finding">
+<h3>R11 — Dependency currency · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> As of 2026-07-26 every major is current or in support: Next.js 15.5.15, React 19.2.5, Node 22.x, ESLint 9, Jest 30.</p>
+<p><strong>Gap:</strong> No Renovate/Dependabot, no bump-commit habit, and Tailwind is pinned to a <code>4.0.0-alpha.29</code> prerelease. Versions are fresh because the project is young, not because a process keeps them fresh. Without a lockfile, <code>npm audit</code> can't even run.</p>
+</div>
+
+<div class="finding">
+<h3>R12 — Automated deployment path · <span class="score-pass">Pass</span></h3>
+<p><strong>Evidence:</strong> GitHub deployments API shows vercel[bot] creating Production deployments on every push to main and Preview deployments per branch (most recent: 2026-07-23). Merge → production is fully automated with no manual step; no manual deploy procedure is documented anywhere.</p>
+</div>
+
+<div class="finding">
+<h3>R13 — Safe failure and rollback · <span class="score-partial">Partial</span></h3>
+<p><strong>Evidence:</strong> Vercel offers platform-native instant rollback to any previous immutable deployment.</p>
+<p><strong>Gap:</strong> That path is undocumented and unexercised in this repo, and Supabase migrations are forward-only with known state drift (bootstrap SQLs exist because migration 0001 fails on fresh projects) — a bad migration can only be fixed forward. Document the rollback runbook and adopt expand-contract migration discipline.</p>
+</div>
+
+<div class="finding">
+<h3>R14 — Production observability · <span class="score-fail">Fail</span></h3>
+<p><strong>Evidence:</strong> No monitoring or error-tracking SDK in the dependency tree (no Sentry/Datadog/OTel/Rollbar), no alerting config, no uptime checks, no health endpoint. Ten API route files log via <code>console.error</code> only, visible solely to whoever browses Vercel function logs. GTM/GA4 is product analytics, not observability.</p>
+<p><strong>Gap:</strong> A production regression is currently noticed by a customer, not a system. Sentry's free tier plus one uptime check on the readiness-submit endpoint would flip this.</p>
+</div>
+</section>
+
+<section>
+<h2>Recommendations</h2>
+<ol>
+  <li><strong>Add a CI workflow gating every PR</strong> (<code>.github/workflows/ci.yml</code>: <code>npm ci</code>, lint, <code>jest --ci</code>, <code>next build</code>) — CI is the referee between an agent's "done, tests pass" and reality, and it is the only thing blocking Level 2. <em>Effort: Small.</em></li>
+  <li><strong>Commit <code>package-lock.json</code></strong> (remove it from <code>.gitignore</code>, run <code>npm install</code>, commit) — without it neither CI nor an agent sandbox can reproduce the tree your green build ran against. <em>Effort: Small.</em></li>
+  <li><strong>Track the env template</strong> (rename to <code>env.example</code> or add <code>!.env.example</code> to <code>.gitignore</code>) and fix the stale CLAUDE.md testing note — a fresh agent clone currently hits a dead README reference in its first five minutes. <em>Effort: Small.</em></li>
+  <li><strong>Silence the false-positive lint noise and enforce lint in CI</strong> (ignore <code>.claude/</code> in eslint.config.mjs) — the documented lint command must exit 0 for an agent to trust it as a check. <em>Effort: Small.</em></li>
+  <li><strong>Add error tracking + one uptime check</strong> (e.g. Sentry SDK in the API routes, uptime monitor on <code>/api/readiness/submit</code>) — unlocks progress toward Level 3; today a regression waits for a human to notice. <em>Effort: Medium.</em></li>
+  <li><strong>Set up Renovate or Dependabot</strong> — keeps majors supported without relying on the project staying young; also restores <code>npm audit</code> signal once a lockfile exists. <em>Effort: Small.</em></li>
+  <li><strong>Document the rollback runbook and tighten migration discipline</strong> (Vercel instant-rollback steps; expand-contract for Supabase changes; reconcile the migration/bootstrap drift) — bounded blast radius is the price of autonomous shipping. <em>Effort: Medium.</em></li>
+  <li><strong>Add a PR template and keep PRs reviewable</strong> — +10k-line PRs can't absorb agent contributions safely; the flow exists, the discipline needs a guardrail. <em>Effort: Small.</em></li>
+</ol>
+</section>
+
+<section>
+<h2>Effort rollup</h2>
+<table>
+  <tr><th>Priority</th><th>Recommendation</th><th>Effort</th></tr>
+  <tr><td>1</td><td>CI workflow on every PR</td><td>S</td></tr>
+  <tr><td>2</td><td>Commit the lockfile</td><td>S</td></tr>
+  <tr><td>3</td><td>Track env template, refresh stale docs</td><td>S</td></tr>
+  <tr><td>4</td><td>Clean + enforce lint</td><td>S</td></tr>
+  <tr><td>5</td><td>Error tracking + uptime check</td><td>M</td></tr>
+  <tr><td>6</td><td>Renovate/Dependabot</td><td>S</td></tr>
+  <tr><td>7</td><td>Rollback runbook + migration discipline</td><td>M</td></tr>
+  <tr><td>8</td><td>PR template + size discipline</td><td>S</td></tr>
+</table>
+<p><strong>Overall:</strong> Four small fixes — CI, lockfile, env template, lint hygiene — take this repo from Level 1 to Level 2; one medium observability effort opens the road to Level 3.</p>
+</section>
+
+<footer>
+AI-Native Readiness Audit v1 · drleewarden/ai-integration @ b0ddd23 · 2026-07-26 · Every score is backed by the evidence log alongside this report.
+</footer>
+
+</body>
+</html>
