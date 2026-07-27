@@ -112,6 +112,19 @@ describe("POST /api/admin/payment-links", () => {
     const json = await res.json();
     expect(json.emailSent).toBe(false);
   });
+
+  it("still returns the link when the email send THROWS", async () => {
+    // A network/SDK rejection (vs a returned error) must not 500 -- the row
+    // already exists, and a 500 would make the admin retry and duplicate it.
+    const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
+    mockSend.mockRejectedValue(new Error("fetch failed"));
+    const res = await POST(makeRequest(validBody));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.emailSent).toBe(false);
+    expect(json.url).toContain(`/pay/${VALID_UUID}`);
+    errorSpy.mockRestore();
+  });
 });
 
 describe("PATCH /api/admin/payment-links (void)", () => {

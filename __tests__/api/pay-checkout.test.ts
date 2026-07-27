@@ -1,9 +1,12 @@
 import { NextRequest } from "next/server";
 
 const mockCreateSession = jest.fn();
+const mockRetrieveSession = jest.fn();
 jest.mock("../../lib/stripe", () => ({
   getStripe: () => ({
-    checkout: { sessions: { create: mockCreateSession } },
+    checkout: {
+      sessions: { create: mockCreateSession, retrieve: mockRetrieveSession },
+    },
   }),
 }));
 
@@ -71,6 +74,57 @@ describe("POST /api/pay/checkout", () => {
     });
     const res = await POST(makeRequest({ id: VALID_UUID }));
     expect(res.status).toBe(409);
+  });
+
+  it("reuses a still-open stored session instead of creating another", async () => {
+    mockMaybeSingle.mockResolvedValue({
+      data: { ...ROW, stripe_checkout_session_id: "cs_test_prior" },
+      error: null,
+    });
+    mockRetrieveSession.mockResolvedValue({
+      id: "cs_test_prior",
+      status: "open",
+      url: "https://checkout.stripe.com/pay/cs_test_prior",
+    });
+    const res = await POST(makeRequest({ id: VALID_UUID }));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.url).toBe("https://checkout.stripe.com/pay/cs_test_prior");
+    expect(mockRetrieveSession).toHaveBeenCalledWith("cs_test_prior");
+    expect(mockCreateSession).not.toHaveBeenCalled();
+  });
+
+  it("creates a fresh session when the stored one is no longer open", async () => {
+    mockMaybeSingle.mockResolvedValue({
+      data: { ...ROW, stripe_checkout_session_id: "cs_test_prior" },
+      error: null,
+    });
+    mockRetrieveSession.mockResolvedValue({
+      id: "cs_test_prior",
+      status: "expired",
+      url: null,
+    });
+    const res = await POST(makeRequest({ id: VALID_UUID }));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.url).toBe("https://checkout.stripe.com/pay/cs_test_1");
+    expect(mockCreateSession).toHaveBeenCalledTimes(1);
+  });
+
+  it("creates a fresh session when retrieving the stored one throws", async () => {
+    const errorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    mockMaybeSingle.mockResolvedValue({
+      data: { ...ROW, stripe_checkout_session_id: "cs_test_prior" },
+      error: null,
+    });
+    mockRetrieveSession.mockRejectedValue(new Error("no such session"));
+    const res = await POST(makeRequest({ id: VALID_UUID }));
+    expect(res.status).toBe(200);
+    const json = await res.json();
+    expect(json.url).toBe("https://checkout.stripe.com/pay/cs_test_1");
+    errorSpy.mockRestore();
   });
 
   it("creates a payment-mode checkout session from DB values only", async () => {

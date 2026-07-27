@@ -119,20 +119,32 @@ export async function fulfilWorkshopPayment(opts: {
 
   const amount = formatAmount(row.amount_cents, row.currency);
 
+  // Each send is individually caught: a THROWN failure (network/SDK) after
+  // the paid UPDATE would otherwise abort fulfilment, and because the row is
+  // now paid, every webhook retry exits early -- the notifications would be
+  // lost permanently. Thrown and returned errors get identical treatment:
+  // log, carry on.
   const confirmation = renderPaymentConfirmationEmail({
     name: row.name,
     description: row.description,
     amount,
   });
-  const { error: confirmError } = await sendEmail({
-    from,
-    to: row.email,
-    replyTo: internalTo,
-    subject: confirmation.subject,
-    html: confirmation.html,
-  });
-  if (confirmError) {
-    console.error("[payments/fulfil] confirmation email failed:", confirmError);
+  try {
+    const { error: confirmError } = await sendEmail({
+      from,
+      to: row.email,
+      replyTo: internalTo,
+      subject: confirmation.subject,
+      html: confirmation.html,
+    });
+    if (confirmError) {
+      console.error(
+        "[payments/fulfil] confirmation email failed:",
+        confirmError,
+      );
+    }
+  } catch (err) {
+    console.error("[payments/fulfil] confirmation email threw:", err);
   }
 
   const alert = renderPaymentAlertEmail({
@@ -141,15 +153,19 @@ export async function fulfilWorkshopPayment(opts: {
     description: row.description,
     amount,
   });
-  const { error: alertError } = await sendEmail({
-    from,
-    to: internalTo,
-    replyTo: row.email,
-    subject: alert.subject,
-    html: alert.html,
-  });
-  if (alertError) {
-    console.error("[payments/fulfil] alert email failed:", alertError);
+  try {
+    const { error: alertError } = await sendEmail({
+      from,
+      to: internalTo,
+      replyTo: row.email,
+      subject: alert.subject,
+      html: alert.html,
+    });
+    if (alertError) {
+      console.error("[payments/fulfil] alert email failed:", alertError);
+    }
+  } catch (err) {
+    console.error("[payments/fulfil] alert email threw:", err);
   }
 
   // Email failures are logged but never cause a retry -- the row is already

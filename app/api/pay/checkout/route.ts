@@ -50,7 +50,9 @@ export async function POST(req: NextRequest) {
   // values (e.g. raw DB errors) into them.
   const { data: row, error } = await supabase
     .from("workshop_payments")
-    .select("id, status, amount_cents, currency, description, email")
+    .select(
+      "id, status, amount_cents, currency, description, email, stripe_checkout_session_id",
+    )
     .eq("id", id)
     .maybeSingle();
   if (error) {
@@ -71,6 +73,25 @@ export async function POST(req: NextRequest) {
       { error: "This payment link is no longer active." },
       { status: 409 },
     );
+  }
+
+  // Reuse an existing still-open session before creating another one.
+  // Without this, every click mints a fresh payable session for the same
+  // link (double-click, second device, stale tab) and two of them can BOTH
+  // be paid -- the webhook stays idempotent, but the customer is charged
+  // twice. Checkout sessions stay "open" for 24h; anything else (completed,
+  // expired, retrieval failure) falls through to creating a new one.
+  if (row.stripe_checkout_session_id) {
+    try {
+      const existing = await getStripe().checkout.sessions.retrieve(
+        row.stripe_checkout_session_id,
+      );
+      if (existing.status === "open" && existing.url) {
+        return NextResponse.json({ url: existing.url });
+      }
+    } catch (err) {
+      console.error("[pay/checkout] session retrieve failed:", err);
+    }
   }
 
   try {

@@ -131,19 +131,25 @@ export async function POST(req: NextRequest) {
       amount: formatAmount(amountCents, "aud"),
       payUrl,
     });
-    const { error: sendError } = await resend.emails.send({
-      from: FROM,
-      to: email,
-      replyTo: TO,
-      subject: msg.subject,
-      html: msg.html,
-    });
-    if (sendError) {
-      // The link still exists -- surface emailSent:false so the admin can
-      // copy it manually rather than silently believing it was delivered.
-      console.error("[admin/payment-links] request email failed:", sendError);
-    } else {
-      emailSent = true;
+    // Caught rather than allowed to throw: the row already exists, so a
+    // thrown (network/SDK) send failure surfacing as a 500 would make the
+    // admin retry and create a duplicate link. Both failure shapes resolve
+    // to emailSent:false, and the UI offers the manual copy block.
+    try {
+      const { error: sendError } = await resend.emails.send({
+        from: FROM,
+        to: email,
+        replyTo: TO,
+        subject: msg.subject,
+        html: msg.html,
+      });
+      if (sendError) {
+        console.error("[admin/payment-links] request email failed:", sendError);
+      } else {
+        emailSent = true;
+      }
+    } catch (err) {
+      console.error("[admin/payment-links] request email threw:", err);
     }
   } else {
     console.error("[admin/payment-links] RESEND_API_KEY not configured");
