@@ -43,12 +43,13 @@ export default async function PayPage({
   const firstName = row.name.split(" ")[0] || row.name;
   const amount = formatAmount(row.amount_cents, row.currency);
   // Checkout redirects back with ?success=1 before the webhook lands, so
-  // treat that as paid for display purposes.
+  // treat that as paid for display purposes -- but never let the (user-
+  // editable) query param mask a voided link's real state.
   const state: "pending" | "paid" | "void" =
-    row.status === "paid" || success === "1"
-      ? "paid"
-      : row.status === "void"
-        ? "void"
+    row.status === "void"
+      ? "void"
+      : row.status === "paid" || success === "1"
+        ? "paid"
         : "pending";
 
   return (
