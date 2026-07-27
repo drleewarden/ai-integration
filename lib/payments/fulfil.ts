@@ -3,9 +3,21 @@
  * Called only by the Stripe webhook AFTER signature verification -- the
  * session object is trusted because it came from a verified event.
  *
- * Idempotent by design: Stripe retries webhook deliveries, so an
- * already-paid row is a no-op (no duplicate emails). Email failures are
- * logged but never thrown -- the webhook must still 200 to stop retries.
+ * Idempotent by design: the paid UPDATE is itself the idempotency gate
+ * (conditional on status != "paid", observed via .select()), so concurrent
+ * or retried deliveries can never send duplicate emails.
+ *
+ * The return value is a retry instruction for the webhook, not a success
+ * flag:
+ *   true  -- handled/terminal. The webhook must NOT trigger a Stripe retry.
+ *            Covers: no metadata id, payment not actually "paid" yet, the
+ *            row not existing, the row already paid (by this call or a
+ *            concurrent one), and email send failures (logged, but a retry
+ *            of the same event can't fix a broken outbound email).
+ *   false -- transient failure (a DB read/write that might succeed on
+ *            retry). The webhook should return a non-2xx status so Stripe
+ *            retries the event; fulfilment is idempotent, so retrying is
+ *            always safe.
  */
 import type Stripe from "stripe";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -29,26 +41,47 @@ export async function fulfilWorkshopPayment(opts: {
   sendEmail: SendEmailFn;
   from: string;
   internalTo: string;
-}): Promise<void> {
+}): Promise<boolean> {
   const { session, supabase, sendEmail, from, internalTo } = opts;
 
   const paymentId = session.metadata?.workshop_payment_id;
-  if (typeof paymentId !== "string" || paymentId.length === 0) return;
+  if (typeof paymentId !== "string" || paymentId.length === 0) return true;
+
+  // Delayed-notification payment methods (e.g. BECS direct debit) can fire
+  // checkout.session.completed before funds actually clear, leaving
+  // payment_status "unpaid" rather than "paid". Checkout is pinned to
+  // card-only (app/api/pay/checkout/route.ts) specifically to avoid this,
+  // but guard it here too: a retry of the same event can never change this
+  // outcome, so it's terminal (true), not transient.
+  if (session.payment_status !== "paid") {
+    console.error(
+      `[payments/fulfil] session ${session.id} completed with payment_status=` +
+        `${session.payment_status} (expected "paid") for id=${paymentId}`,
+    );
+    return true;
+  }
 
   const { data: row, error } = await supabase
     .from("workshop_payments")
     .select("id, name, email, amount_cents, currency, description, status")
     .eq("id", paymentId)
     .maybeSingle();
-  if (error || !row) {
+  if (error) {
+    // Could be transient (network blip, connection pool exhaustion) --
+    // false tells the webhook to 500 so Stripe retries the event.
+    console.error(`[payments/fulfil] lookup failed for id=${paymentId}`, error);
+    return false;
+  }
+  if (!row) {
+    // No row will ever appear for this id -- retrying can't fix that.
     console.error(
       `[payments/fulfil] no workshop_payments row for id=${paymentId}`,
-      error,
     );
-    return;
+    return true;
   }
-  // Stripe retries deliveries; a paid row means we've already processed this.
-  if (row.status === "paid") return;
+  // Cheap pre-check; the conditional UPDATE below is the real idempotency
+  // gate that also covers concurrent deliveries racing each other.
+  if (row.status === "paid") return true;
 
   const paymentIntentId =
     typeof session.payment_intent === "string"
@@ -56,8 +89,11 @@ export async function fulfilWorkshopPayment(opts: {
       : (session.payment_intent?.id ?? null);
 
   // Money has been taken even if the link was voided post-checkout-creation,
-  // so any non-paid status transitions to paid here.
-  const { error: updateError } = await supabase
+  // so any non-paid status transitions to paid here. `.neq("status", "paid")`
+  // makes this UPDATE atomic-and-observed: if two deliveries race, only one
+  // matches a row and gets it back from .select() -- the loser sees zero
+  // rows and must not send emails.
+  const { data: updated, error: updateError } = await supabase
     .from("workshop_payments")
     .update({
       status: "paid",
@@ -65,12 +101,20 @@ export async function fulfilWorkshopPayment(opts: {
       stripe_payment_intent_id: paymentIntentId,
       stripe_checkout_session_id: session.id,
     })
-    .eq("id", paymentId);
+    .eq("id", paymentId)
+    .neq("status", "paid")
+    .select("id");
   if (updateError) {
-    // Don't email if the DB didn't record the payment -- the Stripe retry
-    // will land back here with the row still pending.
+    // The silent-money-loss path: card charged, row still pending. False
+    // makes the webhook 500 so Stripe retries -- safe, since this UPDATE
+    // is idempotent.
     console.error("[payments/fulfil] paid update failed:", updateError);
-    return;
+    return false;
+  }
+  if (!updated || updated.length === 0) {
+    // A concurrent delivery already flipped this row to paid (and is
+    // sending, or has sent, the emails) -- don't send them again.
+    return true;
   }
 
   const amount = formatAmount(row.amount_cents, row.currency);
@@ -107,4 +151,8 @@ export async function fulfilWorkshopPayment(opts: {
   if (alertError) {
     console.error("[payments/fulfil] alert email failed:", alertError);
   }
+
+  // Email failures are logged but never cause a retry -- the row is already
+  // paid, so retrying the event would just be an idempotent no-op UPDATE.
+  return true;
 }

@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
               "[stripe/webhook] RESEND_API_KEY not set -- payment will be recorded without emails",
             );
           }
-          await fulfilWorkshopPayment({
+          const handled = await fulfilWorkshopPayment({
             session,
             supabase,
             sendEmail: resend
@@ -80,6 +80,12 @@ export async function POST(req: NextRequest) {
               "Creative Milk <onboarding@resend.dev>",
             internalTo: process.env.RESEND_TO ?? "contact@creative-milk.com.au",
           });
+          // Only the workshop paid-UPDATE failure earns a 500 here --
+          // fulfilment is idempotent and a non-2xx makes Stripe retry the
+          // event, which is exactly what a transient DB failure needs.
+          if (!handled) {
+            return NextResponse.json({ error: "Retry" }, { status: 500 });
+          }
           break;
         }
 

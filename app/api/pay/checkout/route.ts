@@ -15,12 +15,22 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { UUID_RE } from "@/lib/payments/validate";
 import { baseUrl } from "@/lib/payments/base-url";
 
+// Reject anything bigger than this -- the body is a single UUID (~50 bytes),
+// 4KB is generous. Same convention as app/api/readiness/submit/route.ts.
+const MAX_BODY_BYTES = 4 * 1024;
+
 export async function POST(req: NextRequest) {
   const limited = checkRateLimit("pay-checkout", req, {
     limit: 10,
     windowMs: 60_000,
   });
   if (limited) return limited;
+
+  // Body size guard
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Body too large" }, { status: 413 });
+  }
 
   let body: Record<string, unknown>;
   try {
@@ -35,6 +45,9 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = getServiceSupabase();
+  // These error strings are displayed verbatim to payers by PayButton --
+  // keep them static curated copy and never interpolate internal/dynamic
+  // values (e.g. raw DB errors) into them.
   const { data: row, error } = await supabase
     .from("workshop_payments")
     .select("id, status, amount_cents, currency, description, email")
@@ -63,6 +76,12 @@ export async function POST(req: NextRequest) {
   try {
     const session = await getStripe().checkout.sessions.create({
       mode: "payment",
+      // Card-only keeps this a synchronous state machine: delayed-
+      // notification methods (e.g. BECS) would fire checkout.session
+      // .completed with payment_status "unpaid" before funds clear.
+      // fulfilWorkshopPayment() guards this too, but pinning the method
+      // here avoids ever creating that pending-forever state in practice.
+      payment_method_types: ["card"],
       customer_email: row.email,
       line_items: [
         {

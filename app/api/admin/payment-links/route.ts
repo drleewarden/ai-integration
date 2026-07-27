@@ -29,6 +29,10 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
+// Reject anything bigger than this -- these payloads are a handful of short
+// strings, 4KB is generous. Same convention as app/api/readiness/submit/route.ts.
+const MAX_BODY_BYTES = 4 * 1024;
+
 /** Returns the admin's email, or null when the caller isn't an admin. */
 async function requireAdmin(): Promise<string | null> {
   const user = await getSessionUser();
@@ -47,6 +51,12 @@ export async function POST(req: NextRequest) {
   const adminEmail = await requireAdmin();
   if (!adminEmail) {
     return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
+  }
+
+  // Body size guard
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Body too large" }, { status: 413 });
   }
 
   let body: Record<string, unknown>;
@@ -152,6 +162,12 @@ export async function PATCH(req: NextRequest) {
   const adminEmail = await requireAdmin();
   if (!adminEmail) {
     return NextResponse.json({ error: "Unauthorised" }, { status: 401 });
+  }
+
+  // Body size guard
+  const contentLength = Number(req.headers.get("content-length") ?? "0");
+  if (contentLength > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "Body too large" }, { status: 413 });
   }
 
   let body: Record<string, unknown>;

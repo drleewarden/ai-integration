@@ -12,30 +12,60 @@ const ROW = {
   status: "pending",
 };
 
-function makeSession(paymentId: string | undefined): Stripe.Checkout.Session {
+function makeSession(
+  paymentId: string | undefined,
+  overrides: Partial<Stripe.Checkout.Session> = {},
+): Stripe.Checkout.Session {
   return {
     id: "cs_test_123",
     payment_intent: "pi_test_456",
+    payment_status: "paid",
     metadata: paymentId ? { workshop_payment_id: paymentId } : {},
+    ...overrides,
   } as unknown as Stripe.Checkout.Session;
 }
 
-/** Minimal fake of the two supabase call chains fulfil uses. */
-function makeSupabase(row: typeof ROW | null, updateError: unknown = null) {
-  const update = jest.fn().mockReturnValue({
-    eq: jest.fn().mockResolvedValue({ error: updateError }),
+/**
+ * Minimal fake of the two supabase call chains fulfil uses:
+ *   .from().select().eq().maybeSingle()                    -- the lookup
+ *   .from().update({...}).eq().neq("status","paid").select() -- the paid UPDATE
+ */
+function makeSupabase(opts: {
+  row?: typeof ROW | null;
+  selectError?: unknown;
+  updateError?: unknown;
+  /** Rows returned by the conditional UPDATE's .select(); defaults to [row] when a row is given. */
+  updatedRows?: Array<{ id: string }> | null;
+} = {}) {
+  const {
+    row = null,
+    selectError = null,
+    updateError = null,
+    updatedRows = row ? [{ id: row.id }] : [],
+  } = opts;
+
+  const maybeSingle = jest
+    .fn()
+    .mockResolvedValue({ data: selectError ? null : row, error: selectError });
+  const select = jest.fn().mockReturnValue({
+    eq: jest.fn().mockReturnValue({ maybeSingle }),
   });
+
+  const updateSelect = jest
+    .fn()
+    .mockResolvedValue({ data: updatedRows, error: updateError });
+  const neq = jest.fn().mockReturnValue({ select: updateSelect });
+  const eq = jest.fn().mockReturnValue({ neq });
+  const update = jest.fn().mockReturnValue({ eq });
+
   const supabase = {
-    from: jest.fn().mockReturnValue({
-      select: jest.fn().mockReturnValue({
-        eq: jest.fn().mockReturnValue({
-          maybeSingle: jest.fn().mockResolvedValue({ data: row, error: null }),
-        }),
-      }),
-      update,
-    }),
+    from: jest.fn().mockReturnValue({ select, update }),
   };
-  return { supabase: supabase as unknown as SupabaseClient, update };
+  return {
+    supabase: supabase as unknown as SupabaseClient,
+    update,
+    updateSelect,
+  };
 }
 
 describe("fulfilWorkshopPayment", () => {
@@ -43,15 +73,16 @@ describe("fulfilWorkshopPayment", () => {
   const internalTo = "contact@creative-milk.com.au";
 
   it("marks the row paid and sends confirmation + alert emails", async () => {
-    const { supabase, update } = makeSupabase({ ...ROW });
+    const { supabase, update } = makeSupabase({ row: { ...ROW } });
     const sendEmail = jest.fn().mockResolvedValue({ error: null });
-    await fulfilWorkshopPayment({
+    const result = await fulfilWorkshopPayment({
       session: makeSession(ROW.id),
       supabase,
       sendEmail,
       from,
       internalTo,
     });
+    expect(result).toBe(true);
     expect(update).toHaveBeenCalledWith(
       expect.objectContaining({
         status: "paid",
@@ -69,65 +100,138 @@ describe("fulfilWorkshopPayment", () => {
   });
 
   it("is idempotent: an already-paid row sends nothing", async () => {
-    const { supabase, update } = makeSupabase({ ...ROW, status: "paid" });
+    const { supabase, update } = makeSupabase({
+      row: { ...ROW, status: "paid" },
+    });
     const sendEmail = jest.fn();
-    await fulfilWorkshopPayment({
+    const result = await fulfilWorkshopPayment({
       session: makeSession(ROW.id),
       supabase,
       sendEmail,
       from,
       internalTo,
     });
+    expect(result).toBe(true);
     expect(update).not.toHaveBeenCalled();
     expect(sendEmail).not.toHaveBeenCalled();
   });
 
   it("does nothing when metadata has no workshop_payment_id", async () => {
-    const { supabase } = makeSupabase({ ...ROW });
+    const { supabase } = makeSupabase({ row: { ...ROW } });
     const sendEmail = jest.fn();
-    await fulfilWorkshopPayment({
+    const result = await fulfilWorkshopPayment({
       session: makeSession(undefined),
       supabase,
       sendEmail,
       from,
       internalTo,
     });
+    expect(result).toBe(true);
     expect(sendEmail).not.toHaveBeenCalled();
   });
 
-  it("does nothing when the row is missing", async () => {
-    const { supabase, update } = makeSupabase(null);
-    const sendEmail = jest.fn();
-    await fulfilWorkshopPayment({
-      session: makeSession(ROW.id),
-      supabase,
-      sendEmail,
-      from,
-      internalTo,
-    });
-    expect(update).not.toHaveBeenCalled();
-    expect(sendEmail).not.toHaveBeenCalled();
-  });
-
-  it("does not email when the paid update fails", async () => {
-    const { supabase } = makeSupabase({ ...ROW }, { message: "db down" });
+  it("returns true (no emails, no retry) when the row is missing", async () => {
+    const { supabase, update } = makeSupabase({ row: null });
     const sendEmail = jest.fn();
     const consoleErrorSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    await fulfilWorkshopPayment({
+    const result = await fulfilWorkshopPayment({
       session: makeSession(ROW.id),
       supabase,
       sendEmail,
       from,
       internalTo,
     });
+    expect(result).toBe(true);
+    expect(update).not.toHaveBeenCalled();
     expect(sendEmail).not.toHaveBeenCalled();
     consoleErrorSpy.mockRestore();
   });
 
+  it("returns false (retryable) when the lookup select errors", async () => {
+    const { supabase, update } = makeSupabase({
+      row: { ...ROW },
+      selectError: { message: "connection reset" },
+    });
+    const sendEmail = jest.fn();
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const result = await fulfilWorkshopPayment({
+      session: makeSession(ROW.id),
+      supabase,
+      sendEmail,
+      from,
+      internalTo,
+    });
+    expect(result).toBe(false);
+    expect(update).not.toHaveBeenCalled();
+    expect(sendEmail).not.toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("returns true (no emails, no retry) when payment_status is not paid", async () => {
+    const { supabase, update } = makeSupabase({ row: { ...ROW } });
+    const sendEmail = jest.fn();
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const result = await fulfilWorkshopPayment({
+      session: makeSession(ROW.id, { payment_status: "unpaid" }),
+      supabase,
+      sendEmail,
+      from,
+      internalTo,
+    });
+    expect(result).toBe(true);
+    expect(update).not.toHaveBeenCalled();
+    expect(sendEmail).not.toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("returns false (retryable) when the paid update errors", async () => {
+    const { supabase, updateSelect } = makeSupabase({
+      row: { ...ROW },
+      updateError: { message: "db down" },
+    });
+    const sendEmail = jest.fn();
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    const result = await fulfilWorkshopPayment({
+      session: makeSession(ROW.id),
+      supabase,
+      sendEmail,
+      from,
+      internalTo,
+    });
+    expect(result).toBe(false);
+    expect(updateSelect).toHaveBeenCalled();
+    expect(sendEmail).not.toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("returns true and skips emails when the conditional update matches zero rows (concurrent delivery already paid it)", async () => {
+    const { supabase, update } = makeSupabase({
+      row: { ...ROW },
+      updatedRows: [],
+    });
+    const sendEmail = jest.fn();
+    const result = await fulfilWorkshopPayment({
+      session: makeSession(ROW.id),
+      supabase,
+      sendEmail,
+      from,
+      internalTo,
+    });
+    expect(result).toBe(true);
+    expect(update).toHaveBeenCalled();
+    expect(sendEmail).not.toHaveBeenCalled();
+  });
+
   it("still sends the alert when the confirmation email fails", async () => {
-    const { supabase } = makeSupabase({ ...ROW });
+    const { supabase } = makeSupabase({ row: { ...ROW } });
     const sendEmail = jest
       .fn()
       .mockResolvedValueOnce({ error: { message: "bounce" } })
@@ -143,7 +247,7 @@ describe("fulfilWorkshopPayment", () => {
         from,
         internalTo,
       }),
-    ).resolves.toBeUndefined();
+    ).resolves.toBe(true);
     expect(sendEmail).toHaveBeenCalledTimes(2);
     expect(sendEmail).toHaveBeenLastCalledWith(
       expect.objectContaining({ to: internalTo }),

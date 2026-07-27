@@ -81,6 +81,7 @@ describe("POST /api/pay/checkout", () => {
     expect(mockCreateSession).toHaveBeenCalledWith(
       expect.objectContaining({
         mode: "payment",
+        payment_method_types: ["card"],
         customer_email: "jane@example.com",
         metadata: { workshop_payment_id: VALID_UUID },
         line_items: [

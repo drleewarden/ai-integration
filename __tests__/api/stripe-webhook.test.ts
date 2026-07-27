@@ -45,6 +45,16 @@ jest.mock("../../lib/supabase/server", () => ({
   }),
 }));
 
+// The workshop-payment branch delegates entirely to fulfilWorkshopPayment --
+// mocked here so these route tests only pin the routing seam (which branch
+// runs, and how its true/false return maps to the HTTP response) rather
+// than re-testing fulfil's own logic (covered by lib/payments/__tests__/fulfil.test.ts).
+const mockFulfilWorkshopPayment = jest.fn().mockResolvedValue(true);
+jest.mock("../../lib/payments/fulfil", () => ({
+  fulfilWorkshopPayment: (...args: unknown[]) =>
+    mockFulfilWorkshopPayment(...args),
+}));
+
 process.env.STRIPE_WEBHOOK_SECRET = "whsec_test";
 
 import { POST } from "../../app/api/stripe/webhook/route";
@@ -65,6 +75,7 @@ describe("POST /api/stripe/webhook", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     mockSelect.mockResolvedValue({ data: [{ id: "u1" }], error: null });
+    mockFulfilWorkshopPayment.mockResolvedValue(true);
   });
 
   it("400 when signature header missing", async () => {
@@ -104,6 +115,51 @@ describe("POST /api/stripe/webhook", () => {
       }),
     );
     expect(mockEq).toHaveBeenCalledWith("id", "u1");
+    // Metadata has no workshop_payment_id -- this is the subscription path,
+    // not the workshop payment-link path.
+    expect(mockFulfilWorkshopPayment).not.toHaveBeenCalled();
+  });
+
+  describe("checkout.session.completed workshop payment routing", () => {
+    it("routes sessions carrying workshop_payment_id to fulfilWorkshopPayment only", async () => {
+      const session = {
+        id: "cs_test_workshop_1",
+        payment_intent: "pi_test_1",
+        payment_status: "paid",
+        metadata: { workshop_payment_id: "wp_1" },
+      };
+      mockConstructEvent.mockReturnValue({
+        type: "checkout.session.completed",
+        data: { object: session },
+      });
+      const res = await POST(makeReq("{}"));
+      expect(res.status).toBe(200);
+      expect(mockFulfilWorkshopPayment).toHaveBeenCalledTimes(1);
+      expect(mockFulfilWorkshopPayment).toHaveBeenCalledWith(
+        expect.objectContaining({ session }),
+      );
+      // The member_profiles/subscription branch must never run for a
+      // workshop payment-link event.
+      expect(mockUpdate).not.toHaveBeenCalled();
+    });
+
+    it("returns 500 so Stripe retries when fulfilWorkshopPayment reports a transient failure", async () => {
+      mockFulfilWorkshopPayment.mockResolvedValue(false);
+      mockConstructEvent.mockReturnValue({
+        type: "checkout.session.completed",
+        data: {
+          object: {
+            id: "cs_test_workshop_2",
+            payment_intent: "pi_test_2",
+            payment_status: "paid",
+            metadata: { workshop_payment_id: "wp_2" },
+          },
+        },
+      });
+      const res = await POST(makeReq("{}"));
+      expect(res.status).toBe(500);
+      expect(mockUpdate).not.toHaveBeenCalled();
+    });
   });
 
   it("subscription.updated with past_due downgrades to free using a fresh retrieve", async () => {
