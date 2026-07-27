@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { formatAmount } from "@/lib/payments/emails";
+import { parseDollarsToCents } from "@/lib/payments/validate";
 
 export interface PaymentRow {
   id: string;
@@ -11,10 +13,6 @@ export interface PaymentRow {
   currency: string;
   description: string;
   status: "pending" | "paid" | "void";
-}
-
-function formatAmount(cents: number, currency: string): string {
-  return `$${(cents / 100).toFixed(2)} ${currency.toUpperCase()}`;
 }
 
 const inputStyle: React.CSSProperties = {
@@ -40,12 +38,14 @@ export default function PaymentLinksClient({
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [manualUrl, setManualUrl] = useState<string | null>(null);
 
   async function createLink(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
     setError(null);
     setNotice(null);
+    setManualUrl(null);
     try {
       const res = await fetch("/api/admin/payment-links", {
         method: "POST",
@@ -59,15 +59,19 @@ export default function PaymentLinksClient({
         );
         return;
       }
-      setNotice(
-        data.emailSent
-          ? `Link created and emailed to ${email}.`
-          : `Link created, but the EMAIL FAILED — copy it and send manually: ${data.url}`,
-      );
+      if (data.emailSent) {
+        setNotice(`Link created and emailed to ${email}.`);
+        setManualUrl(null);
+      } else {
+        setNotice(
+          "Link created, but the email FAILED to send — copy the link below and send it manually.",
+        );
+        setManualUrl(data.url);
+      }
       // Optimistic prepend; amount here mirrors what the server stored.
-      const cents = Math.round(
-        Number(amount.replace(/^\$/, "").replace(/,/g, "")) * 100,
-      );
+      // The server already accepted this same string, so parsing can't
+      // realistically fail here — `?? 0` only satisfies the type checker.
+      const cents = parseDollarsToCents(amount) ?? 0;
       setRows([
         {
           id: data.id,
@@ -180,6 +184,38 @@ export default function PaymentLinksClient({
           <p role="alert" style={{ color: "var(--liquid-gold)", marginTop: "1rem" }}>
             {error}
           </p>
+        )}
+        {manualUrl && (
+          <div
+            style={{
+              marginTop: "0.75rem",
+              display: "flex",
+              gap: "0.75rem",
+              alignItems: "center",
+              flexWrap: "wrap",
+              padding: "0.75rem 1rem",
+              background: "rgba(245,240,232,0.05)",
+              border: "1px solid var(--rule)",
+            }}
+          >
+            <code style={{ fontSize: "0.875rem", wordBreak: "break-all" }}>
+              {manualUrl}
+            </code>
+            <button
+              type="button"
+              onClick={() => navigator.clipboard.writeText(manualUrl)}
+              style={{
+                minHeight: 44,
+                background: "none",
+                border: "1px solid var(--rule)",
+                color: "inherit",
+                padding: "0 1rem",
+                cursor: "pointer",
+              }}
+            >
+              Copy link
+            </button>
+          </div>
         )}
       </form>
 
