@@ -21,9 +21,9 @@ function makeSession(paymentId: string | undefined): Stripe.Checkout.Session {
 }
 
 /** Minimal fake of the two supabase call chains fulfil uses. */
-function makeSupabase(row: typeof ROW | null) {
+function makeSupabase(row: typeof ROW | null, updateError: unknown = null) {
   const update = jest.fn().mockReturnValue({
-    eq: jest.fn().mockResolvedValue({ error: null }),
+    eq: jest.fn().mockResolvedValue({ error: updateError }),
   });
   const supabase = {
     from: jest.fn().mockReturnValue({
@@ -107,5 +107,47 @@ describe("fulfilWorkshopPayment", () => {
     });
     expect(update).not.toHaveBeenCalled();
     expect(sendEmail).not.toHaveBeenCalled();
+  });
+
+  it("does not email when the paid update fails", async () => {
+    const { supabase } = makeSupabase({ ...ROW }, { message: "db down" });
+    const sendEmail = jest.fn();
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    await fulfilWorkshopPayment({
+      session: makeSession(ROW.id),
+      supabase,
+      sendEmail,
+      from,
+      internalTo,
+    });
+    expect(sendEmail).not.toHaveBeenCalled();
+    consoleErrorSpy.mockRestore();
+  });
+
+  it("still sends the alert when the confirmation email fails", async () => {
+    const { supabase } = makeSupabase({ ...ROW });
+    const sendEmail = jest
+      .fn()
+      .mockResolvedValueOnce({ error: { message: "bounce" } })
+      .mockResolvedValueOnce({ error: null });
+    const consoleErrorSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
+    await expect(
+      fulfilWorkshopPayment({
+        session: makeSession(ROW.id),
+        supabase,
+        sendEmail,
+        from,
+        internalTo,
+      }),
+    ).resolves.toBeUndefined();
+    expect(sendEmail).toHaveBeenCalledTimes(2);
+    expect(sendEmail).toHaveBeenLastCalledWith(
+      expect.objectContaining({ to: internalTo }),
+    );
+    consoleErrorSpy.mockRestore();
   });
 });
