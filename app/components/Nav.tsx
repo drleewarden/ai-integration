@@ -311,6 +311,25 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
             );
           })}
           <a
+            href="/login"
+            style={navLinkStyle}
+            onMouseEnter={(e) => {
+              setOpenMenu(null);
+              e.currentTarget.style.color = "var(--liquid-gold)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "rgba(245,240,232,0.62)";
+            }}
+            onClick={() =>
+              pushEvent(EVENTS.CTA_CLICK, {
+                cta_label: "sign_in",
+                cta_location: "nav_desktop",
+              })
+            }
+          >
+            Sign in
+          </a>
+          <a
             href="/contact"
             className="cta cta-gold"
             style={{ marginLeft: "1rem" }}
@@ -465,6 +484,24 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
             }}
           >
             Book a call
+          </a>
+          <a
+            href="/login"
+            onClick={() => {
+              pushEvent(EVENTS.CTA_CLICK, {
+                cta_label: "sign_in",
+                cta_location: "nav_mobile",
+              });
+              setMobileOpen(false);
+            }}
+            className="cta"
+            style={{
+              marginTop: "0.75rem",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            Sign in
           </a>
         </div>
       )}
