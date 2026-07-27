@@ -898,12 +898,14 @@ git commit -m "feat: handle workshop payments in stripe webhook"
 ### Task 7: `POST` + `PATCH /api/admin/payment-links`
 
 **Files:**
+- Create: `lib/payments/base-url.ts`
 - Create: `app/api/admin/payment-links/route.ts`
 - Test: `__tests__/api/admin-payment-links.test.ts`
 
 **Interfaces:**
 - Consumes: `parseAdminEmails`/`isAdminEmail` (Task 3), `parseDollarsToCents`/`EMAIL_RE`/`UUID_RE` (Task 2), `renderPaymentRequestEmail`/`formatAmount` (Task 4), `getSessionUser` from `@/lib/supabase/auth-server`, `getServiceSupabase` from `@/lib/supabase/server`, `checkRateLimit` from `@/lib/rate-limit`.
 - Produces:
+  - `baseUrl(req: NextRequest): string` in `lib/payments/base-url.ts` — Task 8 imports it too.
   - `POST` body `{ name, email, amount, description }` (amount is a dollars **string**) → `200 { id, url, emailSent }` | `400` | `401` | `500`.
   - `PATCH` body `{ id }` → voids a pending link → `200 { success: true }` | `400` | `401` | `409` (not pending) | `500`.
   - The admin UI (Task 10) calls both.
@@ -1073,7 +1075,27 @@ Expected: FAIL — cannot find module `../../app/api/admin/payment-links/route`
 
 - [ ] **Step 3: Write the implementation**
 
-Create `app/api/admin/payment-links/route.ts`:
+First create `lib/payments/base-url.ts` (shared by this route and Task 8's checkout route; same production/preview split as `/api/members/checkout`):
+
+```ts
+/**
+ * Absolute site origin for links we generate server-side (emailed pay links,
+ * Stripe success/cancel URLs). Production always uses the canonical domain;
+ * previews and local dev use the request's own origin.
+ */
+import type { NextRequest } from "next/server";
+
+const SITE_URL = "https://www.creative-milk.com.au";
+
+export function baseUrl(req: NextRequest): string {
+  const isProduction = process.env.VERCEL_ENV
+    ? process.env.VERCEL_ENV === "production"
+    : process.env.NODE_ENV === "production";
+  return isProduction ? SITE_URL : req.nextUrl.origin;
+}
+```
+
+Then create `app/api/admin/payment-links/route.ts`:
 
 ```ts
 /**
@@ -1101,20 +1123,11 @@ import {
   parseDollarsToCents,
 } from "@/lib/payments/validate";
 import { formatAmount, renderPaymentRequestEmail } from "@/lib/payments/emails";
-
-const SITE_URL = "https://www.creative-milk.com.au";
+import { baseUrl } from "@/lib/payments/base-url";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
-
-// Same production/preview split as /api/members/checkout.
-function baseUrl(req: NextRequest): string {
-  const isProduction = process.env.VERCEL_ENV
-    ? process.env.VERCEL_ENV === "production"
-    : process.env.NODE_ENV === "production";
-  return isProduction ? SITE_URL : req.nextUrl.origin;
-}
 
 /** Returns the admin's email, or null when the caller isn't an admin. */
 async function requireAdmin(): Promise<string | null> {
@@ -1287,7 +1300,7 @@ Expected: PASS (10 tests)
 
 ```bash
 git branch --show-current   # must be feat/workshop-payment-links
-git add app/api/admin/payment-links/route.ts __tests__/api/admin-payment-links.test.ts
+git add lib/payments/base-url.ts app/api/admin/payment-links/route.ts __tests__/api/admin-payment-links.test.ts
 git commit -m "feat: admin payment-links API (create + void)"
 ```
 
@@ -1434,16 +1447,7 @@ import { getStripe } from "@/lib/stripe";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { UUID_RE } from "@/lib/payments/validate";
-
-const SITE_URL = "https://www.creative-milk.com.au";
-
-// Same production/preview split as /api/members/checkout.
-function baseUrl(req: NextRequest): string {
-  const isProduction = process.env.VERCEL_ENV
-    ? process.env.VERCEL_ENV === "production"
-    : process.env.NODE_ENV === "production";
-  return isProduction ? SITE_URL : req.nextUrl.origin;
-}
+import { baseUrl } from "@/lib/payments/base-url";
 
 export async function POST(req: NextRequest) {
   const limited = checkRateLimit("pay-checkout", req, {
