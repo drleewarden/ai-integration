@@ -52,6 +52,8 @@ Node 22.x required (`.nvmrc`, `package.json` engines).
 | `readiness/book-call` | Qualification form → contact/opportunity upsert |
 | `readiness/email-playbook` | Generate PDF playbook + email it |
 | `readiness/result/[id]` | Fetch sanitised result (CDN-cached 1h) |
+| `admin/payment-links` | Admin-only (ADMIN_EMAILS): create/void workshop payment links + email them |
+| `pay/checkout` | Start Stripe Checkout for a payment link (amount read server-side) |
 
 Conventions all routes follow:
 - **Rate limiting** via `lib/rate-limit.ts` (`checkRateLimit(name, req, {limit, windowMs})`) — in-memory per-instance; swap store for Upstash if abuse becomes real
@@ -78,6 +80,8 @@ Long marketing pages keep copy/data arrays in a sibling `data.ts` (see services/
 
 - `RESEND_API_KEY`, `RESEND_FROM`, `RESEND_TO` — email
 - `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` — database (service key is server-only)
+- `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` — Stripe (server-only)
+- `ADMIN_EMAILS` — comma-separated emails allowed to use `/members/admin/payment-links`
 
 `.env.local` is gitignored; never commit keys.
 
