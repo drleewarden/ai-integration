@@ -20,6 +20,12 @@ import type { NextRequest } from "next/server";
 import type Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import { getServiceSupabase } from "@/lib/supabase/server";
+import { Resend } from "resend";
+import { fulfilWorkshopPayment } from "@/lib/payments/fulfil";
+
+const resend = process.env.RESEND_API_KEY
+  ? new Resend(process.env.RESEND_API_KEY)
+  : null;
 
 const PRO_STATUSES = new Set(["active", "trialing"]);
 
@@ -54,6 +60,29 @@ export async function POST(req: NextRequest) {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
+
+        // Workshop payment links (one-off payment mode) carry their row id in
+        // metadata; everything else is the Pro subscription flow below.
+        if (session.metadata?.workshop_payment_id) {
+          if (!resend) {
+            console.error(
+              "[stripe/webhook] RESEND_API_KEY not set -- payment will be recorded without emails",
+            );
+          }
+          await fulfilWorkshopPayment({
+            session,
+            supabase,
+            sendEmail: resend
+              ? (msg) => resend.emails.send(msg)
+              : async () => ({ error: null }),
+            from:
+              process.env.RESEND_FROM ??
+              "Creative Milk <onboarding@resend.dev>",
+            internalTo: process.env.RESEND_TO ?? "contact@creative-milk.com.au",
+          });
+          break;
+        }
+
         const userId = session.metadata?.supabase_user_id;
         const customerId =
           typeof session.customer === "string"

@@ -1,3 +1,13 @@
+// route.ts imports the real `resend` package at module scope. Left unmocked,
+// it pulls in postal-mime, which needs TextEncoder -- unavailable in this
+// suite's jsdom environment. Mirrors the mock pattern in send-email.test.ts.
+jest.mock("resend", () => ({
+  Resend: jest.fn().mockImplementation(function (this: any) {
+    this.emails = { send: jest.fn() };
+    return this;
+  }),
+}));
+
 const mockConstructEvent = jest.fn();
 const mockRetrieve = jest.fn().mockResolvedValue({
   id: "sub_1",
