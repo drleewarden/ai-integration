@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { items, itemBySlug } from "@/lib/members/items";
 import { canAccess } from "@/lib/members/access";
+import { isAdminEmail, parseAdminEmails } from "@/lib/payments/admin";
 import {
   getAuthServerSupabase,
   getMemberProfile,
@@ -98,6 +99,10 @@ export default async function MembersDashboardPage() {
   const member = await getMemberProfile();
   // Middleware guarantees a session, but belt-and-braces:
   const tier = member?.profile.tier ?? null;
+  const isAdmin = isAdminEmail(
+    member?.profile.email,
+    parseAdminEmails(process.env.ADMIN_EMAILS),
+  );
   const { feed, checksRun, downloads } = member
     ? await fetchDashboardData(member.user.id)
     : { feed: [], checksRun: 0, downloads: 0 };
@@ -111,6 +116,7 @@ export default async function MembersDashboardPage() {
       // Google OAuth photo; avatarFromMetadata only passes vetted https URLs.
       avatarUrl={avatarFromMetadata(member?.user.user_metadata)}
       tier={tier}
+      isAdmin={isAdmin}
       feed={feed}
       checksRun={checksRun}
       downloads={downloads}
