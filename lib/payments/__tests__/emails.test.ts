@@ -27,7 +27,31 @@ describe("renderPaymentRequestEmail", () => {
   it("links to the pay URL and shows the amount", () => {
     expect(msg.html).toContain("https://www.creative-milk.com.au/pay/abc-123");
     expect(msg.html).toContain("$450.00 AUD");
-    expect(msg.subject).toContain("$450.00 AUD");
+  });
+  it("includes the workshop preparation details and polished subject", () => {
+    expect(msg.subject).toBe(
+      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+    );
+    expect(msg.html).toContain("What we'll cover");
+    expect(msg.html).toContain("What to bring");
+    expect(msg.html).toContain("Claude or ChatGPT: which one?");
+    expect(msg.html).toContain("Your top three pain points");
+  });
+  it("includes a prefilled Google Calendar save-the-date link", () => {
+    expect(msg.html).toContain("Add to Google Calendar");
+    expect(msg.html).toContain(
+      "https://calendar.google.com/calendar/render?action=TEMPLATE",
+    );
+    expect(msg.html).toContain(
+      "dates=20260807T050000Z%2F20260807T070000Z",
+    );
+    expect(msg.html).toContain(
+      "Elwood%20%2B%20St%20Kilda%20Neighbourhood%20Learning%20Centre",
+    );
+  });
+  it("does not use em dashes", () => {
+    expect(msg.subject).not.toContain("—");
+    expect(msg.html).not.toContain("—");
   });
 });
 
