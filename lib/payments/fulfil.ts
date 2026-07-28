@@ -128,6 +128,7 @@ export async function fulfilWorkshopPayment(opts: {
     name: row.name,
     description: row.description,
     amount,
+    reference: paymentIntentId ?? session.id,
   });
   try {
     const { error: confirmError } = await sendEmail({

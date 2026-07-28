@@ -61,10 +61,16 @@ describe("renderPaymentConfirmationEmail", () => {
       name: "Jane Doe",
       description: "AI Workshop — Fri 7 Aug",
       amount: "$450.00 AUD",
+      reference: "pi_test_456",
     });
+    expect(msg.subject).toBe("Payment receipt: AI Automation Workshop");
     expect(msg.html).toContain("$450.00 AUD");
-    expect(msg.html).toContain("AI Workshop — Fri 7 Aug");
+    expect(msg.html).toContain("AI Workshop - Fri 7 Aug");
     expect(msg.html).toContain("Jane");
+    expect(msg.html).toContain("pi_test_456");
+    expect(msg.html).toContain("Please keep this email as your payment receipt");
+    expect(msg.html).not.toContain("separate card receipt");
+    expect(msg.html).not.toContain("—");
   });
 });
 
