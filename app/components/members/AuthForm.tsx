@@ -101,7 +101,7 @@ export default function AuthForm({
 
   if (status.state === "sent") {
     return (
-      <p role="status" className="animate-fadeInUp" style={{ color: "var(--warm-cream)" }}>
+      <p role="status" className="animate-fadeInUp" style={{ color: "var(--midnight-ink)" }}>
         Check your inbox — we've sent you a link to{" "}
         {usePassword && mode === "signup" ? "confirm your account" : "sign in"}
         .
