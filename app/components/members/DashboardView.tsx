@@ -9,6 +9,7 @@ export interface DashboardViewProps {
   /** Vetted https URL (see avatarFromMetadata) or null for the monogram. */
   avatarUrl: string | null;
   tier: MemberTier | null;
+  isAdmin?: boolean;
   feed: ActivityFeedItem[];
   checksRun: number;
   downloads: number;
@@ -25,6 +26,7 @@ export default function DashboardView({
   name,
   avatarUrl,
   tier,
+  isAdmin = false,
   feed,
   checksRun,
   downloads,
@@ -110,15 +112,26 @@ export default function DashboardView({
           Quick actions
         </p>
         <nav className="glass-chip-row" aria-label="Quick actions">
-          <Link href="/members/website-health-check" className="glass-chip">
-            Website Health Check <span className="mc-arrow">→</span>
-          </Link>
-          <Link href="/members/security-headers-audit" className="glass-chip">
-            Security Headers Audit <span className="mc-arrow">→</span>
-          </Link>
-          <Link href="/members/library" className="glass-chip">
-            Browse the library <span className="mc-arrow">→</span>
-          </Link>
+          {isAdmin ? (
+            <Link href="/members/admin/payment-links" className="glass-chip">
+              Payment links <span className="mc-arrow">→</span>
+            </Link>
+          ) : (
+            <>
+              <Link href="/members/website-health-check" className="glass-chip">
+                Website Health Check <span className="mc-arrow">→</span>
+              </Link>
+              <Link
+                href="/members/security-headers-audit"
+                className="glass-chip"
+              >
+                Security Headers Audit <span className="mc-arrow">→</span>
+              </Link>
+              <Link href="/members/library" className="glass-chip">
+                Browse the library <span className="mc-arrow">→</span>
+              </Link>
+            </>
+          )}
         </nav>
 
         <p className="eyebrow" style={{ margin: "3.5rem 0 1.25rem" }}>
