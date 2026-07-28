@@ -50,8 +50,25 @@ function detailRow(label: string, value: string): string {
   </div>`;
 }
 
+function sectionHeading(text: string): string {
+  return `<h2 style="font-family:Georgia,serif;font-size:24px;font-weight:400;line-height:1.2;color:#F5F0E8;margin:36px 0 16px;">${text}</h2>`;
+}
+
+function bulletList(items: string[]): string {
+  return `<ul style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;padding-left:22px;">
+    ${items.map((item) => `<li style="margin:0 0 10px;">${item}</li>`).join("\n    ")}
+  </ul>`;
+}
+
 const PARA =
   'style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;"';
+
+const WORKSHOP_CALENDAR_URL =
+  "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+  "&text=AI%20Automation%20Workshop" +
+  "&dates=20260807T050000Z%2F20260807T070000Z" +
+  "&details=AI%20Automation%20Workshop%20with%20Creative%20Milk.%20Bring%20a%20fully%20charged%20laptop%2C%20your%20charger%2C%20and%20an%20active%20Claude%20or%20ChatGPT%20account." +
+  "&location=Elwood%20%2B%20St%20Kilda%20Neighbourhood%20Learning%20Centre";
 
 /** Sent by the admin route when a payment link is created. */
 export function renderPaymentRequestEmail(f: {
@@ -60,26 +77,70 @@ export function renderPaymentRequestEmail(f: {
   amount: string;
   payUrl: string;
 }): { subject: string; html: string } {
-  const name = escapeHtml(f.name);
-  const firstName = name.split(" ")[0] || name;
-  const description = escapeHtml(f.description);
+  const nameWithoutEmDashes = f.name.replace(/\s*—\s*/g, " - ");
+  const descriptionWithoutEmDashes = f.description.replace(/\s*—\s*/g, " - ");
+  const name = escapeHtml(nameWithoutEmDashes);
+  const firstName = escapeHtml(
+    nameWithoutEmDashes.trim().split(/\s+/)[0] || nameWithoutEmDashes,
+  );
+  const description = escapeHtml(descriptionWithoutEmDashes);
   const amount = escapeHtml(f.amount);
+  const payUrl = escapeHtml(f.payUrl);
   const inner = `
     <p ${PARA}>Hi ${firstName},</p>
-    <p ${PARA}>Here's your payment link for the workshop. The amount is set for you — just click through and pay securely with Stripe.</p>
+    <p ${PARA}>Thanks for signing up for the AI Automation Workshop. We're looking forward to seeing you at the Elwood + St Kilda Neighbourhood Learning Centre on Friday 7 August, from 3:00 to 5:00 PM.</p>
+    <p ${PARA}>To confirm your place, complete your payment securely through Stripe using the link below.</p>
     <div style="margin:28px 0;padding:20px 24px;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;">
       ${detailRow("For", name)}
       ${detailRow("What you're paying for", description)}
       ${detailRow("Amount", amount)}
     </div>
     <div style="margin:32px 0;">
-      <a href="${f.payUrl}" style="display:inline-block;background:#C9A84C;color:#0F1526;font-size:15px;font-weight:600;letter-spacing:0.04em;text-decoration:none;padding:14px 32px;">Pay securely &rarr;</a>
+      <a href="${payUrl}" style="display:inline-block;background:#C9A84C;color:#0F1526;font-size:15px;font-weight:600;letter-spacing:0.04em;text-decoration:none;padding:14px 32px;">Pay securely &rarr;</a>
     </div>
-    <p ${PARA}>The link doesn't expire, and payment is handled end-to-end by Stripe — we never see your card details. Any questions, just hit reply.</p>
-    <p ${PARA}><span style="color:#F5F0E8;">-- The Creative Milk team</span></p>`;
+    <p ${PARA}>The link doesn't expire. Stripe handles the payment securely, and we never see your card details.</p>
+    <div style="margin:32px 0;">
+      <a href="${WORKSHOP_CALENDAR_URL}" target="_blank" rel="noopener noreferrer" style="display:inline-block;border:1px solid #C9A84C;color:#C9A84C;font-size:15px;font-weight:600;letter-spacing:0.02em;text-decoration:none;padding:13px 24px;">Add to Google Calendar</a>
+    </div>
+    <p ${PARA}>Here's everything you need to arrive ready and get the most out of the two-hour session.</p>
+
+    ${sectionHeading("What we'll cover")}
+    ${bulletList([
+      "<strong style=\"color:#F5F0E8;\">The state of AI for small business in 2026:</strong> what's hype and what's actually moving the needle",
+      "<strong style=\"color:#F5F0E8;\">AI fundamentals in plain English:</strong> what these tools really do and where they fall over",
+      "<strong style=\"color:#F5F0E8;\">Finding the wins in your own workflow:</strong> a live exercise where you map your week and spot the repetitive, low-judgement tasks AI handles best",
+      "<strong style=\"color:#F5F0E8;\">Building a working AI workflow live, from scratch:</strong> chosen on the day based on what the room needs most",
+      "<strong style=\"color:#F5F0E8;\">Measuring impact:</strong> what to track at week 1, week 4 and week 12, so you know whether it's actually saving you time",
+      "<strong style=\"color:#F5F0E8;\">Q&amp;A, plus one concrete next step</strong> to take the moment you walk out the door",
+    ])}
+
+    ${sectionHeading("What to bring")}
+    ${bulletList([
+      "<strong style=\"color:#F5F0E8;\">A fully charged laptop and your charger.</strong> This is a hands-on session, not a lecture.",
+      "<strong style=\"color:#F5F0E8;\">An active Claude or ChatGPT account.</strong> A paid plan is ideal, at roughly AU$30–35 per month, because free plans can hit usage limits quickly during a hands-on session. You can cancel at any time.",
+    ])}
+
+    ${sectionHeading("Claude or ChatGPT: which one?")}
+    <p ${PARA}>Both are excellent, and everything we build on the day will work with either. They simply have different strengths.</p>
+    ${bulletList([
+      "<strong style=\"color:#F5F0E8;\">Claude</strong> is the stronger choice for deep thinking, research and writing. It's particularly good at working through long documents, handling multi-step reasoning and producing drafts that sound like you, which matters for the email reply and document workflows we'll be building. The trade-off is that it doesn't generate images.",
+      "<strong style=\"color:#F5F0E8;\">ChatGPT</strong> is the more general-purpose toolkit. It can generate and edit images, has voice conversation built in and connects to a broad ecosystem of apps. The trade-off is that, for careful long-form reasoning and writing tasks, we generally find Claude produces stronger results.",
+    ])}
+    <p ${PARA}>If you already use one of them, bring that. There's no need to buy the other. If you're starting fresh and your work is mostly words, documents and email, we'd lean towards Claude. If you know you'll want images and voice, choose ChatGPT.</p>
+
+    ${sectionHeading("One thing to do before the workshop")}
+    <p ${PARA}>Reply to this email and tell us:</p>
+    ${bulletList([
+      "<strong style=\"color:#F5F0E8;\">Your top three pain points</strong> in your day-to-day work, especially the repetitive tasks that eat into your week",
+      "<strong style=\"color:#F5F0E8;\">Any specific AI or agentic workflows you'd like to see built,</strong> such as answering customer enquiries, summarising supplier quotes or drafting your weekly newsletter",
+    ])}
+    <p ${PARA}>We read every reply and use them to choose the live build on the day, so this is your chance to make the session relevant to your business.</p>
+    <p ${PARA}>If you have any questions before then, just reply to this email.</p>
+    <p ${PARA}>See you on the 7th,<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
   return {
-    subject: `Your workshop payment link — ${f.amount}`,
-    html: emailShell("Payment link", inner),
+    subject:
+      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+    html: emailShell("Workshop payment and preparation", inner),
   };
 }
 
