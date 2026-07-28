@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>50 Free Websites That Feel Like Cheating — Creative Milk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --midnight-ink: #0f1526;
+    --midnight-deep: #0a0f1c;
+    --midnight-tint: #1c2340;
+    --warm-cream: #f5f0e8;
+    --off-white: #faf8f4;
+    --milk-white: #fffdf9;
+    --liquid-gold: #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-pale: #f4e9c8;
+    --deep-slate: #2b2e3b;
+    --slate-mid: #4a4e60;
+    --slate-light: #8b8fa8;
+    --rule: rgba(13, 13, 13, 0.1);
+    --rule-gold: rgba(201, 168, 76, 0.25);
+    --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+    --font-sans: 'Syne', system-ui, -apple-system, sans-serif;
+    --font-mono: 'DM Mono', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--warm-cream);
+    color: var(--deep-slate);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    padding: 32px 16px;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 296mm;
+    margin: 0 auto 32px;
+    background: var(--milk-white);
+    box-shadow: 0 12px 40px rgba(15, 21, 38, 0.14);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Masthead ─────────────────────────────── */
+  .masthead {
+    background: linear-gradient(135deg, var(--midnight-deep) 0%, var(--midnight-ink) 55%, var(--midnight-tint) 100%);
+    color: var(--warm-cream);
+    padding: 9mm 14mm 8mm;
+    position: relative;
+  }
+  .masthead::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--liquid-gold), rgba(201, 168, 76, 0.15));
+  }
+  .brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 5mm;
+  }
+  .wordmark {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .wordmark span { color: var(--liquid-gold); }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--liquid-gold);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 38px;
+    line-height: 1.06;
+    letter-spacing: -0.01em;
+    max-width: 150mm;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hook {
+    margin-top: 3.5mm;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--slate-light);
+    max-width: 120mm;
+  }
+  .hook strong { color: var(--warm-cream); font-weight: 600; }
+
+  /* ── Body ─────────────────────────────────── */
+  .sheet-body {
+    padding: 7mm 14mm 6mm;
+    flex: 1;
+  }
+  .category { margin-bottom: 6mm; }
+  .category:last-child { margin-bottom: 0; }
+  .cat-head {
+    display: flex;
+    align-items: baseline;
+    gap: 3mm;
+    padding-bottom: 2.2mm;
+    margin-bottom: 3.5mm;
+    border-bottom: 1px solid var(--rule-gold);
+  }
+  .cat-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--liquid-gold);
+    letter-spacing: 0.08em;
+  }
+  .cat-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 13.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--midnight-ink);
+  }
+  .cat-count {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--slate-light);
+    letter-spacing: 0.1em;
+  }
+  .items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8mm;
+    row-gap: 2.8mm;
+  }
+  .item { break-inside: avoid; }
+  .item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 3mm;
+  }
+  .item-name {
+    font-weight: 600;
+    font-size: 11.5px;
+    color: var(--midnight-ink);
+    white-space: nowrap;
+  }
+  .item-url {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    color: var(--liquid-gold);
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .item-desc {
+    font-size: 10px;
+    line-height: 1.45;
+    color: var(--slate-mid);
+    margin-top: 0.6mm;
+  }
+
+  /* ── Continuation strip (page 2) ──────────── */
+  .continue-strip {
+    background: var(--midnight-ink);
+    color: var(--warm-cream);
+    padding: 6mm 14mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--liquid-gold);
+  }
+  .continue-strip .title {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 17px;
+    color: var(--gold-light);
+  }
+
+  /* ── CTA + footer ─────────────────────────── */
+  .cta-band {
+    margin: 8mm 14mm 0;
+    background: var(--midnight-ink);
+    color: var(--warm-cream);
+    padding: 7mm 9mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8mm;
+  }
+  .cta-band h2 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 1.15;
+  }
+  .cta-band h2 em { font-style: italic; color: var(--gold-light); }
+  .cta-band p {
+    margin-top: 2mm;
+    font-size: 10px;
+    line-height: 1.5;
+    color: var(--slate-light);
+    max-width: 100mm;
+  }
+  .cta-pill {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    color: var(--midnight-ink);
+    background: var(--liquid-gold);
+    padding: 3.5mm 5.5mm;
+    white-space: nowrap;
+  }
+  .foot {
+    padding: 5mm 14mm 7mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--slate-light);
+  }
+  .foot .gold { color: var(--liquid-gold); }
+
+  /* ── Print ────────────────────────────────── */
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: none; padding: 0; }
+    .page {
+      width: 210mm;
+      min-height: auto;
+      height: 296mm;
+      margin: 0;
+      box-shadow: none;
+      page-break-after: always;
+    }
+    .page:last-child { page-break-after: auto; }
+    .masthead, .continue-strip, .cta-band, .cta-pill {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE 1 ══════════════ -->
+<section class="page">
+  <header class="masthead">
+    <div class="brand-row">
+      <div class="wordmark">Creative <span>Milk</span></div>
+      <div class="eyebrow">Field Notes · Free Tools Edition</div>
+    </div>
+    <h1>50 free websites that feel like <em>cheating.</em></h1>
+    <p class="hook">Most people know ChatGPT. Almost nobody knows these. <strong>Bookmark this page</strong> — the few who actually use it will have a serious advantage.</p>
+  </header>
+
+  <div class="sheet-body">
+
+    <div class="category">
+      <div class="cat-head">
+        <span class="cat-num">01</span>
+        <span class="cat-title">AI &amp; Research</span>
+        <span class="cat-count">10 tools</span>
+      </div>
+      <div class="items">
+        <div class="item"><div class="item-top"><span class="item-name">Perplexity</span><span class="item-url">perplexity.ai</span></div><div class="item-desc">AI search that cites its sources</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">NotebookLM</span><span class="item-url">notebooklm.google.com</span></div><div class="item-desc">Turn your documents into a personal AI tutor</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Elicit</span><span class="item-url">elicit.com</span></div><div class="item-desc">Research assistant for academic papers</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Consensus</span><span class="item-url">consensus.app</span></div><div class="item-desc">Search the scientific consensus on any question</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Connected Papers</span><span class="item-url">connectedpapers.com</span></div><div class="item-desc">Visualise how research papers relate</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">SciSpace</span><span class="item-url">scispace.com</span></div><div class="item-desc">Understand complex research, explained simply</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Semantic Scholar</span><span class="item-url">semanticscholar.org</span></div><div class="item-desc">AI-powered academic search engine</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Open Culture</span><span class="item-url">openculture.com</span></div><div class="item-desc">Free university courses and cultural media</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">FutureTools</span><span class="item-url">futuretools.io</span></div><div class="item-desc">Discover new AI tools as they launch</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">There's An AI For That</span><span class="item-url">theresanaiforthat.com</span></div><div class="item-desc">The largest AI tool directory</div></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="cat-head">
+        <span class="cat-num">02</span>
+        <span class="cat-title">Productivity</span>
+        <span class="cat-count">10 tools</span>
+      </div>
+      <div class="items">
+        <div class="item"><div class="item-top"><span class="item-name">Goblin Tools</span><span class="item-url">goblin.tools</span></div><div class="item-desc">Break overwhelming tasks into small steps</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Excalidraw</span><span class="item-url">excalidraw.com</span></div><div class="item-desc">Sketch ideas instantly, no sign-up</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">tldraw</span><span class="item-url">tldraw.com</span></div><div class="item-desc">Infinite AI-assisted whiteboard</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Whimsical</span><span class="item-url">whimsical.com</span></div><div class="item-desc">Mind maps and flowcharts in minutes</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Miro</span><span class="item-url">miro.com</span></div><div class="item-desc">Collaborative brainstorming boards</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Notion Calendar</span><span class="item-url">calendar.notion.so</span></div><div class="item-desc">Free, elegant planning system</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Clockify</span><span class="item-url">clockify.me</span></div><div class="item-desc">Time tracking without the price tag</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Toggl Track</span><span class="item-url">toggl.com</span></div><div class="item-desc">Productivity insights from your hours</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Readwise</span><span class="item-url">readwise.io</span></div><div class="item-desc">Never forget what you read</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Napkin AI</span><span class="item-url">napkin.ai</span></div><div class="item-desc">Turn plain notes into visuals</div></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="cat-head">
+        <span class="cat-num">03</span>
+        <span class="cat-title">Content Creation</span>
+        <span class="cat-count">10 tools</span>
+      </div>
+      <div class="items">
+        <div class="item"><div class="item-top"><span class="item-name">Canva</span><span class="item-url">canva.com</span></div><div class="item-desc">Design almost anything, fast</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">CapCut</span><span class="item-url">capcut.com</span></div><div class="item-desc">Free, capable video editing</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Adobe Express</span><span class="item-url">adobe.com/express</span></div><div class="item-desc">Quick content creation from Adobe</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Remove.bg</span><span class="item-url">remove.bg</span></div><div class="item-desc">Remove image backgrounds in one click</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Cleanup Pictures</span><span class="item-url">cleanup.pictures</span></div><div class="item-desc">Erase unwanted objects from photos</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Squoosh</span><span class="item-url">squoosh.app</span></div><div class="item-desc">Compress images with zero quality loss</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Ray.so</span><span class="item-url">ray.so</span></div><div class="item-desc">Beautiful code screenshots</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Carbon</span><span class="item-url">carbon.now.sh</span></div><div class="item-desc">Turn code snippets into graphics</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Screen Studio</span><span class="item-url">screen.studio</span></div><div class="item-desc">Polished, professional screen recordings</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Loom</span><span class="item-url">loom.com</span></div><div class="item-desc">Record and share video messages instantly</div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <span>creative-milk.com.au</span>
+    <span class="gold">Page 1 of 2</span>
+  </div>
+</section>
+
+<!-- ══════════════ PAGE 2 ══════════════ -->
+<section class="page">
+  <header class="continue-strip">
+    <div class="wordmark">Creative <span>Milk</span></div>
+    <div class="title">50 free websites, continued —</div>
+  </header>
+
+  <div class="sheet-body">
+
+    <div class="category">
+      <div class="cat-head">
+        <span class="cat-num">04</span>
+        <span class="cat-title">Career &amp; Learning</span>
+        <span class="cat-count">10 tools</span>
+      </div>
+      <div class="items">
+        <div class="item"><div class="item-top"><span class="item-name">Coursera</span><span class="item-url">coursera.org</span></div><div class="item-desc">Free audit mode on thousands of courses</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">edX</span><span class="item-url">edx.org</span></div><div class="item-desc">University courses, open to everyone</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Harvard Online</span><span class="item-url">pll.harvard.edu</span></div><div class="item-desc">Free learning straight from Harvard</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Google AI Courses</span><span class="item-url">ai.google</span></div><div class="item-desc">Learn AI directly from Google</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">OpenAI Academy</span><span class="item-url">academy.openai.com</span></div><div class="item-desc">Official OpenAI training</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">DeepLearning.AI</span><span class="item-url">deeplearning.ai</span></div><div class="item-desc">Andrew Ng's AI course library</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Hugging Face Learn</span><span class="item-url">huggingface.co/learn</span></div><div class="item-desc">Open-source AI education</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">AWS Skill Builder</span><span class="item-url">skillbuilder.aws</span></div><div class="item-desc">Cloud and AI learning from AWS</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">IBM SkillsBuild</span><span class="item-url">skillsbuild.org</span></div><div class="item-desc">Free career-focused courses</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Microsoft Learn</span><span class="item-url">learn.microsoft.com</span></div><div class="item-desc">Technical learning hub for Microsoft stacks</div></div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="cat-head">
+        <span class="cat-num">05</span>
+        <span class="cat-title">Hidden Gems</span>
+        <span class="cat-count">10 tools</span>
+      </div>
+      <div class="items">
+        <div class="item"><div class="item-top"><span class="item-name">Have I Been Pwned</span><span class="item-url">haveibeenpwned.com</span></div><div class="item-desc">Check if your data has been breached</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">VirusTotal</span><span class="item-url">virustotal.com</span></div><div class="item-desc">Scan suspicious files and links</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Flightradar24</span><span class="item-url">flightradar24.com</span></div><div class="item-desc">Live flight tracking worldwide</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">CamelCamelCamel</span><span class="item-url">camelcamelcamel.com</span></div><div class="item-desc">Amazon price history before you buy</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">JustWatch</span><span class="item-url">justwatch.com</span></div><div class="item-desc">Find where anything is streaming</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Radio Garden</span><span class="item-url">radio.garden</span></div><div class="item-desc">Listen to live radio around the globe</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Archive.org</span><span class="item-url">archive.org</span></div><div class="item-desc">The internet's time machine</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">Fast.com</span><span class="item-url">fast.com</span></div><div class="item-desc">Instant internet speed test</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">DownDetector</span><span class="item-url">downdetector.com</span></div><div class="item-desc">Check outages the moment they happen</div></div>
+        <div class="item"><div class="item-top"><span class="item-name">TinEye</span><span class="item-url">tineye.com</span></div><div class="item-desc">Reverse image search</div></div>
+      </div>
+    </div>
+
+    <div class="cta-band">
+      <div>
+        <h2>Saving this is easy. <em>Using it</em> is the advantage.</h2>
+        <p>Wondering which of these actually moves the needle for your business? Take the free AI Readiness assessment and get a personalised playbook in minutes.</p>
+      </div>
+      <div class="cta-pill">creative-milk.com.au/ai-readiness</div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <span>© Creative Milk · AI consulting, without the jargon</span>
+    <span class="gold">Page 2 of 2</span>
+  </div>
+</section>
+
+</body>
+</html>
