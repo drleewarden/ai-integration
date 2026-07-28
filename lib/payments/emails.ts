@@ -149,23 +149,30 @@ export function renderPaymentConfirmationEmail(f: {
   name: string;
   description: string;
   amount: string;
+  reference: string;
 }): { subject: string; html: string } {
-  const name = escapeHtml(f.name);
-  const firstName = name.split(" ")[0] || name;
-  const description = escapeHtml(f.description);
+  const nameWithoutEmDashes = f.name.replace(/\s*—\s*/g, " - ");
+  const descriptionWithoutEmDashes = f.description.replace(/\s*—\s*/g, " - ");
+  const firstName = escapeHtml(
+    nameWithoutEmDashes.trim().split(/\s+/)[0] || nameWithoutEmDashes,
+  );
+  const description = escapeHtml(descriptionWithoutEmDashes);
   const amount = escapeHtml(f.amount);
+  const reference = escapeHtml(f.reference);
   const inner = `
     <p ${PARA}>Hi ${firstName},</p>
-    <p ${PARA}>Payment received — you're all set. Here's what you've paid for:</p>
+    <p ${PARA}>Thanks, your payment has been received and your place at the AI Automation Workshop is confirmed.</p>
     <div style="margin:28px 0;padding:20px 24px;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;">
       ${detailRow("Item", description)}
       ${detailRow("Amount paid", amount)}
+      ${detailRow("Payment status", "Paid")}
+      ${detailRow("Receipt reference", reference)}
     </div>
-    <p ${PARA}>Stripe will send you a separate card receipt. We'll be in touch with joining details closer to the day — anything in the meantime, just hit reply.</p>
-    <p ${PARA}>Looking forward to having you in the room.<br><span style="color:#F5F0E8;">-- The Creative Milk team</span></p>`;
+    <p ${PARA}>Please keep this email as your payment receipt. If you have any questions, reply to this email and we'll be happy to help.</p>
+    <p ${PARA}>We look forward to seeing you on Friday 7 August, from 3:00 to 5:00 PM.<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
   return {
-    subject: "Payment received — Creative Milk Workshop",
-    html: emailShell("Payment received", inner),
+    subject: "Payment receipt: AI Automation Workshop",
+    html: emailShell("Payment receipt", inner),
   };
 }
 
