@@ -106,11 +106,26 @@ export default function WorkshopSignup() {
         return;
       }
       setStatus({ type: "success" });
-      pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
-        form_id: "workshop",
-        business_type: form.businessType,
-        has_workflow: Boolean(form.workflows.trim()),
-      });
+      try {
+        // Both workshop routes are valid lead forms. Keep the existing
+        // analytics event while also emitting Meta's standard Lead event.
+        // Analytics must never turn a successful registration into a visible
+        // submission failure.
+        const eventId =
+          globalThis.crypto?.randomUUID?.() ??
+          `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        pushEvent(EVENTS.GENERATE_LEAD, {
+          event_id: eventId,
+          form_id: "workshop",
+        });
+        pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
+          form_id: "workshop",
+          business_type: form.businessType,
+          has_workflow: Boolean(form.workflows.trim()),
+        });
+      } catch {
+        // Registration succeeded; analytics failures are intentionally silent.
+      }
     } catch {
       setStatus({
         type: "error",
