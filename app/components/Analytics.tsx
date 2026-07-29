@@ -3,8 +3,9 @@ import Script from "next/script";
 /**
  * Google Tag Manager loader.
  *
- * Reads `NEXT_PUBLIC_GTM_ID` and returns null when unset, so local dev and
- * Vercel Preview deploys can opt out cleanly by leaving the env var blank.
+ * This container owns the site's Google and Meta browser/server tracking.
+ * Keep it pinned here so a stale deployment environment variable cannot load
+ * the retired container.
  *
  * `NEXT_PUBLIC_GTM_AUTH` + `NEXT_PUBLIC_GTM_PREVIEW` are optional and used to
  * point a deployment at a non-Live GTM environment (e.g. the Preview
@@ -15,8 +16,7 @@ import Script from "next/script";
  * `strategy="beforeInteractive"` so they land before this loader runs.
  */
 export default function Analytics() {
-  const gtmId = process.env.NEXT_PUBLIC_GTM_ID;
-  if (!gtmId) return null;
+  const gtmId = "GTM-WLC8NXHD";
 
   const gtmAuth = process.env.NEXT_PUBLIC_GTM_AUTH ?? "";
   const gtmPreview = process.env.NEXT_PUBLIC_GTM_PREVIEW ?? "";
