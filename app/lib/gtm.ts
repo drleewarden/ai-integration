@@ -6,8 +6,8 @@
  * so prefer the `EVENTS` constants over inline strings.
  *
  * Consent Mode v2 helpers (`grantConsent` / `denyConsent`) are wired to the
- * cookie banner. Defaults are set to `denied` in `app/layout.tsx` before GTM
- * loads.
+ * footer's Cookie settings control. Defaults are set to `granted` in
+ * `app/layout.tsx`; visitors can opt out at any time.
  *
  * Never include PII (name, email, message bodies, IP) in event payloads.
  * Doing so violates the GA4 Terms of Service.

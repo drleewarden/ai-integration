@@ -6,35 +6,31 @@ import { CONSENT_CHANGED_EVENT } from "./ConsentBanner";
 
 const GTM_ID = "GTM-WLC8NXHD";
 
-function hasStoredConsent(): boolean {
+function hasOptedOut(): boolean {
   try {
-    return window.localStorage.getItem("cm_consent") === "granted";
+    return window.localStorage.getItem("cm_consent") === "denied";
   } catch {
     return false;
   }
 }
 
-/**
- * Loads the live GTM container only after explicit consent. Gating the
- * container itself also covers custom Meta tags that do not automatically
- * honour Google's Consent Mode state.
- */
+/** Loads GTM by default while preserving a visitor's saved footer opt-out. */
 export default function AnalyticsLoader() {
-  const [hasConsent, setHasConsent] = useState(false);
+  const [enabled, setEnabled] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setHasConsent(hasStoredConsent());
+    setEnabled(!hasOptedOut());
 
     const onConsentChanged = (event: Event) => {
       const choice = (event as CustomEvent<"granted" | "denied">).detail;
-      setHasConsent(choice === "granted");
+      setEnabled(choice === "granted");
     };
     window.addEventListener(CONSENT_CHANGED_EVENT, onConsentChanged);
     return () =>
       window.removeEventListener(CONSENT_CHANGED_EVENT, onConsentChanged);
   }, []);
 
-  if (!hasConsent) return null;
+  if (enabled !== true) return null;
 
   return (
     <>

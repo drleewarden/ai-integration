@@ -9,9 +9,8 @@ import AnalyticsLoader from "./AnalyticsLoader";
  * loader; development, local production builds, and Preview deployments do
  * not send events into production ads data.
  *
- * The client loader additionally requires explicit stored consent before it
- * injects GTM. This prevents custom Meta tags from firing pre-consent even if
- * they do not honour Google's Consent Mode state.
+ * Visitors can revoke analytics and advertising consent through the footer's
+ * Cookie settings control.
  */
 export default function Analytics() {
   if (process.env.VERCEL_ENV !== "production") return null;

@@ -45,8 +45,6 @@ export default function ConsentBanner() {
     } else if (stored === "denied") {
       denyConsent();
       announceChoice("denied");
-    } else {
-      setVisible(true);
     }
 
     const onReopen = () => setVisible(true);

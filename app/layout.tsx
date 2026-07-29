@@ -69,20 +69,26 @@ export default function RootLayout({
       <head>
         <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
         {/*
-          Consent Mode v2 defaults. Non-essential storage stays denied until
-          the visitor explicitly accepts it in ConsentBanner.
+          Consent Mode v2 defaults for the footer-controlled opt-out model.
+          Visitors can revoke non-essential tracking through Cookie settings.
         */}
         <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            var cmConsent = 'granted';
+            try {
+              if (window.localStorage.getItem('cm_consent') === 'denied') {
+                cmConsent = 'denied';
+              }
+            } catch (e) {}
             gtag('consent', 'default', {
-              ad_storage: 'denied',
-              ad_user_data: 'denied',
-              ad_personalization: 'denied',
-              analytics_storage: 'denied',
+              ad_storage: cmConsent,
+              ad_user_data: cmConsent,
+              ad_personalization: cmConsent,
+              analytics_storage: cmConsent,
               functionality_storage: 'granted',
-              personalization_storage: 'denied',
+              personalization_storage: cmConsent,
               security_storage: 'granted'
             });
           `}
