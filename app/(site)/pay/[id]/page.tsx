@@ -13,6 +13,10 @@ import { getServiceSupabase } from "@/lib/supabase/server";
 import { UUID_RE } from "@/lib/payments/validate";
 import { formatAmount } from "@/lib/payments/emails";
 import { getStripe } from "@/lib/stripe";
+import {
+  CHECKOUT_SESSION_ID_RE,
+  paymentConfirmationState,
+} from "@/lib/payments/confirmation";
 import PayButton from "./PayButton";
 import PurchaseEvent from "./PurchaseEvent";
 
@@ -48,7 +52,8 @@ export default async function PayPage({
   // Stripe can redirect before the webhook updates our row. Verify the
   // returned Checkout Session server-side rather than trusting query params.
   let hasVerifiedCheckout = false;
-  if (success === "1" && sessionId?.startsWith("cs_")) {
+  const returnedFromCheckout = success === "1";
+  if (returnedFromCheckout && sessionId && CHECKOUT_SESSION_ID_RE.test(sessionId)) {
     try {
       const session = await getStripe().checkout.sessions.retrieve(sessionId);
       hasVerifiedCheckout =
@@ -59,12 +64,11 @@ export default async function PayPage({
     }
   }
 
-  const state: "pending" | "paid" | "void" =
-    row.status === "void"
-      ? "void"
-      : row.status === "paid" || hasVerifiedCheckout
-        ? "paid"
-        : "pending";
+  const state = paymentConfirmationState({
+    rowStatus: row.status,
+    returnedFromCheckout,
+    hasVerifiedCheckout,
+  });
 
   return (
     <>
@@ -122,6 +126,25 @@ export default async function PayPage({
                       contact@creative-milk.com.au
                     </a>{" "}
                     and we&rsquo;ll sort it out.
+                  </p>
+                </>
+              )}
+
+              {state === "confirming" && (
+                <>
+                  <h1
+                    className="h-display"
+                    style={{
+                      fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                    We&rsquo;re confirming your payment
+                  </h1>
+                  <p style={{ fontSize: "1.125rem", lineHeight: 1.6 }}>
+                    Thanks {firstName}. Stripe is finalising the confirmation,
+                    which can take a few moments. Please don&rsquo;t pay again.
+                    We&rsquo;ll email you as soon as your place is confirmed.
                   </p>
                 </>
               )}

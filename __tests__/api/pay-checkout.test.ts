@@ -138,6 +138,9 @@ describe("POST /api/pay/checkout", () => {
         payment_method_types: ["card"],
         customer_email: "jane@example.com",
         metadata: { workshop_payment_id: VALID_UUID },
+        success_url:
+          `http://localhost:3000/pay/${VALID_UUID}` +
+          "?success=1&session_id={CHECKOUT_SESSION_ID}",
         line_items: [
           {
             quantity: 1,

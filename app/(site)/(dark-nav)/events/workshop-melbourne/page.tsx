@@ -142,7 +142,10 @@ export default function WorkshopMelbourne() {
       setStatus({ type: "success" });
       // The Meta-enabled GTM container maps this standard event to both the
       // browser Pixel and server-side Conversions API.
-      pushEvent(EVENTS.GENERATE_LEAD);
+      pushEvent(EVENTS.GENERATE_LEAD, {
+        event_id: crypto.randomUUID(),
+        form_id: "workshop-melbourne",
+      });
       pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
         form_id: "workshop-melbourne",
         variant: "melbourne-cro",

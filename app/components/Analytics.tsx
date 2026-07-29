@@ -5,7 +5,8 @@ import Script from "next/script";
  *
  * This container owns the site's Google and Meta browser/server tracking.
  * Keep it pinned here so a stale deployment environment variable cannot load
- * the retired container.
+ * the retired container. It is disabled in development and Vercel Preview
+ * deployments so test events do not contaminate production ads data.
  *
  * `NEXT_PUBLIC_GTM_AUTH` + `NEXT_PUBLIC_GTM_PREVIEW` are optional and used to
  * point a deployment at a non-Live GTM environment (e.g. the Preview
@@ -16,6 +17,12 @@ import Script from "next/script";
  * `strategy="beforeInteractive"` so they land before this loader runs.
  */
 export default function Analytics() {
+  const vercelEnvironment = process.env.VERCEL_ENV;
+  const isProduction =
+    vercelEnvironment === "production" ||
+    (!vercelEnvironment && process.env.NODE_ENV === "production");
+  if (!isProduction) return null;
+
   const gtmId = "GTM-WLC8NXHD";
 
   const gtmAuth = process.env.NEXT_PUBLIC_GTM_AUTH ?? "";

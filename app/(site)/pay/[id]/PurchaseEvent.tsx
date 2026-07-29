@@ -19,7 +19,14 @@ export default function PurchaseEvent({
   currency,
 }: PurchaseEventProps) {
   useEffect(() => {
+    const storageKey = `cm_purchase_${transactionId}`;
+    if (localStorage.getItem(storageKey)) return;
+
+    // Set the guard before pushing so a navigation during tag processing
+    // cannot emit the same purchase again from this browser.
+    localStorage.setItem(storageKey, "1");
     pushEvent(EVENTS.PURCHASE, {
+      event_id: transactionId,
       ecommerce: {
         value,
         currency: currency.toUpperCase(),
