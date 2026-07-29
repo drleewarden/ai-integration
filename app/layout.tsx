@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import Analytics from "./components/Analytics";
+import ConsentBanner from "./components/ConsentBanner";
 import BackToTop from "./components/BackToTop";
 import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
@@ -68,55 +69,38 @@ export default function RootLayout({
       <head>
         <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
         {/*
-          Consent Mode v2 defaults. Tracking storage granted by default —
-          the /privacy page discloses what is collected and how to opt out
-          via browser controls.
+          Consent Mode v2 defaults for the footer-controlled opt-out model.
+          Visitors can revoke non-essential tracking through Cookie settings.
         */}
         <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            var cmConsent = 'granted';
+            try {
+              if (window.localStorage.getItem('cm_consent') === 'denied') {
+                cmConsent = 'denied';
+              }
+            } catch (e) {}
             gtag('consent', 'default', {
-              ad_storage: 'granted',
-              ad_user_data: 'granted',
-              ad_personalization: 'granted',
-              analytics_storage: 'granted',
+              ad_storage: cmConsent,
+              ad_user_data: cmConsent,
+              ad_personalization: cmConsent,
+              analytics_storage: cmConsent,
               functionality_storage: 'granted',
-              personalization_storage: 'granted',
+              personalization_storage: cmConsent,
               security_storage: 'granted'
             });
           `}
         </Script>
       </head>
       <body className="antialiased">
-        <Script id="meta-pixel" strategy="afterInteractive">
-          {`
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '2179507452620533');
-            fbq('track', 'PageView');
-          `}
-        </Script>
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src="https://www.facebook.com/tr?id=2179507452620533&ev=PageView&noscript=1"
-            alt=""
-          />
-        </noscript>
         <OrganisationSchema />
         <WebsiteSchema />
         <Analytics />
         {children}
         <BackToTop />
+        <ConsentBanner />
       </body>
     </html>
   );

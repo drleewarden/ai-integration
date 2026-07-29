@@ -140,10 +140,23 @@ export default function WorkshopMelbourne() {
         return;
       }
       setStatus({ type: "success" });
-      pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
-        form_id: "workshop-melbourne",
-        variant: "melbourne-cro",
-      });
+      try {
+        // Analytics must never turn a successful registration into a visible
+        // submission failure.
+        const eventId =
+          globalThis.crypto?.randomUUID?.() ??
+          `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
+        pushEvent(EVENTS.GENERATE_LEAD, {
+          event_id: eventId,
+          form_id: "workshop-melbourne",
+        });
+        pushEvent(EVENTS.WORKSHOP_SIGNUP_SUBMIT, {
+          form_id: "workshop-melbourne",
+          variant: "melbourne-cro",
+        });
+      } catch {
+        // Registration succeeded; analytics failures are intentionally silent.
+      }
     } catch {
       setStatus({
         type: "error",

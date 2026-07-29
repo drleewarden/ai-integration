@@ -1,4 +1,5 @@
 import { CMWordmark } from "./CMLogo";
+import CookieSettingsLink from "./CookieSettingsLink";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -159,6 +160,7 @@ export default function Footer() {
           >
             Privacy
           </a>
+          <CookieSettingsLink />
           <p
             style={{
               fontFamily: "var(--font-mono)",

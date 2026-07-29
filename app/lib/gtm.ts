@@ -5,9 +5,9 @@
  * are stable identifiers — GTM triggers match against them case-sensitively,
  * so prefer the `EVENTS` constants over inline strings.
  *
- * Consent Mode v2 helpers (`grantConsent` / `denyConsent`) are intended to be
- * wired into a future cookie banner. Defaults are set to `denied` in
- * `app/layout.tsx` before GTM loads.
+ * Consent Mode v2 helpers (`grantConsent` / `denyConsent`) are wired to the
+ * footer's Cookie settings control. Defaults are set to `granted` in
+ * `app/layout.tsx`; visitors can opt out at any time.
  *
  * Never include PII (name, email, message bodies, IP) in event payloads.
  * Doing so violates the GA4 Terms of Service.
@@ -18,6 +18,7 @@ type DataLayerEntry = Record<string, unknown>;
 declare global {
   interface Window {
     dataLayer?: DataLayerEntry[];
+    fbq?: (...args: unknown[]) => void;
   }
 }
 
@@ -28,6 +29,8 @@ export const EVENTS = {
   WORKSHOP_SIGNUP_START: "workshop_signup_start",
   WORKSHOP_SIGNUP_SUBMIT: "workshop_signup_submit",
   WORKSHOP_SIGNUP_ERROR: "workshop_signup_error",
+  GENERATE_LEAD: "generate_lead",
+  PURCHASE: "purchase",
   NEWSLETTER_SUBMIT: "newsletter_submit",
   AUDIT_CARD_CLICK: "audit_card_click",
   CONSENT_ACCEPT: "consent_accept",
@@ -74,6 +77,7 @@ export function updateConsent(update: ConsentUpdate): void {
 }
 
 export function grantConsent(): void {
+  if (typeof window === "undefined") return;
   updateConsent({
     ad_storage: "granted",
     ad_user_data: "granted",
@@ -83,13 +87,16 @@ export function grantConsent(): void {
     personalization_storage: "granted",
     security_storage: "granted",
   });
+  window.fbq?.("consent", "grant");
 }
 
 export function denyConsent(): void {
+  if (typeof window === "undefined") return;
   updateConsent({
     ad_storage: "denied",
     ad_user_data: "denied",
     ad_personalization: "denied",
     analytics_storage: "denied",
   });
+  window.fbq?.("consent", "revoke");
 }

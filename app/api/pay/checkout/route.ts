@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
         },
       ],
       metadata: { workshop_payment_id: row.id },
-      success_url: `${baseUrl(req)}/pay/${row.id}?success=1`,
+      success_url: `${baseUrl(req)}/pay/${row.id}?success=1&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl(req)}/pay/${row.id}`,
     });
 

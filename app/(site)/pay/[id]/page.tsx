@@ -12,7 +12,13 @@ import Footer from "@/app/components/Footer";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { UUID_RE } from "@/lib/payments/validate";
 import { formatAmount } from "@/lib/payments/emails";
+import { getStripe } from "@/lib/stripe";
+import {
+  CHECKOUT_SESSION_ID_RE,
+  paymentConfirmationState,
+} from "@/lib/payments/confirmation";
 import PayButton from "./PayButton";
+import PurchaseEvent from "./PurchaseEvent";
 
 export const metadata: Metadata = {
   title: "Workshop payment | Creative Milk",
@@ -26,10 +32,10 @@ export default async function PayPage({
   searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ success?: string }>;
+  searchParams: Promise<{ success?: string; session_id?: string }>;
 }) {
   const { id } = await params;
-  const { success } = await searchParams;
+  const { success, session_id: sessionId } = await searchParams;
   if (!UUID_RE.test(id)) notFound();
 
   const { data: row, error } = await getServiceSupabase()
@@ -42,15 +48,30 @@ export default async function PayPage({
 
   const firstName = row.name.split(" ")[0] || row.name;
   const amount = formatAmount(row.amount_cents, row.currency);
-  // Checkout redirects back with ?success=1 before the webhook lands, so
-  // treat that as paid for display purposes -- but never let the (user-
-  // editable) query param mask a voided link's real state.
-  const state: "pending" | "paid" | "void" =
-    row.status === "void"
-      ? "void"
-      : row.status === "paid" || success === "1"
-        ? "paid"
-        : "pending";
+
+  // Stripe can redirect before the webhook updates our row. Verify the
+  // returned Checkout Session server-side rather than trusting query params.
+  let hasVerifiedCheckout = false;
+  const returnedFromCheckout =
+    success === "1" &&
+    typeof sessionId === "string" &&
+    CHECKOUT_SESSION_ID_RE.test(sessionId);
+  if (returnedFromCheckout) {
+    try {
+      const session = await getStripe().checkout.sessions.retrieve(sessionId);
+      hasVerifiedCheckout =
+        session.payment_status === "paid" &&
+        session.metadata?.workshop_payment_id === row.id;
+    } catch (err) {
+      console.error("[pay] checkout verification failed:", err);
+    }
+  }
+
+  const state = paymentConfirmationState({
+    rowStatus: row.status,
+    returnedFromCheckout,
+    hasVerifiedCheckout,
+  });
 
   return (
     <>
@@ -68,6 +89,11 @@ export default async function PayPage({
 
               {state === "paid" && (
                 <>
+                  <PurchaseEvent
+                    transactionId={row.id}
+                    value={row.amount_cents / 100}
+                    currency={row.currency}
+                  />
                   <h1
                     className="h-display"
                     style={{
@@ -103,6 +129,25 @@ export default async function PayPage({
                       contact@creative-milk.com.au
                     </a>{" "}
                     and we&rsquo;ll sort it out.
+                  </p>
+                </>
+              )}
+
+              {state === "confirming" && (
+                <>
+                  <h1
+                    className="h-display"
+                    style={{
+                      fontSize: "clamp(2.5rem, 5vw, 3.5rem)",
+                      marginBottom: "2rem",
+                    }}
+                  >
+                    We&rsquo;re confirming your payment
+                  </h1>
+                  <p style={{ fontSize: "1.125rem", lineHeight: 1.6 }}>
+                    Thanks {firstName}. Stripe is finalising the confirmation,
+                    which can take a few moments. Please don&rsquo;t pay again.
+                    We&rsquo;ll email you as soon as your place is confirmed.
                   </p>
                 </>
               )}
