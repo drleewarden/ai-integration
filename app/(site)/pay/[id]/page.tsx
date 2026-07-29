@@ -52,8 +52,11 @@ export default async function PayPage({
   // Stripe can redirect before the webhook updates our row. Verify the
   // returned Checkout Session server-side rather than trusting query params.
   let hasVerifiedCheckout = false;
-  const returnedFromCheckout = success === "1";
-  if (returnedFromCheckout && sessionId && CHECKOUT_SESSION_ID_RE.test(sessionId)) {
+  const returnedFromCheckout =
+    success === "1" &&
+    typeof sessionId === "string" &&
+    CHECKOUT_SESSION_ID_RE.test(sessionId);
+  if (returnedFromCheckout) {
     try {
       const session = await getStripe().checkout.sessions.retrieve(sessionId);
       hasVerifiedCheckout =

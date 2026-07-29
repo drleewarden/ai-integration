@@ -5,6 +5,7 @@ import { EVENTS, grantConsent, denyConsent, pushEvent } from "../lib/gtm";
 import { COOKIE_SETTINGS_EVENT } from "./CookieSettingsLink";
 
 const STORAGE_KEY = "cm_consent";
+export const CONSENT_CHANGED_EVENT = "cm:consent-changed";
 
 type StoredChoice = "granted" | "denied";
 
@@ -27,6 +28,12 @@ function writeStoredChoice(choice: StoredChoice): void {
   }
 }
 
+function announceChoice(choice: StoredChoice): void {
+  window.dispatchEvent(
+    new CustomEvent<StoredChoice>(CONSENT_CHANGED_EVENT, { detail: choice }),
+  );
+}
+
 export default function ConsentBanner() {
   const [visible, setVisible] = useState(false);
 
@@ -34,8 +41,10 @@ export default function ConsentBanner() {
     const stored = readStoredChoice();
     if (stored === "granted") {
       grantConsent();
+      announceChoice("granted");
     } else if (stored === "denied") {
       denyConsent();
+      announceChoice("denied");
     } else {
       setVisible(true);
     }
@@ -49,6 +58,7 @@ export default function ConsentBanner() {
     grantConsent();
     pushEvent(EVENTS.CONSENT_ACCEPT);
     writeStoredChoice("granted");
+    announceChoice("granted");
     setVisible(false);
   };
 
@@ -56,6 +66,7 @@ export default function ConsentBanner() {
     denyConsent();
     pushEvent(EVENTS.CONSENT_DECLINE);
     writeStoredChoice("denied");
+    announceChoice("denied");
     setVisible(false);
   };
 
@@ -93,8 +104,8 @@ export default function ConsentBanner() {
           lineHeight: 1.5,
         }}
       >
-        We use cookies to measure how visitors use this site so we can improve
-        it. Analytics only — no advertising profiles.
+        We use analytics and advertising cookies to measure site activity and
+        campaign performance. You can accept or decline non-essential tracking.
       </p>
       <div
         style={{

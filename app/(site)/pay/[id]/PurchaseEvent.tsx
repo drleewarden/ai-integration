@@ -20,11 +20,15 @@ export default function PurchaseEvent({
 }: PurchaseEventProps) {
   useEffect(() => {
     const storageKey = `cm_purchase_${transactionId}`;
-    if (localStorage.getItem(storageKey)) return;
-
-    // Set the guard before pushing so a navigation during tag processing
-    // cannot emit the same purchase again from this browser.
-    localStorage.setItem(storageKey, "1");
+    try {
+      if (window.localStorage.getItem(storageKey)) return;
+      // Set the guard before pushing so a navigation during tag processing
+      // cannot emit the same purchase again from this browser.
+      window.localStorage.setItem(storageKey, "1");
+    } catch {
+      // Storage can be blocked. Preserve the confirmation page and fire once
+      // for this view rather than turning analytics into a customer error.
+    }
     pushEvent(EVENTS.PURCHASE, {
       event_id: transactionId,
       ecommerce: {

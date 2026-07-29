@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
 import Analytics from "./components/Analytics";
+import ConsentBanner from "./components/ConsentBanner";
 import BackToTop from "./components/BackToTop";
 import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import "./globals.css";
@@ -68,21 +69,20 @@ export default function RootLayout({
       <head>
         <meta name="facebook-domain-verification" content="iuiqmg6qd0cif7jsdr4z1iwdd7fnp1" />
         {/*
-          Consent Mode v2 defaults. Tracking storage granted by default —
-          the /privacy page discloses what is collected and how to opt out
-          via browser controls.
+          Consent Mode v2 defaults. Non-essential storage stays denied until
+          the visitor explicitly accepts it in ConsentBanner.
         */}
         <Script id="consent-default" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('consent', 'default', {
-              ad_storage: 'granted',
-              ad_user_data: 'granted',
-              ad_personalization: 'granted',
-              analytics_storage: 'granted',
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied',
+              analytics_storage: 'denied',
               functionality_storage: 'granted',
-              personalization_storage: 'granted',
+              personalization_storage: 'denied',
               security_storage: 'granted'
             });
           `}
@@ -94,6 +94,7 @@ export default function RootLayout({
         <Analytics />
         {children}
         <BackToTop />
+        <ConsentBanner />
       </body>
     </html>
   );

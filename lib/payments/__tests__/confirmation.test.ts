@@ -29,6 +29,16 @@ describe("payment confirmation", () => {
     ).toBe("confirming");
   });
 
+  it("keeps an ordinary pending visit payable", () => {
+    expect(
+      paymentConfirmationState({
+        rowStatus: "pending",
+        returnedFromCheckout: false,
+        hasVerifiedCheckout: false,
+      }),
+    ).toBe("pending");
+  });
+
   it("shows paid after either database or Stripe verification", () => {
     expect(
       paymentConfirmationState({
