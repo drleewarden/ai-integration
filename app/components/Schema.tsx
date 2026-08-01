@@ -181,7 +181,6 @@ export function PricingSchema() {
             unitCode: 'MON',
           },
           seller: { '@id': `${BASE_URL}/#organisation` },
-        },
       },
     ],
   }
@@ -194,7 +193,7 @@ export function PricingSchema() {
   )
 }
 
-// ── 5. BREADCRUMB (use on any inner page) ─────────────────────────────────────
+// ── 5. BREADCRUMB (use on any inner page) ──────────────────────────────────
 // Example: <BreadcrumbSchema items={[{ name: 'Home', url: '/' }, { name: 'Pricing', url: '/pricing' }]} />
 interface BreadcrumbItem {
   name: string
@@ -277,7 +276,7 @@ export function BlogPostingSchema({
   )
 }
 
-// ── 6. CASE STUDY / ARTICLE (use on /work/[slug]/page.tsx) ──────────────────
+// ── 6. CASE STUDY / ARTICLE (use on /work/[slug]/page.tsx) ────────────────────
 interface CaseStudySchemaProps {
   title: string
   description: string
@@ -315,6 +314,57 @@ export function CaseStudySchema({
     ...(datePublished && { datePublished }),
     ...(industry && { about: { '@type': 'Thing', name: industry } }),
     inLanguage: 'en-AU',
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
+
+
+// ── 7. WORKSHOP EVENT (use in /events/workshop-melbourne/layout.tsx) ──────────
+// Ticketed, dated, capacity-limited event -- Event schema is what feeds Google's
+// Event rich results and AI-answer engines for queries like "AI workshop Melbourne".
+// Added 2026-08-01 (seo-audit-agent monthly run) -- the page had no Event schema.
+// Price/date/seats must be kept in sync BY HAND with the live page copy (source of
+// truth is the page itself, not this file) -- flagged separately in the audit brief
+// because the live page copy itself was showing a stale/expired early-bird price
+// at the time of this run.
+export function EventSchema() {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Event',
+    name: 'Automate Your Business: AI Automation Workshop',
+    description:
+      'A two-hour, in-person AI workshop in Melbourne: learn the fundamentals in plain English and build a working automated email-reply system for your business.',
+    startDate: '2026-08-07T15:00:00+10:00',
+    endDate: '2026-08-07T17:00:00+10:00',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    eventStatus: 'https://schema.org/EventScheduled',
+    location: {
+      '@type': 'Place',
+      name: 'Elwood + St Kilda Neighbourhood Learning Centre',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Elwood',
+        addressRegion: 'VIC',
+        addressCountry: 'AU',
+      },
+    },
+    organizer: { '@id': `${BASE_URL}/#organisation` },
+    performer: { '@id': `${BASE_URL}/#organisation` },
+    offers: {
+      '@type': 'Offer',
+      price: '39',
+      priceCurrency: 'AUD',
+      availability: 'https://schema.org/InStock',
+      url: `${BASE_URL}/events/workshop-melbourne`,
+      validFrom: '2026-06-01T00:00:00+10:00',
+    },
+    maximumAttendeeCapacity: 24,
   }
 
   return (
