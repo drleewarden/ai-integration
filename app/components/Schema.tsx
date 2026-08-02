@@ -324,3 +324,41 @@ export function CaseStudySchema({
     />
   )
 }
+
+// ── 7. LOCAL SERVICE (use on geo-targeted landing pages, e.g. /ai-consulting-melbourne) ──
+// Distinct from ServiceSchema (site-wide, areaServed: Australia) — this pins
+// areaServed to a specific city so the page can carry its own service-area
+// signal without overriding the generic Service entity used elsewhere.
+interface LocalServiceSchemaProps {
+  serviceName: string
+  areaName: string
+  description: string
+  url: string
+}
+
+export function LocalServiceSchema({
+  serviceName,
+  areaName,
+  description,
+  url,
+}: LocalServiceSchemaProps) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: serviceName,
+    provider: { '@id': `${BASE_URL}/#organisation` },
+    areaServed: {
+      '@type': 'City',
+      name: areaName,
+    },
+    description,
+    url: `${BASE_URL}${url}`,
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}
