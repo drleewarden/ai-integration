@@ -15,7 +15,7 @@ import { posts } from '@/lib/insights/posts'
 const BASE_URL = 'https://www.creative-milk.com.au'
 
 // Last substantive update to the static marketing pages.
-const SITE_UPDATED = new Date('2026-07-07')
+const SITE_UPDATED = new Date('2026-08-01')
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -42,9 +42,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── Conversion / lead gen ────────────────────────────────────
     { url: `${BASE_URL}/ai-readiness`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/opportunity-cost`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/events/workshop`, lastModified: SITE_UPDATED, changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${BASE_URL}/events/workshop-melbourne`, lastModified: SITE_UPDATED, changeFrequency: 'weekly', priority: 0.9 },
 
-    // ── Members area ──────────────────────────────────────────────
+    // ── Members area ─────────────────────────────────────────────
     { url: `${BASE_URL}/members/upgrade`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.6 },
   ]
 
