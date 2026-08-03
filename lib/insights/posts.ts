@@ -15,6 +15,8 @@ import blog03 from "@/content/insights/blog-03-change-management.json";
 import blog04 from "@/content/insights/blog-04-ai-accounting-firms.json";
 import blog05 from "@/content/insights/blog-05-what-is-ai-agent.json";
 import blog06 from "@/content/insights/blog-06-behind-support-build.json";
+import blog21 from "@/content/insights/blog-21-ai-ndis.json";
+import blog28 from "@/content/insights/blog-28-ai-aged-care.json";
 
 export interface InsightPost {
   slug: string;
@@ -33,7 +35,7 @@ export interface InsightPost {
 }
 
 export const posts: InsightPost[] = (
-  [blog01, blog02, blog03, blog04, blog05, blog06] as InsightPost[]
+  [blog01, blog02, blog03, blog04, blog05, blog06, blog21, blog28] as InsightPost[]
 ).sort((a, b) => a.num - b.num);
 
 export function postBySlug(slug: string): InsightPost | undefined {
