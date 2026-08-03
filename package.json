@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "analytics:daily": "node scripts/ga4-daily-report.mjs",
+    "gtm:audit": "node scripts/gtm-audit.mjs",
+    "tracking:daily": "npm run analytics:daily && npm run gtm:audit",
     "test": "jest",
     "test:watch": "jest --watch"
   },
