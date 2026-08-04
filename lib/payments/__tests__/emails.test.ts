@@ -53,6 +53,30 @@ describe("renderPaymentRequestEmail", () => {
     expect(msg.subject).not.toContain("—");
     expect(msg.html).not.toContain("—");
   });
+
+  describe("without a payUrl", () => {
+    const noLink = renderPaymentRequestEmail({
+      name: "Jane Doe",
+      description: "AI Workshop - Fri 7 Aug",
+      amount: "$25.00 AUD",
+    });
+    it("omits the pay button rather than linking nowhere", () => {
+      expect(noLink.html).not.toContain("Pay securely");
+      expect(noLink.html).not.toContain("/pay/");
+      expect(noLink.html).not.toContain("The link doesn't expire");
+      expect(noLink.html).toContain(
+        "we'll send your secure payment link in a separate email shortly",
+      );
+    });
+    it("keeps the same subject and preparation content", () => {
+      expect(noLink.subject).toBe(msg.subject);
+      expect(noLink.html).toContain("What we'll cover");
+      expect(noLink.html).toContain("What to bring");
+      expect(noLink.html).toContain("Claude or ChatGPT: which one?");
+      expect(noLink.html).toContain("Add to Google Calendar");
+      expect(noLink.html).toContain("$25.00 AUD");
+    });
+  });
 });
 
 describe("renderPaymentConfirmationEmail", () => {

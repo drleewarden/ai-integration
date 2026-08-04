@@ -70,12 +70,19 @@ const WORKSHOP_CALENDAR_URL =
   "&details=AI%20Automation%20Workshop%20with%20Creative%20Milk.%20Bring%20a%20fully%20charged%20laptop%2C%20your%20charger%2C%20and%20an%20active%20Claude%20or%20ChatGPT%20account." +
   "&location=Elwood%20%2B%20St%20Kilda%20Neighbourhood%20Learning%20Centre";
 
-/** Sent by the admin route when a payment link is created. */
+/**
+ * Sent by the admin route when a payment link is created, and by the public
+ * workshop-signup route as its auto-reply.
+ *
+ * `payUrl` is optional so the signup route can still send the identical prep
+ * email when the payment row could not be created -- the signup is already
+ * recorded at that point, so silence would be worse than a link-less email.
+ */
 export function renderPaymentRequestEmail(f: {
   name: string;
   description: string;
   amount: string;
-  payUrl: string;
+  payUrl?: string;
 }): { subject: string; html: string } {
   const nameWithoutEmDashes = f.name.replace(/\s*—\s*/g, " - ");
   const descriptionWithoutEmDashes = f.description.replace(/\s*—\s*/g, " - ");
@@ -85,20 +92,26 @@ export function renderPaymentRequestEmail(f: {
   );
   const description = escapeHtml(descriptionWithoutEmDashes);
   const amount = escapeHtml(f.amount);
-  const payUrl = escapeHtml(f.payUrl);
+  const payUrl = f.payUrl ? escapeHtml(f.payUrl) : null;
+  const payIntro = payUrl
+    ? `<p ${PARA}>To confirm your place, complete your payment securely through Stripe using the link below.</p>`
+    : `<p ${PARA}>To confirm your place, we'll send your secure payment link in a separate email shortly.</p>`;
+  const payButton = payUrl
+    ? `<div style="margin:32px 0;">
+      <a href="${payUrl}" style="display:inline-block;background:#C9A84C;color:#0F1526;font-size:15px;font-weight:600;letter-spacing:0.04em;text-decoration:none;padding:14px 32px;">Pay securely &rarr;</a>
+    </div>
+    <p ${PARA}>The link doesn't expire. Stripe handles the payment securely, and we never see your card details.</p>`
+    : "";
   const inner = `
     <p ${PARA}>Hi ${firstName},</p>
     <p ${PARA}>Thanks for signing up for the AI Automation Workshop. We're looking forward to seeing you at the Elwood + St Kilda Neighbourhood Learning Centre on Friday 7 August, from 3:00 to 5:00 PM.</p>
-    <p ${PARA}>To confirm your place, complete your payment securely through Stripe using the link below.</p>
+    ${payIntro}
     <div style="margin:28px 0;padding:20px 24px;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;">
       ${detailRow("For", name)}
       ${detailRow("What you're paying for", description)}
       ${detailRow("Amount", amount)}
     </div>
-    <div style="margin:32px 0;">
-      <a href="${payUrl}" style="display:inline-block;background:#C9A84C;color:#0F1526;font-size:15px;font-weight:600;letter-spacing:0.04em;text-decoration:none;padding:14px 32px;">Pay securely &rarr;</a>
-    </div>
-    <p ${PARA}>The link doesn't expire. Stripe handles the payment securely, and we never see your card details.</p>
+    ${payButton}
     <div style="margin:32px 0;">
       <a href="${WORKSHOP_CALENDAR_URL}" target="_blank" rel="noopener noreferrer" style="display:inline-block;border:1px solid #C9A84C;color:#C9A84C;font-size:15px;font-weight:600;letter-spacing:0.02em;text-decoration:none;padding:13px 24px;">Add to Google Calendar</a>
     </div>

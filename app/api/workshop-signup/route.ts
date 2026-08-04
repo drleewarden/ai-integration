@@ -1,6 +1,16 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
+import { getServiceSupabase } from "@/lib/supabase/server";
+import { baseUrl } from "@/lib/payments/base-url";
+import { formatAmount, renderPaymentRequestEmail } from "@/lib/payments/emails";
+import {
+  WORKSHOP_CURRENCY,
+  WORKSHOP_DESCRIPTION,
+  WORKSHOP_EARLY_BIRD_CENTS,
+  WORKSHOP_SIGNUP_CREATED_BY,
+} from "@/lib/payments/workshop";
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -29,7 +39,7 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
-export async function POST(request: Request): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
   try {
     // Rate limit: 5 signups per hour per IP
     const limited = checkRateLimit("workshop-signup", request, {
@@ -65,9 +75,26 @@ export async function POST(request: Request): Promise<NextResponse> {
         { status: 400 },
       );
     }
-    if (!EMAIL_RE.test(email)) {
+    if (!EMAIL_RE.test(email) || email.length > 320) {
       return NextResponse.json(
         { error: "Please provide a valid email address." },
+        { status: 400 },
+      );
+    }
+    // Length caps mirror the admin route and the workshop_payments columns --
+    // these values now reach the database, not just an email body.
+    if (name.length > 200) {
+      return NextResponse.json(
+        { error: "Name is too long -- please keep it under 200 characters." },
+        { status: 400 },
+      );
+    }
+    if (businessType.length > 200) {
+      return NextResponse.json(
+        {
+          error:
+            "Type of business is too long -- please keep it under 200 characters.",
+        },
         { status: 400 },
       );
     }
@@ -108,15 +135,50 @@ export async function POST(request: Request): Promise<NextResponse> {
       );
     }
 
+    // Auto-create this signup's payment link so the auto-reply is the same
+    // email the admin section sends. The amount comes from the server-side
+    // constant, never the request body, so a signup cannot set its own price.
+    // A failure here is logged and the reply still goes out without the pay
+    // button -- the internal notification above already succeeded, so an
+    // admin can raise the link by hand from /members/admin/payment-links.
+    let payUrl: string | undefined;
+    try {
+      const { data: row, error: rowError } = await getServiceSupabase()
+        .from("workshop_payments")
+        .insert({
+          name,
+          email,
+          amount_cents: WORKSHOP_EARLY_BIRD_CENTS,
+          currency: WORKSHOP_CURRENCY,
+          description: WORKSHOP_DESCRIPTION,
+          created_by: WORKSHOP_SIGNUP_CREATED_BY,
+        })
+        .select("id")
+        .single();
+      if (rowError || !row) {
+        console.error("[workshop-signup] payment row insert failed:", rowError);
+      } else {
+        payUrl = `${baseUrl(request)}/pay/${row.id}`;
+      }
+    } catch (err) {
+      console.error("[workshop-signup] payment row insert threw:", err);
+    }
+
     // Auto-reply to the person who signed up. The internal notification has
     // already succeeded, so any failure here is logged but not surfaced --
     // we don't want to tell the user the signup failed when we've got it.
+    const confirmation = renderPaymentRequestEmail({
+      name,
+      description: WORKSHOP_DESCRIPTION,
+      amount: formatAmount(WORKSHOP_EARLY_BIRD_CENTS, WORKSHOP_CURRENCY),
+      payUrl,
+    });
     const { error: confirmError } = await resend.emails.send({
       from: FROM,
       to: email,
       replyTo: TO,
-      subject: "You're on the list -- Creative Milk Workshop, Fri 7 Aug",
-      html: renderConfirmationEmail({ name: safe.name }),
+      subject: confirmation.subject,
+      html: confirmation.html,
     });
 
     if (confirmError) {
@@ -188,91 +250,6 @@ function renderEmail(fields: {
 
         <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">
           Sent from the workshop signup form
-        </td></tr>
-
-      </table>
-    </td></tr>
-  </table>
-</body>
-</html>`;
-}
-
-function renderConfirmationEmail(fields: { name: string }): string {
-  const firstName = fields.name.split(" ")[0] || fields.name;
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>You're on the list -- Creative Milk Workshop</title>
-</head>
-<body style="margin:0;background:#0F1526;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#F5F0E8;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0F1526;padding:40px 20px;">
-    <tr><td align="center">
-      <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#0F1526;border:1px solid rgba(245,240,232,0.08);">
-
-        <tr><td style="padding:32px 40px;border-bottom:1px solid rgba(245,240,232,0.08);">
-          <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:8px;">-- You're on the list</div>
-          <div style="font-family:Georgia,serif;font-size:32px;font-weight:300;color:#F5F0E8;letter-spacing:-0.01em;line-height:1.05;">
-            Creative <em style="color:#C9A84C;font-style:italic;">Milk</em>
-          </div>
-        </td></tr>
-
-        <tr><td style="padding:32px 40px;">
-          <p style="font-size:16px;line-height:1.6;color:#F5F0E8;margin:0 0 20px;">
-            Hi ${firstName},
-          </p>
-          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
-            Thanks for signing up to the workshop -- your seat's reserved.
-            Here's what you've booked in:
-          </p>
-
-          <div style="margin:28px 0;padding:20px 24px;background:rgba(245,240,232,0.04);border-left:2px solid #C9A84C;">
-            <div style="margin-bottom:18px;">
-              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Workshop</div>
-              <div style="font-size:15px;color:#F5F0E8;">Automate your business -- put time back in your pocket</div>
-            </div>
-            <div style="margin-bottom:18px;">
-              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Date &amp; time</div>
-              <div style="font-size:15px;color:#F5F0E8;">Friday 7 August 2026, 3:00 -- 5:00 PM</div>
-            </div>
-            <div style="margin-bottom:18px;">
-              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Location</div>
-              <div style="font-size:15px;color:#F5F0E8;">Elwood + St Kilda Neighbourhood Learning Centre (ESNLC)</div>
-            </div>
-            <div>
-              <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:4px;">Price</div>
-              <div style="font-size:15px;color:#F5F0E8;">$39 ($25 early bird)</div>
-            </div>
-          </div>
-
-          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0 0 20px;">
-            <strong style="color:#F5F0E8;">Next step:</strong>
-            we'll follow up separately with payment details and the final
-            joining information closer to the day.
-          </p>
-
-          <div style="margin-top:28px;padding-top:22px;border-top:1px solid rgba(245,240,232,0.12);">
-            <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:#C9A84C;margin-bottom:10px;">Anything to add?</div>
-            <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
-              If you forgot to add any workflows on the signup form, or have
-              specific training you'd like us to cover, please email us at
-              <a href="mailto:contact@creative-milk.com.au?subject=Workshop%20--%20personalise%20my%20session" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.35);">contact@creative-milk.com.au</a>
-              and we'll personalise the session for the class.
-            </p>
-          </div>
-
-          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:24px 0 20px;">
-            If anything else changes on your end, or you have a question in
-            the meantime, just hit reply.
-          </p>
-          <p style="font-size:16px;line-height:1.6;color:rgba(245,240,232,0.85);margin:0;">
-            Looking forward to having you in the room.<br>
-            <span style="color:#F5F0E8;">-- The Creative Milk team</span>
-          </p>
-        </td></tr>
-
-        <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">
-          Creative Milk &middot; contact@creative-milk.com.au
         </td></tr>
 
       </table>
