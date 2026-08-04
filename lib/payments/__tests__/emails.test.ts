@@ -64,7 +64,7 @@ describe("renderPaymentRequestEmail", () => {
   });
   it("includes the workshop preparation details and polished subject", () => {
     expect(msg.subject).toBe(
-      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      "Jane, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
     );
     expect(msg.html).toContain("What we'll cover");
     expect(msg.html).toContain("What to bring");
@@ -86,6 +86,41 @@ describe("renderPaymentRequestEmail", () => {
   it("does not use em dashes", () => {
     expect(msg.subject).not.toContain("—");
     expect(msg.html).not.toContain("—");
+  });
+
+  describe("personalised subject", () => {
+    const subjectFor = (name: string) =>
+      renderPaymentRequestEmail({
+        name,
+        description: "Workshop",
+        amount: "$35.00 AUD",
+        payUrl: "https://x.test/pay/1",
+      }).subject;
+
+    it("leads with the first name", () => {
+      expect(subjectFor("Jane Doe")).toBe(
+        "Jane, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+    });
+    it("strips CR/LF so a name cannot inject a header", () => {
+      const subject = subjectFor("Jane\r\nBcc: attacker@evil.test");
+      expect(subject).not.toMatch(/[\r\n]/);
+      expect(subject).not.toContain("Bcc:");
+      expect(subject.startsWith("Jane,")).toBe(true);
+    });
+    it("caps a pathological name", () => {
+      const subject = subjectFor("a".repeat(500));
+      expect(subject.startsWith("a".repeat(40) + ",")).toBe(true);
+      expect(subject).toContain("your AI Automation Workshop");
+    });
+    it("falls back to the impersonal subject when the name is unusable", () => {
+      expect(subjectFor("   ")).toBe(
+        "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+      expect(subjectFor("\r\n")).toBe(
+        "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+    });
   });
 
   describe("without a payUrl", () => {

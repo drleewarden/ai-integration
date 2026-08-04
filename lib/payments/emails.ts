@@ -20,6 +20,23 @@ function escapeHtml(s: string): string {
     .replace(/'/g, "&#39;");
 }
 
+/**
+ * First name, sanitised for use in a Subject header.
+ *
+ * Input handling: subject lines are headers, so CR/LF and other control
+ * characters are stripped rather than escaped -- a name carrying "\r\n" must
+ * never be able to start a new header line. Length is capped so a pathological
+ * name cannot push the real subject out of the inbox preview. Returns "" when
+ * nothing usable survives, and callers fall back to the impersonal subject.
+ */
+function subjectFirstName(rawName: string): string {
+  const first = rawName.trim().split(/\s+/)[0] ?? "";
+  return first
+    .replace(/[\x00-\x1F\x7F]/g, "")
+    .trim()
+    .slice(0, 40);
+}
+
 export function formatAmount(amountCents: number, currency: string): string {
   return `$${(amountCents / 100).toFixed(2)} ${currency.toUpperCase()}`;
 }
@@ -206,9 +223,16 @@ export function renderPaymentRequestEmail(f: {
     <p ${PARA}>If you have any questions before then, just reply to this email.</p>
     <p ${PARA}>See you on the 7th,<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
   const html = emailShell("Workshop payment and preparation", inner);
+  // Personalised so repeat sends to one address don't share an identical
+  // subject -- Gmail threads on subject plus participants and collapses the
+  // duplicated body behind its "trimmed content" ellipsis. Falls back to the
+  // impersonal line when the name yields nothing usable.
+  const subjectName = subjectFirstName(nameWithoutEmDashes);
+  const subject = subjectName
+    ? `${subjectName}, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)`
+    : "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)";
   return {
-    subject:
-      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+    subject,
     html,
     text: htmlToText(html),
   };
