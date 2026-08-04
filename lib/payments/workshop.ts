@@ -8,13 +8,18 @@
  * amount; this constant only governs auto-created rows.
  */
 
-/** Early-bird rate charged to everyone who signs up through the public form. */
-export const WORKSHOP_EARLY_BIRD_CENTS = 2500;
+/**
+ * One fixed seat price, no early-bird tiering. Keep in sync by hand with
+ * SEAT_PRICE in app/(site)/(dark-nav)/events/workshop-melbourne/page.tsx and
+ * the Event schema offer price in app/components/Schema.tsx. Charging an
+ * amount the page doesn't advertise is the failure mode to avoid here.
+ */
+export const WORKSHOP_SEAT_PRICE_CENTS = 3500;
 
 export const WORKSHOP_CURRENCY = "aud";
 
-export const WORKSHOP_DESCRIPTION =
-  "AI Automation Workshop - Friday 7 August 2026 (early bird)";
+/** Shown as "What you're paying for" in the payment request email. */
+export const WORKSHOP_DESCRIPTION = "AI Workshop Elwood";
 
 /** Marks rows the signup form created, as opposed to an admin's email. */
 export const WORKSHOP_SIGNUP_CREATED_BY = "workshop-signup";
