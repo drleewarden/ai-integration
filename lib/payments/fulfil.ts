@@ -33,6 +33,7 @@ export type SendEmailFn = (msg: {
   replyTo?: string;
   subject: string;
   html: string;
+  text: string;
 }) => Promise<{ error: unknown }>;
 
 export async function fulfilWorkshopPayment(opts: {
@@ -137,6 +138,7 @@ export async function fulfilWorkshopPayment(opts: {
       replyTo: internalTo,
       subject: confirmation.subject,
       html: confirmation.html,
+      text: confirmation.text,
     });
     if (confirmError) {
       console.error(
@@ -161,6 +163,7 @@ export async function fulfilWorkshopPayment(opts: {
       replyTo: row.email,
       subject: alert.subject,
       html: alert.html,
+      text: alert.text,
     });
     if (alertError) {
       console.error("[payments/fulfil] alert email failed:", alertError);

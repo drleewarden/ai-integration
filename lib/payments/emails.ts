@@ -4,6 +4,13 @@
  * must not pre-escape. Rendering is pure so it unit-tests without Resend.
  */
 
+/** Every template renders both parts -- see htmlToText for why. */
+export interface RenderedEmail {
+  subject: string;
+  html: string;
+  text: string;
+}
+
 function escapeHtml(s: string): string {
   return s
     .replace(/&/g, "&amp;")
@@ -15,6 +22,54 @@ function escapeHtml(s: string): string {
 
 export function formatAmount(amountCents: number, currency: string): string {
   return `$${(amountCents / 100).toFixed(2)} ${currency.toUpperCase()}`;
+}
+
+/**
+ * Plain-text alternative derived from our own generated HTML. HTML-only mail
+ * is a long-standing spam-filter signal, and these are payment emails, so the
+ * text/plain part matters more than usual.
+ *
+ * Deliberately derived rather than hand-written: a parallel text template
+ * would drift out of sync with the HTML the moment either is edited. It only
+ * has to handle the markup emailShell/detailRow/bulletList actually emit, not
+ * arbitrary HTML.
+ */
+export function htmlToText(html: string): string {
+  return (
+    html
+      // Drop the document scaffolding entirely.
+      .replace(/<!DOCTYPE[^>]*>/gi, "")
+      .replace(/<head[\s\S]*?<\/head>/gi, "")
+      .replace(/<(script|style)[\s\S]*?<\/\1>/gi, "")
+      // Links become "label (url)" so the pay URL survives in the text part.
+      .replace(
+        /<a\b[^>]*href="([^"]*)"[^>]*>([\s\S]*?)<\/a>/gi,
+        (_m, href: string, label: string) => {
+          const text = label.replace(/<[^>]+>/g, "").trim();
+          return text && text !== href ? `${text} (${href})` : href;
+        },
+      )
+      .replace(/<li\b[^>]*>/gi, "\n- ")
+      .replace(/<br\s*\/?>/gi, "\n")
+      // Every remaining block-level close becomes a paragraph break.
+      .replace(/<\/(p|div|h[1-6]|ul|tr|td|table)>/gi, "\n\n")
+      .replace(/<[^>]+>/g, "")
+      // Only the entities these templates actually emit.
+      .replace(/&nbsp;/g, " ")
+      .replace(/&middot;/g, "·")
+      .replace(/&rarr;/g, "->")
+      .replace(/&ndash;/g, "-")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      // Ampersand last, so "&amp;lt;" cannot be double-decoded into a tag.
+      .replace(/&amp;/g, "&")
+      .replace(/[ \t]+/g, " ")
+      .replace(/ *\n */g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim()
+  );
 }
 
 /** Shared dark shell matching the workshop-signup emails. */
@@ -83,7 +138,7 @@ export function renderPaymentRequestEmail(f: {
   description: string;
   amount: string;
   payUrl?: string;
-}): { subject: string; html: string } {
+}): RenderedEmail {
   const nameWithoutEmDashes = f.name.replace(/\s*—\s*/g, " - ");
   const descriptionWithoutEmDashes = f.description.replace(/\s*—\s*/g, " - ");
   const name = escapeHtml(nameWithoutEmDashes);
@@ -150,10 +205,12 @@ export function renderPaymentRequestEmail(f: {
     <p ${PARA}>We read every reply and use them to choose the live build on the day, so this is your chance to make the session relevant to your business.</p>
     <p ${PARA}>If you have any questions before then, just reply to this email.</p>
     <p ${PARA}>See you on the 7th,<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
+  const html = emailShell("Workshop payment and preparation", inner);
   return {
     subject:
       "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
-    html: emailShell("Workshop payment and preparation", inner),
+    html,
+    text: htmlToText(html),
   };
 }
 
@@ -163,7 +220,7 @@ export function renderPaymentConfirmationEmail(f: {
   description: string;
   amount: string;
   reference: string;
-}): { subject: string; html: string } {
+}): RenderedEmail {
   const nameWithoutEmDashes = f.name.replace(/\s*—\s*/g, " - ");
   const descriptionWithoutEmDashes = f.description.replace(/\s*—\s*/g, " - ");
   const firstName = escapeHtml(
@@ -183,9 +240,11 @@ export function renderPaymentConfirmationEmail(f: {
     </div>
     <p ${PARA}>Please keep this email as your payment receipt. If you have any questions, reply to this email and we'll be happy to help.</p>
     <p ${PARA}>We look forward to seeing you on Friday 7 August, from 3:00 to 5:00 PM.<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
+  const html = emailShell("Payment receipt", inner);
   return {
     subject: "Payment receipt: AI Automation Workshop",
-    html: emailShell("Payment receipt", inner),
+    html,
+    text: htmlToText(html),
   };
 }
 
@@ -195,7 +254,7 @@ export function renderPaymentAlertEmail(f: {
   email: string;
   description: string;
   amount: string;
-}): { subject: string; html: string } {
+}): RenderedEmail {
   const name = escapeHtml(f.name);
   const email = escapeHtml(f.email);
   const description = escapeHtml(f.description);
@@ -205,8 +264,10 @@ export function renderPaymentAlertEmail(f: {
     ${detailRow("Email", `<a href="mailto:${email}" style="color:#C9A84C;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.35);">${email}</a>`)}
     ${detailRow("Paid for", description)}
     ${detailRow("Amount", amount)}`;
+  const html = emailShell("Workshop payment", inner);
   return {
     subject: `Workshop payment received — ${f.name} (${f.amount})`,
-    html: emailShell("Workshop payment", inner),
+    html,
+    text: htmlToText(html),
   };
 }

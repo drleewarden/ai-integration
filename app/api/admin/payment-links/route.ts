@@ -142,6 +142,7 @@ export async function POST(req: NextRequest) {
         replyTo: TO,
         subject: msg.subject,
         html: msg.html,
+        text: msg.text,
       });
       if (sendError) {
         console.error("[admin/payment-links] request email failed:", sendError);

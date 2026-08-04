@@ -1,9 +1,31 @@
 import {
   formatAmount,
+  htmlToText,
   renderPaymentRequestEmail,
   renderPaymentConfirmationEmail,
   renderPaymentAlertEmail,
 } from "../emails";
+
+describe("htmlToText", () => {
+  it("keeps link targets so URLs survive in the text part", () => {
+    expect(htmlToText('<p><a href="https://x.test/pay/1">Pay securely</a></p>'))
+      .toBe("Pay securely (https://x.test/pay/1)");
+  });
+  it("turns list items into dashes", () => {
+    expect(htmlToText("<ul><li>One</li><li>Two</li></ul>")).toBe("- One\n- Two");
+  });
+  it("strips tags and drops head/script content", () => {
+    const html = "<head><title>T</title></head><body><p>Hi</p></body>";
+    const text = htmlToText(html);
+    expect(text).toBe("Hi");
+    expect(text).not.toContain("<");
+  });
+  it("decodes entities without re-creating markup", () => {
+    // &amp;lt; must stay the literal text "&lt;", never become a tag.
+    expect(htmlToText("<p>&amp;lt;b&amp;gt;</p>")).toBe("&lt;b&gt;");
+    expect(htmlToText("<p>Tom &amp; Jerry&#39;s</p>")).toBe("Tom & Jerry's");
+  });
+});
 
 describe("formatAmount", () => {
   it("formats cents as dollars with currency code", () => {
@@ -27,6 +49,18 @@ describe("renderPaymentRequestEmail", () => {
   it("links to the pay URL and shows the amount", () => {
     expect(msg.html).toContain("https://www.creative-milk.com.au/pay/abc-123");
     expect(msg.html).toContain("$450.00 AUD");
+  });
+  it("ships a text/plain alternative carrying the pay URL", () => {
+    // HTML-only mail is a spam-filter signal, so the text part must be real
+    // content, not a stub, and must keep the link the email exists to deliver.
+    expect(msg.text).toContain("https://www.creative-milk.com.au/pay/abc-123");
+    expect(msg.text).toContain("$450.00 AUD");
+    expect(msg.text).toContain("What we'll cover");
+    expect(msg.text.length).toBeGreaterThan(500);
+    // No markup survives: no tags, no inline styles, no entities.
+    expect(msg.text).not.toMatch(/<\/?(p|div|a|ul|li|table|td|tr|strong)\b/i);
+    expect(msg.text).not.toContain("style=");
+    expect(msg.text).not.toMatch(/&(amp|lt|gt|quot|#39|nbsp);/);
   });
   it("includes the workshop preparation details and polished subject", () => {
     expect(msg.subject).toBe(
