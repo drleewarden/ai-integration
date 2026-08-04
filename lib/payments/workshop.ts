@@ -8,13 +8,17 @@
  * amount; this constant only governs auto-created rows.
  */
 
-/** Early-bird rate charged to everyone who signs up through the public form. */
-export const WORKSHOP_EARLY_BIRD_CENTS = 2500;
+/**
+ * Single fixed seat price -- no early-bird tiering. Must match SEAT_PRICE in
+ * the workshop landing page and the Event schema offer; a mismatch means we
+ * advertise one price and charge another.
+ */
+export const WORKSHOP_SEAT_CENTS = 3500;
 
 export const WORKSHOP_CURRENCY = "aud";
 
 export const WORKSHOP_DESCRIPTION =
-  "AI Automation Workshop - Friday 7 August 2026 (early bird)";
+  "AI Automation Workshop - Friday 7 August 2026";
 
 /** Marks rows the signup form created, as opposed to an admin's email. */
 export const WORKSHOP_SIGNUP_CREATED_BY = "workshop-signup";

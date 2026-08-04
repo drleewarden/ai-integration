@@ -77,10 +77,10 @@ describe("/api/workshop-signup", () => {
     expect(reply.html).not.toContain("we'll follow up separately with payment");
   });
 
-  it("charges the server-side early bird price and links the new row", async () => {
+  it("charges the server-side seat price and links the new row", async () => {
     await POST(createRequest({ ...validBody, amount: "1.00" }));
     const reply = mockSend.mock.calls[1][0];
-    expect(reply.html).toContain("$25.00 AUD");
+    expect(reply.html).toContain("$35.00 AUD");
     expect(reply.html).toContain("http://localhost:3000/pay/row-uuid-1");
     expect(reply.html).not.toContain("$1.00");
   });
