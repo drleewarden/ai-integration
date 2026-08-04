@@ -396,7 +396,7 @@ export function EventSchema() {
     performer: { '@id': `${BASE_URL}/#organisation` },
     offers: {
       '@type': 'Offer',
-      price: '39',
+      price: '35',
       priceCurrency: 'AUD',
       availability: 'https://schema.org/InStock',
       url: `${BASE_URL}/events/workshop-melbourne`,

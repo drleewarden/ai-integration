@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, CheckCircle2, AlertCircle, Check, X, Shield } from "lucide-react";
 import { EVENTS, pushEvent } from "@/app/lib/gtm";
@@ -8,8 +8,9 @@ import FAQ from "@/app/components/FAQ";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Early-bird deadline drives the countdown label + urgency copy.
-const EARLY_BIRD_ENDS = new Date("2026-07-27T23:59:59+10:00");
+// Single fixed seat price -- no early-bird tiering. Keep the Event schema
+// offer price in app/components/Schema.tsx in sync with this by hand.
+const SEAT_PRICE = "$35";
 
 const OUTCOMES = [
   "One working AI email-reply system that sounds like you",
@@ -59,20 +60,6 @@ export default function WorkshopMelbourne() {
   const [honeypot, setHoneypot] = useState("");
   const formStartedAt = useRef<number>(Date.now());
   const hasStartedRef = useRef(false);
-
-  // Hydration-safe countdown: server renders static "Ends 27 July";
-  // client swaps in a "· X days left" tail after mount.
-  const [daysLeft, setDaysLeft] = useState<number | null>(null);
-  useEffect(() => {
-    const ms = EARLY_BIRD_ENDS.getTime() - Date.now();
-    setDaysLeft(Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24))));
-  }, []);
-  const earlyBirdLabel =
-    daysLeft === null
-      ? "Ends 27 July"
-      : daysLeft > 0
-        ? `Ends 27 July · ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`
-        : "Early bird has ended";
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -325,7 +312,7 @@ export default function WorkshopMelbourne() {
                   label: "Location",
                   value: "Elwood + St Kilda Neighbourhood Learning Centre",
                 },
-                { label: "Price", value: "$25 early bird · $39 after" },
+                { label: "Price", value: `${SEAT_PRICE} per seat` },
                 { label: "Seats", value: "24 only · founding cohort" },
               ].map((item) => (
                 <div key={item.label}>
@@ -413,7 +400,7 @@ export default function WorkshopMelbourne() {
               </div>
             ) : (
               <>
-                {/* Price + deadline callout -- makes the urgency unmissable */}
+                {/* Price + scarcity callout -- one fixed price, capped seats */}
                 <div
                   style={{
                     display: "flex",
@@ -437,7 +424,7 @@ export default function WorkshopMelbourne() {
                         lineHeight: 1,
                       }}
                     >
-                      $25
+                      {SEAT_PRICE}
                     </div>
                     <div
                       style={{
@@ -449,7 +436,7 @@ export default function WorkshopMelbourne() {
                         marginTop: "0.3rem",
                       }}
                     >
-                      Early bird · then $39
+                      Per seat
                     </div>
                   </div>
                   <div
@@ -461,7 +448,7 @@ export default function WorkshopMelbourne() {
                       textAlign: "right",
                     }}
                   >
-                    {earlyBirdLabel}
+                    24 seats only
                   </div>
                 </div>
 
@@ -573,7 +560,7 @@ export default function WorkshopMelbourne() {
                   >
                     {isSubmitting
                       ? "Reserving…"
-                      : "Reserve my seat — $25 early bird"}
+                      : `Reserve my seat — ${SEAT_PRICE}`}
                     {!isSubmitting && (
                       <ArrowRight size={14} aria-hidden="true" />
                     )}
@@ -1017,8 +1004,8 @@ export default function WorkshopMelbourne() {
               }}
             >
               This is workshop #1 — the founding cohort. If it doesn't earn
-              your $25 in the first half hour, you don't pay for it. That's
-              the deal.
+              your {SEAT_PRICE} in the first half hour, you don't pay for it.
+              That's the deal.
             </p>
           </div>
         </div>
@@ -1051,11 +1038,11 @@ export default function WorkshopMelbourne() {
               margin: "1rem 0 1.25rem",
             }}
           >
-            24 seats. <em className="gold">$25 until 27 July.</em>
+            24 seats. <em className="gold">{SEAT_PRICE} a seat.</em>
           </h2>
           <p className="body-copy" style={{ marginBottom: "2rem" }}>
-            Founding cohort pricing ends when the early bird does. Two hours,
-            in person, one working workflow you built yourself.
+            One price, one room, 24 seats. Two hours, in person, one working
+            workflow you built yourself.
           </p>
           <a
             href="#reserve"
@@ -1067,7 +1054,7 @@ export default function WorkshopMelbourne() {
               textAlign: "center",
             }}
           >
-            Reserve my seat — $25 early bird
+            Reserve my seat — {SEAT_PRICE}
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
@@ -1084,9 +1071,9 @@ export default function WorkshopMelbourne() {
           aria-label="Reserve my seat"
         >
           <span>
-            <strong style={{ color: "var(--liquid-gold)" }}>$25</strong>
+            <strong style={{ color: "var(--liquid-gold)" }}>{SEAT_PRICE}</strong>
             <span style={{ opacity: 0.7, marginLeft: "0.5rem" }}>
-              early bird · {earlyBirdLabel.replace("Ends 27 July · ", "").replace("Ends 27 July", "ends 27 July")}
+              per seat · 24 seats only
             </span>
           </span>
           <span
