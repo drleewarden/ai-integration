@@ -134,6 +134,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
   };
 
   return (
+    <>
     <nav
       style={{
         position: "fixed",
@@ -360,14 +361,16 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
+    </nav>
 
-      {mobileOpen && (
+    {mobileOpen && (
         <div
           className="animate-fadeIn"
           style={{
             position: "fixed",
             inset: "116px 0 0 0",
             background: "var(--midnight-deep)",
+            zIndex: 99,
             padding: "2rem var(--container-pad)",
             display: "flex",
             flexDirection: "column",
@@ -505,7 +508,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           </a>
         </div>
       )}
-    </nav>
+    </>
   );
 }
 
