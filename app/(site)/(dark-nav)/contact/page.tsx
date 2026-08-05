@@ -274,9 +274,9 @@ export default function Contact() {
                     href="tel:+61426522294"
                     style={{
                       display: "flex",
-                      alignItems: "baseline",
-                      justifyContent: "space-between",
-                      gap: "1rem",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: "0.4rem",
                       textDecoration: "none",
                       color: "var(--warm-cream)",
                     }}
@@ -306,9 +306,9 @@ export default function Contact() {
                     href="tel:+61455775052"
                     style={{
                       display: "flex",
-                      alignItems: "baseline",
-                      justifyContent: "space-between",
-                      gap: "1rem",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                      gap: "0.4rem",
                       textDecoration: "none",
                       color: "var(--warm-cream)",
                     }}
