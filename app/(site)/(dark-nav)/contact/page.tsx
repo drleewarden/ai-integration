@@ -137,9 +137,9 @@ export default function Contact() {
         >
           <div className="container">
             <div
+              className="contact-grid"
               style={{
                 display: "grid",
-                gridTemplateColumns: "minmax(0,1fr) minmax(0,1.1fr)",
                 gap: "clamp(3rem,6vw,6rem)",
                 alignItems: "start",
               }}
@@ -148,6 +148,7 @@ export default function Contact() {
               <div>
                 {/* Trust signals */}
                 <div
+                  className="contact-hide-mobile"
                   style={{
                     paddingBottom: "clamp(2rem,4vw,3rem)",
                     borderBottom: "1px solid var(--rule-cream)",
@@ -259,6 +260,82 @@ export default function Contact() {
 
               {/* Right: form */}
               <div>
+                {/* Direct phone lines -- always visible, above the form */}
+                <div
+                  style={{
+                    marginBottom: "2rem",
+                    paddingBottom: "1.5rem",
+                    borderBottom: "1px solid var(--rule-cream)",
+                    display: "grid",
+                    gap: "1rem",
+                  }}
+                >
+                  <a
+                    href="tel:+61426522294"
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "space-between",
+                      gap: "1rem",
+                      textDecoration: "none",
+                      color: "var(--warm-cream)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: "rgba(245,240,232,0.55)",
+                      }}
+                    >
+                      Sales &mdash; call Craig
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "1rem",
+                        color: "var(--liquid-gold)",
+                      }}
+                    >
+                      0426 522 294
+                    </span>
+                  </a>
+                  <a
+                    href="tel:+61455775052"
+                    style={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      justifyContent: "space-between",
+                      gap: "1rem",
+                      textDecoration: "none",
+                      color: "var(--warm-cream)",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: "rgba(245,240,232,0.55)",
+                      }}
+                    >
+                      Technical support &mdash; call Darryn
+                    </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "1rem",
+                        color: "var(--liquid-gold)",
+                      }}
+                    >
+                      0455 775 052
+                    </span>
+                  </a>
+                </div>
+
                 {submitted ? (
                   <div
                     style={{
