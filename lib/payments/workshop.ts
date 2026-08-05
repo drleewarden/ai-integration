@@ -9,16 +9,17 @@
  */
 
 /**
- * Single fixed seat price -- no early-bird tiering. Must match SEAT_PRICE in
- * the workshop landing page and the Event schema offer; a mismatch means we
- * advertise one price and charge another.
+ * One fixed seat price, no early-bird tiering. Keep in sync by hand with
+ * SEAT_PRICE in app/(site)/(dark-nav)/events/workshop-melbourne/page.tsx and
+ * the Event schema offer price in app/components/Schema.tsx. Charging an
+ * amount the page doesn't advertise is the failure mode to avoid here.
  */
-export const WORKSHOP_SEAT_CENTS = 3500;
+export const WORKSHOP_SEAT_PRICE_CENTS = 3500;
 
 export const WORKSHOP_CURRENCY = "aud";
 
-export const WORKSHOP_DESCRIPTION =
-  "AI Automation Workshop - Friday 7 August 2026";
+/** Shown as "What you're paying for" in the payment request email. */
+export const WORKSHOP_DESCRIPTION = "AI Workshop Elwood";
 
 /** Marks rows the signup form created, as opposed to an admin's email. */
 export const WORKSHOP_SIGNUP_CREATED_BY = "workshop-signup";

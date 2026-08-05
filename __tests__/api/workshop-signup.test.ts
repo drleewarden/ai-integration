@@ -1,4 +1,7 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { NextRequest } from "next/server";
+import { WORKSHOP_SEAT_PRICE_CENTS } from "../../lib/payments/workshop";
 
 type ResendMockCtor = { _mockSend: jest.Mock };
 
@@ -81,8 +84,24 @@ describe("/api/workshop-signup", () => {
     await POST(createRequest({ ...validBody, amount: "1.00" }));
     const reply = mockSend.mock.calls[1][0];
     expect(reply.html).toContain("$35.00 AUD");
+    expect(reply.html).toContain("AI Workshop Elwood");
     expect(reply.html).toContain("http://localhost:3000/pay/row-uuid-1");
     expect(reply.html).not.toContain("$1.00");
+  });
+
+  it("matches the seat price the workshop page advertises", () => {
+    // These drifted apart once before: the page moved to a flat $35 while the
+    // auto-reply still charged the old $25 early-bird rate.
+    const page = readFileSync(
+      resolve(
+        __dirname,
+        "../../app/(site)/(dark-nav)/events/workshop-melbourne/page.tsx",
+      ),
+      "utf8",
+    );
+    const advertised = page.match(/const SEAT_PRICE = "\$(\d+)"/)?.[1];
+    expect(advertised).toBeDefined();
+    expect(WORKSHOP_SEAT_PRICE_CENTS).toBe(Number(advertised) * 100);
   });
 
   it("still sends the reply, without a pay button, when the insert fails", async () => {

@@ -12,7 +12,7 @@ import {
 import {
   WORKSHOP_CURRENCY,
   WORKSHOP_DESCRIPTION,
-  WORKSHOP_SEAT_CENTS,
+  WORKSHOP_SEAT_PRICE_CENTS,
   WORKSHOP_SIGNUP_CREATED_BY,
 } from "@/lib/payments/workshop";
 
@@ -154,7 +154,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         .insert({
           name,
           email,
-          amount_cents: WORKSHOP_SEAT_CENTS,
+          amount_cents: WORKSHOP_SEAT_PRICE_CENTS,
           currency: WORKSHOP_CURRENCY,
           description: WORKSHOP_DESCRIPTION,
           created_by: WORKSHOP_SIGNUP_CREATED_BY,
@@ -176,7 +176,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     const confirmation = renderPaymentRequestEmail({
       name,
       description: WORKSHOP_DESCRIPTION,
-      amount: formatAmount(WORKSHOP_SEAT_CENTS, WORKSHOP_CURRENCY),
+      amount: formatAmount(WORKSHOP_SEAT_PRICE_CENTS, WORKSHOP_CURRENCY),
       payUrl,
     });
     const { error: confirmError } = await resend.emails.send({
