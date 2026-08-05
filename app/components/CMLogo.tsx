@@ -58,33 +58,38 @@ export function CMWordmark({
   variant?: LogoVariant;
   markSize?: number;
 }) {
-  const textColor =
-    variant === "cream-on-ink" || variant === "gold-on-ink"
-      ? "var(--warm-cream)"
-      : "var(--midnight-ink)";
+  const onLight = variant === "ink-on-cream";
+  const horizontalSrc = onLight
+    ? "/svg/creative-milk-logo-horizontal-on-light.svg"
+    : "/svg/creative-milk-logo-horizontal-on-dark.svg";
+  const markSrc = onLight
+    ? "/svg/creative-milk-mark-on-light.svg"
+    : "/svg/creative-milk-mark-on-dark.svg";
+
+  const height = Math.round(markSize * 1.4);
+  const horizontalWidth = Math.round(height * (259 / 102));
+  const mobileHeight = Math.round(markSize * 1.1);
 
   return (
-    <span
-      style={{
-        display: "inline-flex",
-        alignItems: "center",
-        gap: "0.65rem",
-      }}
-    >
-      <CMMark size={markSize} variant={variant} />
-      <span
-        style={{
-          fontFamily: "var(--font-sans)",
-          fontSize: "0.78rem",
-          fontWeight: 700,
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: textColor,
-          lineHeight: 1,
-        }}
-      >
-        Creative Milk
-      </span>
-    </span>
+    <>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={horizontalSrc}
+        alt="Creative Milk"
+        width={horizontalWidth}
+        height={height}
+        className="hide-md"
+        style={{ height, width: "auto" }}
+      />
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={markSrc}
+        alt="Creative Milk"
+        width={mobileHeight}
+        height={mobileHeight}
+        className="show-md"
+        style={{ height: mobileHeight, width: mobileHeight }}
+      />
+    </>
   );
 }

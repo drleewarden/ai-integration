@@ -933,6 +933,21 @@ textarea.input-light {
   }
 }
 
+/* Contact page: 2-column form layout collapses to single column on mobile,
+   and the "Before you submit" trust block is hidden on narrow viewports
+   so the form gets the full width. */
+.contact-grid {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+}
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .contact-hide-mobile {
+    display: none !important;
+  }
+}
+
 /* Workshop content grids: 2 columns on desktop, stack below 700px */
 .workshop-instructor-grid {
   grid-template-columns: minmax(180px, 260px) 1fr;
