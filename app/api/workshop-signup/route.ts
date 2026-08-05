@@ -4,7 +4,11 @@ import type { NextRequest } from "next/server";
 import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import { baseUrl } from "@/lib/payments/base-url";
-import { formatAmount, renderPaymentRequestEmail } from "@/lib/payments/emails";
+import {
+  formatAmount,
+  htmlToText,
+  renderPaymentRequestEmail,
+} from "@/lib/payments/emails";
 import {
   WORKSHOP_CURRENCY,
   WORKSHOP_DESCRIPTION,
@@ -116,12 +120,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       workflows: workflows ? escapeHtml(workflows).replace(/\n/g, "<br>") : "",
     };
 
+    const notification = renderEmail(safe);
     const { data, error: sendError } = await resend.emails.send({
       from: FROM,
       to: TO,
       replyTo: email,
       subject: `New workshop signup -- ${name}`,
-      html: renderEmail(safe),
+      html: notification,
+      text: htmlToText(notification),
     });
 
     if (sendError) {
@@ -179,6 +185,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       replyTo: TO,
       subject: confirmation.subject,
       html: confirmation.html,
+      text: confirmation.text,
     });
 
     if (confirmError) {

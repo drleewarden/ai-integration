@@ -1,9 +1,31 @@
 import {
   formatAmount,
+  htmlToText,
   renderPaymentRequestEmail,
   renderPaymentConfirmationEmail,
   renderPaymentAlertEmail,
 } from "../emails";
+
+describe("htmlToText", () => {
+  it("keeps link targets so URLs survive in the text part", () => {
+    expect(htmlToText('<p><a href="https://x.test/pay/1">Pay securely</a></p>'))
+      .toBe("Pay securely (https://x.test/pay/1)");
+  });
+  it("turns list items into dashes", () => {
+    expect(htmlToText("<ul><li>One</li><li>Two</li></ul>")).toBe("- One\n- Two");
+  });
+  it("strips tags and drops head/script content", () => {
+    const html = "<head><title>T</title></head><body><p>Hi</p></body>";
+    const text = htmlToText(html);
+    expect(text).toBe("Hi");
+    expect(text).not.toContain("<");
+  });
+  it("decodes entities without re-creating markup", () => {
+    // &amp;lt; must stay the literal text "&lt;", never become a tag.
+    expect(htmlToText("<p>&amp;lt;b&amp;gt;</p>")).toBe("&lt;b&gt;");
+    expect(htmlToText("<p>Tom &amp; Jerry&#39;s</p>")).toBe("Tom & Jerry's");
+  });
+});
 
 describe("formatAmount", () => {
   it("formats cents as dollars with currency code", () => {
@@ -28,9 +50,21 @@ describe("renderPaymentRequestEmail", () => {
     expect(msg.html).toContain("https://www.creative-milk.com.au/pay/abc-123");
     expect(msg.html).toContain("$450.00 AUD");
   });
+  it("ships a text/plain alternative carrying the pay URL", () => {
+    // HTML-only mail is a spam-filter signal, so the text part must be real
+    // content, not a stub, and must keep the link the email exists to deliver.
+    expect(msg.text).toContain("https://www.creative-milk.com.au/pay/abc-123");
+    expect(msg.text).toContain("$450.00 AUD");
+    expect(msg.text).toContain("What we'll cover");
+    expect(msg.text.length).toBeGreaterThan(500);
+    // No markup survives: no tags, no inline styles, no entities.
+    expect(msg.text).not.toMatch(/<\/?(p|div|a|ul|li|table|td|tr|strong)\b/i);
+    expect(msg.text).not.toContain("style=");
+    expect(msg.text).not.toMatch(/&(amp|lt|gt|quot|#39|nbsp);/);
+  });
   it("includes the workshop preparation details and polished subject", () => {
     expect(msg.subject).toBe(
-      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      "Jane, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
     );
     expect(msg.html).toContain("What we'll cover");
     expect(msg.html).toContain("What to bring");
@@ -52,6 +86,41 @@ describe("renderPaymentRequestEmail", () => {
   it("does not use em dashes", () => {
     expect(msg.subject).not.toContain("—");
     expect(msg.html).not.toContain("—");
+  });
+
+  describe("personalised subject", () => {
+    const subjectFor = (name: string) =>
+      renderPaymentRequestEmail({
+        name,
+        description: "Workshop",
+        amount: "$35.00 AUD",
+        payUrl: "https://x.test/pay/1",
+      }).subject;
+
+    it("leads with the first name", () => {
+      expect(subjectFor("Jane Doe")).toBe(
+        "Jane, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+    });
+    it("strips CR/LF so a name cannot inject a header", () => {
+      const subject = subjectFor("Jane\r\nBcc: attacker@evil.test");
+      expect(subject).not.toMatch(/[\r\n]/);
+      expect(subject).not.toContain("Bcc:");
+      expect(subject.startsWith("Jane,")).toBe(true);
+    });
+    it("caps a pathological name", () => {
+      const subject = subjectFor("a".repeat(500));
+      expect(subject.startsWith("a".repeat(40) + ",")).toBe(true);
+      expect(subject).toContain("your AI Automation Workshop");
+    });
+    it("falls back to the impersonal subject when the name is unusable", () => {
+      expect(subjectFor("   ")).toBe(
+        "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+      expect(subjectFor("\r\n")).toBe(
+        "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      );
+    });
   });
 
   describe("without a payUrl", () => {

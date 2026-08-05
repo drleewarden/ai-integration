@@ -71,7 +71,7 @@ describe("/api/workshop-signup", () => {
     const reply = mockSend.mock.calls[1][0];
     expect(reply.to).toBe("jane@example.com");
     expect(reply.subject).toBe(
-      "Your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
+      "Jane, your AI Automation Workshop: how to prepare (7 Aug, 3–5 PM)",
     );
     expect(reply.html).toContain("What we'll cover");
     expect(reply.html).toContain("Claude or ChatGPT: which one?");
