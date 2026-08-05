@@ -157,7 +157,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 68,
+          height: 116,
         }}
       >
         <a
@@ -165,7 +165,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           aria-label="Creative Milk -- home"
           style={{ display: "inline-flex" }}
         >
-          <CMWordmark variant="cream-on-ink" markSize={28} />
+          <CMWordmark variant="cream-on-ink" markSize={72} />
         </a>
 
         <div
@@ -366,7 +366,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           className="animate-fadeIn"
           style={{
             position: "fixed",
-            inset: "68px 0 0 0",
+            inset: "116px 0 0 0",
             background: "var(--midnight-deep)",
             padding: "2rem var(--container-pad)",
             display: "flex",

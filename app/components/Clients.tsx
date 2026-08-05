@@ -12,12 +12,6 @@ type Client = {
 
 const CLIENTS: Client[] = [
   {
-    name: "Xplor Technologies",
-    shortName: "xplor",
-    detail: "Software · Payments",
-    logoSrc: "/images/clients/xplor.svg",
-  },
-  {
     name: "Woolpert",
     shortName: "WOOLPERT",
     detail: "Architecture · Engineering",
