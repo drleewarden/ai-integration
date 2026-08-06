@@ -37,7 +37,7 @@ export default function Hero() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          paddingTop: "clamp(7rem, 14vh, 10rem)",
+          paddingTop: "clamp(2rem, 5vh, 3rem)",
           paddingBottom: "clamp(2rem, 4vh, 3rem)",
           width: "100%",
         }}

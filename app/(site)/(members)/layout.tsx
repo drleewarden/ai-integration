@@ -16,7 +16,9 @@ export default function MembersLayout({
         Skip to content
       </a>
       <Nav forceDark />
-      <main id="main">{children}</main>
+      <main id="main" style={{ paddingTop: "var(--site-nav-height)" }}>
+        {children}
+      </main>
       <Footer />
     </>
   );
