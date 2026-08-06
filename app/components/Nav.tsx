@@ -158,7 +158,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          height: 116,
+          height: "var(--site-nav-height)",
         }}
       >
         <a

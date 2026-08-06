@@ -20,6 +20,7 @@ export default function Hero() {
         background: "var(--midnight-ink)",
         color: "var(--warm-cream)",
         minHeight: "100svh",
+        paddingTop: "var(--site-nav-height)",
         display: "grid",
         gridTemplateRows: "1fr auto",
         overflow: "hidden",
