@@ -26,10 +26,11 @@ export function GET(): Response {
 Key facts:
 - Location: Level 7, 80 Dorcas Street, South Melbourne VIC 3205, Australia (works with businesses Australia-wide, remote-friendly)
 - Contact: contact@creative-milk.com.au
-- Engagement model: three phases, each stands alone
-  - Phase 1 — Discovery Sprint: AUD $5K–$15K, 1–2 weeks. Process audit, scoped system design, agreed success metrics, go/no-go recommendation, fixed-price Phase 2 proposal. No obligation to proceed.
-  - Phase 2 — Build & Integrate: AUD $30K–$120K, 4–6 weeks. Production AI system built into your existing stack; change management and team training included as standard; full IP transfer on completion; 30-day post-launch support.
-  - Phase 3 — Managed Partnership: AUD $5K–$15K/month, ongoing and optional. Monitoring, optimisation, monthly reporting, strategic advisory.
+- Engagement model: four phases, with two standalone entry points
+  - Phase 1 — AI Tools Assessment: AUD $2K, 3 days. Maps recurring work to practical tools and systems, with a written four-day start plan. If it does not identify at least five hours per week to reclaim, the fee is returned.
+  - Phase 2 — Discovery Sprint: AUD $5K–$15K, 1–2 weeks. Process audit, scoped system design, agreed success metrics, go/no-go recommendation, fixed-price Phase 3 proposal. No obligation to proceed.
+  - Phase 3 — Build & Integrate: AUD $30K–$120K, 4–6 weeks. Production AI system built into your existing stack; change management and team training included as standard; full IP transfer on completion; 30-day post-launch support.
+  - Phase 4 — Managed Partnership: AUD $5K–$15K/month, ongoing and optional. Monitoring, optimisation, monthly reporting, strategic advisory.
 - Pricing is published openly; all prices in AUD
 - Clients own everything: code, documentation, and models transfer on completion
 
@@ -37,7 +38,7 @@ Key facts:
 
 - [Services](${BASE_URL}/services): The three-phase engagement model in detail, deliverables per phase
 - [What we build](${BASE_URL}/what-we-build): Types of AI systems delivered (automation, custom tools, integrations)
-- [Pricing](${BASE_URL}/pricing): Published pricing for all three phases with what moves the price within each range
+- [Pricing](${BASE_URL}/pricing): Published pricing for all four phases, including the AI Tools Assessment guarantee and what moves the price within each range
 - [Process](${BASE_URL}/process): How an engagement runs end to end
 - [Work](${BASE_URL}/work): Case studies and past builds
 - [For professional services firms](${BASE_URL}/for/professional-services): Industry-specific overview
