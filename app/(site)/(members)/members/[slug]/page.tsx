@@ -5,6 +5,7 @@ import { itemBySlug } from "@/lib/members/items";
 import { canAccess } from "@/lib/members/access";
 import { getMemberProfile } from "@/lib/supabase/auth-server";
 import LockedPreview from "@/app/components/members/LockedPreview";
+import PromptCopyEnhancer from "@/app/components/members/PromptCopyEnhancer";
 import { TOOL_COMPONENTS } from "@/app/components/members/tools";
 import "./members-article.css";
 
@@ -79,10 +80,14 @@ export default async function MemberItemPage({
           return <Tool />;
         })()
       ) : (
-        <div
-          className="members-article"
-          dangerouslySetInnerHTML={{ __html: item.html }}
-        />
+        <>
+          <div
+            id={`members-guide-${item.slug}`}
+            className="members-article"
+            dangerouslySetInnerHTML={{ __html: item.html }}
+          />
+          <PromptCopyEnhancer rootId={`members-guide-${item.slug}`} />
+        </>
       )}
         </div>
       </div>

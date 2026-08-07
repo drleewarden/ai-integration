@@ -1,5 +1,83 @@
 import type { GuideItem } from "@/lib/members/items";
 
+function escapePrompt(prompt: string): string {
+  return prompt
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function promptBlock(prompt: string): string {
+  return `
+    <div class="members-prompt" data-copy-prompt>
+      <div class="members-prompt-bar">
+        <span>Copy-ready prompt</span>
+        <button type="button" data-copy-prompt-button>Copy prompt</button>
+      </div>
+      <pre><code>${escapePrompt(prompt)}</code></pre>
+      <span class="members-prompt-status" data-copy-prompt-status aria-live="polite"></span>
+    </div>
+  `;
+}
+
+const grillMePrompt = `Help me safely install and run Matt Pocock’s Grill Me skill from https://github.com/mattpocock/skills.
+
+First, open and review the source for both skills before installing anything:
+
+1. skills/productivity/grill-me/SKILL.md
+2. skills/productivity/grilling/SKILL.md
+
+Explain in plain English what each skill will do, where it will be installed and whether it requests permissions or can modify files. Wait for my approval before running installation commands.
+
+After I approve, check that Node.js and npm are available. Install only these two skills from their public source using the supported skill installer. If a terminal command is required, use:
+
+npx skills add https://github.com/mattpocock/skills --skill grill-me
+npx skills add https://github.com/mattpocock/skills --skill grilling
+
+Show me the installation result. Verify that both grill-me and grilling are discoverable by my assistant. If my assistant needs a new turn, restart or new session before detecting installed skills, tell me exactly what to do and stop until I confirm it is ready. Do not use a different repository or install unrelated skills.
+
+Once both skills are available, run grill-me on me with this objective:
+
+“Help me identify the best first AI workflow for my own work. Interview me about what I do, the tasks I repeat, where time is lost, what frustrates customers or colleagues, what information I handle, what must remain human, and what a useful result would look like. Challenge vague answers and unsupported assumptions. For every question, give me your recommended answer or an example before asking me to decide.”
+
+Ask only one question at a time and wait for my answer. Explore each important branch before moving on. Do not build or automate anything during the interview. When we agree that the interview is complete, give me:
+
+1. My three strongest AI workflow opportunities, ranked by value, feasibility and risk.
+2. The single workflow you recommend I test first, with your reasoning.
+3. The current baseline I should measure before changing the workflow.
+4. A small first experiment I can complete within seven days.
+5. The main privacy, quality and human-review safeguards I need.
+6. The unanswered questions or assumptions that still need checking.`;
+
+const dailyEmailPrompt = `Create a scheduled task named daily-inbox-review that runs every day at 10:00 am in my local timezone.
+
+On each run, use my connected email service to review every inbox email received since the previous successful run, plus older unread messages and unresolved messages that still require action. Do not scan Spam, Trash, deleted items or my full historical mailbox unless I explicitly approve it.
+
+For each relevant email:
+
+1. Classify it as urgent, action required, waiting, informational, newsletter, receipt or suspected spam.
+2. Extract the sender, subject, received time, requested action, deadline and a concise plain-English summary.
+3. Identify any risk, missing information or commitment I should review.
+4. For messages that need a response, prepare a concise reply in professional Australian English. Match the tone of the sender while remaining clear and warm. Write naturally, avoid generic AI language and never use em dashes.
+
+Never send an email automatically. Save replies as drafts when the email connector supports drafts. Otherwise, include the complete proposed reply in the report for my approval. Never invent facts, prices, availability, deadlines, attachments or commitments. Flag uncertainty and sensitive matters for manual review. Do not draft replies to newsletters, automated notifications, receipts or suspected spam.
+
+Before saving any draft, run a final AI-slop check. Remove every em dash and rewrite the sentence using a comma, colon, semicolon, parentheses or a full stop. Remove generic openings such as “I hope this email finds you well,” unnecessary summaries of the sender’s message, repetitive conclusions, excessive enthusiasm, vague filler, inflated claims, robotic transitions, needless headings and phrases such as “delve,” “leverage,” “game changer,” “seamless,” “robust,” “in today’s fast-paced world” or “please do not hesitate.” Vary sentence length, use natural contractions where appropriate and make the reply sound like a capable person wrote it specifically for that recipient. Keep useful detail, but delete anything that does not help answer the message. Read the finished draft once more and rewrite any line that still sounds templated or generated by AI.
+
+Create or replace a standalone HTML file named daily-inbox-report.html in the current workspace. Match the Creative Milk interface: warm cream page background, midnight ink header and text, liquid gold accents, Syne-style sans-serif typography, generous spacing, thin borders and accessible contrast. Do not use em dashes.
+
+The report must include:
+
+1. A summary showing the run time, messages reviewed, replies drafted and urgent items.
+2. An Urgent and Action Required section first.
+3. A card for each relevant email with its category, sender, subject, summary, deadline and proposed reply.
+4. Separate Waiting, Informational and Skipped sections.
+5. A clear notice that all replies require human approval before sending.
+
+Use semantic HTML and responsive CSS. Escape all email content before inserting it into HTML so message text cannot inject scripts or markup. Do not load remote scripts, tracking pixels, external images or email attachments. Preserve the previous report if the email service is unavailable, and show the error and recovery steps instead of replacing it with an empty report.
+
+A run is successful only when the inbox review is complete, every proposed reply is saved as a draft or included in the report, the HTML file opens correctly on desktop and mobile, and no email has been sent.`;
+
 const item: GuideItem = {
   slug: "elwood-workshop",
   title: "Elwood Workshop",
@@ -27,57 +105,11 @@ const item: GuideItem = {
 
     <h3>Prompt: install Grill Me and use it on yourself</h3>
     <p>This exercise helps you find the right problem before you build anything. Paste the prompt below into Codex, Claude Code or another assistant that supports agent skills. It will guide you through reviewing and installing Matt Pocock’s <a href="https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md" target="_blank" rel="noreferrer">Grill Me skill</a>, then use it to interview you about your own work.</p>
-    <blockquote>
-      <p><strong>Help me safely install and run Matt Pocock’s Grill Me skill from https://github.com/mattpocock/skills.</strong></p>
-      <p>First, open and review the source for both skills before installing anything:</p>
-      <ol>
-        <li>skills/productivity/grill-me/SKILL.md</li>
-        <li>skills/productivity/grilling/SKILL.md</li>
-      </ol>
-      <p>Explain in plain English what each skill will do, where it will be installed and whether it requests permissions or can modify files. Wait for my approval before running installation commands.</p>
-      <p>After I approve, check that Node.js and npm are available. Install only these two skills from their public source using the supported skill installer. If a terminal command is required, use:</p>
-      <p><code>npx skills add https://github.com/mattpocock/skills --skill grill-me</code></p>
-      <p><code>npx skills add https://github.com/mattpocock/skills --skill grilling</code></p>
-      <p>Show me the installation result. Verify that both <strong>grill-me</strong> and <strong>grilling</strong> are discoverable by my assistant. If my assistant needs a new turn, restart or new session before detecting installed skills, tell me exactly what to do and stop until I confirm it is ready. Do not use a different repository or install unrelated skills.</p>
-      <p>Once both skills are available, run <strong>grill-me</strong> on me with this objective:</p>
-      <p>“Help me identify the best first AI workflow for my own work. Interview me about what I do, the tasks I repeat, where time is lost, what frustrates customers or colleagues, what information I handle, what must remain human, and what a useful result would look like. Challenge vague answers and unsupported assumptions. For every question, give me your recommended answer or an example before asking me to decide.”</p>
-      <p>Ask only one question at a time and wait for my answer. Explore each important branch before moving on. Do not build or automate anything during the interview. When we agree that the interview is complete, give me:</p>
-      <ol>
-        <li>My three strongest AI workflow opportunities, ranked by value, feasibility and risk.</li>
-        <li>The single workflow you recommend I test first, with your reasoning.</li>
-        <li>The current baseline I should measure before changing the workflow.</li>
-        <li>A small first experiment I can complete within seven days.</li>
-        <li>The main privacy, quality and human-review safeguards I need.</li>
-        <li>The unanswered questions or assumptions that still need checking.</li>
-      </ol>
-    </blockquote>
+    ${promptBlock(grillMePrompt)}
 
     <h3>Prompt: build a daily email workflow</h3>
     <p>Paste the prompt below into an AI assistant that supports scheduled tasks and has permission to access your email. It will create a daily 10:00 am workflow that reviews your inbox, prepares replies for approval and produces a branded HTML report.</p>
-    <blockquote>
-      <p><strong>Create a scheduled task named daily-inbox-review that runs every day at 10:00 am in my local timezone.</strong></p>
-      <p>On each run, use my connected email service to review every inbox email received since the previous successful run, plus older unread messages and unresolved messages that still require action. Do not scan Spam, Trash, deleted items or my full historical mailbox unless I explicitly approve it.</p>
-      <p>For each relevant email:</p>
-      <ol>
-        <li>Classify it as urgent, action required, waiting, informational, newsletter, receipt or suspected spam.</li>
-        <li>Extract the sender, subject, received time, requested action, deadline and a concise plain-English summary.</li>
-        <li>Identify any risk, missing information or commitment I should review.</li>
-        <li>For messages that need a response, prepare a concise reply in professional Australian English. Match the tone of the sender while remaining clear and warm. Write naturally, avoid generic AI language and never use em dashes.</li>
-      </ol>
-      <p>Never send an email automatically. Save replies as drafts when the email connector supports drafts. Otherwise, include the complete proposed reply in the report for my approval. Never invent facts, prices, availability, deadlines, attachments or commitments. Flag uncertainty and sensitive matters for manual review. Do not draft replies to newsletters, automated notifications, receipts or suspected spam.</p>
-      <p>Before saving any draft, run a final AI-slop check. Remove every em dash and rewrite the sentence using a comma, colon, semicolon, parentheses or a full stop. Remove generic openings such as “I hope this email finds you well,” unnecessary summaries of the sender’s message, repetitive conclusions, excessive enthusiasm, vague filler, inflated claims, robotic transitions, needless headings and phrases such as “delve,” “leverage,” “game changer,” “seamless,” “robust,” “in today’s fast-paced world” or “please do not hesitate.” Vary sentence length, use natural contractions where appropriate and make the reply sound like a capable person wrote it specifically for that recipient. Keep useful detail, but delete anything that does not help answer the message. Read the finished draft once more and rewrite any line that still sounds templated or generated by AI.</p>
-      <p>Create or replace a standalone HTML file named <strong>daily-inbox-report.html</strong> in the current workspace. Match the Creative Milk interface: warm cream page background, midnight ink header and text, liquid gold accents, Syne-style sans-serif typography, generous spacing, thin borders and accessible contrast. Do not use em dashes.</p>
-      <p>The report must include:</p>
-      <ol>
-        <li>A summary showing the run time, messages reviewed, replies drafted and urgent items.</li>
-        <li>An Urgent and Action Required section first.</li>
-        <li>A card for each relevant email with its category, sender, subject, summary, deadline and proposed reply.</li>
-        <li>Separate Waiting, Informational and Skipped sections.</li>
-        <li>A clear notice that all replies require human approval before sending.</li>
-      </ol>
-      <p>Use semantic HTML and responsive CSS. Escape all email content before inserting it into HTML so message text cannot inject scripts or markup. Do not load remote scripts, tracking pixels, external images or email attachments. Preserve the previous report if the email service is unavailable, and show the error and recovery steps instead of replacing it with an empty report.</p>
-      <p>A run is successful only when the inbox review is complete, every proposed reply is saved as a draft or included in the report, the HTML file opens correctly on desktop and mobile, and no email has been sent.</p>
-    </blockquote>
+    ${promptBlock(dailyEmailPrompt)}
 
     <h3>Measuring impact</h3>
     <p>We’ll cover what to track in week 1, week 4 and week 12. Before you begin, record a simple baseline: how long the task takes now, how often it happens, who does it, what their time costs, and how much rework or delay it creates.</p>

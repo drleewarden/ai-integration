@@ -29,3 +29,65 @@
 .members-article a:hover {
   color: var(--liquid-gold);
 }
+
+.members-prompt {
+  background: var(--midnight-ink);
+  color: var(--warm-cream);
+  margin: 1rem 0 2rem;
+  position: relative;
+}
+
+.members-prompt-bar {
+  align-items: center;
+  border-bottom: 1px solid rgba(245, 240, 232, 0.16);
+  display: flex;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+}
+
+.members-prompt-bar span {
+  color: rgba(245, 240, 232, 0.72);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.members-prompt-bar button {
+  border: 1px solid var(--liquid-gold);
+  color: var(--warm-cream);
+  font-size: 0.75rem;
+  min-height: 44px;
+  padding: 0 0.9rem;
+}
+
+.members-prompt-bar button:hover {
+  background: var(--liquid-gold);
+  color: var(--midnight-ink);
+}
+
+.members-prompt pre {
+  margin: 0;
+  max-height: 34rem;
+  overflow: auto;
+  padding: 1.25rem;
+  white-space: pre-wrap;
+}
+
+.members-prompt code {
+  color: inherit;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.members-prompt-status {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
