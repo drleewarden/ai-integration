@@ -154,6 +154,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
         .insert({
           name,
           email,
+          business_type: businessType,
+          workflows: workflows || null,
           amount_cents: WORKSHOP_SEAT_PRICE_CENTS,
           currency: WORKSHOP_CURRENCY,
           description: WORKSHOP_DESCRIPTION,
