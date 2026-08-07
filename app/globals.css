@@ -167,6 +167,10 @@ textarea {
   padding-block: clamp(3rem, 5vw, 4.5rem);
 }
 
+.members-auth-section {
+  padding-top: calc(var(--site-nav-height) + clamp(4rem, 8vw, 7rem));
+}
+
 .rule-top {
   border-top: 1px solid var(--rule);
 }

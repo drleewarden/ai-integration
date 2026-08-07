@@ -92,6 +92,10 @@ Required for production:
 
 ## Code Patterns
 
+### Writing Style
+
+- Never use em dashes in website copy, documentation, comments, or generated content. Use commas, colons, semicolons, parentheses, or separate sentences instead.
+
 ### Path Aliases
 
 TypeScript is configured with `@/*` path alias mapping to project root:

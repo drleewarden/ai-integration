@@ -2,7 +2,30 @@
   font-family: var(--font-display, serif);
   margin: 2rem 0 0.75rem;
 }
+.members-article h3 {
+  color: var(--midnight-ink);
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 1.5rem 0 0.4rem;
+}
 .members-article p {
   line-height: 1.7;
   margin: 0 0 1rem;
+}
+.members-article ul {
+  margin: 0 0 1.5rem;
+  padding-left: 1.25rem;
+}
+.members-article li {
+  line-height: 1.7;
+  margin-bottom: 0.5rem;
+}
+.members-article a {
+  border-bottom: 1px solid var(--liquid-gold);
+  color: var(--midnight-ink);
+  text-decoration: none;
+}
+.members-article a:hover {
+  color: var(--liquid-gold);
 }
