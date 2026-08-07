@@ -31,6 +31,16 @@
   padding: 0;
 }
 
+.workshop-signups-notice {
+  background: var(--gold-pale);
+  border: 1px solid var(--liquid-gold);
+  color: var(--midnight-ink);
+  line-height: 1.6;
+  margin: 0 auto 1.25rem;
+  max-width: 960px;
+  padding: 1rem 1.25rem;
+}
+
 .workshop-signup-record {
   border: 1px solid var(--rule);
   padding: clamp(1.25rem, 3vw, 2rem);

@@ -38,7 +38,8 @@ export default async function WorkshopSignupsAdminPage() {
   const allowlist = parseAdminEmails(process.env.ADMIN_EMAILS);
   if (!isAdminEmail(user?.email, allowlist)) notFound();
 
-  const { data, error } = await getServiceSupabase()
+  const service = getServiceSupabase();
+  const detailedResult = await service
     .from("workshop_payments")
     .select(
       "id, created_at, name, email, business_type, workflows, amount_cents, currency, status, paid_at",
@@ -47,8 +48,37 @@ export default async function WorkshopSignupsAdminPage() {
     .order("created_at", { ascending: false })
     .limit(100);
 
-  if (error) console.error("[admin/workshop-signups] list failed:", error);
-  const rows = (data ?? []) as WorkshopSignupRow[];
+  const migrationPending = detailedResult.error?.code === "42703";
+  let loadError = migrationPending ? null : detailedResult.error;
+  let rows = (detailedResult.data ?? []) as WorkshopSignupRow[];
+
+  if (migrationPending) {
+    const fallbackResult = await service
+      .from("workshop_payments")
+      .select(
+        "id, created_at, name, email, amount_cents, currency, status, paid_at",
+      )
+      .eq("created_by", "workshop-signup")
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    loadError = fallbackResult.error;
+    rows = (fallbackResult.data ?? []).map((row) => ({
+      ...row,
+      business_type: null,
+      workflows: null,
+    })) as WorkshopSignupRow[];
+  }
+
+  if (loadError) {
+    const { code, message, details, hint } = loadError;
+    console.warn("[admin/workshop-signups] list failed:", {
+      code,
+      message,
+      details,
+      hint,
+    });
+  }
 
   return (
     <section className="section workshop-signups-admin">
@@ -66,7 +96,15 @@ export default async function WorkshopSignupsAdminPage() {
           </Link>
         </header>
 
-        {error ? (
+        {migrationPending && !loadError && (
+          <div className="workshop-signups-notice" role="status">
+            <strong>Database update required.</strong> Existing signup and
+            payment details are shown below. Apply migration 0005 to start
+            capturing business type and workflow notes.
+          </div>
+        )}
+
+        {loadError ? (
           <div className="workshop-signups-empty" role="alert">
             <h2>Signup details are unavailable</h2>
             <p>
