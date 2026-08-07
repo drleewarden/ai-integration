@@ -26,6 +26,7 @@ describe("members content registry", () => {
 
   it("itemBySlug finds items and misses unknowns", () => {
     expect(itemBySlug("ai-policy-template")?.type).toBe("download");
+    expect(itemBySlug("elwood-workshop")?.type).toBe("guide");
     expect(itemBySlug("nope")).toBeUndefined();
   });
 });

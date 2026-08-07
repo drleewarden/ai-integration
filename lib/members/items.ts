@@ -34,6 +34,7 @@ import reviewHealthCheck from "@/content/members/review-health-check";
 import gettingPaidAudit from "@/content/members/getting-paid-audit";
 import quoteTurnaroundAudit from "@/content/members/quote-turnaround-audit";
 import securityHeadersAudit from "@/content/members/security-headers-audit";
+import elwoodWorkshop from "@/content/members/elwood-workshop";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -85,6 +86,7 @@ export interface GuideItem extends MemberItemBase {
 export type MemberItem = DownloadItem | ToolItem | GuideItem;
 
 export const items: MemberItem[] = [
+  elwoodWorkshop,
   aiNativeReadiness,
   aiPolicyTemplate,
   roiQuickCheck,

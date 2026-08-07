@@ -14,7 +14,7 @@ export default async function SignupPage({
 }) {
   const { next } = await searchParams;
   return (
-    <section className="section">
+    <section className="section members-auth-section">
       <div className="container">
         <div style={{ maxWidth: 420, marginInline: "auto" }}>
           <p className="eyebrow" style={{ marginBottom: "1.5rem" }}>
