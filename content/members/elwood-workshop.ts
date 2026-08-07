@@ -25,6 +25,34 @@ const item: GuideItem = {
     <h3>Building a workflow live</h3>
     <p>We’ll build a real AI-assisted workflow from scratch in the room. The example will be chosen on the day based on what the group needs most, so you can see the decisions, setup and refinement process, not just the finished result.</p>
 
+    <h3>Prompt: install Grill Me and use it on yourself</h3>
+    <p>This exercise helps you find the right problem before you build anything. Paste the prompt below into Codex, Claude Code or another assistant that supports agent skills. It will guide you through reviewing and installing Matt Pocock’s <a href="https://github.com/mattpocock/skills/blob/main/skills/productivity/grill-me/SKILL.md" target="_blank" rel="noreferrer">Grill Me skill</a>, then use it to interview you about your own work.</p>
+    <blockquote>
+      <p><strong>Help me safely install and run Matt Pocock’s Grill Me skill from https://github.com/mattpocock/skills.</strong></p>
+      <p>First, open and review the source for both skills before installing anything:</p>
+      <ol>
+        <li>skills/productivity/grill-me/SKILL.md</li>
+        <li>skills/productivity/grilling/SKILL.md</li>
+      </ol>
+      <p>Explain in plain English what each skill will do, where it will be installed and whether it requests permissions or can modify files. Wait for my approval before running installation commands.</p>
+      <p>After I approve, check that Node.js and npm are available. Install only these two skills from their public source using the supported skill installer. If a terminal command is required, use:</p>
+      <p><code>npx skills add https://github.com/mattpocock/skills --skill grill-me</code></p>
+      <p><code>npx skills add https://github.com/mattpocock/skills --skill grilling</code></p>
+      <p>Show me the installation result. Verify that both <strong>grill-me</strong> and <strong>grilling</strong> are discoverable by my assistant. If my assistant needs a new turn, restart or new session before detecting installed skills, tell me exactly what to do and stop until I confirm it is ready. Do not use a different repository or install unrelated skills.</p>
+      <p>Once both skills are available, run <strong>grill-me</strong> on me with this objective:</p>
+      <p>“Help me identify the best first AI workflow for my own work. Interview me about what I do, the tasks I repeat, where time is lost, what frustrates customers or colleagues, what information I handle, what must remain human, and what a useful result would look like. Challenge vague answers and unsupported assumptions. For every question, give me your recommended answer or an example before asking me to decide.”</p>
+      <p>Ask only one question at a time and wait for my answer. Explore each important branch before moving on. Do not build or automate anything during the interview. When we agree that the interview is complete, give me:</p>
+      <ol>
+        <li>My three strongest AI workflow opportunities, ranked by value, feasibility and risk.</li>
+        <li>The single workflow you recommend I test first, with your reasoning.</li>
+        <li>The current baseline I should measure before changing the workflow.</li>
+        <li>A small first experiment I can complete within seven days.</li>
+        <li>The main privacy, quality and human-review safeguards I need.</li>
+        <li>The unanswered questions or assumptions that still need checking.</li>
+      </ol>
+      <p>Write naturally, avoid generic AI language and never use em dashes.</p>
+    </blockquote>
+
     <h3>Prompt: build a daily email workflow</h3>
     <p>Paste the prompt below into an AI assistant that supports scheduled tasks and has permission to access your email. It will create a daily 10:00 am workflow that reviews your inbox, prepares replies for approval and produces a branded HTML report.</p>
     <blockquote>
