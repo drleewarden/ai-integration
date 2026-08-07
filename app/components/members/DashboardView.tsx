@@ -113,9 +113,17 @@ export default function DashboardView({
         </p>
         <nav className="glass-chip-row" aria-label="Quick actions">
           {isAdmin ? (
-            <Link href="/members/admin/payment-links" className="glass-chip">
-              Payment links <span className="mc-arrow">→</span>
-            </Link>
+            <>
+              <Link
+                href="/members/admin/workshop-signups"
+                className="glass-chip"
+              >
+                Workshop signups <span className="mc-arrow">→</span>
+              </Link>
+              <Link href="/members/admin/payment-links" className="glass-chip">
+                Payment links <span className="mc-arrow">→</span>
+              </Link>
+            </>
           ) : (
             <>
               <Link href="/members/website-health-check" className="glass-chip">

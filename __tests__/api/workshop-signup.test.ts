@@ -20,12 +20,13 @@ jest.mock("resend", () => {
 // The signup route now writes a workshop_payments row, so the service client
 // is stubbed with just the from().insert().select().single() chain it uses.
 const mockSingle = jest.fn();
+const mockInsert = jest.fn().mockReturnValue({
+  select: () => ({ single: mockSingle }),
+});
 jest.mock("../../lib/supabase/server", () => ({
   getServiceSupabase: () => ({
     from: () => ({
-      insert: () => ({
-        select: () => ({ single: mockSingle }),
-      }),
+      insert: mockInsert,
     }),
   }),
 }));
@@ -81,7 +82,19 @@ describe("/api/workshop-signup", () => {
   });
 
   it("charges the server-side seat price and links the new row", async () => {
-    await POST(createRequest({ ...validBody, amount: "1.00" }));
+    await POST(
+      createRequest({
+        ...validBody,
+        amount: "1.00",
+        workflows: "Draft replies to customer enquiries",
+      }),
+    );
+    expect(mockInsert).toHaveBeenCalledWith(
+      expect.objectContaining({
+        business_type: "Cafe",
+        workflows: "Draft replies to customer enquiries",
+      }),
+    );
     const reply = mockSend.mock.calls[1][0];
     expect(reply.html).toContain("$35.00 AUD");
     expect(reply.html).toContain("AI Workshop Elwood");

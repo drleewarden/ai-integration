@@ -1,0 +1,152 @@
+.workshop-signups-admin {
+  min-height: 70vh;
+}
+
+.workshop-signups-header {
+  align-items: end;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin: 0 auto clamp(2.5rem, 5vw, 4rem);
+  max-width: 960px;
+}
+
+.workshop-signups-header h1 {
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  margin: 0 0 1rem;
+}
+
+.workshop-signups-header p {
+  color: var(--slate-mid);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.workshop-signups-list {
+  display: grid;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 0;
+}
+
+.workshop-signups-notice {
+  background: var(--gold-pale);
+  border: 1px solid var(--liquid-gold);
+  color: var(--midnight-ink);
+  line-height: 1.6;
+  margin: 0 auto 1.25rem;
+  max-width: 960px;
+  padding: 1rem 1.25rem;
+}
+
+.workshop-signup-record {
+  border: 1px solid var(--rule);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.workshop-signup-summary {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.workshop-signup-summary h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0 0 0.25rem;
+}
+
+.workshop-signup-summary a {
+  border-bottom: 1px solid var(--liquid-gold);
+}
+
+.workshop-signup-status {
+  border: 1px solid var(--rule-strong);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 0.35rem 0.6rem;
+  text-transform: uppercase;
+}
+
+.workshop-signup-status.paid {
+  background: var(--liquid-gold);
+  border-color: var(--liquid-gold);
+  color: var(--midnight-ink);
+}
+
+.workshop-signup-status.void {
+  opacity: 0.55;
+}
+
+.workshop-signup-facts {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 1.75rem 0;
+}
+
+.workshop-signup-facts div {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.75rem;
+}
+
+.workshop-signup-facts dt,
+.workshop-signup-workflow h3 {
+  color: var(--slate-mid);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  margin: 0 0 0.35rem;
+  text-transform: uppercase;
+}
+
+.workshop-signup-facts dd,
+.workshop-signup-workflow p {
+  margin: 0;
+}
+
+.workshop-signup-workflow {
+  background: var(--warm-cream);
+  padding: 1rem 1.25rem;
+}
+
+.workshop-signup-workflow p {
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.workshop-signups-empty {
+  border-block: 1px solid var(--rule);
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 2rem 0;
+}
+
+.workshop-signups-empty h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+}
+
+.workshop-signups-empty p {
+  color: var(--slate-mid);
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .workshop-signups-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .workshop-signup-facts {
+    grid-template-columns: 1fr;
+  }
+}
