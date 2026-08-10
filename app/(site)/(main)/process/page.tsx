@@ -1,11 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
-import { failureModes, stats, timeline, phase2Deliverables, phase1Deliverables } from "./data";
+import {
+  failureModes,
+  stats,
+  timeline,
+  buildDeliverables,
+  sprintDeliverables,
+  assessmentDeliverables,
+} from "./data";
 
 export const metadata: Metadata = {
   title: "Our AI Implementation Process | Creative Milk",
   description:
-    "How Creative Milk delivers AI systems in 6-8 weeks: Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
+    "How Creative Milk delivers AI systems in 6-8 weeks: AI Tools Assessment, Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
 };
 
 export default function Process() {
@@ -202,7 +209,131 @@ export default function Process() {
             >
               <div>
                 <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                  Phase 01 · 1–2 weeks · AUD $5K–$15K
+                  Phase 01 · 3 days · AUD $2K
+                </p>
+                <h2
+                  className="h-section"
+                  style={{ color: "var(--midnight-ink)" }}
+                >
+                  Find the hours first. Decide what to build later.
+                </h2>
+              </div>
+              <div
+                style={{
+                  backgroundColor: "rgba(15,21,38,0.04)",
+                  padding: "clamp(1.5rem, 2.5vw, 2rem)",
+                  alignSelf: "end",
+                }}
+              >
+                <p
+                  className="body-copy"
+                  style={{ fontStyle: "italic", color: "var(--slate-mid)", marginBottom: "0.75rem" }}
+                >
+                  &quot;We know AI could help. We don&apos;t know where to start.&quot;
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: "0.85rem",
+                    fontWeight: 700,
+                    color: "var(--midnight-ink)",
+                  }}
+                >
+                  Start with three days and $2,000. You&apos;ll know exactly where your time goes
+                  and what removes it -- before you commit to anything bigger.
+                </p>
+              </div>
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "clamp(2rem, 4vw, 4rem)",
+                alignItems: "start",
+              }}
+            >
+              <div
+                className="body-copy"
+                style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
+              >
+                <p style={{ marginBottom: "1rem" }}>
+                  Every business has a week hidden inside it. The AI Tools Assessment finds yours.
+                </p>
+                <p style={{ marginBottom: "1rem" }}>
+                  We spend three days mapping where your team&apos;s time actually goes -- every
+                  recurring task, quantified in hours. Then we match each one to the thing that
+                  removes it: tools you can switch on this week, workflows we can automate in days,
+                  and the larger systems worth building later.
+                </p>
+                <p>
+                  You get it in writing, with the hours and the maths on the page, plus a four-day
+                  start plan you can run without us.{" "}
+                  <strong style={{ color: "var(--midnight-ink)" }}>
+                    If we don&apos;t find you at least five hours a week, you get all $2,000 back.
+                  </strong>
+                </p>
+              </div>
+              <div>
+                <p className="label" style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}>
+                  What you get from the Assessment
+                </p>
+                {assessmentDeliverables.map(([k, v], i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      gap: "1rem",
+                      padding: "0.875rem 0",
+                      borderBottom:
+                        i < assessmentDeliverables.length - 1 ? "1px solid var(--rule)" : "none",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: "0.82rem",
+                        fontWeight: 700,
+                        color: "var(--midnight-ink)",
+                        minWidth: "160px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {k}
+                    </span>
+                    <span
+                      className="body-copy"
+                      style={{ color: "var(--slate-mid)" }}
+                    >
+                      {v}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── Phase 2 ── */}
+        <section
+          className="section"
+          style={{ backgroundColor: "var(--off-white)", borderBottom: "1px solid var(--rule)" }}
+        >
+          <div className="container">
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.2fr 1fr",
+                gap: "clamp(3rem, 6vw, 6rem)",
+                alignItems: "start",
+                marginBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+                paddingBottom: "clamp(2.5rem, 4vw, 3.5rem)",
+                borderBottom: "1px solid var(--rule)",
+              }}
+            >
+              <div>
+                <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
+                  Phase 02 · 1–2 weeks · AUD $5K–$15K
                 </p>
                 <h2
                   className="h-section"
@@ -268,7 +399,7 @@ export default function Process() {
                 <p className="label" style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}>
                   What happens in a Discovery Sprint
                 </p>
-                {phase1Deliverables.map(([k, v], i) => (
+                {sprintDeliverables.map(([k, v], i) => (
                   <div
                     key={i}
                     style={{
@@ -276,7 +407,7 @@ export default function Process() {
                       gap: "1rem",
                       padding: "0.875rem 0",
                       borderBottom:
-                        i < phase1Deliverables.length - 1 ? "1px solid var(--rule)" : "none",
+                        i < sprintDeliverables.length - 1 ? "1px solid var(--rule)" : "none",
                     }}
                   >
                     <span
@@ -304,10 +435,10 @@ export default function Process() {
           </div>
         </section>
 
-        {/* ── Phase 2 ── */}
+        {/* ── Phase 3 ── */}
         <section
           className="section"
-          style={{ backgroundColor: "var(--off-white)", borderBottom: "1px solid var(--rule)" }}
+          style={{ backgroundColor: "var(--warm-cream)", borderBottom: "1px solid var(--rule)" }}
         >
           <div className="container">
             <div
@@ -323,7 +454,7 @@ export default function Process() {
             >
               <div>
                 <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                  Phase 02 · 4–6 weeks · AUD $30K–$120K
+                  Phase 03 · 4–6 weeks · AUD $30K–$120K
                 </p>
                 <h2
                   className="h-section"
@@ -372,7 +503,7 @@ export default function Process() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  Phase 2 is the build. Everything is defined -- the system design, the
+                  Phase 3 is the build. Everything is defined -- the system design, the
                   integrations, the success metrics, the fixed price. We build.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
@@ -384,16 +515,16 @@ export default function Process() {
                   <strong style={{ color: "var(--midnight-ink)" }}>
                     Change management is not optional.
                   </strong>{" "}
-                  Every Phase 2 engagement includes an adoption plan built alongside the system --
+                  Every Phase 3 engagement includes an adoption plan built alongside the system --
                   not retrofitted after -- plus hands-on training sessions with the people who will
                   use the system daily.
                 </p>
               </div>
               <div>
                 <p className="label" style={{ color: "var(--slate-mid)", marginBottom: "1rem" }}>
-                  What's delivered at the end of Phase 2
+                  What's delivered at the end of Phase 3
                 </p>
-                {phase2Deliverables.map(([k, v], i) => (
+                {buildDeliverables.map(([k, v], i) => (
                   <div
                     key={i}
                     style={{
@@ -401,7 +532,7 @@ export default function Process() {
                       gap: "1rem",
                       padding: "0.875rem 0",
                       borderBottom:
-                        i < phase2Deliverables.length - 1 ? "1px solid var(--rule)" : "none",
+                        i < buildDeliverables.length - 1 ? "1px solid var(--rule)" : "none",
                     }}
                   >
                     <span
@@ -429,10 +560,10 @@ export default function Process() {
           </div>
         </section>
 
-        {/* ── Phase 3 ── */}
+        {/* ── Phase 4 ── */}
         <section
           className="section"
-          style={{ backgroundColor: "var(--warm-cream)", borderBottom: "1px solid var(--rule)" }}
+          style={{ backgroundColor: "var(--off-white)", borderBottom: "1px solid var(--rule)" }}
         >
           <div className="container">
             <div
@@ -448,7 +579,7 @@ export default function Process() {
             >
               <div>
                 <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                  Phase 03 · Ongoing · AUD $5K–$15K/month
+                  Phase 04 · Ongoing · AUD $5K–$15K/month
                 </p>
                 <h2
                   className="h-section"
@@ -478,7 +609,7 @@ export default function Process() {
                     color: "var(--midnight-ink)",
                   }}
                 >
-                  You won't be. Phase 2 is designed so your team owns the system. Phase 3 is a
+                  You won't be. Phase 3 is designed so your team owns the system. Phase 4 is a
                   choice, not a dependency. If you cancel, your system keeps running.
                 </p>
               </div>
@@ -502,14 +633,14 @@ export default function Process() {
                   through that period.
                 </p>
                 <p>
-                  This phase is optional. Many clients complete Phase 2 and manage the system
-                  internally. We built it so they can. Phase 3 is for businesses that want a
+                  This phase is optional. Many clients complete Phase 3 and manage the system
+                  internally. We built it so they can. Phase 4 is for businesses that want a
                   strategic AI partner on retainer.
                 </p>
               </div>
               <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                 {[
-                  "Monthly performance review against Phase 1 success metrics",
+                  "Monthly performance review against the Discovery Sprint success metrics",
                   "Continuous model optimisation based on real-world data",
                   "Expansion planning -- where to apply AI next as the first system beds in",
                   "Direct access to Craig and Darryn for questions and strategic decisions",
@@ -588,7 +719,7 @@ export default function Process() {
                 style={{ color: "rgba(245,240,232,0.6)", lineHeight: 1.8 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  That number means something specific. Before every Phase 2 build, we agree a
+                  That number means something specific. Before every Phase 3 build, we agree a
                   measurable target with the client -- a specific metric that defines "it worked."
                   The 95% is the percentage of engagements where that metric was hit.
                 </p>
@@ -740,9 +871,10 @@ export default function Process() {
                 fontSize: "1rem",
               }}
             >
-              Start with a Discovery Sprint. We'll map your problem, assess the opportunity, and
-              give you an honest recommendation -- including if AI isn't the right answer. Fixed
-              price. No surprises. Plain English next steps.
+              Start where it fits. The AI Tools Assessment is three days and $2,000 -- we find you
+              five hours a week or you don't pay. The Discovery Sprint goes deep on one problem and
+              ends with a fixed-price build proposal. Either way: no surprises, plain English next
+              steps.
             </p>
             <div
               style={{
@@ -753,10 +885,10 @@ export default function Process() {
               }}
             >
               <a href="/contact" className="cta cta-gold">
-                Start with a Discovery Sprint <ArrowRight size={16} />
+                Book a call <ArrowRight size={16} />
               </a>
-              <a href="/work" className="cta cta-outline-cream">
-                See the work
+              <a href="/pricing" className="cta cta-outline-cream">
+                See pricing
               </a>
             </div>
           </div>

@@ -196,6 +196,25 @@ export default function About() {
                     explain the system to a client's CFO in five minutes, the brief isn't finished.
                   </p>
                 </div>
+                <p style={{ marginTop: "1.5rem" }}>
+                  <span
+                    className="label"
+                    style={{ color: "var(--slate-mid)", marginRight: "0.75rem" }}
+                  >
+                    Direct
+                  </span>
+                  <a
+                    href="tel:+61426522294"
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.9rem",
+                      color: "var(--midnight-ink)",
+                      borderBottom: "1px solid var(--rule-gold)",
+                    }}
+                  >
+                    0426 522 294
+                  </a>
+                </p>
               </div>
             </div>
 
@@ -231,8 +250,8 @@ export default function About() {
                   style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
                 >
                   <p style={{ marginBottom: "1rem" }}>
-                    Darryn designs and builds the systems. He takes the problem definition from
-                    Phase 1 and turns it into a production system that runs in your stack,
+                    Darryn designs and builds the systems. He takes the problem definition from the
+                    Discovery Sprint and turns it into a production system that runs in your stack,
                     integrates with your tools, and transfers cleanly to your team.
                   </p>
                   <p>
@@ -241,6 +260,25 @@ export default function About() {
                     tooling throughout the build to compress timelines without compromising quality.
                   </p>
                 </div>
+                <p style={{ marginTop: "1.5rem" }}>
+                  <span
+                    className="label"
+                    style={{ color: "var(--slate-mid)", marginRight: "0.75rem" }}
+                  >
+                    Direct
+                  </span>
+                  <a
+                    href="tel:+61455775052"
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: "0.9rem",
+                      color: "var(--midnight-ink)",
+                      borderBottom: "1px solid var(--rule-gold)",
+                    }}
+                  >
+                    0455 775 052
+                  </a>
+                </p>
               </div>
               <div
                 style={{

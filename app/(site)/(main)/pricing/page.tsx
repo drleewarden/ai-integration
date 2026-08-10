@@ -7,7 +7,7 @@ import { PricingSchema, BreadcrumbSchema } from "@/app/components/Schema";
 export const metadata: Metadata = {
   title: "AI Implementation Pricing Australia | Published Rates | Creative Milk",
   description:
-    "Published AI implementation pricing: Discovery Sprint from AUD $5K, Build & Integrate from $30K, Managed Partnership from $5K/month. No hidden fees.",
+    "Published AI implementation pricing: AI Tools Assessment AUD $2K, Discovery Sprint from $5K, Build & Integrate from $30K, Managed Partnership from $5K/month. No hidden fees.",
 };
 
 export default function Pricing() {
@@ -71,8 +71,9 @@ export default function Pricing() {
                 color: "var(--slate-mid)",
               }}
             >
-              Every Creative Milk engagement follows the same three-phase architecture. Each phase
-              can stand alone. Most clients proceed through all three.
+              Every Creative Milk engagement follows the same architecture. Each phase can stand
+              alone, and you can start at whichever one fits the problem. Most clients begin with
+              an assessment or a Discovery Sprint and proceed from there.
             </p>
 
             {phases.map((phase, idx) => (
@@ -151,7 +152,7 @@ export default function Pricing() {
                     >
                       {phase.body}
                     </p>
-                    {idx === 1 && (
+                    {phase.callout && (
                       <p
                         style={{
                           fontFamily: "var(--font-sans)",
@@ -161,7 +162,7 @@ export default function Pricing() {
                           marginBottom: "1rem",
                         }}
                       >
-                        The Phase 2 price is fixed at the end of Phase 1. No surprises.
+                        {phase.callout}
                       </p>
                     )}
                     <div
@@ -174,7 +175,7 @@ export default function Pricing() {
                         className="label"
                         style={{ color: "var(--slate-mid)", marginBottom: "0.5rem" }}
                       >
-                        What affects the price
+                        {phase.noteLabel ?? "What affects the price"}
                       </p>
                       {phase.priceNote.map((note, ni) => (
                         <p
