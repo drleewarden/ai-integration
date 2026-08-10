@@ -146,6 +146,18 @@ export function PricingSchema() {
         position: 1,
         item: {
           '@type': 'Offer',
+          name: 'AI Tools Assessment',
+          price: '2000',
+          priceCurrency: 'AUD',
+          description: 'Three-day assessment. Where your week goes, what AI takes off your plate, and the maths behind it. Five hours a week found or your money back.',
+          seller: { '@id': `${BASE_URL}/#organisation` },
+        },
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        item: {
+          '@type': 'Offer',
           name: 'Discovery Sprint',
           price: '5000',
           priceCurrency: 'AUD',
@@ -155,7 +167,7 @@ export function PricingSchema() {
       },
       {
         '@type': 'ListItem',
-        position: 2,
+        position: 3,
         item: {
           '@type': 'Offer',
           name: 'Build & Integrate',
@@ -167,7 +179,7 @@ export function PricingSchema() {
       },
       {
         '@type': 'ListItem',
-        position: 3,
+        position: 4,
         item: {
           '@type': 'Offer',
           name: 'Managed AI Partnership',
