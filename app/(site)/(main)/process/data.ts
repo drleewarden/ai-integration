@@ -31,17 +31,22 @@ export const timeline = [
   {
     period: "Week 0",
     label: "First call (30 mins)",
-    body: "You describe the problem. We ask questions. We agree whether a Discovery Sprint makes sense. If it does, we send a proposal within 48 hours.",
+    body: "You describe the problem. We ask questions. We agree where to start -- an AI Tools Assessment or a Discovery Sprint. Either way, we send a proposal within 48 hours.",
+  },
+  {
+    period: "Week 0–1",
+    label: "AI Tools Assessment (optional)",
+    body: "Three days. We quantify where your week goes and match every recurring task to the tool, workflow, or system that removes it. You get the hours, the maths, and a four-day start plan -- or your $2,000 back.",
   },
   {
     period: "Weeks 1–2",
     label: "Discovery Sprint",
-    body: "Stakeholder interviews, process mapping, stack audit. We identify the system worth building. We agree the success metric. We deliver the go/no-go and Phase 2 proposal.",
+    body: "Stakeholder interviews, process mapping, stack audit. We identify the system worth building. We agree the success metric. We deliver the go/no-go and Phase 3 proposal.",
   },
   {
     period: "Week 2–3",
     label: "Decision point",
-    body: "You review the Phase 2 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure -- the Discovery Sprint plan is yours regardless.",
+    body: "You review the Phase 3 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure -- the Discovery Sprint plan is yours regardless.",
   },
   {
     period: "Weeks 3–8",
@@ -61,24 +66,33 @@ export const timeline = [
   {
     period: "Month 3+",
     label: "Managed Partnership (optional)",
-    body: "If you want ongoing optimisation and a strategic AI partner, Phase 3 begins. If not, you run the system and we're available if you need us.",
+    body: "If you want ongoing optimisation and a strategic AI partner, Phase 4 begins. If not, you run the system and we're available if you need us.",
   },
 ];
 
-export const phase2Deliverables = [
+export const buildDeliverables = [
   ["Live system", "Running in your stack, connected to your data"],
   ["IP transfer", "You own the code, the model, the documentation"],
   ["Team training", "Your team can use and manage the system independently"],
   ["Documentation", "Plain-English guide for users and your IT team"],
   ["30-day support", "We stay close for the first month after launch"],
-  ["Outcome measurement", "Dashboard or report showing the metrics we agreed in Phase 1"],
+  ["Outcome measurement", "Dashboard or report showing the metrics we agreed in the Discovery Sprint"],
 ];
 
-export const phase1Deliverables = [
+export const sprintDeliverables = [
   ["Stakeholder interviews", "Understand the real problem, not just the stated one"],
   ["Process mapping", "Document current workflows and identify AI leverage points"],
   ["Stack audit", "Assess integration feasibility and surface any blockers"],
   ["Success metric definition", "Agree the measurable outcome we'll target"],
   ["Go/no-go recommendation", "Honest advice -- including if we think AI isn't the right answer"],
-  ["Phase 2 proposal", "Fixed-price, scoped proposal ready to proceed if you choose"],
+  ["Phase 3 proposal", "Fixed-price, scoped proposal ready to proceed if you choose"],
+];
+
+export const assessmentDeliverables = [
+  ["Time audit", "Every recurring task in your week, quantified in hours"],
+  ["Opportunity map", "Each task ranked by impact against effort"],
+  ["Tool matching", "Every task matched to a specific tool or system, with real costs"],
+  ["Four-day start plan", "Ten minutes a day, no technical help needed"],
+  ["The financial case", "Hours back, dollars saved, payback period"],
+  ["Build recommendations", "The larger systems worth doing later, and why"],
 ];
