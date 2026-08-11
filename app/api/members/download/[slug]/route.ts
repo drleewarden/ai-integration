@@ -55,6 +55,21 @@ export async function GET(
     );
   }
 
+  if (item.publicPath) {
+    await recordActivity(await getAuthServerSupabase(), member.user.id, {
+      slug: item.slug,
+      kind: "download",
+    });
+    return NextResponse.redirect(new URL(item.publicPath, req.url), 302);
+  }
+
+  if (!item.storagePath) {
+    return NextResponse.json(
+      { error: "Download unavailable. Please try again." },
+      { status: 500 },
+    );
+  }
+
   const supabase = getServiceSupabase();
   const { data, error } = await supabase.storage
     .from("member-files")
