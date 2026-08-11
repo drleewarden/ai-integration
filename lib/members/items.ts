@@ -35,6 +35,7 @@ import gettingPaidAudit from "@/content/members/getting-paid-audit";
 import quoteTurnaroundAudit from "@/content/members/quote-turnaround-audit";
 import securityHeadersAudit from "@/content/members/security-headers-audit";
 import elwoodWorkshop from "@/content/members/elwood-workshop";
+import fiftyFreeWebsites from "@/content/members/fifty-free-websites";
 
 export type MemberTier = "free" | "pro";
 export type MemberItemType = "download" | "tool" | "guide";
@@ -51,7 +52,11 @@ interface MemberItemBase {
 export interface DownloadItem extends MemberItemBase {
   type: "download";
   /** Object path inside the member-files bucket. */
-  storagePath: string;
+  storagePath?: string;
+  /** A download already shipped with the site rather than stored in Supabase. */
+  publicPath?: string;
+  /** Optional browser-friendly version displayed on the member item page. */
+  previewPath?: string;
   /** Filename suggested to the browser. */
   fileName: string;
 }
@@ -86,6 +91,7 @@ export interface GuideItem extends MemberItemBase {
 export type MemberItem = DownloadItem | ToolItem | GuideItem;
 
 export const items: MemberItem[] = [
+  fiftyFreeWebsites,
   elwoodWorkshop,
   aiNativeReadiness,
   aiPolicyTemplate,

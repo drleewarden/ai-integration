@@ -18,7 +18,9 @@ describe("members content registry", () => {
 
   it("type-specific payloads are present", () => {
     for (const item of items) {
-      if (item.type === "download") expect(item.storagePath.length).toBeGreaterThan(0);
+      if (item.type === "download") {
+        expect(Boolean(item.storagePath || item.publicPath)).toBe(true);
+      }
       if (item.type === "tool") expect(item.componentKey.length).toBeGreaterThan(0);
       if (item.type === "guide") expect(item.html.length).toBeGreaterThan(0);
     }
@@ -26,6 +28,7 @@ describe("members content registry", () => {
 
   it("itemBySlug finds items and misses unknowns", () => {
     expect(itemBySlug("ai-policy-template")?.type).toBe("download");
+    expect(itemBySlug("50-free-websites")?.tier).toBe("free");
     expect(itemBySlug("elwood-workshop")?.type).toBe("guide");
     expect(itemBySlug("nope")).toBeUndefined();
   });

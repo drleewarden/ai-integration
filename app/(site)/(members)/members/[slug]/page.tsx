@@ -67,13 +67,22 @@ export default async function MemberItemPage({
       {!allowed ? (
         <LockedPreview title={item.title} />
       ) : item.type === "download" ? (
-        <a
-          href={`/api/members/download/${item.slug}`}
-          className="cta"
-          style={{ minHeight: 44, display: "inline-block" }}
-        >
-          Download {item.fileName}
-        </a>
+        <div>
+          <a
+            href={`/api/members/download/${item.slug}`}
+            className="cta"
+            style={{ minHeight: 44, display: "inline-block" }}
+          >
+            Download {item.fileName}
+          </a>
+          {item.previewPath && (
+            <iframe
+              src={item.previewPath}
+              title={`${item.title} preview`}
+              className="members-download-preview"
+            />
+          )}
+        </div>
       ) : item.type === "tool" ? (
         (() => {
           const Tool = TOOL_COMPONENTS[item.componentKey];

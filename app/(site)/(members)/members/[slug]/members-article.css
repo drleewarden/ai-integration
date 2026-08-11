@@ -91,3 +91,11 @@
   white-space: nowrap;
   width: 1px;
 }
+.members-download-preview {
+  width: 100%;
+  height: min(78vh, 980px);
+  margin-top: 2rem;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--warm-cream);
+}
