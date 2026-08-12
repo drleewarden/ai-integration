@@ -14,10 +14,10 @@ export default function RoiQuickCheck() {
   const annualCost = Math.round(hoursPerWeek * hourlyValue * people * 46);
   const verdict =
     annualCost >= 15000
-      ? "Strong case — this is exactly the kind of task worth automating first."
+      ? "Strong case. This is exactly the kind of task worth automating first."
       : annualCost >= 5000
-        ? "Worth a look — a light automation could pay for itself inside a year."
-        : "Marginal — batch it or template it before reaching for automation.";
+        ? "Worth a look. A light automation could pay for itself inside a year."
+        : "Marginal. Batch it or template it before reaching for automation.";
 
   const field = (
     label: string,
@@ -52,6 +52,14 @@ export default function RoiQuickCheck() {
         <strong>${annualCost.toLocaleString("en-AU")}</strong>
         <br />
         {verdict}
+      </p>
+      <p>
+        If you&apos;d rather have us build a system that saves you those hours
+        each week, so you can focus on your core business, we&apos;d love to have
+        a chat.{" "}
+        <a href="mailto:contact@creative-milk.com.au?subject=AI%20automation%20enquiry">
+          Just let us know.
+        </a>
       </p>
     </div>
   );
