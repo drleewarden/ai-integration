@@ -10,9 +10,9 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "Creative Milk -- Intelligence that actually works",
+  title: "AI Automation Melbourne | Custom AI Agents | Creative Milk",
   description:
-    "Creative Milk builds custom AI systems for Australian businesses -- scoped around your specific problem, measured by outcomes you can point to.",
+    "Melbourne AI automation company building custom AI agents and workflow automations for Australian businesses. Measured by hours recovered and outcomes delivered.",
 };
 
 export default function CreativeMilkSite() {

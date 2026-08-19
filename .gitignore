@@ -48,6 +48,9 @@ next-env.d.ts
 # project-scoped agent skills (install shared skills globally instead)
 /.agents/
 
+# untrusted Firecrawl research cache
+/.firecrawl/
+
 # local docs / planning files
 /docs/
 

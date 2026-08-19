@@ -20,6 +20,11 @@ const NAV_GROUPS: NavGroup[] = [
         blurb: "The kinds of AI systems we deliver",
       },
       {
+        label: "AI Automation Melbourne",
+        href: "/ai-automation-melbourne",
+        blurb: "AI agents and workflows for growing businesses",
+      },
+      {
         label: "Process",
         href: "/process",
         blurb: "How an engagement actually runs",

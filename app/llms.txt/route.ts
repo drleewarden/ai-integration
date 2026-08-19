@@ -21,7 +21,7 @@ export function GET(): Response {
 
   const body = `# Creative Milk
 
-> Creative Milk is an AI consultancy in South Melbourne, Australia. We build custom AI systems for Australian businesses — scoped around specific problems and measured by outcomes, not deliverables. Founder-led: clients work directly with the two founders, Craig and Darryn.
+> Creative Milk is a Melbourne AI automation and implementation company. We build custom AI agents and agentic workflows for small and mid-sized Australian businesses, scoped around specific problems and measured by outcomes, not deliverables. Founder-led: clients work directly with Craig and Darryn.
 
 Key facts:
 - Location: Level 7, 80 Dorcas Street, South Melbourne VIC 3205, Australia (works with businesses Australia-wide, remote-friendly)
@@ -37,6 +37,7 @@ Key facts:
 
 - [Services](${BASE_URL}/services): The three-phase engagement model in detail, deliverables per phase
 - [What we build](${BASE_URL}/what-we-build): Types of AI systems delivered (automation, custom tools, integrations)
+- [AI automation Melbourne](${BASE_URL}/ai-automation-melbourne): Custom AI agents and multi-step workflow automation for Melbourne small and mid-sized businesses
 - [Pricing](${BASE_URL}/pricing): Published pricing for all three phases with what moves the price within each range
 - [Process](${BASE_URL}/process): How an engagement runs end to end
 - [Work](${BASE_URL}/work): Case studies and past builds
