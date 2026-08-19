@@ -25,6 +25,11 @@ const NAV_GROUPS: NavGroup[] = [
         blurb: "AI agents and workflows for growing businesses",
       },
       {
+        label: "Websites",
+        href: "/websites",
+        blurb: "Strategy, design, and development for business websites",
+      },
+      {
         label: "Process",
         href: "/process",
         blurb: "How an engagement actually runs",

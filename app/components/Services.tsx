@@ -1,4 +1,4 @@
-import { Brain, Zap, Target, Users, ArrowRight } from "lucide-react";
+import { Brain, Zap, Target, Users, Globe2, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 
 type Service = {
@@ -36,6 +36,13 @@ const SERVICES: Service[] = [
     title: "Team Training & Support",
     description:
       "Your team needs to own the outcome. We build capability alongside the system so the results compound after we leave.",
+  },
+  {
+    icon: <Globe2 size={22} strokeWidth={1.4} />,
+    number: "05",
+    title: "Websites",
+    description:
+      "Fast, accessible websites built around a clear business goal. We bring strategy, design, and development together to create a site that earns attention and drives action.",
   },
 ];
 
@@ -98,6 +105,7 @@ export default function Services() {
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
     <article
+      id={service.title === "Websites" ? "websites" : undefined}
       className="service-card"
       style={{
         position: "relative",
