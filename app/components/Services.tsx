@@ -19,9 +19,9 @@ const SERVICES: Service[] = [
   {
     icon: <Zap size={22} strokeWidth={1.4} />,
     number: "02",
-    title: "Custom AI Solutions",
+    title: "AI Agents & Workflow Automation",
     description:
-      "Purpose-built models and systems that solve your actual challenges -- not generic tools retrofitted to your problem.",
+      "Agents that read documents, make decisions within defined rules, update business systems, and send exceptions to your team for approval.",
   },
   {
     icon: <Target size={22} strokeWidth={1.4} />,
@@ -74,8 +74,9 @@ export default function Services() {
             className="body-copy"
             style={{ maxWidth: "44ch", justifySelf: "end" }}
           >
-            Comprehensive AI solutions scoped to your unique business context.
-            We don&apos;t sell tools -- we build systems that run.
+            Custom AI agents, workflow automation, and integrations scoped to
+            your business context. We don&apos;t sell tools. We build systems that
+            run inside your existing stack.
           </p>
         </div>
 

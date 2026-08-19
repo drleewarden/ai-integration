@@ -45,7 +45,7 @@ export default function Hero() {
           className="eyebrow animate-slideDown"
           style={{ color: "var(--liquid-gold)", marginBottom: "2rem" }}
         >
-          AI Solutions for Businesses
+          Melbourne AI Automation &amp; Implementation
         </div>
 
         <h1
@@ -75,8 +75,9 @@ export default function Hero() {
             marginTop: "2rem",
           }}
         >
-          We build AI systems scoped around your actual business problems --
-          and we measure success by outcomes, not deliverables.
+          We build custom AI agents and workflow automations for growing
+          Australian businesses. Every system connects to the tools your team
+          already uses and is measured by outcomes, not deliverables.
         </p>
 
         <div

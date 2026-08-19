@@ -15,7 +15,7 @@ import { posts } from '@/lib/insights/posts'
 const BASE_URL = 'https://www.creative-milk.com.au'
 
 // Last substantive update to the static marketing pages.
-const SITE_UPDATED = new Date('2026-08-01')
+const SITE_UPDATED = new Date('2026-08-13')
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -38,6 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── Geo landing pages ──────────────────────────────────────────
     { url: `${BASE_URL}/ai-consulting-melbourne`, lastModified: new Date('2026-08-01'), changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${BASE_URL}/ai-automation-melbourne`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
 
     // ── Conversion / lead gen ────────────────────────────────────
     { url: `${BASE_URL}/ai-readiness`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
