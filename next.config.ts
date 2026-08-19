@@ -39,6 +39,24 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return {
+      beforeFiles: [
+        {
+          source: "/",
+          has: [
+            {
+              type: "host",
+              value: "websites.creative-milk.com.au",
+            },
+          ],
+          destination: "/websites",
+        },
+      ],
+      afterFiles: [],
+      fallback: [],
+    };
+  },
   async headers() {
     return [
       {
