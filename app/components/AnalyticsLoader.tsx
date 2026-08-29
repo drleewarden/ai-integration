@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Script from "next/script";
 import { CONSENT_CHANGED_EVENT } from "./ConsentBanner";
 
-const GTM_ID = "GTM-WLC8NXHD";
+const GTM_ID = "GTM-Z7VVQ67K";
 
 function hasOptedOut(): boolean {
   try {
