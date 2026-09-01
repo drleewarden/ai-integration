@@ -10,11 +10,11 @@ import type { NextConfig } from "next";
  */
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://capi-automation.s3.us-east-2.amazonaws.com https://www.google-analytics.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://connect.facebook.net https://capi-automation.s3.us-east-2.amazonaws.com https://www.google-analytics.com https://*.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://*.posthog.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.googletagmanager.com https://server-side-tagging-66vw5kt4cq-uc.a.run.app https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net https://*.doubleclick.net",
+  "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.googletagmanager.com https://server-side-tagging-66vw5kt4cq-uc.a.run.app https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net https://*.doubleclick.net https://*.posthog.com",
   "frame-src https://www.googletagmanager.com https://www.facebook.com https://*.doubleclick.net",
   "frame-ancestors 'self'",
   "base-uri 'self'",
@@ -53,10 +53,24 @@ const nextConfig: NextConfig = {
           destination: "/websites",
         },
       ],
-      afterFiles: [],
+      afterFiles: [
+        {
+          source: "/ingest/static/:path*",
+          destination: "https://us-assets.i.posthog.com/static/:path*",
+        },
+        {
+          source: "/ingest/array/:path*",
+          destination: "https://us-assets.i.posthog.com/array/:path*",
+        },
+        {
+          source: "/ingest/:path*",
+          destination: "https://us.i.posthog.com/:path*",
+        },
+      ],
       fallback: [],
     };
   },
+  skipTrailingSlashRedirect: true,
   async headers() {
     return [
       {

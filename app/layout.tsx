@@ -5,6 +5,7 @@ import Analytics from "./components/Analytics";
 import ConsentBanner from "./components/ConsentBanner";
 import BackToTop from "./components/BackToTop";
 import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
+import { PostHogProvider } from "./components/PostHogProvider";
 import "./globals.css";
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -98,7 +99,9 @@ export default function RootLayout({
         <OrganisationSchema />
         <WebsiteSchema />
         <Analytics />
-        {children}
+        <PostHogProvider>
+          {children}
+        </PostHogProvider>
         <BackToTop />
         <ConsentBanner />
       </body>
