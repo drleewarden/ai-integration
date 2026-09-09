@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { faqs, phase1Deliverables, phase2Deliverables, phase3Deliverables, differentiators } from "./data";
 import FAQ from "@/app/components/FAQ";
+import { ServiceSchema } from "@/app/components/Schema";
 
 export const metadata: Metadata = {
   title: "AI Implementation Services Australia | 3-Phase Model | Creative Milk",
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function Services() {
   return (
     <>
+        <ServiceSchema />
 
         {/* ── Hero ── */}
         <section
@@ -46,6 +48,10 @@ export default function Services() {
               We don't hand off after the strategy session. We don't disappear after the build
               ships. One engagement takes you from scoped problem to live system to ongoing
               outcomes -- with a single partner across all three phases.
+            </p>
+            <p className="body-copy" style={{ color: "var(--warm-cream)", marginTop: "1.5rem" }}>
+              Explore our <a href="/ai-automation-melbourne" style={{ textDecoration: "underline" }}>AI automation services</a> or
+              our <a href="/specialised-websites" style={{ textDecoration: "underline" }}>specialised website design and development</a>.
             </p>
           </div>
         </section>

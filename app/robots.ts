@@ -1,25 +1,24 @@
 // app/robots.ts -- served automatically at /robots.txt
 //
-// AI crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.) are listed explicitly
-// so a future change to the wildcard rule can't accidentally de-list the site
-// from AI search engines. Being cited by ChatGPT/Perplexity/Claude is a lead
-// channel for Creative Milk, so these stay allowed.
+// Preserve the existing crawler permissions. Search and model-training
+// permissions are separate; allowing a bot does not guarantee a citation.
 
 import { MetadataRoute } from 'next'
 
-const DISALLOW = ['/api/', '/_next/']
+// Keep CSS, JavaScript and image optimisation accessible for page rendering.
+const DISALLOW = ['/api/']
 
 // AI search / assistant crawlers we explicitly welcome.
 const AI_CRAWLERS = [
-  'GPTBot',            // OpenAI training + search
+  'GPTBot',            // OpenAI model training, independent of search
   'OAI-SearchBot',     // ChatGPT search
   'ChatGPT-User',      // ChatGPT live browsing
   'ClaudeBot',         // Anthropic
   'Claude-User',       // Claude live browsing
   'PerplexityBot',     // Perplexity index
   'Perplexity-User',   // Perplexity live browsing
-  'Google-Extended',   // Gemini / AI Overviews grounding
-  'Applebot-Extended', // Apple Intelligence
+  'Google-Extended',   // Separate from Googlebot's Google Search controls
+  'Applebot-Extended', // Model-training permission
   'Amazonbot',
   'cohere-ai',
   'meta-externalagent',

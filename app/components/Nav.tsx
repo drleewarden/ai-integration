@@ -26,7 +26,7 @@ const NAV_GROUPS: NavGroup[] = [
       },
       {
         label: "Websites",
-        href: "/websites",
+        href: "/specialised-websites",
         blurb: "Strategy, design, and development for business websites",
       },
       {

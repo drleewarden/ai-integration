@@ -103,6 +103,8 @@ export default function Footer() {
           <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
             {[
               ["Services", "/#services"],
+              ["AI automation", "/ai-automation-melbourne"],
+              ["Specialised websites", "/specialised-websites"],
               ["Case studies", "/#work"],
               ["Process", "/#process"],
               ["Pricing", "/pricing"],

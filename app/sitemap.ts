@@ -20,10 +20,11 @@ const SITE_UPDATED = new Date('2026-08-13')
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     // ── Core pages ──────────────────────────────────────────────
-    { url: BASE_URL, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 1.0 },
+    { url: BASE_URL, lastModified: new Date('2026-09-09'), changeFrequency: 'monthly', priority: 1.0 },
+    { url: `${BASE_URL}/specialised-websites`, lastModified: new Date('2026-09-09'), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/about`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/what-we-build`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/services`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE_URL}/services`, lastModified: new Date('2026-09-09'), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/pricing`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE_URL}/process`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/clients`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },

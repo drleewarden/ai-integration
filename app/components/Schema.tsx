@@ -20,7 +20,7 @@ export function OrganisationSchema() {
     url: BASE_URL,
     logo: `${BASE_URL}/icon.png`,
     description:
-      'Creative Milk builds custom AI systems for Australian businesses — scoped around specific problems and measured by outcomes.',
+      'Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Level 7, 80 Dorcas Street',
@@ -34,7 +34,8 @@ export function OrganisationSchema() {
       name: 'Australia',
     },
     sameAs: [
-      // Add LinkedIn, Twitter etc. once confirmed
+      'https://www.facebook.com/Creative.MilkAI',
+      'https://www.instagram.com/creativemilk.ai/',
     ],
     knowsAbout: [
       'Artificial Intelligence',
@@ -46,6 +47,7 @@ export function OrganisationSchema() {
       'Small Business Automation',
       'AI Consulting Melbourne',
       'Custom AI Systems',
+      'Website Design and Development',
       'Machine Learning',
     ],
   }
@@ -59,7 +61,7 @@ export function OrganisationSchema() {
 }
 
 // ── 2. WEBSITE (place in root layout.tsx) ────────────────────────────────────
-// Enables sitelinks search box and establishes the canonical website entity.
+// Establishes the website name and its relationship to the organisation.
 export function WebsiteSchema() {
   const schema = {
     '@context': 'https://schema.org',
@@ -67,7 +69,7 @@ export function WebsiteSchema() {
     '@id': `${BASE_URL}/#website`,
     url: BASE_URL,
     name: 'Creative Milk',
-    description: 'AI systems scoped around your actual business problems.',
+    description: 'Custom AI agents, workflow automation and specialised business websites.',
     publisher: {
       '@id': `${BASE_URL}/#organisation`,
     },
