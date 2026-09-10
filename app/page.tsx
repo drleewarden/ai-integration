@@ -10,9 +10,21 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "AI Automation Melbourne | Custom AI Agents | Creative Milk",
+  title: "AI Automation & Specialised Websites | Creative Milk Melbourne",
   description:
-    "Melbourne AI automation company building custom AI agents and workflow automations for Australian businesses. Measured by hours recovered and outcomes delivered.",
+    "Creative Milk builds custom AI agents, workflow automations and specialised business websites. Melbourne-based strategy, design and development for Australian businesses.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "AI Automation & Specialised Websites | Creative Milk",
+    description: "Custom AI agents, workflow automation and business websites, built around your business goals.",
+    url: "/",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Automation & Specialised Websites | Creative Milk",
+    description: "Custom AI agents, workflow automation and business websites, built around your business goals.",
+  },
 };
 
 export default function CreativeMilkSite() {

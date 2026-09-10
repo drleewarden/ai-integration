@@ -1,9 +1,7 @@
 // app/llms.txt/route.ts -- served at /llms.txt
 //
-// llms.txt (https://llmstxt.org) is the emerging convention AI assistants and
-// AI search engines check for a machine-readable overview of a site. Insights
-// links derive from the content registry, so new posts appear automatically.
-// Facts here must stay consistent with /pricing and /pricingdata.
+// Optional, experimental site summary. This is not a search ranking control.
+// Keep facts in the linked public pages; avoid duplicating changing prices.
 
 import { posts, displayTitle } from "@/lib/insights/posts";
 
@@ -21,21 +19,15 @@ export function GET(): Response {
 
   const body = `# Creative Milk
 
-> Creative Milk is a Melbourne AI automation and implementation company. We build custom AI agents and agentic workflows for small and mid-sized Australian businesses, scoped around specific problems and measured by outcomes, not deliverables. Founder-led: clients work directly with Craig and Darryn.
+> Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses. Website: https://www.creative-milk.com.au.
 
-Key facts:
-- Location: Level 7, 80 Dorcas Street, South Melbourne VIC 3205, Australia (works with businesses Australia-wide, remote-friendly)
-- Contact: contact@creative-milk.com.au
-- Engagement model: three phases, each stands alone
-  - Phase 1 — Discovery Sprint: AUD $5K–$15K, 1–2 weeks. Process audit, scoped system design, agreed success metrics, go/no-go recommendation, fixed-price Phase 2 proposal. No obligation to proceed.
-  - Phase 2 — Build & Integrate: AUD $30K–$120K, 4–6 weeks. Production AI system built into your existing stack; change management and team training included as standard; full IP transfer on completion; 30-day post-launch support.
-  - Phase 3 — Managed Partnership: AUD $5K–$15K/month, ongoing and optional. Monitoring, optimisation, monthly reporting, strategic advisory.
-- Pricing is published openly; all prices in AUD
-- Clients own everything: code, documentation, and models transfer on completion
+Contact: contact@creative-milk.com.au. See the public pages below for current service scope, pricing and examples.
 
 ## Services
 
 - [Services](${BASE_URL}/services): The three-phase engagement model in detail, deliverables per phase
+- [Specialised websites](${BASE_URL}/specialised-websites): Business website strategy, design and development, with links to selected work
+- [Website portfolio](https://websites.creative-milk.com.au): Selected websites and digital products Darryn Lee-Warden helped bring to life
 - [What we build](${BASE_URL}/what-we-build): Types of AI systems delivered (automation, custom tools, integrations)
 - [AI automation Melbourne](${BASE_URL}/ai-automation-melbourne): Custom AI agents and multi-step workflow automation for Melbourne small and mid-sized businesses
 - [Pricing](${BASE_URL}/pricing): Published pricing for all three phases with what moves the price within each range
@@ -56,7 +48,7 @@ ${insightLinks}
 
 - [About](${BASE_URL}/about): Who Creative Milk is and how the founders work
 - [Clients](${BASE_URL}/clients): Who we work with
-- [Contact](${BASE_URL}/contact): Enquiries — contact@creative-milk.com.au
+- [Contact](${BASE_URL}/contact): Enquiries: contact@creative-milk.com.au
 `;
 
   return new Response(body, {
