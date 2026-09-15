@@ -6,7 +6,7 @@
 // editorial copy below is written by hand. If you change a price, change it
 // there and grep PROSE_WITH_PRICES for prose that quotes the old number.
 
-import { pricingPhaseById } from "@/lib/pricing";
+import { pricingPhaseById, SUPPORT_TIERS } from "@/lib/pricing";
 
 const assessment = pricingPhaseById("assessment");
 const discovery = pricingPhaseById("discovery");
@@ -116,10 +116,12 @@ export const phases = [
     price: managed.priceDisplay,
     meta: `${managed.duration} · Optional`,
     body: "Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against the success metrics agreed in the Discovery Sprint. Direct access to Craig and Darryn. Typically a 3-month minimum, month-to-month thereafter.",
-    priceNote: [
-      "Lower ($5K/month): monitoring and reporting only, stable system",
-      "Upper ($15K/month): active optimisation, model retraining, expansion planning",
-    ],
+    // Derived from SUPPORT_TIERS so the tiers, the range on this page and the
+    // JSON-LD cannot disagree.
+    priceNote: SUPPORT_TIERS.map(
+      (tier) =>
+        `${tier.name} (${tier.monthlyPriceDisplay}): ${tier.commitment}. ${tier.summary}`,
+    ),
     deliverables: [],
   },
 ];

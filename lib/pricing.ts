@@ -101,12 +101,64 @@ export const PRICING_PHASES: readonly PricingPhase[] = [
     id: "managed",
     phase: 4,
     name: "Managed Partnership",
-    price: { kind: "monthlyRange", min: 5000, max: 15000 },
-    priceDisplay: "AUD $5K–$15K/mo",
+    // Floor lowered from $5,000 to $1,000 when the support tiers below were
+    // defined. SUPPORT_TIERS is the detail behind this range.
+    price: { kind: "monthlyRange", min: 1000, max: 15000 },
+    priceDisplay: "AUD $1K–$15K/mo",
     duration: "Ongoing",
     standalone: true,
     schemaDescription:
-      "Monthly managed AI operations. Ongoing optimisation and support.",
+      "Monthly managed AI operations. Ongoing optimisation, support and training.",
+  },
+] as const;
+
+/**
+ * The three ongoing support tiers inside the Managed Partnership.
+ *
+ * These are time-based retainers rather than monitoring plans: what the client
+ * buys is a committed amount of support and training each month. Keep the
+ * `monthlyPrice` values in step with the `managed` tier's range above.
+ *
+ * Tier names are a first draft and worth reviewing. The numbers are as
+ * supplied by the owner.
+ */
+export type SupportTier = {
+  id: "essential" | "active" | "embedded";
+  name: string;
+  monthlyPrice: number;
+  monthlyPriceDisplay: string;
+  /** The time commitment, in the client's terms. */
+  commitment: string;
+  summary: string;
+};
+
+export const SUPPORT_TIERS: readonly SupportTier[] = [
+  {
+    id: "essential",
+    name: "Essential",
+    monthlyPrice: 1000,
+    monthlyPriceDisplay: "AUD $1K/mo",
+    commitment: "1 hour per week",
+    summary:
+      "Ongoing support and training for a system your team already runs day to day.",
+  },
+  {
+    id: "active",
+    name: "Active",
+    monthlyPrice: 6000,
+    monthlyPriceDisplay: "AUD $6K/mo",
+    commitment: "8 hours per week",
+    summary:
+      "Sustained support, training and improvement time against the system's original success metric.",
+  },
+  {
+    id: "embedded",
+    name: "Embedded",
+    monthlyPrice: 15000,
+    monthlyPriceDisplay: "AUD $15K/mo",
+    commitment: "1 week per month",
+    summary:
+      "We work alongside your team, setting up infrastructure and building internal capability.",
   },
 ] as const;
 
