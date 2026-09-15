@@ -7,6 +7,8 @@
 
 import React from 'react'
 
+import { PRICING_PHASES, type PriceShape } from '@/lib/pricing'
+
 const BASE_URL = 'https://www.creative-milk.com.au'
 
 // ── 1. ORGANISATION (place in root layout.tsx) ────────────────────────────────
@@ -141,68 +143,51 @@ export function ServiceSchema() {
 }
 
 // ── 4. PRICING PAGE (use in /pricing/page.tsx) ────────────────────────────────
+// Offers derive from lib/pricing.ts so the structured data cannot drift from
+// the published pricing page. Ranged tiers use minPrice/maxPrice: emitting a
+// flat `price` for a range tells Google the lower bound is the actual price.
+function priceSpecificationFor(price: PriceShape) {
+  if (price.kind === 'fixed') {
+    return {
+      '@type': 'PriceSpecification',
+      price: String(price.amount),
+      priceCurrency: 'AUD',
+    }
+  }
+  if (price.kind === 'range') {
+    return {
+      '@type': 'PriceSpecification',
+      minPrice: String(price.min),
+      maxPrice: String(price.max),
+      priceCurrency: 'AUD',
+    }
+  }
+  return {
+    '@type': 'UnitPriceSpecification',
+    minPrice: String(price.min),
+    maxPrice: String(price.max),
+    priceCurrency: 'AUD',
+    unitCode: 'MON',
+  }
+}
+
 export function PricingSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Creative Milk AI Implementation Pricing',
     description: 'Transparent AI implementation pricing for Australian businesses.',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        item: {
-          '@type': 'Offer',
-          name: 'AI Tools Assessment',
-          price: '2000',
-          priceCurrency: 'AUD',
-          description: 'Three-day assessment. Where your week goes, what AI takes off your plate, and the maths behind it. Five hours a week found or your money back.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
+    itemListElement: PRICING_PHASES.map((phase, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Offer',
+        name: phase.name,
+        description: phase.schemaDescription,
+        priceSpecification: priceSpecificationFor(phase.price),
+        seller: { '@id': `${BASE_URL}/#organisation` },
       },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        item: {
-          '@type': 'Offer',
-          name: 'Discovery Sprint',
-          price: '5000',
-          priceCurrency: 'AUD',
-          description: 'Scoped AI assessment. Understand your problem, map your data, define the build.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        item: {
-          '@type': 'Offer',
-          name: 'Build & Integrate',
-          price: '30000',
-          priceCurrency: 'AUD',
-          description: 'Custom AI system built and integrated into your existing workflows.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        item: {
-          '@type': 'Offer',
-          name: 'Managed AI Partnership',
-          price: '5000',
-          priceCurrency: 'AUD',
-          description: 'Monthly managed AI operations. Ongoing optimisation and support.',
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: '5000',
-            priceCurrency: 'AUD',
-            unitCode: 'MON',
-          },
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-    ],
+    })),
   }
 
   return (

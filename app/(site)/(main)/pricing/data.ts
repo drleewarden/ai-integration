@@ -1,5 +1,19 @@
 // Page copy/data for pricing - extracted from page.tsx to keep the
 // component readable. Edit copy here; edit layout in page.tsx.
+//
+// Tier names, prices, phase numbers and durations come from lib/pricing.ts so
+// this page, the Pricing JSON-LD and llms.txt cannot disagree. Only the
+// editorial copy below is written by hand. If you change a price, change it
+// there and grep PROSE_WITH_PRICES for prose that quotes the old number.
+
+import { pricingPhaseById } from "@/lib/pricing";
+
+const assessment = pricingPhaseById("assessment");
+const discovery = pricingPhaseById("discovery");
+const build = pricingPhaseById("build");
+const managed = pricingPhaseById("managed");
+
+const phaseLabel = (n: number) => `Phase ${String(n).padStart(2, "0")}`;
 
 export const faqs = [
   {
@@ -38,10 +52,10 @@ export const faqs = [
 
 export const phases = [
   {
-    num: "Phase 01",
-    title: "AI Tools Assessment",
-    price: "AUD $2K",
-    meta: "3 days · Can stand alone",
+    num: phaseLabel(assessment.phase),
+    title: assessment.name,
+    price: assessment.priceDisplay,
+    meta: `${assessment.duration} · Can stand alone`,
     body: "Every business has a week hidden inside it. The AI Tools Assessment finds yours. We map where your team's time actually goes, then match each recurring task to the thing that removes it - tools you can switch on this week, workflows we can automate in days, and the larger systems worth building later. You get it in writing, with the hours and the maths on the page, plus a four-day start plan you can run without us.",
     callout: "We'll find you five hours a week, or you don't pay.",
     noteLabel: "Our guarantee",
@@ -59,10 +73,10 @@ export const phases = [
     ],
   },
   {
-    num: "Phase 02",
-    title: "Discovery Sprint",
-    price: "AUD $5K–$15K",
-    meta: "1–2 weeks · Can stand alone",
+    num: phaseLabel(discovery.phase),
+    title: discovery.name,
+    price: discovery.priceDisplay,
+    meta: `${discovery.duration} · Can stand alone`,
     body: "The Discovery Sprint is a scoped investigation into your specific business problem. We spend 1–2 weeks understanding your processes, your stack, and the opportunity. We come out with a specific system design, agreed success metrics, a go/no-go recommendation, and a fixed-price Phase 3 proposal if we both want to proceed. The plan is yours - no obligation to proceed with us.",
     priceNote: [
       "Lower ($5K): single process, clear brief, simple tech stack",
@@ -78,10 +92,10 @@ export const phases = [
     ],
   },
   {
-    num: "Phase 03",
-    title: "Build & Integrate",
-    price: "AUD $30K–$120K",
-    meta: "4–6 weeks · Requires Phase 2",
+    num: phaseLabel(build.phase),
+    title: build.name,
+    price: build.priceDisplay,
+    meta: `${build.duration} · Requires ${phaseLabel(build.requiresPhase ?? 0)}`,
     body: "We build the system to the specification from the Discovery Sprint. Production-ready, integrated into your existing stack, with change management and team training included as standard. IP transfers to you on completion.",
     callout: "The Phase 3 price is fixed at the end of Phase 2. No surprises.",
     priceNote: [
@@ -97,10 +111,10 @@ export const phases = [
     ],
   },
   {
-    num: "Phase 04",
-    title: "Managed Partnership",
-    price: "AUD $5K–$15K/mo",
-    meta: "Ongoing · Optional",
+    num: phaseLabel(managed.phase),
+    title: managed.name,
+    price: managed.priceDisplay,
+    meta: `${managed.duration} · Optional`,
     body: "Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against the success metrics agreed in the Discovery Sprint. Direct access to Craig and Darryn. Typically a 3-month minimum, month-to-month thereafter.",
     priceNote: [
       "Lower ($5K/month): monitoring and reporting only, stable system",
