@@ -3,7 +3,7 @@
  *
  * Gated file downloads. Auth via the cookie session; tier checked against
  * the registry via canAccess; on success responds 302 to a 60-second signed
- * URL from the private member-files bucket (service role mints it -- the
+ * URL from the private member-files bucket (service role mints it - the
  * bucket has no client policies at all).
  *
  *   401 no session | 403 tier too low | 404 unknown or non-download slug

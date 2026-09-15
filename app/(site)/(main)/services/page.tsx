@@ -47,7 +47,7 @@ export default function Services() {
             >
               We don't hand off after the strategy session. We don't disappear after the build
               ships. One engagement takes you from scoped problem to live system to ongoing
-              outcomes -- with a single partner across all three phases.
+              outcomes - with a single partner across all three phases.
             </p>
             <p className="body-copy" style={{ color: "var(--warm-cream)", marginTop: "1.5rem" }}>
               Explore our <a href="/ai-automation-melbourne" style={{ textDecoration: "underline" }}>AI automation services</a> or
@@ -79,7 +79,7 @@ export default function Services() {
                   className="h-section"
                   style={{ color: "var(--midnight-ink)", marginBottom: "0.5rem" }}
                 >
-                  Find out exactly what's possible -- before you commit to anything.
+                  Find out exactly what's possible - before you commit to anything.
                 </h2>
                 <p
                   style={{
@@ -149,10 +149,10 @@ export default function Services() {
                   Discovery Sprint fixes that.
                 </p>
                 <p>
-                  We spend 1–2 weeks inside your business -- understanding your processes, your
+                  We spend 1–2 weeks inside your business - understanding your processes, your
                   stack, and the specific problem you want solved. You don't have to proceed to
                   Phase 2. Many clients run the Discovery Sprint and implement the plan themselves.
-                  That's fine -- the plan is yours.
+                  That's fine - the plan is yours.
                 </p>
               </div>
               <div>
@@ -273,7 +273,7 @@ export default function Services() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  We work inside your existing tech stack -- not a proprietary platform that
+                  We work inside your existing tech stack - not a proprietary platform that
                   requires ongoing fees. When it ships, your IT lead can read the code, your team
                   knows how to use it, and you own the IP outright.
                 </p>
@@ -354,7 +354,7 @@ export default function Services() {
                   AUD $5,000–$15,000/month
                 </p>
                 <p className="label" style={{ color: "var(--slate-mid)" }}>
-                  Optional -- not every engagement continues to Phase 3
+                  Optional - not every engagement continues to Phase 3
                 </p>
               </div>
               <p

@@ -51,7 +51,7 @@ export default function Pricing() {
               }}
             >
               We publish our pricing because we think hiding it wastes everyone's time. If the
-              numbers don't fit your budget, we'd rather you know now. If they do -- let's talk
+              numbers don't fit your budget, we'd rather you know now. If they do - let's talk
               about what we'd build.
             </p>
           </div>

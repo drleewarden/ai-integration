@@ -7,7 +7,7 @@
  *   2. Redirect unauthenticated visitors of /members/* to /login (except
  *      the public /members/upgrade pitch page).
  *
- * Matcher is scoped to /members only -- the rest of the marketing site pays
+ * Matcher is scoped to /members only - the rest of the marketing site pays
  * zero middleware cost.
  */
 import { NextResponse, type NextRequest } from "next/server";
@@ -73,7 +73,7 @@ export async function middleware(request: NextRequest) {
     // response instead, so those refreshed cookies are not re-applied to it
     // (this mirrors the Supabase ssr reference pattern). Worst case, a
     // session-invalidation event leaves stale cookies on the client until
-    // the next request re-runs this middleware -- not an auth bypass, since
+    // the next request re-runs this middleware - not an auth bypass, since
     // getUser() above already re-validated the session for this request.
     return NextResponse.redirect(new URL(redirectTo, request.url));
   }

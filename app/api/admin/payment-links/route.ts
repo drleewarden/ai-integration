@@ -7,7 +7,7 @@
  * PATCH { id } -> voids a PENDING link (paid rows are immutable). 200|409.
  *
  * Auth: Supabase session cookie proves identity; the ADMIN_EMAILS allowlist
- * decides authorisation. Checked here on every call -- the admin page's own
+ * decides authorisation. Checked here on every call - the admin page's own
  * gate is presentation only and is never trusted.
  */
 import { NextResponse } from "next/server";
@@ -29,7 +29,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-// Reject anything bigger than this -- these payloads are a handful of short
+// Reject anything bigger than this - these payloads are a handful of short
 // strings, 4KB is generous. Same convention as app/api/readiness/submit/route.ts.
 const MAX_BODY_BYTES = 4 * 1024;
 

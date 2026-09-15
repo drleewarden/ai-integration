@@ -60,7 +60,7 @@ export default function ResultNotFound() {
               margin: '0 0 40px',
             }}
           >
-            The link may be wrong, or the result may have been removed. You can take the assessment from scratch -- it only takes five minutes.
+            The link may be wrong, or the result may have been removed. You can take the assessment from scratch - it only takes five minutes.
           </p>
           <Link href="/ai-readiness" style={{ textDecoration: 'none' }}>
             <span style={goldButtonStyle}>Start a new assessment</span>

@@ -2,8 +2,8 @@
  * POST /api/readiness/email-playbook
  *
  * Captures the prospect's email after they've seen their result. This is the
- * first lead-conversion step -- turning an anonymous assessment into a named
- * contact + New Lead opportunity in the CRM -- AND it sends them their
+ * first lead-conversion step - turning an anonymous assessment into a named
+ * contact + New Lead opportunity in the CRM - AND it sends them their
  * playbook email via Resend with the PDF playbook attached.
  *
  * Flow:
@@ -20,7 +20,7 @@
  *  11.  Log activities
  *
  * Failure handling: the lead is canonical. PDF/storage/email failures surface
- * as warnings -- the lead is never lost because of a delivery hiccup.
+ * as warnings - the lead is never lost because of a delivery hiccup.
  */
 
 import { NextResponse } from "next/server";
@@ -83,7 +83,7 @@ function parseAndValidate(body: unknown): CapturePayload {
 }
 
 export async function POST(req: NextRequest) {
-  // Rate limit: 3 playbook emails per hour per IP -- this route is the most
+  // Rate limit: 3 playbook emails per hour per IP - this route is the most
   // expensive to abuse (PDF render + outbound email per request).
   const limited = checkRateLimit("readiness-email-playbook", req, {
     limit: 3,
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
 
   const supabase = getServiceSupabase();
 
-  // 1. Fetch assessment -- pull all fields needed to rebuild AssessmentResult
+  // 1. Fetch assessment - pull all fields needed to rebuild AssessmentResult
   const { data: assessment, error: aErr } = await supabase
     .from("readiness_assessments")
     .select(
@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
       .from("opportunities")
       .insert({
         contact_id: contactId,
-        title: `Lead -- ${band.label} (${assessment.overall_score}/100)`,
+        title: `Lead - ${band.label} (${assessment.overall_score}/100)`,
         source: "ai_readiness",
         stage: "New Lead",
         readiness_score: assessment.overall_score,
@@ -218,7 +218,7 @@ export async function POST(req: NextRequest) {
     pdfBuffer = await renderPlaybookToBuffer(composition);
   } catch (pdfErr) {
     console.error("[email-playbook] PDF generation failed:", pdfErr);
-    // Soft failure -- email still sends without attachment
+    // Soft failure - email still sends without attachment
   }
 
   // 6. Upload PDF to Supabase Storage
@@ -304,7 +304,7 @@ export async function POST(req: NextRequest) {
   if (sendOutcome.kind === "sent") {
     return NextResponse.json({
       ok: true,
-      message: "Your playbook is on its way. Check your inbox in the next few minutes -- and your spam folder, just in case.",
+      message: "Your playbook is on its way. Check your inbox in the next few minutes - and your spam folder, just in case.",
     });
   }
   return NextResponse.json({
@@ -342,8 +342,8 @@ interface SendArgs {
 async function sendPlaybookEmails(args: SendArgs): Promise<SendOutcome> {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    console.warn("[email-playbook] RESEND_API_KEY not set -- skipping send");
-    return { kind: "skipped", warning: "Email service not configured -- lead captured." };
+    console.warn("[email-playbook] RESEND_API_KEY not set - skipping send");
+    return { kind: "skipped", warning: "Email service not configured - lead captured." };
   }
 
   const FROM = process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";

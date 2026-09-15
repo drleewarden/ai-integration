@@ -1,6 +1,6 @@
 /**
  * Marks a workshop payment paid and sends the two post-payment emails.
- * Called only by the Stripe webhook AFTER signature verification -- the
+ * Called only by the Stripe webhook AFTER signature verification - the
  * session object is trusted because it came from a verified event.
  *
  * Idempotent by design: the paid UPDATE is itself the idempotency gate
@@ -9,12 +9,12 @@
  *
  * The return value is a retry instruction for the webhook, not a success
  * flag:
- *   true  -- handled/terminal. The webhook must NOT trigger a Stripe retry.
+ *   true  - handled/terminal. The webhook must NOT trigger a Stripe retry.
  *            Covers: no metadata id, payment not actually "paid" yet, the
  *            row not existing, the row already paid (by this call or a
  *            concurrent one), and email send failures (logged, but a retry
  *            of the same event can't fix a broken outbound email).
- *   false -- transient failure (a DB read/write that might succeed on
+ *   false - transient failure (a DB read/write that might succeed on
  *            retry). The webhook should return a non-2xx status so Stripe
  *            retries the event; fulfilment is idempotent, so retrying is
  *            always safe.
@@ -74,7 +74,7 @@ export async function fulfilWorkshopPayment(opts: {
     return false;
   }
   if (!row) {
-    // No row will ever appear for this id -- retrying can't fix that.
+    // No row will ever appear for this id - retrying can't fix that.
     console.error(
       `[payments/fulfil] no workshop_payments row for id=${paymentId}`,
     );
@@ -92,7 +92,7 @@ export async function fulfilWorkshopPayment(opts: {
   // Money has been taken even if the link was voided post-checkout-creation,
   // so any non-paid status transitions to paid here. `.neq("status", "paid")`
   // makes this UPDATE atomic-and-observed: if two deliveries race, only one
-  // matches a row and gets it back from .select() -- the loser sees zero
+  // matches a row and gets it back from .select() - the loser sees zero
   // rows and must not send emails.
   const { data: updated, error: updateError } = await supabase
     .from("workshop_payments")
@@ -107,14 +107,14 @@ export async function fulfilWorkshopPayment(opts: {
     .select("id");
   if (updateError) {
     // The silent-money-loss path: card charged, row still pending. False
-    // makes the webhook 500 so Stripe retries -- safe, since this UPDATE
+    // makes the webhook 500 so Stripe retries - safe, since this UPDATE
     // is idempotent.
     console.error("[payments/fulfil] paid update failed:", updateError);
     return false;
   }
   if (!updated || updated.length === 0) {
     // A concurrent delivery already flipped this row to paid (and is
-    // sending, or has sent, the emails) -- don't send them again.
+    // sending, or has sent, the emails) - don't send them again.
     return true;
   }
 
@@ -122,7 +122,7 @@ export async function fulfilWorkshopPayment(opts: {
 
   // Each send is individually caught: a THROWN failure (network/SDK) after
   // the paid UPDATE would otherwise abort fulfilment, and because the row is
-  // now paid, every webhook retry exits early -- the notifications would be
+  // now paid, every webhook retry exits early - the notifications would be
   // lost permanently. Thrown and returned errors get identical treatment:
   // log, carry on.
   const confirmation = renderPaymentConfirmationEmail({
@@ -172,7 +172,7 @@ export async function fulfilWorkshopPayment(opts: {
     console.error("[payments/fulfil] alert email threw:", err);
   }
 
-  // Email failures are logged but never cause a retry -- the row is already
+  // Email failures are logged but never cause a retry - the row is already
   // paid, so retrying the event would just be an idempotent no-op UPDATE.
   return true;
 }

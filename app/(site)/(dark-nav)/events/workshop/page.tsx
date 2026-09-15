@@ -70,7 +70,7 @@ export default function WorkshopSignup() {
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right -- try again?",
+        message: "That email address doesn't look right - try again?",
       });
       pushEvent(EVENTS.WORKSHOP_SIGNUP_ERROR, {
         form_id: "workshop",
@@ -207,7 +207,7 @@ export default function WorkshopSignup() {
             {/* Left: copy + image */}
             <div>
               <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                -- Workshop · 7 Aug 2026
+                - Workshop · 7 Aug 2026
               </span>
               <h1
                 className="h-display"
@@ -382,7 +382,7 @@ export default function WorkshopSignup() {
                       color: "var(--liquid-gold)",
                     }}
                   >
-                    -- Reserve your seat
+                    - Reserve your seat
                   </span>
                   <h2
                     style={{
@@ -406,7 +406,7 @@ export default function WorkshopSignup() {
                       gap: "1.25rem",
                     }}
                   >
-                    {/* Honeypot -- visually hidden from humans, present in
+                    {/* Honeypot - visually hidden from humans, present in
                         the DOM for naive bots to fill. Not aria-hidden (a
                         focusable control inside aria-hidden is an a11y
                         violation); the label tells screen-reader users to

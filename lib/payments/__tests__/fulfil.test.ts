@@ -27,8 +27,8 @@ function makeSession(
 
 /**
  * Minimal fake of the two supabase call chains fulfil uses:
- *   .from().select().eq().maybeSingle()                    -- the lookup
- *   .from().update({...}).eq().neq("status","paid").select() -- the paid UPDATE
+ *   .from().select().eq().maybeSingle()                    - the lookup
+ *   .from().update({...}).eq().neq("status","paid").select() - the paid UPDATE
  */
 function makeSupabase(opts: {
   row?: typeof ROW | null;
@@ -286,7 +286,7 @@ describe("fulfilWorkshopPayment", () => {
     const consoleErrorSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => {});
-    // The row is already paid at this point -- a retry would be an
+    // The row is already paid at this point - a retry would be an
     // idempotent no-op that can't resend, so this must stay terminal.
     await expect(
       fulfilWorkshopPayment({

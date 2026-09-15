@@ -1,7 +1,7 @@
 /**
- * Cached Stripe server client. Server-side only -- STRIPE_SECRET_KEY must
+ * Cached Stripe server client. Server-side only - STRIPE_SECRET_KEY must
  * never reach the browser. No apiVersion is passed, so the SDK's bundled
- * default API version is used -- the effective Stripe API version moves
+ * default API version is used - the effective Stripe API version moves
  * whenever the "stripe" package is upgraded, rather than being pinned here.
  */
 import Stripe from "stripe";

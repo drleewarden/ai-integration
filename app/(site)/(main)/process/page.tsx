@@ -12,7 +12,7 @@ import {
 export const metadata: Metadata = {
   title: "Our AI Implementation Process | Creative Milk",
   description:
-    "How Creative Milk delivers AI systems in 6-8 weeks: AI Tools Assessment, Discovery Sprint, Build & Integrate, Managed Partnership -- with published pricing and a 95% outcome rate.",
+    "How Creative Milk delivers AI systems in 6-8 weeks: AI Tools Assessment, Discovery Sprint, Build & Integrate, Managed Partnership - with published pricing and a 95% outcome rate.",
 };
 
 export default function Process() {
@@ -50,7 +50,7 @@ export default function Process() {
                 lineHeight: 1.7,
               }}
             >
-              Most AI projects fail not because the technology doesn't work -- but because nobody
+              Most AI projects fail not because the technology doesn't work - but because nobody
               defined success before they started. We scope every engagement around a measurable
               outcome. That's how we get to 95%.
             </p>
@@ -90,7 +90,7 @@ export default function Process() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.75, alignSelf: "end" }}
               >
                 67–80% of mid-market AI projects fail to deliver their promised ROI. The reasons
-                are predictable -- and preventable.
+                are predictable - and preventable.
               </p>
             </div>
 
@@ -181,7 +181,7 @@ export default function Process() {
                 fontSize: "1rem",
               }}
             >
-              Strategic thinking comes from Craig and Darryn -- experienced practitioners who've
+              Strategic thinking comes from Craig and Darryn - experienced practitioners who've
               built and managed AI systems across 50+ engagements. Execution is accelerated by
               AI-native tooling that compresses delivery timelines without compromising quality.
               Every engagement follows the same architecture: define success → build to spec →
@@ -240,7 +240,7 @@ export default function Process() {
                   }}
                 >
                   Start with three days and $2,000. You&apos;ll know exactly where your time goes
-                  and what removes it -- before you commit to anything bigger.
+                  and what removes it - before you commit to anything bigger.
                 </p>
               </div>
             </div>
@@ -261,7 +261,7 @@ export default function Process() {
                   Every business has a week hidden inside it. The AI Tools Assessment finds yours.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
-                  We spend three days mapping where your team&apos;s time actually goes -- every
+                  We spend three days mapping where your team&apos;s time actually goes - every
                   recurring task, quantified in hours. Then we match each one to the thing that
                   removes it: tools you can switch on this week, workflows we can automate in days,
                   and the larger systems worth building later.
@@ -390,8 +390,8 @@ export default function Process() {
                   skip: we tell you honestly whether the ROI justifies the investment.
                 </p>
                 <p>
-                  Some clients run the Discovery Sprint and find that a simpler solution -- not AI
-                  -- is the right answer. We'll tell you that. It's not a sales pitch. It's a
+                  Some clients run the Discovery Sprint and find that a simpler solution - not AI
+                  - is the right answer. We'll tell you that. It's not a sales pitch. It's a
                   professional assessment.
                 </p>
               </div>
@@ -503,7 +503,7 @@ export default function Process() {
                 style={{ color: "var(--slate-mid)", lineHeight: 1.8 }}
               >
                 <p style={{ marginBottom: "1rem" }}>
-                  Phase 3 is the build. Everything is defined -- the system design, the
+                  Phase 3 is the build. Everything is defined - the system design, the
                   integrations, the success metrics, the fixed price. We build.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
@@ -516,7 +516,7 @@ export default function Process() {
                     Change management is not optional.
                   </strong>{" "}
                   Every Phase 3 engagement includes an adoption plan built alongside the system --
-                  not retrofitted after -- plus hands-on training sessions with the people who will
+                  not retrofitted after - plus hands-on training sessions with the people who will
                   use the system daily.
                 </p>
               </div>
@@ -642,9 +642,9 @@ export default function Process() {
                 {[
                   "Monthly performance review against the Discovery Sprint success metrics",
                   "Continuous model optimisation based on real-world data",
-                  "Expansion planning -- where to apply AI next as the first system beds in",
+                  "Expansion planning - where to apply AI next as the first system beds in",
                   "Direct access to Craig and Darryn for questions and strategic decisions",
-                  "Priority support -- not a ticketing queue",
+                  "Priority support - not a ticketing queue",
                 ].map((item, i) => (
                   <li
                     key={i}
@@ -720,7 +720,7 @@ export default function Process() {
               >
                 <p style={{ marginBottom: "1rem" }}>
                   That number means something specific. Before every Phase 3 build, we agree a
-                  measurable target with the client -- a specific metric that defines "it worked."
+                  measurable target with the client - a specific metric that defines "it worked."
                   The 95% is the percentage of engagements where that metric was hit.
                 </p>
                 <p>
@@ -800,7 +800,7 @@ export default function Process() {
                 className="body-copy"
                 style={{ color: "var(--slate-mid)" }}
               >
-                What the timeline actually looks like -- week by week.
+                What the timeline actually looks like - week by week.
               </p>
             </div>
 
@@ -871,7 +871,7 @@ export default function Process() {
                 fontSize: "1rem",
               }}
             >
-              Start where it fits. The AI Tools Assessment is three days and $2,000 -- we find you
+              Start where it fits. The AI Tools Assessment is three days and $2,000 - we find you
               five hours a week or you don't pay. The Discovery Sprint goes deep on one problem and
               ends with a fixed-price build proposal. Either way: no surprises, plain English next
               steps.

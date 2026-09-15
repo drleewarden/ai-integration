@@ -15,7 +15,7 @@ const DIAL_SWEEP_MS = 1100;
 /**
  * Animated ring for a 0-100 score. The ring sweeps in via a CSS transition
  * on stroke-dashoffset while the number counts up; both settle on the same
- * final state. Everything inside is decorative -- the accessible name is
+ * final state. Everything inside is decorative - the accessible name is
  * the role="img" label.
  */
 export default function ScoreDial({ score }: { score: number }) {

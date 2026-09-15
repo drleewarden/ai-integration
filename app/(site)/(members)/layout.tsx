@@ -2,7 +2,7 @@ import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
 
 /**
- * Chrome for the members area -- same solid-nav treatment as (dark-nav).
+ * Chrome for the members area - same solid-nav treatment as (dark-nav).
  * Auth is enforced by middleware.ts (all of /members except /members/upgrade).
  */
 export default function MembersLayout({

@@ -1,6 +1,6 @@
 /**
  * Cookie-based Supabase client for Server Components and route handlers.
- * Uses the ANON key -- RLS applies (members can only read their own
+ * Uses the ANON key - RLS applies (members can only read their own
  * member_profiles row). This is deliberately separate from
  * lib/supabase/server.ts (service role, RLS bypass), which stays reserved
  * for the webhook, signed URLs, and profile writes.

@@ -7,6 +7,8 @@
 
 import React from 'react'
 
+import { PRICING_PHASES, type PriceShape } from '@/lib/pricing'
+
 const BASE_URL = 'https://www.creative-milk.com.au'
 
 // ── 1. ORGANISATION (place in root layout.tsx) ────────────────────────────────
@@ -21,12 +23,17 @@ export function OrganisationSchema() {
     logo: `${BASE_URL}/icon.png`,
     description:
       'Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
+    // Must stay identical to the Google Business Profile listing. Search
+    // engines treat a name/address/phone mismatch between a site and its GBP
+    // as a signal that the two are different entities, which matters here
+    // because page one for "Creative Milk" is shared with several unrelated
+    // design agencies.
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Level 7, 80 Dorcas Street',
-      addressLocality: 'South Melbourne',
+      streetAddress: '13 Mason Ave',
+      addressLocality: 'Elwood',
       addressRegion: 'VIC',
-      postalCode: '3205',
+      postalCode: '3184',
       addressCountry: 'AU',
     },
     areaServed: {
@@ -141,68 +148,51 @@ export function ServiceSchema() {
 }
 
 // ── 4. PRICING PAGE (use in /pricing/page.tsx) ────────────────────────────────
+// Offers derive from lib/pricing.ts so the structured data cannot drift from
+// the published pricing page. Ranged tiers use minPrice/maxPrice: emitting a
+// flat `price` for a range tells Google the lower bound is the actual price.
+function priceSpecificationFor(price: PriceShape) {
+  if (price.kind === 'fixed') {
+    return {
+      '@type': 'PriceSpecification',
+      price: String(price.amount),
+      priceCurrency: 'AUD',
+    }
+  }
+  if (price.kind === 'range') {
+    return {
+      '@type': 'PriceSpecification',
+      minPrice: String(price.min),
+      maxPrice: String(price.max),
+      priceCurrency: 'AUD',
+    }
+  }
+  return {
+    '@type': 'UnitPriceSpecification',
+    minPrice: String(price.min),
+    maxPrice: String(price.max),
+    priceCurrency: 'AUD',
+    unitCode: 'MON',
+  }
+}
+
 export function PricingSchema() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     name: 'Creative Milk AI Implementation Pricing',
     description: 'Transparent AI implementation pricing for Australian businesses.',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        item: {
-          '@type': 'Offer',
-          name: 'AI Tools Assessment',
-          price: '2000',
-          priceCurrency: 'AUD',
-          description: 'Three-day assessment. Where your week goes, what AI takes off your plate, and the maths behind it. Five hours a week found or your money back.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
+    itemListElement: PRICING_PHASES.map((phase, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Offer',
+        name: phase.name,
+        description: phase.schemaDescription,
+        priceSpecification: priceSpecificationFor(phase.price),
+        seller: { '@id': `${BASE_URL}/#organisation` },
       },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        item: {
-          '@type': 'Offer',
-          name: 'Discovery Sprint',
-          price: '5000',
-          priceCurrency: 'AUD',
-          description: 'Scoped AI assessment. Understand your problem, map your data, define the build.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        item: {
-          '@type': 'Offer',
-          name: 'Build & Integrate',
-          price: '30000',
-          priceCurrency: 'AUD',
-          description: 'Custom AI system built and integrated into your existing workflows.',
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-      {
-        '@type': 'ListItem',
-        position: 4,
-        item: {
-          '@type': 'Offer',
-          name: 'Managed AI Partnership',
-          price: '5000',
-          priceCurrency: 'AUD',
-          description: 'Monthly managed AI operations. Ongoing optimisation and support.',
-          priceSpecification: {
-            '@type': 'UnitPriceSpecification',
-            price: '5000',
-            priceCurrency: 'AUD',
-            unitCode: 'MON',
-          },
-          seller: { '@id': `${BASE_URL}/#organisation` },
-        },
-      },
-    ],
+    })),
   }
 
   return (
@@ -383,11 +373,11 @@ export function LocalServiceSchema({
 }
 
 // ── 7. WORKSHOP EVENT (use in /events/workshop-melbourne/layout.tsx) ──────────
-// Ticketed, dated, capacity-limited event -- Event schema is what feeds Google's
+// Ticketed, dated, capacity-limited event - Event schema is what feeds Google's
 // Event rich results and AI-answer engines for queries like "AI workshop Melbourne".
-// Added 2026-08-01 (seo-audit-agent monthly run) -- the page had no Event schema.
+// Added 2026-08-01 (seo-audit-agent monthly run) - the page had no Event schema.
 // Price/date/seats must be kept in sync BY HAND with the live page copy (source of
-// truth is the page itself, not this file) -- flagged separately in the audit brief
+// truth is the page itself, not this file) - flagged separately in the audit brief
 // because the live page copy itself was showing a stale/expired early-bird price
 // at the time of this run.
 export function EventSchema() {

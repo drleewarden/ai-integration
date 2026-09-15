@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(new URL("/login?error=1", req.url));
   }
 
-  // Welcome email, once per member. Never blocks login -- all failures are
+  // Welcome email, once per member. Never blocks login - all failures are
   // logged and swallowed. welcomed_at is set BEFORE sending so a Resend
   // hiccup can't cause duplicate sends on the next login.
   try {

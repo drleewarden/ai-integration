@@ -1,8 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import { EVENTS, pushEvent } from "../lib/gtm";
+import { resolveEnquirySource } from "@/lib/service-lines";
 
 type FormState = {
   name: string;
@@ -32,6 +34,15 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
   const [honeypot, setHoneypot] = useState("");
   const formStartedAt = useRef<number>(Date.now());
 
+  // Service-line attribution. Captured on mount because document.referrer is
+  // cleared once the visitor navigates, and this form is embedded on service
+  // pages as well as standing alone at /contact.
+  const pathname = usePathname();
+  const referrer = useRef<string>("");
+  useEffect(() => {
+    referrer.current = document.referrer;
+  }, []);
+
   const onChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -53,10 +64,16 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right -- try again?",
+        message: "That email address doesn't look right - try again?",
       });
       return;
     }
+
+    const source = resolveEnquirySource(
+      pathname ?? "/",
+      referrer.current,
+      window.location.origin,
+    );
 
     try {
       const res = await fetch("/api/send-email", {
@@ -66,6 +83,8 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
           ...form,
           website: honeypot,
           formStartedAt: formStartedAt.current,
+          sourcePath: source.sourcePath,
+          serviceLine: source.serviceLine,
         }),
       });
       const data = await res.json();
@@ -85,6 +104,9 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
       pushEvent(EVENTS.CONTACT_FORM_SUBMIT, {
         form_id: "contact",
         has_company: Boolean(form.company.trim()),
+        // Not PII: a service-line enum and a site-relative path.
+        service_line: source.serviceLine,
+        source_path: source.sourcePath,
       });
       setStatus({
         type: "success",
@@ -158,7 +180,7 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
       >
         <div>
           <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-            05 -- Start a project
+            05 - Start a project
           </span>
           <h2
             className="h-display"
@@ -274,7 +296,7 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
               </div>
             )}
 
-          {/* Honeypot -- visually hidden from humans but present in the DOM
+          {/* Honeypot - visually hidden from humans but present in the DOM
               for naive bots to fill. Not aria-hidden (a focusable control
               inside aria-hidden is an a11y violation); the label tells
               screen-reader users to skip it instead. */}

@@ -1,5 +1,5 @@
 // route.ts imports the real `resend` package at module scope. Left unmocked,
-// it pulls in postal-mime, which needs TextEncoder -- unavailable in this
+// it pulls in postal-mime, which needs TextEncoder - unavailable in this
 // suite's jsdom environment. Mirrors the mock pattern in send-email.test.ts.
 jest.mock("resend", () => ({
   Resend: jest.fn().mockImplementation(function (this: any) {
@@ -115,7 +115,7 @@ describe("POST /api/stripe/webhook", () => {
       }),
     );
     expect(mockEq).toHaveBeenCalledWith("id", "u1");
-    // Metadata has no workshop_payment_id -- this is the subscription path,
+    // Metadata has no workshop_payment_id - this is the subscription path,
     // not the workshop payment-link path.
     expect(mockFulfilWorkshopPayment).not.toHaveBeenCalled();
   });
@@ -170,7 +170,7 @@ describe("POST /api/stripe/webhook", () => {
     });
     mockConstructEvent.mockReturnValue({
       type: "customer.subscription.updated",
-      // Stale event payload still says "active" -- the handler must not
+      // Stale event payload still says "active" - the handler must not
       // trust it and should re-fetch the subscription instead.
       data: { object: { id: "sub_1", status: "active", customer: "cus_1" } },
     });
