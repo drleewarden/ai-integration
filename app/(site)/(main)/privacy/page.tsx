@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Privacy Policy | Creative Milk",
   description:
-    "How Creative Milk collects, uses, and protects personal information -- including analytics, forms, and third-party services -- under the Australian Privacy Act.",
+    "How Creative Milk collects, uses, and protects personal information - including analytics, forms, and third-party services - under the Australian Privacy Act.",
   robots: { index: true, follow: true },
 };
 
@@ -65,13 +65,13 @@ export default function PrivacyPage() {
             <ul>
               <li>
                 <strong>Information you give us</strong> via forms on this site
-                -- your name, email, business type, phone (where provided), and
+                - your name, email, business type, phone (where provided), and
                 any free-text you enter (e.g. describing a workflow you&#39;d like
                 automated, or answers in the AI Readiness assessment).
               </li>
               <li>
                 <strong>Information collected automatically</strong> when you
-                visit -- IP address, device and browser type, referring URL,
+                visit - IP address, device and browser type, referring URL,
                 pages viewed, timestamps, and interaction events (button
                 clicks, form submissions). We do not collect precise location.
               </li>
@@ -86,7 +86,7 @@ export default function PrivacyPage() {
                 AI Readiness playbook PDF).
               </li>
               <li>
-                To improve the site -- understand which pages people find
+                To improve the site - understand which pages people find
                 useful and where they get stuck.
               </li>
               <li>
@@ -110,7 +110,7 @@ export default function PrivacyPage() {
             </p>
             <ul>
               <li>
-                <strong>Google Analytics 4 &amp; Google Tag Manager</strong> -- website
+                <strong>Google Analytics 4 &amp; Google Tag Manager</strong> - website
                 analytics and event tracking. Uses cookies and processes IP
                 addresses (which Google anonymises before storage). See the{" "}
                 <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
@@ -119,7 +119,7 @@ export default function PrivacyPage() {
                 .
               </li>
               <li>
-                <strong>Meta Pixel (Facebook)</strong> -- measures the
+                <strong>Meta Pixel (Facebook)</strong> - measures the
                 performance of Meta ad campaigns and helps us reach similar
                 audiences. See the{" "}
                 <a href="https://www.facebook.com/privacy/policy" target="_blank" rel="noopener noreferrer">
@@ -128,7 +128,7 @@ export default function PrivacyPage() {
                 .
               </li>
               <li>
-                <strong>Supabase</strong> -- database hosting for the AI
+                <strong>Supabase</strong> - database hosting for the AI
                 Readiness assessment. Data is stored in the Sydney region. See
                 the{" "}
                 <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">
@@ -137,7 +137,7 @@ export default function PrivacyPage() {
                 .
               </li>
               <li>
-                <strong>Resend</strong> -- delivers transactional emails
+                <strong>Resend</strong> - delivers transactional emails
                 (confirmations, playbook downloads). See the{" "}
                 <a href="https://resend.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
                   Resend Privacy Policy
@@ -145,7 +145,7 @@ export default function PrivacyPage() {
                 .
               </li>
               <li>
-                <strong>Vercel</strong> -- website hosting. Automatically logs
+                <strong>Vercel</strong> - website hosting. Automatically logs
                 requests (IP, user agent, path) for a limited period for
                 security and debugging. See the{" "}
                 <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
@@ -269,7 +269,7 @@ export default function PrivacyPage() {
               We use industry-standard practices to protect your information:
               HTTPS across the site, encrypted database storage, restricted
               access to production systems, and rate-limiting on public forms.
-              No system is perfect -- if we ever have reason to believe your
+              No system is perfect - if we ever have reason to believe your
               data has been exposed, we&#39;ll notify you and the OAIC in
               accordance with the Notifiable Data Breaches scheme.
             </p>
@@ -279,8 +279,8 @@ export default function PrivacyPage() {
             <p>
               Our primary database (Supabase) is hosted in Sydney, Australia.
               Some third-party processors (Google, Meta, Resend, Vercel) may
-              transfer or process data outside Australia -- typically in the
-              US or EU -- under standard contractual protections.
+              transfer or process data outside Australia - typically in the
+              US or EU - under standard contractual protections.
             </p>
           </PolicySection>
 

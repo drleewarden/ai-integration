@@ -1,4 +1,4 @@
-// app/sitemap.ts -- served automatically at /sitemap.xml
+// app/sitemap.ts - served automatically at /sitemap.xml
 //
 // Insights posts are derived from the content registry (lib/insights/posts.ts)
 // so new articles appear here without touching this file.

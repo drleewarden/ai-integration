@@ -1,10 +1,10 @@
-// Page copy/data for process -- extracted from page.tsx to keep the
+// Page copy/data for process - extracted from page.tsx to keep the
 // component readable. Edit copy here; edit layout in page.tsx.
 
 export const failureModes = [
   {
     label: "No success metric defined upfront",
-    body: '"We want to use AI" is not a brief. Projects without a measurable target can\'t be declared done -- and can\'t be called successful.',
+    body: '"We want to use AI" is not a brief. Projects without a measurable target can\'t be declared done - and can\'t be called successful.',
   },
   {
     label: "Strategy without implementation",
@@ -31,12 +31,12 @@ export const timeline = [
   {
     period: "Week 0",
     label: "First call (30 mins)",
-    body: "You describe the problem. We ask questions. We agree where to start -- an AI Tools Assessment or a Discovery Sprint. Either way, we send a proposal within 48 hours.",
+    body: "You describe the problem. We ask questions. We agree where to start - an AI Tools Assessment or a Discovery Sprint. Either way, we send a proposal within 48 hours.",
   },
   {
     period: "Week 0–1",
     label: "AI Tools Assessment (optional)",
-    body: "Three days. We quantify where your week goes and match every recurring task to the tool, workflow, or system that removes it. You get the hours, the maths, and a four-day start plan -- or your $2,000 back.",
+    body: "Three days. We quantify where your week goes and match every recurring task to the tool, workflow, or system that removes it. You get the hours, the maths, and a four-day start plan - or your $2,000 back.",
   },
   {
     period: "Weeks 1–2",
@@ -46,7 +46,7 @@ export const timeline = [
   {
     period: "Week 2–3",
     label: "Decision point",
-    body: "You review the Phase 3 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure -- the Discovery Sprint plan is yours regardless.",
+    body: "You review the Phase 3 proposal. Fixed price, fixed scope, fixed timeline. You decide whether to proceed. There's no pressure - the Discovery Sprint plan is yours regardless.",
   },
   {
     period: "Weeks 3–8",
@@ -61,7 +61,7 @@ export const timeline = [
   {
     period: "Weeks 8–12",
     label: "30-day support window",
-    body: "We stay close. Any issues, refinements, or adoption questions -- we're on it.",
+    body: "We stay close. Any issues, refinements, or adoption questions - we're on it.",
   },
   {
     period: "Month 3+",
@@ -84,7 +84,7 @@ export const sprintDeliverables = [
   ["Process mapping", "Document current workflows and identify AI leverage points"],
   ["Stack audit", "Assess integration feasibility and surface any blockers"],
   ["Success metric definition", "Agree the measurable outcome we'll target"],
-  ["Go/no-go recommendation", "Honest advice -- including if we think AI isn't the right answer"],
+  ["Go/no-go recommendation", "Honest advice - including if we think AI isn't the right answer"],
   ["Phase 3 proposal", "Fixed-price, scoped proposal ready to proceed if you choose"],
 ];
 

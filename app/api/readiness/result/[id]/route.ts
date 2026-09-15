@@ -49,14 +49,14 @@ export interface PublicResult {
   schemaVersion: number;
 }
 
-// UUID format check -- cheap input validation before DB hit
+// UUID format check - cheap input validation before DB hit
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  // Generous read limit -- blunts UUID-enumeration scans without touching
+  // Generous read limit - blunts UUID-enumeration scans without touching
   // legitimate traffic (responses are also CDN-cached for 1h).
   const limited = checkRateLimit('readiness-result', req, {
     limit: 60,
@@ -94,7 +94,7 @@ export async function GET(
 
   // Build sanitised public projection. Notice that we look up the band's full
   // label and description from lib/readiness/bands rather than persisting them
-  // in the DB -- single source of truth, and band copy can be tweaked without
+  // in the DB - single source of truth, and band copy can be tweaked without
   // rewriting any rows.
   const band = bandByKey(data.band as BandKey);
 
@@ -115,7 +115,7 @@ export async function GET(
   };
 
   // Cache headers: 1h public, 5m stale-while-revalidate. The result never
-  // changes (score is fixed once written), so longer caching is safe -- but
+  // changes (score is fixed once written), so longer caching is safe - but
   // we keep it modest in case we need to invalidate quickly.
   return NextResponse.json(
     { result },

@@ -6,7 +6,7 @@
  *
  * Adding a post: drop a new JSON file in content/insights/, import it below,
  * and add it to the array. The [slug] route, the /insights index, and
- * sitemap.xml all derive from this list -- nothing else to update.
+ * sitemap.xml all derive from this list - nothing else to update.
  */
 
 import blog01 from "@/content/insights/blog-01-why-ai-fails.json";

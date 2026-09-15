@@ -53,7 +53,7 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right -- try again?",
+        message: "That email address doesn't look right - try again?",
       });
       return;
     }
@@ -158,7 +158,7 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
       >
         <div>
           <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-            05 -- Start a project
+            05 - Start a project
           </span>
           <h2
             className="h-display"
@@ -274,7 +274,7 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
               </div>
             )}
 
-          {/* Honeypot -- visually hidden from humans but present in the DOM
+          {/* Honeypot - visually hidden from humans but present in the DOM
               for naive bots to fill. Not aria-hidden (a focusable control
               inside aria-hidden is an a11y violation); the label tells
               screen-reader users to skip it instead. */}

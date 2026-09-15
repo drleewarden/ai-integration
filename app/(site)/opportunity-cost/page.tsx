@@ -1,5 +1,5 @@
 /**
- * /opportunity-cost -- server component shell.
+ * /opportunity-cost - server component shell.
  *
  * Sets page metadata and renders the interactive AI value calculator. The tool
  * itself is client-side (live recompute on every input change) so lives in

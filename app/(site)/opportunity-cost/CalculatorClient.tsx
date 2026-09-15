@@ -926,7 +926,7 @@ function MethodologyNote() {
         aria-expanded={open}
       >
         <span style={{ ...F.label, fontSize: '10px', color: C.slate }}>
-          -- How this is calculated
+          - How this is calculated
         </span>
         <span style={{ color: C.slateMute, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform 0.2s' }}>
           <Icons.ChevronRight size={16} />

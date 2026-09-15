@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 // The workshop page is a client component, so its metadata lives here.
 // This route is an older duplicate of /events/workshop-melbourne (same event,
-// different build) -- canonicalised to the live/promoted URL 2026-08-01
+// different build) - canonicalised to the live/promoted URL 2026-08-01
 // (seo-audit-agent monthly run) to resolve the duplicate-content split; see
 // reports/seo-audit/creative-milk.com.au/history.md for the finding.
 export const metadata: Metadata = {

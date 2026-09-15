@@ -8,7 +8,7 @@ import FAQ from "@/app/components/FAQ";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Single fixed seat price -- no early-bird tiering. Keep the Event schema
+// Single fixed seat price - no early-bird tiering. Keep the Event schema
 // offer price in app/components/Schema.tsx in sync with this by hand.
 const SEAT_PRICE = "$35";
 
@@ -40,11 +40,11 @@ const FAQ_ITEMS = [
   },
   {
     q: "Is this a sales pitch for Creative Milk services?",
-    a: "No. You'll leave with a working workflow you built yourself. Some people go on to work with us on bigger builds -- most don't, and that's fine.",
+    a: "No. You'll leave with a working workflow you built yourself. Some people go on to work with us on bigger builds - most don't, and that's fine.",
   },
   {
     q: "Will there be a recording?",
-    a: "This is an in-person session -- part of the value is the room, the questions, and the live-build. No recording. Seats are capped at 24 so everyone gets attention.",
+    a: "This is an in-person session - part of the value is the room, the questions, and the live-build. No recording. Seats are capped at 24 so everyone gets attention.",
   },
 ];
 
@@ -87,7 +87,7 @@ export default function WorkshopMelbourne() {
     if (!EMAIL_RE.test(form.email)) {
       setStatus({
         type: "error",
-        message: "That email address doesn't look right -- try again?",
+        message: "That email address doesn't look right - try again?",
       });
       pushEvent(EVENTS.WORKSHOP_SIGNUP_ERROR, {
         form_id: "workshop-melbourne",
@@ -105,7 +105,7 @@ export default function WorkshopMelbourne() {
         body: JSON.stringify({
           name: form.name,
           email: form.email,
-          // Kept for API compatibility -- v2 form removed the fields to reduce friction.
+          // Kept for API compatibility - v2 form removed the fields to reduce friction.
           businessType: "-",
           workflows: "",
           website: honeypot,
@@ -227,7 +227,7 @@ export default function WorkshopMelbourne() {
           {/* Left: copy */}
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              -- Workshop · 7 Aug 2026 · Melbourne
+              - Workshop · 7 Aug 2026 · Melbourne
             </span>
             <h1
               className="h-display"
@@ -255,7 +255,7 @@ export default function WorkshopMelbourne() {
               yourself.
             </p>
 
-            {/* Outcome bullets -- what you actually walk out with */}
+            {/* Outcome bullets - what you actually walk out with */}
             <ul
               style={{
                 listStyle: "none",
@@ -400,7 +400,7 @@ export default function WorkshopMelbourne() {
               </div>
             ) : (
               <>
-                {/* Price + scarcity callout -- one fixed price, capped seats */}
+                {/* Price + scarcity callout - one fixed price, capped seats */}
                 <div
                   style={{
                     display: "flex",
@@ -459,7 +459,7 @@ export default function WorkshopMelbourne() {
                     color: "var(--liquid-gold)",
                   }}
                 >
-                  -- Reserve your seat
+                  - Reserve your seat
                 </span>
                 <h2
                   style={{
@@ -483,7 +483,7 @@ export default function WorkshopMelbourne() {
                     gap: "1.25rem",
                   }}
                 >
-                  {/* Honeypot -- visually hidden from humans; label tells
+                  {/* Honeypot - visually hidden from humans; label tells
                       screen-reader users to skip it (aria-hidden on a
                       focusable control is an a11y violation) */}
                   <div
@@ -650,7 +650,7 @@ export default function WorkshopMelbourne() {
           </div>
           <div>
             <span className="eyebrow" style={{ marginBottom: "1rem" }}>
-              -- Your instructor
+              - Your instructor
             </span>
             <h2
               className="h-display"
@@ -983,7 +983,7 @@ export default function WorkshopMelbourne() {
               className="eyebrow"
               style={{ color: "var(--liquid-gold)", marginBottom: "1rem" }}
             >
-              -- The 30-minute promise
+              - The 30-minute promise
             </span>
             <h2
               className="h-display"
@@ -1017,7 +1017,7 @@ export default function WorkshopMelbourne() {
       <FAQ eyebrow="-- Common questions" title="Before you book" items={FAQ_ITEMS} />
 
       {/* ------------------------------------------------------------------ */}
-      {/* Secondary CTA -- for people who read the full page                  */}
+      {/* Secondary CTA - for people who read the full page                  */}
       {/* ------------------------------------------------------------------ */}
       <section
         className="section"
@@ -1029,7 +1029,7 @@ export default function WorkshopMelbourne() {
       >
         <div className="container" style={{ maxWidth: "620px" }}>
           <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-            -- Ready?
+            - Ready?
           </span>
           <h2
             className="h-display"
@@ -1061,7 +1061,7 @@ export default function WorkshopMelbourne() {
       </section>
 
       {/* ------------------------------------------------------------------ */}
-      {/* Sticky mobile CTA -- only visible on small viewports, hidden once   */}
+      {/* Sticky mobile CTA - only visible on small viewports, hidden once   */}
       {/* the user has converted                                              */}
       {/* ------------------------------------------------------------------ */}
       {!isDone && (
@@ -1090,7 +1090,7 @@ export default function WorkshopMelbourne() {
         </a>
       )}
 
-      {/* Sticky CTA styles -- scoped, mobile-only. Plain <style> tag avoids
+      {/* Sticky CTA styles - scoped, mobile-only. Plain <style> tag avoids
           the styled-jsx dependency, which isn't wired into this Next 15 setup. */}
       <style
         dangerouslySetInnerHTML={{

@@ -16,7 +16,7 @@ const SERVICES: Service[] = [
     href: "/services",
     title: "AI Strategy & Roadmap",
     description:
-      "We scope every engagement around a specific business problem. That means defining what success looks like before we start -- not after we've shipped.",
+      "We scope every engagement around a specific business problem. That means defining what success looks like before we start - not after we've shipped.",
   },
   {
     icon: <Zap size={22} strokeWidth={1.4} />,
@@ -32,7 +32,7 @@ const SERVICES: Service[] = [
     href: "/what-we-build",
     title: "Implementation & Integration",
     description:
-      "Seamless integration into your existing workflows. We measure success by hours recovered and decisions improved -- not features shipped.",
+      "Seamless integration into your existing workflows. We measure success by hours recovered and decisions improved - not features shipped.",
   },
   {
     icon: <Users size={22} strokeWidth={1.4} />,
@@ -72,7 +72,7 @@ export default function Services() {
         >
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              02 -- Services
+              02 - Services
             </span>
             <h2
               className="h-section"

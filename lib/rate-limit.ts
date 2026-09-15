@@ -5,7 +5,7 @@
  * - State lives in module memory, so limits apply per serverless instance.
  *   On Vercel this still blunts bursts (a bot hammering one region tends to
  *   hit warm instances), but it is NOT a distributed limiter. If abuse
- *   becomes real, swap the store for @upstash/ratelimit -- the call sites
+ *   becomes real, swap the store for @upstash/ratelimit - the call sites
  *   won't need to change.
  * - Fixed-window counting: simple, allocation-light, good enough for
  *   low-traffic marketing endpoints.

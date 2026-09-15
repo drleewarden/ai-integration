@@ -1,5 +1,5 @@
 /**
- * /pay/[id] -- public payment page for a workshop payment link.
+ * /pay/[id] - public payment page for a workshop payment link.
  *
  * The id is an unguessable UUID; the page projects only what a payer needs
  * to see (first name, amount, description, status) and never exposes the

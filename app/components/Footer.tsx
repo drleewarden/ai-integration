@@ -1,7 +1,7 @@
 import { CMWordmark } from "./CMLogo";
 import CookieSettingsLink from "./CookieSettingsLink";
 
-// Official brand glyphs (Simple Icons paths) -- lucide's outline versions are
+// Official brand glyphs (Simple Icons paths) - lucide's outline versions are
 // approximations, not the real marks.
 function FacebookMark({ size = 18 }: { size?: number }) {
   return (
@@ -161,7 +161,7 @@ export default function Footer() {
             >
               contact form
             </a>{" "}
-            -- we&apos;ll respond within 24 hours.
+            - we&apos;ll respond within 24 hours.
           </p>
 
           <ul

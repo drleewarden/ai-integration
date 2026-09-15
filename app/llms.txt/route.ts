@@ -1,4 +1,4 @@
-// app/llms.txt/route.ts -- served at /llms.txt
+// app/llms.txt/route.ts - served at /llms.txt
 //
 // Optional, experimental site summary. This is not a search ranking control.
 // Keep facts in the linked public pages; avoid duplicating changing prices.

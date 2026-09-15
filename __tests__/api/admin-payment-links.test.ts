@@ -114,7 +114,7 @@ describe("POST /api/admin/payment-links", () => {
   });
 
   it("still returns the link when the email send THROWS", async () => {
-    // A network/SDK rejection (vs a returned error) must not 500 -- the row
+    // A network/SDK rejection (vs a returned error) must not 500 - the row
     // already exists, and a 500 would make the admin retry and duplicate it.
     const errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
     mockSend.mockRejectedValue(new Error("fetch failed"));

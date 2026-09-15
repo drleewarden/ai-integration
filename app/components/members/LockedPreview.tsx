@@ -2,7 +2,7 @@ import Link from "next/link";
 
 /**
  * Rendered in place of Pro content for free members. The gated content is
- * NEVER in the payload -- the server renders this instead.
+ * NEVER in the payload - the server renders this instead.
  */
 export default function LockedPreview({ title }: { title: string }) {
   return (

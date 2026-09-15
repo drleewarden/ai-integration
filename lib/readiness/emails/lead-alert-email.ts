@@ -1,5 +1,5 @@
 /**
- * Internal lead-alert email -- fired to RESEND_TO whenever a reader requests
+ * Internal lead-alert email - fired to RESEND_TO whenever a reader requests
  * their AI Readiness playbook. Gives the Creative Milk team an instant signal
  * that a new lead is in pipeline, with enough context to triage quickly
  * (score, band, focus areas, link to the assessment in the admin UI / DB).
@@ -41,7 +41,7 @@ function escapeHtml(s: string): string {
 
 export function renderLeadAlertSubject(fields: LeadAlertEmailFields): string {
   const tag = fields.isNewContact ? 'New lead' : 'Returning lead';
-  return `${tag} -- ${fields.email} (${fields.overallScore}/100, ${fields.bandLabel})`;
+  return `${tag} - ${fields.email} (${fields.overallScore}/100, ${fields.bandLabel})`;
 }
 
 export function renderLeadAlertText(fields: LeadAlertEmailFields): string {
@@ -52,7 +52,7 @@ export function renderLeadAlertText(fields: LeadAlertEmailFields): string {
   return `${fields.isNewContact ? 'New' : 'Returning'} AI Readiness lead
 
 ${fields.email}${name}
-Score: ${fields.overallScore}/100 -- ${fields.bandLabel}
+Score: ${fields.overallScore}/100 - ${fields.bandLabel}
 Focus areas: ${focusLine}
 
 Result: ${fields.resultUrl}
@@ -107,7 +107,7 @@ export function renderLeadAlertHtml(fields: LeadAlertEmailFields): string {
           <div style="margin-bottom:18px;">
             <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:${COLORS.creamSoft};margin-bottom:4px;">Score / band</div>
             <div style="font-size:15px;color:${COLORS.cream};">
-              <strong style="color:${COLORS.gold};">${fields.overallScore}/100</strong> -- ${safeBand}
+              <strong style="color:${COLORS.gold};">${fields.overallScore}/100</strong> - ${safeBand}
             </div>
           </div>
 

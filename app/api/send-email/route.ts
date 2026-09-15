@@ -12,7 +12,7 @@ interface ConsultationRequestBody {
   email: string;
   company?: string;
   message: string;
-  /** Honeypot field -- humans never see it, bots fill it. */
+  /** Honeypot field - humans never see it, bots fill it. */
   website?: string;
   /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
   formStartedAt?: number;
@@ -51,7 +51,7 @@ export async function POST(request: Request): Promise<NextResponse> {
 
     // Honeypot / timing check: respond success-shaped, send nothing.
     if (isLikelyBot(body)) {
-      console.warn("[send-email] honeypot triggered -- dropping submission");
+      console.warn("[send-email] honeypot triggered - dropping submission");
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
@@ -75,7 +75,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     if (message.length > 5000) {
       return NextResponse.json(
         {
-          error: "Message is too long -- please keep it under 5,000 characters.",
+          error: "Message is too long - please keep it under 5,000 characters.",
         },
         { status: 400 },
       );
@@ -98,7 +98,7 @@ export async function POST(request: Request): Promise<NextResponse> {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `New project enquiry -- ${name}`,
+      subject: `New project enquiry - ${name}`,
       html,
     });
 

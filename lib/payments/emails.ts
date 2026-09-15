@@ -1,10 +1,10 @@
 /**
  * Email templates for the workshop payment-links flow. All user-supplied
- * fields are escaped HERE (input handling) -- callers pass raw strings and
+ * fields are escaped HERE (input handling) - callers pass raw strings and
  * must not pre-escape. Rendering is pure so it unit-tests without Resend.
  */
 
-/** Every template renders both parts -- see htmlToText for why. */
+/** Every template renders both parts - see htmlToText for why. */
 export interface RenderedEmail {
   subject: string;
   html: string;
@@ -24,7 +24,7 @@ function escapeHtml(s: string): string {
  * First name, sanitised for use in a Subject header.
  *
  * Input handling: subject lines are headers, so CR/LF and other control
- * characters are stripped rather than escaped -- a name carrying "\r\n" must
+ * characters are stripped rather than escaped - a name carrying "\r\n" must
  * never be able to start a new header line. Length is capped so a pathological
  * name cannot push the real subject out of the inbox preview. Returns "" when
  * nothing usable survives, and callers fall back to the impersonal subject.
@@ -147,7 +147,7 @@ const WORKSHOP_CALENDAR_URL =
  * workshop-signup route as its auto-reply.
  *
  * `payUrl` is optional so the signup route can still send the identical prep
- * email when the payment row could not be created -- the signup is already
+ * email when the payment row could not be created - the signup is already
  * recorded at that point, so silence would be worse than a link-less email.
  */
 export function renderPaymentRequestEmail(f: {
@@ -224,7 +224,7 @@ export function renderPaymentRequestEmail(f: {
     <p ${PARA}>See you on the 7th,<br><span style="color:#F5F0E8;">The Creative Milk team</span><br><a href="mailto:contact@creative-milk.com.au" style="color:#C9A84C;text-decoration:none;">contact@creative-milk.com.au</a></p>`;
   const html = emailShell("Workshop payment and preparation", inner);
   // Personalised so repeat sends to one address don't share an identical
-  // subject -- Gmail threads on subject plus participants and collapses the
+  // subject - Gmail threads on subject plus participants and collapses the
   // duplicated body behind its "trimmed content" ellipsis. Falls back to the
   // impersonal line when the name yields nothing usable.
   const subjectName = subjectFirstName(nameWithoutEmDashes);

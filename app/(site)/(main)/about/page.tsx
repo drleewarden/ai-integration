@@ -22,7 +22,7 @@ const principles = [
   {
     num: "03",
     title: "The people matter as much as the system",
-    body: "67–80% of mid-market AI projects fail not because the technology doesn't work -- but because the team doesn't adopt it. Change management is standard in every engagement. Not optional. Not an upsell.",
+    body: "67–80% of mid-market AI projects fail not because the technology doesn't work - but because the team doesn't adopt it. Change management is standard in every engagement. Not optional. Not an upsell.",
   },
   {
     num: "04",
@@ -112,7 +112,7 @@ export default function About() {
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
                   The failure wasn't usually the technology. It was the gap between what was
-                  promised and what got built -- and the absence of anyone willing to stay
+                  promised and what got built - and the absence of anyone willing to stay
                   accountable for whether it actually worked.
                 </p>
                 <p>
@@ -415,7 +415,7 @@ export default function About() {
                   system.
                 </p>
                 <p style={{ marginBottom: "1rem" }}>
-                  That's not a feature that scales infinitely -- and we know it. We take a limited
+                  That's not a feature that scales infinitely - and we know it. We take a limited
                   number of engagements at any one time because that's what it takes to deliver a
                   95% outcome rate.
                 </p>

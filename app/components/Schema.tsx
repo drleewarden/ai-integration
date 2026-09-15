@@ -383,11 +383,11 @@ export function LocalServiceSchema({
 }
 
 // ── 7. WORKSHOP EVENT (use in /events/workshop-melbourne/layout.tsx) ──────────
-// Ticketed, dated, capacity-limited event -- Event schema is what feeds Google's
+// Ticketed, dated, capacity-limited event - Event schema is what feeds Google's
 // Event rich results and AI-answer engines for queries like "AI workshop Melbourne".
-// Added 2026-08-01 (seo-audit-agent monthly run) -- the page had no Event schema.
+// Added 2026-08-01 (seo-audit-agent monthly run) - the page had no Event schema.
 // Price/date/seats must be kept in sync BY HAND with the live page copy (source of
-// truth is the page itself, not this file) -- flagged separately in the audit brief
+// truth is the page itself, not this file) - flagged separately in the audit brief
 // because the live page copy itself was showing a stale/expired early-bird price
 // at the time of this run.
 export function EventSchema() {
