@@ -40,6 +40,9 @@ import {
   goldButtonStyle,
   AiReadinessFontLink,
 } from '@/app/(site)/ai-readiness/_components/ui';
+import { serviceLineForPath } from '@/lib/service-lines';
+
+const CALCULATOR_PATH = '/opportunity-cost';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const INDUSTRY_KEYS = Object.keys(INDUSTRY_BENCHMARKS) as IndustryKey[];
@@ -1287,6 +1290,10 @@ function LeadCapture({
           email: email.trim(),
           company: getBenchmark(inputs.industry).label,
           message: buildLeadMessage(inputs, result),
+          // This component only ever renders on /opportunity-cost, so the
+          // service line is fixed rather than resolved from the referrer.
+          sourcePath: CALCULATOR_PATH,
+          serviceLine: serviceLineForPath(CALCULATOR_PATH),
         }),
       });
       if (!res.ok) {

@@ -1,6 +1,11 @@
 import { Resend } from "resend";
 import { NextResponse } from "next/server";
 import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
+import {
+  SERVICE_LINE_LABELS,
+  isServiceLine,
+  normaliseSourcePath,
+} from "@/lib/service-lines";
 
 // Initialize Resend only when API key is available
 const resend = process.env.RESEND_API_KEY
@@ -16,6 +21,10 @@ interface ConsultationRequestBody {
   website?: string;
   /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
   formStartedAt?: number;
+  /** Site-relative path the enquiry came from. Validated, never trusted. */
+  sourcePath?: string;
+  /** Service line inferred client-side. Re-validated against an allowlist. */
+  serviceLine?: string;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -85,14 +94,31 @@ export async function POST(request: Request): Promise<NextResponse> {
       process.env.RESEND_FROM ?? "Creative Milk <onboarding@resend.dev>";
     const TO = process.env.RESEND_TO ?? "contact@creative-milk.com.au";
 
+    // Attribution fields are optional and advisory. Validate both against
+    // the shared allowlist rather than trusting the client: the service line
+    // must be a known enum and the path must be site-relative, so neither can
+    // inject markup or an external URL into the notification email.
+    const serviceLine = isServiceLine(body?.serviceLine)
+      ? body.serviceLine
+      : null;
+    const sourcePath = normaliseSourcePath(body?.sourcePath);
+
     const html = renderEmail({
       name: escapeHtml(name),
       email: escapeHtml(email),
       company: company ? escapeHtml(company) : "",
       message: escapeHtml(message).replace(/\n/g, "<br>"),
+      serviceLine: serviceLine ? SERVICE_LINE_LABELS[serviceLine] : "",
+      sourcePath: sourcePath ? escapeHtml(sourcePath) : "",
     });
 
-    console.log("[send-email] sending", { from: FROM, to: TO, replyTo: email });
+    console.log("[send-email] sending", {
+      from: FROM,
+      to: TO,
+      replyTo: email,
+      serviceLine,
+      sourcePath,
+    });
 
     const { data, error: sendError } = await resend.emails.send({
       from: FROM,
@@ -130,6 +156,8 @@ function renderEmail(fields: {
   email: string;
   company: string;
   message: string;
+  serviceLine: string;
+  sourcePath: string;
 }): string {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -175,6 +203,19 @@ function renderEmail(fields: {
               ${fields.message}
             </div>
           </div>
+
+          ${
+            fields.serviceLine
+              ? `<div style="margin-top:24px;padding-top:24px;border-top:1px solid rgba(245,240,232,0.08);">
+                   <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(245,240,232,0.45);margin-bottom:6px;">Service line</div>
+                   <div style="font-size:16px;color:#F5F0E8;">${fields.serviceLine}${
+                     fields.sourcePath
+                       ? ` <span style="color:rgba(245,240,232,0.45);font-size:13px;">(from ${fields.sourcePath})</span>`
+                       : ""
+                   }</div>
+                 </div>`
+              : ""
+          }
         </td></tr>
 
         <tr><td style="padding:24px 40px;border-top:1px solid rgba(245,240,232,0.08);font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:rgba(245,240,232,0.32);">

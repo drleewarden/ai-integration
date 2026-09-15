@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { resolveEnquirySource } from "@/lib/service-lines";
 import { ArrowRight } from "lucide-react";
 
 const budgetOptions = [
@@ -46,6 +48,14 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Service-line attribution. This page's own pathname carries no service
+  // intent, so resolveEnquirySource falls back to a same-origin referrer.
+  const pathname = usePathname();
+  const referrer = useRef<string>("");
+  useEffect(() => {
+    referrer.current = document.referrer;
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -69,6 +79,12 @@ export default function Contact() {
       return;
     }
 
+    const source = resolveEnquirySource(
+      pathname ?? "/contact",
+      referrer.current,
+      window.location.origin,
+    );
+
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
@@ -78,6 +94,8 @@ export default function Contact() {
           email: formData.email,
           company: formData.company,
           message: `Problem: ${formData.problem}\n\nBudget range: ${formData.budget || "Not specified"}`,
+          sourcePath: source.sourcePath,
+          serviceLine: source.serviceLine,
         }),
       });
 
