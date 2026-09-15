@@ -23,12 +23,17 @@ export function OrganisationSchema() {
     logo: `${BASE_URL}/icon.png`,
     description:
       'Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
+    // Must stay identical to the Google Business Profile listing. Search
+    // engines treat a name/address/phone mismatch between a site and its GBP
+    // as a signal that the two are different entities, which matters here
+    // because page one for "Creative Milk" is shared with several unrelated
+    // design agencies.
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Level 7, 80 Dorcas Street',
-      addressLocality: 'South Melbourne',
+      streetAddress: '13 Mason Ave',
+      addressLocality: 'Elwood',
       addressRegion: 'VIC',
-      postalCode: '3205',
+      postalCode: '3184',
       addressCountry: 'AU',
     },
     areaServed: {

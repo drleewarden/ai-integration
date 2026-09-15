@@ -54,8 +54,8 @@ export default function PrivacyPage() {
           <PolicySection title="Who we are">
             <p>
               This site is operated by Creative Milk Pty Ltd (&quot;Creative Milk&quot;,
-              &quot;we&quot;, &quot;us&quot;). Our registered address is Level 7, 80 Dorcas Street,
-              South Melbourne, VIC 3205, Australia. We are bound by the
+              &quot;we&quot;, &quot;us&quot;). Our registered address is 13 Mason Ave, Elwood,
+              VIC 3184, Australia. We are bound by the
               Australian Privacy Principles under the Privacy Act 1988 (Cth).
             </p>
           </PolicySection>
@@ -303,8 +303,8 @@ export default function PrivacyPage() {
           <PolicySection title="Contact">
             <p>
               Privacy questions or requests: use the{" "}
-              <a href="/contact">contact form</a> or write to us at Level 7,
-              80 Dorcas Street, South Melbourne, VIC 3205.
+              <a href="/contact">contact form</a> or write to us at 13 Mason
+              Ave, Elwood, VIC 3184.
             </p>
           </PolicySection>
         </div>
