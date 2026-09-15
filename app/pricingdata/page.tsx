@@ -7,6 +7,15 @@ export const metadata: Metadata = {
   title: "Pricing - Creative Milk",
   description:
     "Three ways to engage Creative Milk. Fixed-price 30-Day Pilot, scoped Build engagements, and ongoing AI Ops Residency. Australian pricing, no hidden hours.",
+  robots: {
+    // This page publishes a different offer and price architecture to /pricing
+    // (30-Day Pilot / Build Engagement / AI Ops Residency vs the four tiers in
+    // lib/pricing.ts). Until the two are reconciled, keep it out of search and
+    // AI indexes so neither buyers nor assistants can quote prices we don't
+    // sell. Excluding it from sitemap.ts alone does not prevent indexing.
+    index: false,
+    follow: false,
+  },
 };
 
 type Tier = {
