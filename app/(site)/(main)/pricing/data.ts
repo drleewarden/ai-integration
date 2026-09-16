@@ -7,6 +7,12 @@
 // there and grep PROSE_WITH_PRICES for prose that quotes the old number.
 
 import { pricingPhaseById, SUPPORT_TIERS } from "@/lib/pricing";
+import {
+  MODEL_USAGE,
+  RESPONSE_COMMITMENTS,
+  SUPPORT_HOURS,
+  WARRANTY,
+} from "@/lib/support";
 
 const assessment = pricingPhaseById("assessment");
 const discovery = pricingPhaseById("discovery");
@@ -106,7 +112,7 @@ export const phases = [
       "Production AI system running in your stack",
       "Full IP transfer - code, documentation, model",
       "Team training and adoption plan (standard)",
-      "30-day post-launch support window",
+      `${WARRANTY.windowDays}-day post-launch support window`,
       "Outcome measurement framework",
     ],
   },
@@ -122,7 +128,15 @@ export const phases = [
       (tier) =>
         `${tier.name} (${tier.priceDisplay}): ${tier.commitment}. ${tier.summary}`,
     ),
-    deliverables: [],
+    // Was empty, which is why the ongoing phase read as a promise rather than
+    // an offer. Derived from lib/support.ts so the commitments are stated once.
+    deliverables: [
+      ...RESPONSE_COMMITMENTS.map((c) => `${c.severity}: ${c.response.toLowerCase()}`),
+      SUPPORT_HOURS,
+      `${WARRANTY.defect.label}s fixed free inside the ${WARRANTY.windowDays}-day window; ${WARRANTY.change.label.toLowerCase()}s scoped and quoted`,
+      MODEL_USAGE.billing,
+      "Monthly reporting against the success metric agreed in the Discovery Sprint",
+    ],
   },
 ];
 
