@@ -152,27 +152,44 @@ export function ServiceSchema() {
 // the published pricing page. Ranged tiers use minPrice/maxPrice: emitting a
 // flat `price` for a range tells Google the lower bound is the actual price.
 function priceSpecificationFor(price: PriceShape) {
-  if (price.kind === 'fixed') {
-    return {
-      '@type': 'PriceSpecification',
-      price: String(price.amount),
-      priceCurrency: 'AUD',
-    }
-  }
-  if (price.kind === 'range') {
-    return {
-      '@type': 'PriceSpecification',
-      minPrice: String(price.min),
-      maxPrice: String(price.max),
-      priceCurrency: 'AUD',
-    }
-  }
-  return {
-    '@type': 'UnitPriceSpecification',
-    minPrice: String(price.min),
-    maxPrice: String(price.max),
-    priceCurrency: 'AUD',
-    unitCode: 'MON',
+  switch (price.kind) {
+    case 'fixed':
+      return {
+        '@type': 'PriceSpecification',
+        price: String(price.amount),
+        priceCurrency: 'AUD',
+      }
+    case 'range':
+      return {
+        '@type': 'PriceSpecification',
+        minPrice: String(price.min),
+        maxPrice: String(price.max),
+        priceCurrency: 'AUD',
+      }
+    case 'monthlyRange':
+      return {
+        '@type': 'UnitPriceSpecification',
+        minPrice: String(price.min),
+        maxPrice: String(price.max),
+        priceCurrency: 'AUD',
+        unitCode: 'MON',
+      }
+    // A floor with no ceiling. minPrice without maxPrice is valid and is the
+    // honest representation: inventing a maximum would misstate the offer.
+    case 'monthlyFrom':
+      return {
+        '@type': 'UnitPriceSpecification',
+        minPrice: String(price.min),
+        priceCurrency: 'AUD',
+        unitCode: 'MON',
+      }
+    case 'daily':
+      return {
+        '@type': 'UnitPriceSpecification',
+        price: String(price.amount),
+        priceCurrency: 'AUD',
+        unitCode: 'DAY',
+      }
   }
 }
 

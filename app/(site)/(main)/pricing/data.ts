@@ -115,12 +115,12 @@ export const phases = [
     title: managed.name,
     price: managed.priceDisplay,
     meta: `${managed.duration} · Optional`,
-    body: "Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against the success metrics agreed in the Discovery Sprint. Direct access to Craig and Darryn. Typically a 3-month minimum, month-to-month thereafter.",
-    // Derived from SUPPORT_TIERS so the tiers, the range on this page and the
-    // JSON-LD cannot disagree.
+    body: "Ongoing optimisation, performance monitoring, and strategic advisory. We stay close as the system processes real data and improves over time. Monthly reporting against the success metrics agreed in the Discovery Sprint. Direct access to Craig and Darryn. The monthly tiers are typically a 3-month minimum, month-to-month thereafter. Embedded days are booked as you need them.",
+    // Derived from SUPPORT_TIERS so the tiers, the headline price on this page
+    // and the JSON-LD cannot disagree.
     priceNote: SUPPORT_TIERS.map(
       (tier) =>
-        `${tier.name} (${tier.monthlyPriceDisplay}): ${tier.commitment}. ${tier.summary}`,
+        `${tier.name} (${tier.priceDisplay}): ${tier.commitment}. ${tier.summary}`,
     ),
     deliverables: [],
   },

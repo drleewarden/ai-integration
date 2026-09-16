@@ -41,7 +41,11 @@
 export type PriceShape =
   | { kind: "fixed"; amount: number }
   | { kind: "range"; min: number; max: number }
-  | { kind: "monthlyRange"; min: number; max: number };
+  | { kind: "monthlyRange"; min: number; max: number }
+  /** Open-ended monthly floor, for a tier whose ceiling depends on usage. */
+  | { kind: "monthlyFrom"; min: number }
+  /** Day rate, booked as needed rather than committed monthly. */
+  | { kind: "daily"; amount: number };
 
 export type PricingPhase = {
   /** Stable key for lookups. Safe to use in analytics and URLs. */
@@ -101,10 +105,12 @@ export const PRICING_PHASES: readonly PricingPhase[] = [
     id: "managed",
     phase: 4,
     name: "Managed Partnership",
-    // Floor lowered from $5,000 to $1,000 when the support tiers below were
-    // defined. SUPPORT_TIERS is the detail behind this range.
-    price: { kind: "monthlyRange", min: 1000, max: 15000 },
-    priceDisplay: "AUD $1K–$15K/mo",
+    // No ceiling: the top support tier is a day rate booked as needed rather
+    // than a committed monthly fee, so a range would be invented. The three
+    // tiers in SUPPORT_TIERS carry the actual numbers immediately below this
+    // on the pricing page, so nothing is hidden by the "from".
+    price: { kind: "monthlyFrom", min: 1000 },
+    priceDisplay: "From AUD $1K/mo",
     duration: "Ongoing",
     standalone: true,
     schemaDescription:
@@ -115,9 +121,17 @@ export const PRICING_PHASES: readonly PricingPhase[] = [
 /**
  * The three ongoing support tiers inside the Managed Partnership.
  *
- * These are time-based retainers rather than monitoring plans: what the client
- * buys is a committed amount of support and training each month. Keep the
- * `monthlyPrice` values in step with the `managed` tier's range above.
+ * Essential and Active are committed monthly retainers. Embedded is a day rate
+ * booked as needed, deliberately not expressed as a monthly fee: at one week a
+ * month it would land near Active's price for a similar number of hours, and
+ * the two tiers would compete with each other instead of offering a real
+ * choice between spread-out support and a concentrated block.
+ *
+ * The rate ladder declines with volume, which is the property to preserve when
+ * any of these change. On an 8-hour day and a 4.33-week month:
+ *   Essential  $1,000/mo   4.3 h/mo    ~$231/h
+ *   Active     $6,000/mo   34.7 h/mo   ~$173/h
+ *   Embedded   $1,200/day  8 h/day     ~$150/h
  *
  * Tier names are a first draft and worth reviewing. The numbers are as
  * supplied by the owner.
@@ -125,19 +139,23 @@ export const PRICING_PHASES: readonly PricingPhase[] = [
 export type SupportTier = {
   id: "essential" | "active" | "embedded";
   name: string;
-  monthlyPrice: number;
-  monthlyPriceDisplay: string;
+  /** Monthly for the committed tiers, daily for the embedded engagement. */
+  price: PriceShape;
+  priceDisplay: string;
   /** The time commitment, in the client's terms. */
   commitment: string;
   summary: string;
 };
 
+/** Assumed length of a billed day, used only to sanity-check the rate ladder. */
+export const HOURS_PER_DAY = 8;
+
 export const SUPPORT_TIERS: readonly SupportTier[] = [
   {
     id: "essential",
     name: "Essential",
-    monthlyPrice: 1000,
-    monthlyPriceDisplay: "AUD $1K/mo",
+    price: { kind: "monthlyFrom", min: 1000 },
+    priceDisplay: "AUD $1K/mo",
     commitment: "1 hour per week",
     summary:
       "Ongoing support and training for a system your team already runs day to day.",
@@ -145,8 +163,8 @@ export const SUPPORT_TIERS: readonly SupportTier[] = [
   {
     id: "active",
     name: "Active",
-    monthlyPrice: 6000,
-    monthlyPriceDisplay: "AUD $6K/mo",
+    price: { kind: "monthlyFrom", min: 6000 },
+    priceDisplay: "AUD $6K/mo",
     commitment: "8 hours per week",
     summary:
       "Sustained support, training and improvement time against the system's original success metric.",
@@ -154,11 +172,11 @@ export const SUPPORT_TIERS: readonly SupportTier[] = [
   {
     id: "embedded",
     name: "Embedded",
-    monthlyPrice: 15000,
-    monthlyPriceDisplay: "AUD $15K/mo",
-    commitment: "1 week per month",
+    price: { kind: "daily", amount: 1200 },
+    priceDisplay: "AUD $1,200/day",
+    commitment: "Full engagement, booked by the day",
     summary:
-      "We work alongside your team, setting up infrastructure and building internal capability.",
+      "We work alongside your team full time for the days you book, setting up infrastructure and building internal capability.",
   },
 ] as const;
 
@@ -182,7 +200,15 @@ export function pricingPhaseById(id: PricingPhase["id"]): PricingPhase {
 
 /** Lower bound of a tier, for sorting or "from" copy. */
 export function priceFrom(price: PriceShape): number {
-  return price.kind === "fixed" ? price.amount : price.min;
+  switch (price.kind) {
+    case "fixed":
+    case "daily":
+      return price.amount;
+    case "range":
+    case "monthlyRange":
+    case "monthlyFrom":
+      return price.min;
+  }
 }
 
 /**

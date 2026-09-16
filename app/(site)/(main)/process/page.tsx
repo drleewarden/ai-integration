@@ -8,6 +8,9 @@ import {
   sprintDeliverables,
   assessmentDeliverables,
 } from "./data";
+import { pricingPhaseById } from "@/lib/pricing";
+
+const managed = pricingPhaseById("managed");
 
 export const metadata: Metadata = {
   title: "Our AI Implementation Process | Creative Milk",
@@ -579,7 +582,7 @@ export default function Process() {
             >
               <div>
                 <p className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-                  Phase 04 · Ongoing · AUD $5K–$15K/month
+                  Phase 04 · {managed.duration} · {managed.priceDisplay}
                 </p>
                 <h2
                   className="h-section"

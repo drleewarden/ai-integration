@@ -3,11 +3,24 @@ import type { Metadata } from "next";
 import { faqs, phases, reasons } from "./data";
 import FAQ from "@/app/components/FAQ";
 import { PricingSchema, BreadcrumbSchema } from "@/app/components/Schema";
+import { pricingPhaseById } from "@/lib/pricing";
+
+// Prices in the description are derived so this string cannot drift from the
+// page it describes, which is how it came to advertise a $5K/month Managed
+// Partnership floor after that floor moved to $1K.
+const priced = (id: Parameters<typeof pricingPhaseById>[0]) =>
+  pricingPhaseById(id)
+    .priceDisplay.replace("AUD ", "")
+    // Lower-cased because these appear mid-sentence in the description.
+    .replace(/^From /, "from ");
 
 export const metadata: Metadata = {
   title: "AI Implementation Pricing Australia | Published Rates | Creative Milk",
-  description:
-    "Published AI implementation pricing: AI Tools Assessment AUD $2K, Discovery Sprint from $5K, Build & Integrate from $30K, Managed Partnership from $5K/month. No hidden fees.",
+  description: `Published AI implementation pricing: AI Tools Assessment ${priced(
+    "assessment",
+  )}, Discovery Sprint ${priced("discovery")}, Build & Integrate ${priced(
+    "build",
+  )}, Managed Partnership ${priced("managed")}. No hidden fees.`,
 };
 
 export default function Pricing() {
