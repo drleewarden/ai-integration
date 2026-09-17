@@ -10,7 +10,7 @@ const STEPS: Step[] = [
     number: "01",
     title: "Discovery & Strategy",
     description:
-      "We map your business objectives, technical landscape, and AI readiness. The output is a scoped plan with measurable targets -- not a vague roadmap.",
+      "We map your business objectives, technical landscape, and AI readiness. The output is a scoped plan with measurable targets - not a vague roadmap.",
     duration: "1-2 weeks",
   },
   {
@@ -24,7 +24,7 @@ const STEPS: Step[] = [
     number: "03",
     title: "Optimise & Scale",
     description:
-      "We monitor, refine, and scale performance -- and we stay until the outcomes are real, not just live.",
+      "We monitor, refine, and scale performance - and we stay until the outcomes are real, not just live.",
     duration: "Ongoing",
   },
 ];
@@ -49,7 +49,7 @@ export default function Process() {
         >
           <div>
             <span className="eyebrow" style={{ marginBottom: "1.25rem" }}>
-              04 -- Process
+              04 - Process
             </span>
             <h2
               className="h-section"

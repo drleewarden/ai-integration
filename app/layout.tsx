@@ -28,15 +28,15 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Creative Milk -- Intelligence that actually works",
+  title: "Creative Milk - Intelligence that actually works",
   description:
-    "Creative Milk builds AI systems scoped around your actual business problems -- strategy, custom builds, integration, and training, measured by outcomes.",
+    "Creative Milk builds AI systems scoped around your actual business problems - strategy, custom builds, integration, and training, measured by outcomes.",
   metadataBase: new URL("https://www.creative-milk.com.au"),
   // Relative canonical resolves against each route's own path, giving every
   // page a self-referencing canonical unless it overrides it.
   alternates: { canonical: "./" },
   openGraph: {
-    title: "Creative Milk -- Intelligence that actually works",
+    title: "Creative Milk - Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
     type: "website",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Creative Milk -- Intelligence that actually works",
+    title: "Creative Milk - Intelligence that actually works",
     description:
       "AI systems scoped around your actual business problems. Outcomes, not deliverables.",
   },

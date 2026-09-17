@@ -173,7 +173,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
       >
         <a
           href="/"
-          aria-label="Creative Milk -- home"
+          aria-label="Creative Milk - home"
           style={{ display: "inline-flex" }}
         >
           <CMWordmark variant="cream-on-ink" markSize={72} />

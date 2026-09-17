@@ -1,5 +1,5 @@
 /**
- * Playbook email -- sent to the reader after they request their AI Readiness
+ * Playbook email - sent to the reader after they request their AI Readiness
  * playbook on the result page.
  *
  * Pure function: takes the public result projection + a few personalisation
@@ -10,7 +10,7 @@
  * same across all transactional mail: dark ink background, liquid-gold
  * accents, Courier eyebrows, Georgia display.
  *
- * Note: this is the "Phase 1" email -- score + insight + link back to the
+ * Note: this is the "Phase 1" email - score + insight + link back to the
  * result page. A future revision will attach a generated PDF playbook;
  * until then, the result URL is the canonical destination.
  */
@@ -44,7 +44,7 @@ export interface PlaybookEmailFields {
 }
 
 /**
- * Minimal HTML escape -- only what's needed for the values we interpolate.
+ * Minimal HTML escape - only what's needed for the values we interpolate.
  * Same approach as the contact-form email so the helpers stay symmetrical.
  */
 function escapeHtml(s: string): string {
@@ -58,7 +58,7 @@ function escapeHtml(s: string): string {
 
 /**
  * Plain-text fallback. Most modern clients render the HTML, but Resend
- * recommends always sending a text alt -- improves deliverability and gives
+ * recommends always sending a text alt - improves deliverability and gives
  * accessibility-aware readers something clean.
  */
 export function renderPlaybookEmailText(fields: PlaybookEmailFields): string {
@@ -80,7 +80,7 @@ export function renderPlaybookEmailText(fields: PlaybookEmailFields): string {
 
   return `${greeting}
 
-Your AI Readiness Score: ${fields.overallScore}/100 -- ${fields.band.label}
+Your AI Readiness Score: ${fields.overallScore}/100 - ${fields.band.label}
 
 ${fields.band.description}
 
@@ -94,7 +94,7 @@ ${focusLines}
 View your full result online:
 ${fields.resultUrl}
 
-Want to talk through what your score means for your business? Book a 30-minute call from your result page -- no deck, no pitch.
+Want to talk through what your score means for your business? Book a 30-minute call from your result page - no deck, no pitch.
 
 -- Creative Milk
 https://www.creative-milk.com.au
@@ -212,7 +212,7 @@ export function renderPlaybookEmailHtml(fields: PlaybookEmailFields): string {
         <!-- Pillar breakdown -->
         <tr><td style="padding:24px 40px 8px;">
           <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:${COLORS.creamSoft};margin-bottom:6px;">
-            -- Pillar breakdown
+            - Pillar breakdown
           </div>
           <div style="font-family:Georgia,serif;font-size:24px;color:${COLORS.cream};line-height:1.2;margin-bottom:16px;">
             How you scored across the five pillars
@@ -225,7 +225,7 @@ export function renderPlaybookEmailHtml(fields: PlaybookEmailFields): string {
         <!-- Focus areas -->
         <tr><td style="padding:40px 40px 8px;">
           <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:${COLORS.creamSoft};margin-bottom:6px;">
-            -- Where to focus
+            - Where to focus
           </div>
           <div style="font-family:Georgia,serif;font-size:24px;color:${COLORS.cream};line-height:1.2;margin-bottom:8px;">
             Your three highest-leverage focus areas
@@ -241,7 +241,7 @@ export function renderPlaybookEmailHtml(fields: PlaybookEmailFields): string {
         <!-- CTA -->
         <tr><td align="center" style="padding:24px 40px 48px;border-top:1px solid ${COLORS.border};">
           <div style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:${COLORS.creamSoft};margin-bottom:12px;">
-            -- Keep going
+            - Keep going
           </div>
           <p style="margin:0 0 24px;font-size:15px;line-height:1.7;color:${COLORS.creamMute};max-width:440px;">
             Revisit your full result online any time, or book a 30-minute call to talk through what your score means for your business.
@@ -253,7 +253,7 @@ export function renderPlaybookEmailHtml(fields: PlaybookEmailFields): string {
 
         <!-- Footer -->
         <tr><td style="padding:24px 40px;border-top:1px solid ${COLORS.border};font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.12em;color:${COLORS.creamSoft};">
-          Creative Milk -- AI consulting for Australian businesses<br>
+          Creative Milk - AI consulting for Australian businesses<br>
           <a href="https://www.creative-milk.com.au" style="color:${COLORS.creamSoft};text-decoration:none;border-bottom:1px solid ${COLORS.border};">creative-milk.com.au</a>
         </td></tr>
 
@@ -265,9 +265,9 @@ export function renderPlaybookEmailHtml(fields: PlaybookEmailFields): string {
 }
 
 /**
- * Build the subject line. Kept short and on-brand -- no emoji, no
+ * Build the subject line. Kept short and on-brand - no emoji, no
  * marketing-y exclamation. Score + band gives the recipient instant context.
  */
 export function renderPlaybookEmailSubject(fields: PlaybookEmailFields): string {
-  return `Your AI Readiness playbook -- ${fields.overallScore}/100 (${fields.band.label})`;
+  return `Your AI Readiness playbook - ${fields.overallScore}/100 (${fields.band.label})`;
 }

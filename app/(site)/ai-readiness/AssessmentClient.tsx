@@ -1,5 +1,5 @@
 /**
- * AssessmentClient -- the interactive AI Readiness flow.
+ * AssessmentClient - the interactive AI Readiness flow.
  *
  * States:
  *   intro       → hero + brief + Start button
@@ -8,7 +8,7 @@
  *   error       → retry option if submission fails
  *
  * On successful submit, redirects to /ai-readiness/result/[id]. The result
- * page is the single source of truth for what to render -- the client never
+ * page is the single source of truth for what to render - the client never
  * shows the score locally.
  *
  * Refactored from CreativeMilkReadiness_v5.jsx. Visual identity preserved
@@ -59,7 +59,7 @@ export default function AssessmentClient() {
       setQuestionIdx((i) => i + 1);
       if (typeof window !== 'undefined') window.scrollTo(0, 0);
     } else {
-      // Last question -- submit
+      // Last question - submit
       await submitAssessment();
     }
   };
@@ -176,7 +176,7 @@ function IntroScreen({ onStart }: { onStart: () => void }) {
               margin: '0 0 48px',
             }}
           >
-            A five-minute assessment across the five pillars of AI readiness -- strategy, data, culture, technology, governance. You&rsquo;ll get a personalised score, a breakdown of where you&rsquo;re strongest and weakest, and a focused 90-day playbook for what to do next.
+            A five-minute assessment across the five pillars of AI readiness - strategy, data, culture, technology, governance. You&rsquo;ll get a personalised score, a breakdown of where you&rsquo;re strongest and weakest, and a focused 90-day playbook for what to do next.
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', marginBottom: '48px' }}>
             {['Free assessment', 'No credit card', '5 minutes'].map((item) => (

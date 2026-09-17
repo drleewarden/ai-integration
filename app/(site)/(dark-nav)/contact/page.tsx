@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { resolveEnquirySource } from "@/lib/service-lines";
 import { ArrowRight } from "lucide-react";
 
 const budgetOptions = [
@@ -20,7 +22,7 @@ const nextSteps = [
   {
     step: "2",
     label: "We assess the fit (within 24 hours)",
-    body: "We'll have an initial view on whether we can help and what we'd propose. If we're not the right fit, we'll tell you that too -- and point you toward someone who might be.",
+    body: "We'll have an initial view on whether we can help and what we'd propose. If we're not the right fit, we'll tell you that too - and point you toward someone who might be.",
   },
   {
     step: "3",
@@ -46,6 +48,14 @@ export default function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  // Service-line attribution. This page's own pathname carries no service
+  // intent, so resolveEnquirySource falls back to a same-origin referrer.
+  const pathname = usePathname();
+  const referrer = useRef<string>("");
+  useEffect(() => {
+    referrer.current = document.referrer;
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -69,6 +79,12 @@ export default function Contact() {
       return;
     }
 
+    const source = resolveEnquirySource(
+      pathname ?? "/contact",
+      referrer.current,
+      window.location.origin,
+    );
+
     try {
       const response = await fetch("/api/send-email", {
         method: "POST",
@@ -78,6 +94,8 @@ export default function Contact() {
           email: formData.email,
           company: formData.company,
           message: `Problem: ${formData.problem}\n\nBudget range: ${formData.budget || "Not specified"}`,
+          sourcePath: source.sourcePath,
+          serviceLine: source.serviceLine,
         }),
       });
 
@@ -97,7 +115,7 @@ export default function Contact() {
 
   return (
     <>
-        {/* Hero -- light background */}
+        {/* Hero - light background */}
         <section
           className="section-tight"
           style={{
@@ -130,7 +148,7 @@ export default function Contact() {
           </div>
         </section>
 
-        {/* Main content -- dark background for form */}
+        {/* Main content - dark background for form */}
         <section
           className="section"
           style={{ backgroundColor: "var(--midnight-ink)" }}
@@ -169,7 +187,7 @@ export default function Contact() {
                   <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
                     {[
                       "No NDAs in the first call",
-                      "No vague roadmaps -- plain English next steps",
+                      "No vague roadmaps - plain English next steps",
                       "Response within 24 hours (business days)",
                       "We'll tell you honestly if we're not the right fit",
                     ].map((item, i) => (
@@ -260,7 +278,7 @@ export default function Contact() {
 
               {/* Right: form */}
               <div>
-                {/* Direct phone lines -- always visible, above the form */}
+                {/* Direct phone lines - always visible, above the form */}
                 <div
                   style={{
                     marginBottom: "2rem",

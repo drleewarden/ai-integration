@@ -150,7 +150,7 @@ export default function AIAutomationMelbournePage() {
               textTransform: "uppercase",
             }}
           >
-            <MapPin size={14} aria-hidden="true" /> South Melbourne, working Australia-wide
+            <MapPin size={14} aria-hidden="true" /> Elwood, working Australia-wide
           </p>
         </div>
       </section>

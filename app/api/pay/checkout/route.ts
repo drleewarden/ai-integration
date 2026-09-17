@@ -1,5 +1,5 @@
 /**
- * POST /api/pay/checkout -- body { id }.
+ * POST /api/pay/checkout - body { id }.
  *
  * Starts a Stripe Checkout session for a pending workshop payment link.
  * Input handling: the ONLY client-supplied value is the row's UUID; amount,
@@ -15,7 +15,7 @@ import { checkRateLimit } from "@/lib/rate-limit";
 import { UUID_RE } from "@/lib/payments/validate";
 import { baseUrl } from "@/lib/payments/base-url";
 
-// Reject anything bigger than this -- the body is a single UUID (~50 bytes),
+// Reject anything bigger than this - the body is a single UUID (~50 bytes),
 // 4KB is generous. Same convention as app/api/readiness/submit/route.ts.
 const MAX_BODY_BYTES = 4 * 1024;
 
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
   // Reuse an existing still-open session before creating another one.
   // Without this, every click mints a fresh payable session for the same
   // link (double-click, second device, stale tab) and two of them can BOTH
-  // be paid -- the webhook stays idempotent, but the customer is charged
+  // be paid - the webhook stays idempotent, but the customer is charged
   // twice. Checkout sessions stay "open" for 24h; anything else (completed,
   // expired, retrieval failure) falls through to creating a new one.
   if (row.stripe_checkout_session_id) {

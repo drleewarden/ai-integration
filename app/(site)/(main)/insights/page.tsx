@@ -7,7 +7,7 @@ import { posts, displayTitle } from "@/lib/insights/posts";
 export const metadata: Metadata = {
   title: "Insights | AI Implementation Articles & Case Studies | Creative Milk",
   description:
-    "Real observations on AI implementation from Creative Milk -- why projects fail, what works, and what we've built. No hype. Published regularly.",
+    "Real observations on AI implementation from Creative Milk - why projects fail, what works, and what we've built. No hype. Published regularly.",
 };
 
 const categoryColors: Record<string, string> = {

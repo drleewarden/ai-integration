@@ -1,4 +1,4 @@
-// Page copy/data for services -- extracted from page.tsx to keep the
+// Page copy/data for services - extracted from page.tsx to keep the
 // component readable. Edit copy here; edit layout in page.tsx.
 
 export const faqs = [
@@ -12,7 +12,7 @@ export const faqs = [
   },
   {
     q: "What if the system doesn't hit the success metrics?",
-    a: "We define the success metrics together in Phase 1. If the Phase 2 system doesn't hit them, we stay involved until it does. That's part of what the 95% outcome rate means -- we don't declare something done until it works.",
+    a: "We define the success metrics together in Phase 1. If the Phase 2 system doesn't hit them, we stay involved until it does. That's part of what the 95% outcome rate means - we don't declare something done until it works.",
   },
   {
     q: "Who will we work with?",
@@ -29,15 +29,15 @@ export const phase1Deliverables = [
   ["Stack review", "We assess your existing tech for integration feasibility"],
   ["Problem scoping", "We define one or more specific problems worth solving"],
   ["Success metrics", "We agree the exact outcomes we'll measure"],
-  ["Go/no-go recommendation", "Honest advice -- including if we think AI isn't the right answer"],
+  ["Go/no-go recommendation", "Honest advice - including if we think AI isn't the right answer"],
   ["Phase 2 proposal", "Fixed-price, scoped proposal ready to proceed if you choose"],
 ];
 
 export const phase2Deliverables = [
   ["System build", "Custom AI system designed to the Phase 1 specification"],
-  ["Stack integration", "Built into your existing tools -- no new vendor dependencies"],
+  ["Stack integration", "Built into your existing tools - no new vendor dependencies"],
   ["Testing & QA", "Validated against the success metrics agreed in Phase 1"],
-  ["Change management", "Structured adoption plan for your team -- included as standard"],
+  ["Change management", "Structured adoption plan for your team - included as standard"],
   ["Team training", "Hands-on sessions so your team owns the system, not just uses it"],
   ["IP transfer", "Full ownership of the system transfers to you on completion"],
   ["Documentation", "Plain-English system documentation for your team and IT"],
@@ -49,7 +49,7 @@ export const phase3Deliverables = [
   ["Continuous optimisation", "Refinements to the model based on real-world performance data"],
   ["Monthly reporting", "Plain-English report: what the system did, what changed, what's next"],
   ["Strategic advisory", "Access to Craig and Darryn for ongoing AI decisions and expansion"],
-  ["Priority support", "Direct line for issues -- not a ticketing queue"],
+  ["Priority support", "Direct line for issues - not a ticketing queue"],
 ];
 
 export const differentiators = [

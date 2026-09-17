@@ -1,4 +1,4 @@
-// app/robots.ts -- served automatically at /robots.txt
+// app/robots.ts - served automatically at /robots.txt
 //
 // Preserve the existing crawler permissions. Search and model-training
 // permissions are separate; allowing a bot does not guarantee a citation.

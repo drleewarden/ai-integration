@@ -2,7 +2,7 @@
  * POST /api/stripe/webhook
  *
  * THE ONLY WRITER OF member_profiles.tier. Signature-verified against the
- * raw body (no rate limiting, no honeypot -- Stripe is the only caller and
+ * raw body (no rate limiting, no honeypot - Stripe is the only caller and
  * signature verification is the gate).
  *
  * Events:
@@ -31,7 +31,7 @@ const PRO_STATUSES = new Set(["active", "trialing"]);
 
 // Voluntary cancellations keep Stripe status "active" (with cancel_at_period_end
 // set) until the current period ends, so members stay pro until then. "past_due"
-// (a failed payment) intentionally downgrades immediately -- do not add a grace
+// (a failed payment) intentionally downgrades immediately - do not add a grace
 // period here without an explicit product decision.
 function tierFor(status: string): "free" | "pro" {
   return PRO_STATUSES.has(status) ? "pro" : "free";
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
         if (session.metadata?.workshop_payment_id) {
           if (!resend) {
             console.error(
-              "[stripe/webhook] RESEND_API_KEY not set -- payment will be recorded without emails",
+              "[stripe/webhook] RESEND_API_KEY not set - payment will be recorded without emails",
             );
           }
           const handled = await fulfilWorkshopPayment({
@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
           typeof subscription.customer === "string"
             ? subscription.customer
             : subscription.customer.id;
-        // Stripe doesn't guarantee webhook delivery order -- a stale
+        // Stripe doesn't guarantee webhook delivery order - a stale
         // retried event could wrongly downgrade a member who has since
         // recovered. Re-fetch the subscription so we always act on its
         // current status rather than trusting the event payload.

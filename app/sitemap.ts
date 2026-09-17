@@ -1,4 +1,4 @@
-// app/sitemap.ts -- served automatically at /sitemap.xml
+// app/sitemap.ts - served automatically at /sitemap.xml
 //
 // Insights posts are derived from the content registry (lib/insights/posts.ts)
 // so new articles appear here without touching this file.
@@ -44,7 +44,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // ── Conversion / lead gen ────────────────────────────────────
     { url: `${BASE_URL}/ai-readiness`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/opportunity-cost`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/events/workshop-melbourne`, lastModified: SITE_UPDATED, changeFrequency: 'weekly', priority: 0.9 },
+    // Demoted from priority 0.9 / weekly: the advertised cohort (7 August 2026)
+    // has passed. Restore the higher priority when a future cohort is dated.
+    { url: `${BASE_URL}/events/workshop-melbourne`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.4 },
 
     // ── Members area ─────────────────────────────────────────────
     { url: `${BASE_URL}/members/upgrade`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.6 },

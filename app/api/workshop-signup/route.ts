@@ -24,9 +24,9 @@ interface WorkshopSignupBody {
   name: string;
   email: string;
   businessType: string;
-  /** Optional -- workflows/tasks the signup would like automated. */
+  /** Optional - workflows/tasks the signup would like automated. */
   workflows?: string;
-  /** Honeypot field -- humans never see it, bots fill it. */
+  /** Honeypot field - humans never see it, bots fill it. */
   website?: string;
   /** Epoch ms when the form mounted; sub-3s submits are treated as bots. */
   formStartedAt?: number;
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     // Honeypot / timing check: respond success-shaped, send nothing.
     if (isLikelyBot(body)) {
-      console.warn("[workshop-signup] honeypot triggered -- dropping submission");
+      console.warn("[workshop-signup] honeypot triggered - dropping submission");
       return NextResponse.json({ success: true }, { status: 200 });
     }
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // these values now reach the database, not just an email body.
     if (name.length > 200) {
       return NextResponse.json(
-        { error: "Name is too long -- please keep it under 200 characters." },
+        { error: "Name is too long - please keep it under 200 characters." },
         { status: 400 },
       );
     }
@@ -97,14 +97,14 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       return NextResponse.json(
         {
           error:
-            "Type of business is too long -- please keep it under 200 characters.",
+            "Type of business is too long - please keep it under 200 characters.",
         },
         { status: 400 },
       );
     }
     if (workflows.length > 2000) {
       return NextResponse.json(
-        { error: "Workflows note is too long -- please keep it under 2,000 characters." },
+        { error: "Workflows note is too long - please keep it under 2,000 characters." },
         { status: 400 },
       );
     }
@@ -125,7 +125,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       from: FROM,
       to: TO,
       replyTo: email,
-      subject: `New workshop signup -- ${name}`,
+      subject: `New workshop signup - ${name}`,
       html: notification,
       text: htmlToText(notification),
     });
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     // email the admin section sends. The amount comes from the server-side
     // constant, never the request body, so a signup cannot set its own price.
     // A failure here is logged and the reply still goes out without the pay
-    // button -- the internal notification above already succeeded, so an
+    // button - the internal notification above already succeeded, so an
     // admin can raise the link by hand from /members/admin/payment-links.
     let payUrl: string | undefined;
     try {

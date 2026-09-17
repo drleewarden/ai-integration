@@ -38,7 +38,7 @@ mockSend = (Resend as any)._mockSend;
 describe("/api/send-email", () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // All test requests share the same (absent) IP -- clear limiter state so
+    // All test requests share the same (absent) IP - clear limiter state so
     // the per-IP rate limit doesn't 429 later tests.
     resetRateLimits();
   });
@@ -80,7 +80,7 @@ describe("/api/send-email", () => {
         from: "test@example.com",
         to: "recipient@example.com",
         replyTo: "john@example.com",
-        subject: "New project enquiry -- John Doe",
+        subject: "New project enquiry - John Doe",
         html: expect.stringContaining("John Doe"),
       });
     });
@@ -118,7 +118,7 @@ describe("/api/send-email", () => {
         from: "Creative Milk <onboarding@resend.dev>",
         to: "contact@creative-milk.com.au",
         replyTo: "john@example.com",
-        subject: "New project enquiry -- John Doe",
+        subject: "New project enquiry - John Doe",
         html: expect.any(String),
       });
 
@@ -179,7 +179,7 @@ describe("/api/send-email", () => {
 
       expect(response.status).toBe(400);
       expect(data.error).toBe(
-        "Message is too long -- please keep it under 5,000 characters.",
+        "Message is too long - please keep it under 5,000 characters.",
       );
     });
 
@@ -200,7 +200,7 @@ describe("/api/send-email", () => {
         from: expect.any(String),
         to: expect.any(String),
         replyTo: "john@example.com",
-        subject: "New project enquiry -- John Doe",
+        subject: "New project enquiry - John Doe",
         html: expect.stringContaining("John Doe"),
       });
     });
@@ -259,7 +259,7 @@ describe("/api/send-email", () => {
       expect(data.error).toBe(
         "Failed to send. Please try again or email us directly.",
       );
-      // Error detail must never leak to the client -- it's logged server-side.
+      // Error detail must never leak to the client - it's logged server-side.
       expect(data.details).toBeUndefined();
     });
 
@@ -274,7 +274,7 @@ describe("/api/send-email", () => {
       expect(data.error).toBe(
         "Failed to send. Please try again or email us directly.",
       );
-      // Error detail must never leak to the client -- it's logged server-side.
+      // Error detail must never leak to the client - it's logged server-side.
       expect(data.details).toBeUndefined();
     });
   });

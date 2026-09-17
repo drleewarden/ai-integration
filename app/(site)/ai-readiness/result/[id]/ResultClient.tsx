@@ -1,5 +1,5 @@
 /**
- * ResultClient -- public result view.
+ * ResultClient - public result view.
  *
  * Renders the score reveal, pillar breakdown, focus areas, and two CTAs:
  *   1. Book a 30-min call (primary)  → opens BookCallModal
@@ -58,7 +58,7 @@ export default function ResultClient({
   const [emailBusy, setEmailBusy] = useState(false);
   const [copyClicked, setCopyClicked] = useState(false);
 
-  // Animated score reveal -- same easing as v5
+  // Animated score reveal - same easing as v5
   useEffect(() => {
     const target = result.overallScore;
     const duration = 1400;
@@ -76,7 +76,7 @@ export default function ResultClient({
 
   // Focus areas already come ordered lowest-first from the API; we render in
   // that order. We also derive a fully-sorted list for the pillar breakdown
-  // section but in v5's PILLAR_KEYS order (not score order) -- design choice
+  // section but in v5's PILLAR_KEYS order (not score order) - design choice
   // from v5: pillar order is consistent so readers can compare across runs.
   const focusAreaCards = useMemo(
     () =>
@@ -119,7 +119,7 @@ export default function ResultClient({
 
   const handleCopy = async () => {
     try {
-      const shareText = `Just did the Creative Milk AI Readiness assessment. ${result.overallScore}/100 -- ${result.band.label}. Worth a read: ${resultUrl}`;
+      const shareText = `Just did the Creative Milk AI Readiness assessment. ${result.overallScore}/100 - ${result.band.label}. Worth a read: ${resultUrl}`;
       await navigator.clipboard.writeText(shareText);
       setCopyClicked(true);
       setTimeout(() => setCopyClicked(false), 2000);
@@ -371,7 +371,7 @@ export default function ResultClient({
         </div>
       </div>
 
-      {/* CTA -- dark */}
+      {/* CTA - dark */}
       <div style={{ position: 'relative', background: C.ink, color: C.cream }}>
         <HeroBackground />
         <div
