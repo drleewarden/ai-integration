@@ -2,6 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import WebGLBackground from "./WebGLBackground";
+import MilkFluid from "./MilkFluid";
 import { EVENTS, pushEvent } from "../lib/gtm";
 
 const STATS = [
@@ -27,6 +28,7 @@ export default function Hero() {
       }}
     >
       <WebGLBackground />
+      <MilkFluid />
 
       <div
         className="container"
