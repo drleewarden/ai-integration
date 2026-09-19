@@ -28,7 +28,7 @@ import { createDropletSystem } from "@/lib/milk/droplets";
 const MIN_DESKTOP_WIDTH = 1024;
 
 /** Pointer speed, in UV per second, that starts throwing droplets. */
-const FLICK_THRESHOLD = 1.15;
+const FLICK_THRESHOLD = 1.7;
 
 /** Ignore sub-pixel pointer jitter so a resting cursor does not leak milk. */
 const MIN_MOVE = 0.0015;
@@ -36,22 +36,40 @@ const MIN_MOVE = 0.0015;
 /** Per-axis cap on a single frame's pointer delta, in UV. */
 const MAX_DELTA = 0.05;
 
-/** Pointer delta to fluid force. Tuned against the hero's height. */
-const FORCE_SCALE = 2600;
+/**
+ * Pointer delta to fluid force. Tuned against the hero's height, and kept
+ * deliberately gentle: at higher values an ordinary mouse sweep churns the
+ * whole field, which pulls the eye off the headline.
+ */
+const FORCE_SCALE = 1500;
 
 /**
  * Milk laid down per trail sub-splat. Not divided across the sub-splats: a
  * longer stroke genuinely holds more milk, and spreading a fixed budget over
  * the ribbon washes the trail out to nothing on fast moves.
  */
-const TRAIL_DYE = 0.42;
+const TRAIL_DYE = 0.24;
 
 /** Distance in UV between trail sub-splats, and the cap on how many. */
 const TRAIL_STEP = 0.012;
 const MAX_TRAIL_STEPS = 6;
 
 /** Milk a droplet sheds per second of life, scaled by its remaining alpha. */
-const DROPLET_DYE_RATE = 2.4;
+const DROPLET_DYE_RATE = 1.4;
+
+/**
+ * Solver settings, pulled back from lib/milk/fluid.ts defaults: motion dies
+ * away sooner, milk fades faster, less swirl in the curl, and lower opacity
+ * over the midnight ink. The milk should read as a trace the cursor leaves
+ * behind, not a lava lamp competing with the hero copy.
+ */
+const FLUID_SETTINGS = {
+  velocityDissipation: 3.8,
+  densityDissipation: 2.1,
+  curl: 7,
+  splatRadius: 0.034,
+  opacity: 0.55,
+} as const;
 
 /**
  * Desktop gate. `hover` and `pointer: fine` are the truer test for "has a
@@ -99,17 +117,18 @@ export default function MilkFluid() {
     };
     sizeCanvas();
 
-    fluid = createMilkFluid(canvas);
+    fluid = createMilkFluid(canvas, FLUID_SETTINGS);
     // No WebGL2 or no float render targets: leave the hero as it was.
     if (!fluid) return;
 
     const droplets = createDropletSystem({
       emitSpeed: FLICK_THRESHOLD,
-      gravity: 0.5,
-      drag: 1.4,
-      lifetime: 0.85,
-      maxDroplets: 80,
-      throwFactor: 0.3,
+      gravity: 0.45,
+      drag: 1.9,
+      lifetime: 0.6,
+      maxDroplets: 36,
+      maxPerEmit: 4,
+      throwFactor: 0.2,
     });
 
     let resizeRaf = 0;
@@ -190,7 +209,7 @@ export default function MilkFluid() {
         const dx = pointer.dx * FORCE_SCALE;
         // Slight downward bias so the trail sags like liquid rather than
         // hanging in place.
-        const dy = pointer.dy * FORCE_SCALE - 12;
+        const dy = pointer.dy * FORCE_SCALE - 7;
 
         // A fast flick can cover a lot of ground between two pointer events.
         // Splatting only at the end point leaves a dotted line, so walk the
