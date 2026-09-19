@@ -25,8 +25,12 @@ import { createDropletSystem } from "@/lib/milk/droplets";
 /** Below this width there is no mouse to ripple with, and no room for it. */
 const MIN_RIPPLE_WIDTH = 1024;
 
-/** Overall strength of the ripple contribution in the shader. */
-const RIPPLE_AMOUNT = 1.0;
+/**
+ * Overall strength of the ripple contribution in the shader. Scales the
+ * refraction, the crest highlight and the wave body together, so it is the
+ * single dial for how loud the water is against the hero copy.
+ */
+const RIPPLE_AMOUNT = 0.55;
 
 /**
  * Fixed wave integration rate, and the most catch-up allowed per frame.
