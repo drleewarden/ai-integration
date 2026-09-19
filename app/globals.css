@@ -1319,17 +1319,3 @@ textarea.input-light {
     animation: none !important;
   }
 }
-
-/* Hero milk cursor effect. Sits above .webgl-canvas, below hero content
-   (z-index 1). Desktop only; MilkFluid.tsx renders nothing elsewhere. */
-.milk-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 0;
-  pointer-events: none;
-  /* Softens the low-res dye grid into something creamy. */
-  filter: blur(3px);
-}

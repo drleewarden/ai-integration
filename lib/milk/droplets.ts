@@ -45,7 +45,12 @@ export type DropletSystemOptions = {
 export type DropletSystem = {
   /** Returns how many droplets the flick actually threw. */
   emit: (x: number, y: number, dx: number, dy: number) => number;
-  step: (dt: number) => void;
+  /**
+   * `onImpact` fires for each droplet whose flight ends on the surface, so
+   * the caller can ring the water where it landed. Droplets that leave the
+   * viewport are dropped silently: they never struck anything.
+   */
+  step: (dt: number, onImpact?: (droplet: Droplet) => void) => void;
   readonly droplets: readonly Droplet[];
   clear: () => void;
 };
@@ -106,7 +111,7 @@ export function createDropletSystem(
     return count;
   };
 
-  const step = (dt: number) => {
+  const step = (dt: number, onImpact?: (droplet: Droplet) => void) => {
     const t = Math.min(dt, MAX_STEP);
     const damping = Math.max(0, 1 - drag * t);
 
@@ -122,14 +127,18 @@ export function createDropletSystem(
       d.life -= t;
       d.alpha = Math.max(0, d.life / lifetime);
 
-      const gone =
-        d.life <= 0 ||
+      const offCanvas =
         d.y < -CULL_MARGIN ||
         d.y > 1 + CULL_MARGIN ||
         d.x < -CULL_MARGIN ||
         d.x > 1 + CULL_MARGIN;
 
-      if (gone) droplets.splice(i, 1);
+      if (offCanvas) {
+        droplets.splice(i, 1);
+      } else if (d.life <= 0) {
+        droplets.splice(i, 1);
+        onImpact?.(d);
+      }
     }
   };
 

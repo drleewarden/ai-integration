@@ -148,6 +148,58 @@ describe("droplet motion", () => {
   });
 });
 
+describe("droplet impacts", () => {
+  it("reports where a droplet struck the surface when its flight ends", () => {
+    const system = createDropletSystem({
+      emitSpeed: 1,
+      lifetime: 0.2,
+      gravity: 1,
+      random: noJitter,
+    });
+    system.emit(0.5, 0.5, 3, 0);
+    const impacts: Array<{ x: number; y: number }> = [];
+
+    for (let i = 0; i < 10; i++) {
+      system.step(1 / 30, (d) => impacts.push({ x: d.x, y: d.y }));
+    }
+
+    expect(impacts.length).toBeGreaterThan(0);
+    // It struck downstream of where it was thrown, not at the cursor.
+    expect(impacts[0].x).toBeGreaterThan(0.5);
+    expect(impacts[0].y).toBeLessThan(0.5);
+  });
+
+  it("does not report an impact while droplets are still in flight", () => {
+    const system = createDropletSystem({
+      emitSpeed: 1,
+      lifetime: 1,
+      random: noJitter,
+    });
+    system.emit(0.5, 0.5, 3, 0);
+    const onImpact = jest.fn();
+
+    system.step(1 / 60, onImpact);
+
+    expect(onImpact).not.toHaveBeenCalled();
+  });
+
+  it("does not report an impact for a droplet that leaves the viewport", () => {
+    const system = createDropletSystem({
+      emitSpeed: 1,
+      gravity: 6,
+      lifetime: 100,
+      random: noJitter,
+    });
+    system.emit(0.5, 0.02, 3, 0);
+    const onImpact = jest.fn();
+
+    for (let i = 0; i < 60; i++) system.step(1 / 60, onImpact);
+
+    expect(system.droplets).toHaveLength(0);
+    expect(onImpact).not.toHaveBeenCalled();
+  });
+});
+
 describe("droplet lifecycle", () => {
   it("clears every droplet on demand", () => {
     const system = createDropletSystem({ emitSpeed: 1, random: noJitter });
