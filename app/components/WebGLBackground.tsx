@@ -30,7 +30,7 @@ const MIN_RIPPLE_WIDTH = 1024;
  * refraction, the crest highlight and the wave body together, so it is the
  * single dial for how loud the water is against the hero copy.
  */
-const RIPPLE_AMOUNT = 0.55;
+const RIPPLE_AMOUNT = 0.2;
 
 /**
  * Fixed wave integration rate, and the most catch-up allowed per frame.
@@ -51,18 +51,22 @@ const MAX_DELTA = 0.05;
  * continuous trench; spacing the drops out leaves distinct rings that expand
  * and interfere, which is what reads as water.
  */
-const DROP_SPACING = 0.07;
+const DROP_SPACING = 0.1;
 
 /** How hard the cursor presses into the surface, and how wide. */
-const DROP_STRENGTH_SCALE = 0.05;
-const DROP_STRENGTH_MAX = 0.2;
+const DROP_STRENGTH_SCALE = 0.035;
+const DROP_STRENGTH_MAX = 0.12;
 const DROP_RADIUS = 0.0004;
 
-/** Pointer speed, in UV per second, that starts throwing droplets. */
-const FLICK_THRESHOLD = 1.7;
+/**
+ * Pointer speed, in UV per second, that starts throwing droplets. Set high
+ * so an ordinary sweep leaves only a wake, and spray is reserved for a
+ * deliberate flick.
+ */
+const FLICK_THRESHOLD = 2.8;
 
 /** The ring a landing droplet leaves. */
-const IMPACT_STRENGTH = 0.2;
+const IMPACT_STRENGTH = 0.11;
 const IMPACT_RADIUS = 0.00006;
 
 const VERT_SRC = `#version 300 es
@@ -380,7 +384,7 @@ export default function WebGLBackground() {
       gravity: 0.45,
       drag: 1.9,
       lifetime: 0.55,
-      maxDroplets: 36,
+      maxDroplets: 18,
       maxPerEmit: 4,
       throwFactor: 0.2,
     });
