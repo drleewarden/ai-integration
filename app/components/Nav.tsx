@@ -1,8 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { CMWordmark } from "./CMLogo";
+import AnimationToggle from "./AnimationToggle";
 import { EVENTS, pushEvent } from "../lib/gtm";
 
 type NavLink = { label: string; href: string; blurb?: string };
@@ -105,6 +107,9 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // The hero animation only exists on the homepage, so the control only
+  // appears there rather than sitting dead on every other page.
+  const showAnimationToggle = usePathname() === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -321,6 +326,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
               </div>
             );
           })}
+          {showAnimationToggle && <AnimationToggle />}
           <a
             href="/login"
             style={navLinkStyle}
@@ -516,6 +522,15 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           >
             Sign in
           </a>
+          {showAnimationToggle && (
+            <AnimationToggle
+              style={{
+                marginTop: "1.25rem",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            />
+          )}
         </div>
       )}
     </>

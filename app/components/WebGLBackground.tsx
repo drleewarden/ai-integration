@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useSyncExternalStore } from "react";
+import {
+  getAnimationPreference,
+  getServerAnimationPreference,
+  subscribeToAnimationPreference,
+} from "@/lib/animation-preference";
 import { createRippleField, type RippleField } from "@/lib/milk/ripples";
 import { createDropletSystem } from "@/lib/milk/droplets";
 
@@ -261,16 +266,18 @@ export default function WebGLBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const fallbackRef = useRef<HTMLDivElement | null>(null);
 
+  // Shared with the nav toggle. Reduced motion is already folded into the
+  // preference's default, so it does not need a separate check here.
+  const animate = useSyncExternalStore(
+    subscribeToAnimationPreference,
+    getAnimationPreference,
+    getServerAnimationPreference
+  );
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      // Show fallback gradient, skip WebGL entirely
-      if (fallbackRef.current) fallbackRef.current.style.opacity = "1";
-      return;
-    }
 
     const gl = canvas.getContext("webgl2", {
       antialias: false,
@@ -545,17 +552,25 @@ export default function WebGLBackground() {
       gl.deleteShader(vert);
       gl.deleteShader(frag);
     };
-  }, []);
+  }, [animate]);
 
   return (
     <>
       <div ref={fallbackRef} className="webgl-fallback" aria-hidden="true" />
-      <canvas
-        ref={canvasRef}
-        className="webgl-canvas"
-        aria-hidden="true"
-        role="presentation"
-      />
+      {/*
+        Unmounted rather than paused when animation is off: a canvas holds
+        its last drawn frame and sits above the fallback, so merely stopping
+        the loop would leave a frozen render covering the static gradient.
+        Unmounting also runs the effect's teardown, releasing the context.
+      */}
+      {animate && (
+        <canvas
+          ref={canvasRef}
+          className="webgl-canvas"
+          aria-hidden="true"
+          role="presentation"
+        />
+      )}
     </>
   );
 }
