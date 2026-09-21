@@ -326,7 +326,6 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
               </div>
             );
           })}
-          {showAnimationToggle && <AnimationToggle />}
           <a
             href="/login"
             style={navLinkStyle}
@@ -346,6 +345,7 @@ export default function Nav({ forceDark = false }: { forceDark?: boolean }) {
           >
             Sign in
           </a>
+          {showAnimationToggle && <AnimationToggle />}
           <a
             href="/contact"
             className="cta cta-gold"
