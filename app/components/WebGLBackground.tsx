@@ -70,6 +70,18 @@ const DROP_RADIUS = 0.0004;
  */
 const FLICK_THRESHOLD = 2.8;
 
+/**
+ * How long the water keeps moving once the cursor stops, in seconds. Left
+ * alone, rings reflect off the hero edges and keep interfering long after
+ * the stroke that made them, which reads as a restless shake. Instead the
+ * ripples play out normally until SETTLE_AFTER, then the damping ramps down
+ * to CALM_DAMPING so the surface is flat by SETTLE_BY.
+ */
+const SETTLE_AFTER = 1.2;
+const SETTLE_BY = 2.0;
+const RIPPLE_DAMPING = 0.994;
+const CALM_DAMPING = 0.9;
+
 /** The ring a landing droplet leaves. */
 const IMPACT_STRENGTH = 0.11;
 const IMPACT_RADIUS = 0.00006;
@@ -433,7 +445,9 @@ export default function WebGLBackground() {
       pointer.y = y;
       pointer.moved = true;
 
-      if (!ripples) ripples = createRippleField(gl, canvas);
+      if (!ripples) {
+        ripples = createRippleField(gl, canvas, { damping: RIPPLE_DAMPING });
+      }
     };
     window.addEventListener("pointermove", onMove, { passive: true });
 
@@ -474,6 +488,8 @@ export default function WebGLBackground() {
     let travelled = 0;
     let lastDropX = 0;
     let lastDropY = 0;
+    // Seconds since the cursor last moved the water.
+    let idle = 0;
 
     const render = (now: number) => {
       raf = requestAnimationFrame(render);
@@ -487,8 +503,10 @@ export default function WebGLBackground() {
       mouse.y += (mouse.ty - mouse.y) * Math.min(1, dt * 3.5);
 
       if (ripples) {
+        idle += dt;
         if (pointer.moved) {
           pointer.moved = false;
+          idle = 0;
           const speed = Math.hypot(pointer.dx, pointer.dy) / Math.max(dt, 1e-4);
           travelled += Math.hypot(pointer.x - lastDropX, pointer.y - lastDropY);
 
@@ -509,10 +527,17 @@ export default function WebGLBackground() {
           ripples?.drop(d.x, d.y, IMPACT_STRENGTH * d.size, IMPACT_RADIUS);
         });
 
+        // Calm the surface once the cursor has been still for a moment.
+        const settle = Math.min(
+          1,
+          Math.max(0, (idle - SETTLE_AFTER) / (SETTLE_BY - SETTLE_AFTER))
+        );
+        const damping = RIPPLE_DAMPING + (CALM_DAMPING - RIPPLE_DAMPING) * settle;
+
         waveDebt = Math.min(waveDebt + dt, MAX_WAVE_DEBT);
         while (waveDebt >= WAVE_STEP) {
           waveDebt -= WAVE_STEP;
-          ripples.step();
+          ripples.step(damping);
         }
 
         // The ripple passes rebind the program and the array buffer, so the

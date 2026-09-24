@@ -97,8 +97,11 @@ export type RippleFieldOptions = {
 export type RippleField = {
   /** Disturb the surface. `strength` may be negative for a dent. */
   drop: (x: number, y: number, strength: number, radius: number) => void;
-  /** Advance the simulation one step. */
-  step: () => void;
+  /**
+   * Advance the simulation one step. `damping` overrides the field's own
+   * value for this step, so a caller can calm the surface on demand.
+   */
+  step: (damping?: number) => void;
   /** Height field for the display shader: red is now, green is one step ago. */
   readonly texture: WebGLTexture;
   resize: () => void;
@@ -281,7 +284,7 @@ export function createRippleField(
     restoreHostState();
   };
 
-  const step = () => {
+  const step = (stepDamping = damping) => {
     gl.useProgram(waveProgram);
     bindQuad();
     gl.bindFramebuffer(gl.FRAMEBUFFER, back.fbo);
@@ -290,7 +293,7 @@ export function createRippleField(
     gl.bindTexture(gl.TEXTURE_2D, front.texture);
     gl.uniform1i(waveUniforms.uState, 0);
     gl.uniform2f(waveUniforms.texelSize, 1 / width, 1 / height);
-    gl.uniform1f(waveUniforms.damping, damping);
+    gl.uniform1f(waveUniforms.damping, stepDamping);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     const swap = front;
