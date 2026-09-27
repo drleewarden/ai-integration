@@ -104,6 +104,12 @@ export default function RootLayout({
         </PostHogProvider>
         <BackToTop />
         <ConsentBanner />
+        {/* Google Preferred Sources button renderer, see components/PreferredSource.tsx */}
+        <Script
+          id="google-preferred-source"
+          src="https://news.google.com/swg/js/v1/publisher.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

@@ -1,5 +1,6 @@
 import { CMWordmark } from "./CMLogo";
 import CookieSettingsLink from "./CookieSettingsLink";
+import PreferredSource from "./PreferredSource";
 
 // Official brand glyphs (Simple Icons paths) - lucide's outline versions are
 // approximations, not the real marks.
@@ -85,6 +86,13 @@ export default function Footer() {
           >
             Intelligence that actually works for your business.
           </p>
+          <div style={{ marginTop: "1.5rem" }}>
+            <PreferredSource
+              theme="dark"
+              label="Seeing us in Google? Make us a preferred source."
+              labelColor="rgba(245,240,232,0.7)"
+            />
+          </div>
         </div>
 
         <div>
