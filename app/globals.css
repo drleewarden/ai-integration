@@ -49,6 +49,9 @@
   --container-max: 1280px;
   --container-pad: clamp(1.25rem, 4vw, 2.5rem);
 
+  /* Fixed nav bar height (keep in sync with Nav.tsx) */
+  --site-nav-height: 116px;
+
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
