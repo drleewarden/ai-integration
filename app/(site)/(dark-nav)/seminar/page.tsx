@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import SeminarForm from "@/app/components/members/SeminarForm";
-import { isSeminarCodeValid, readSeminarConfig } from "@/lib/members/seminar";
+import { isSeminarCodeValid } from "@/lib/members/seminar";
 
 export const metadata: Metadata = {
   title: "Seminar premium pack | Creative Milk Members",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 /**
- * QR landing page for seminar attendees: /seminar?c=<SEMINAR_ACCESS_CODE>.
+ * QR landing page for seminar attendees: /seminar?c=<SEMINAR_CODE>.
  * The code is checked here only to choose what to render; the API route
  * re-checks it, so editing the URL can't skip the gate.
  */
@@ -21,7 +21,7 @@ export default async function SeminarPage({
   searchParams: Promise<{ c?: string }>;
 }) {
   const { c } = await searchParams;
-  const valid = isSeminarCodeValid(c, readSeminarConfig());
+  const valid = isSeminarCodeValid(c);
 
   return (
     <section className="section members-auth-section">

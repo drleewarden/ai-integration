@@ -4,8 +4,8 @@ import { getSessionUser } from "@/lib/supabase/auth-server";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import {
   GOOGLE_REVIEW_URL,
+  SEMINAR_PRO_DAYS,
   complimentaryUntil,
-  readSeminarConfig,
 } from "@/lib/members/seminar";
 
 export const metadata: Metadata = {
@@ -43,8 +43,7 @@ async function grantFor(userId: string, email: string) {
     return { name: signup.name as string, until: profile?.complimentary_pro_until ?? null };
   }
 
-  const proDays = readSeminarConfig()?.proDays ?? 90;
-  const until = complimentaryUntil(profile?.complimentary_pro_until ?? null, proDays);
+  const until = complimentaryUntil(profile?.complimentary_pro_until ?? null, SEMINAR_PRO_DAYS);
 
   const { error } = await service
     .from("member_profiles")

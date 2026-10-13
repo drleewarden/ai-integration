@@ -1,50 +1,29 @@
 /**
  * Seminar QR sign-up: config and pure decision helpers.
  *
- * Env (server-only, never NEXT_PUBLIC_):
- *   SEMINAR_ACCESS_CODE       code printed in the QR (?c=...). Unset = closed.
- *   SEMINAR_ACCESS_CLOSES_AT  ISO timestamp after which the code stops working.
- *   SEMINAR_PRO_DAYS          days of complimentary Pro per attendee (default 90).
- *
- * The code is a shared secret on a projected slide, so it WILL leak. The
- * closing date is what bounds the damage: set it a few days after the event.
+ * No env setup by design: the code printed in the QR is built in and the
+ * link never closes. It is unlisted (noindex) and the worst case if it
+ * spreads is someone getting 90 days of Pro content, which is accepted.
+ * For a new event, change SEMINAR_CODE here and regenerate the QR.
  */
 import { timingSafeEqual } from "node:crypto";
 import type { MemberTier } from "@/lib/members/items";
 
 export { GOOGLE_REVIEW_URL, SEMINAR_CONSENT_TEXT } from "@/lib/members/seminar-copy";
 
-export interface SeminarConfig {
-  code: string;
-  closesAt: Date;
-  proDays: number;
-}
+/** Matches the QR on the Growth Club deck: /seminar?c=growth4-nldutam */
+export const SEMINAR_CODE = "growth4-nldutam";
+export const SEMINAR_PRO_DAYS = 90;
 
-export function readSeminarConfig(
-  env: Record<string, string | undefined> = process.env,
-): SeminarConfig | null {
-  const code = env.SEMINAR_ACCESS_CODE?.trim();
-  const closesAt = new Date(env.SEMINAR_ACCESS_CLOSES_AT ?? "");
-  if (!code || Number.isNaN(closesAt.getTime())) return null;
-  const days = Number.parseInt(env.SEMINAR_PRO_DAYS ?? "", 10);
-  return {
-    code,
-    closesAt,
-    proDays: Number.isFinite(days) && days > 0 && days <= 365 ? days : 90,
-  };
-}
-
-/** True when the submitted code matches and the window is still open. */
+/** True when the submitted code matches the one in the QR. */
 export function isSeminarCodeValid(
   submitted: string | null | undefined,
-  config: SeminarConfig | null,
-  now: Date = new Date(),
+  code: string = SEMINAR_CODE,
 ): boolean {
-  if (!config || !submitted) return false;
-  if (now.getTime() > config.closesAt.getTime()) return false;
+  if (!submitted) return false;
   // Constant-time compare so the code can't be guessed byte by byte.
   const a = Buffer.from(submitted);
-  const b = Buffer.from(config.code);
+  const b = Buffer.from(code);
   return a.length === b.length && timingSafeEqual(a, b);
 }
 

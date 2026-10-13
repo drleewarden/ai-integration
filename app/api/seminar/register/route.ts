@@ -6,17 +6,17 @@
  * link is never clicked. The client sends the magic link itself after a
  * 200 from here; access is granted later on /seminar/welcome.
  *
- * Gate: the QR code (?c=...) must match SEMINAR_ACCESS_CODE inside the
- * open window. Rate limited per IP plus honeypot/timing bot check.
+ * Gate: the QR code (?c=...) must match the seminar code (see
+ * lib/members/seminar.ts). Rate limited per IP plus honeypot/timing bot check.
  * Writes with the service role; seminar_signups has no RLS policies.
  */
 import { NextResponse, type NextRequest } from "next/server";
 import { checkRateLimit, isLikelyBot } from "@/lib/rate-limit";
 import { getServiceSupabase } from "@/lib/supabase/server";
 import {
+  SEMINAR_CODE,
   SEMINAR_CONSENT_TEXT,
   isSeminarCodeValid,
-  readSeminarConfig,
 } from "@/lib/members/seminar";
 
 interface Body {
@@ -50,8 +50,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ success: true }, { status: 200 });
   }
 
-  const config = readSeminarConfig();
-  if (!isSeminarCodeValid(body.code, config)) {
+  if (!isSeminarCodeValid(body.code)) {
     return NextResponse.json(
       { error: "This seminar sign-up link has expired or is not valid." },
       { status: 403 },
@@ -76,7 +75,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     .from("seminar_signups")
     .upsert(
       {
-        event_code: config!.code,
+        event_code: SEMINAR_CODE,
         name,
         email,
         marketing_opt_in: marketingOptIn,
