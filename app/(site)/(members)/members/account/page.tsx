@@ -57,7 +57,13 @@ export default async function AccountPage({
               Plan
             </dt>
             <dd style={{ margin: 0, fontSize: "1.125rem" }}>
-              {profile.tier === "pro" ? "Pro — $29/month" : "Free"}
+              {profile.complimentary && profile.complimentary_pro_until
+                ? `Pro (complimentary until ${new Date(
+                    profile.complimentary_pro_until,
+                  ).toLocaleDateString("en-AU", { dateStyle: "long" })})`
+                : profile.tier === "pro"
+                  ? "Pro — $29/month"
+                  : "Free"}
               {profile.tier === "free" && (
                 <>
                   {" · "}

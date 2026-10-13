@@ -9,6 +9,7 @@ import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 import type { MemberTier } from "@/lib/members/items";
+import { effectiveTier } from "@/lib/members/seminar";
 
 export async function getAuthServerSupabase(): Promise<SupabaseClient> {
   const cookieStore = await cookies();
@@ -43,7 +44,11 @@ export async function getSessionUser(): Promise<User | null> {
 }
 
 export interface MemberProfileRow {
+  /** Effective tier: paid Pro or a live complimentary grant both read "pro". */
   tier: MemberTier;
+  /** True when Pro comes only from a complimentary (seminar) grant. */
+  complimentary: boolean;
+  complimentary_pro_until: string | null;
   email: string;
   display_name: string | null;
   stripe_customer_id: string | null;
@@ -61,7 +66,7 @@ export async function getMemberProfile(): Promise<{
   const { data: profile, error: profileError } = await supabase
     .from("member_profiles")
     .select(
-      "tier, email, display_name, stripe_customer_id, subscription_status",
+      "tier, email, display_name, stripe_customer_id, subscription_status, complimentary_pro_until",
     )
     .eq("id", data.user.id)
     .maybeSingle();
@@ -75,6 +80,8 @@ export async function getMemberProfile(): Promise<{
       user: data.user,
       profile: {
         tier: "free",
+        complimentary: false,
+        complimentary_pro_until: null,
         email: data.user.email ?? "",
         display_name: null,
         stripe_customer_id: null,
@@ -83,5 +90,16 @@ export async function getMemberProfile(): Promise<{
     };
   }
 
-  return { user: data.user, profile: profile as MemberProfileRow };
+  // Fold the complimentary grant in here so every canAccess() call site gets
+  // it without change. The raw paid tier stays the Stripe webhook's alone.
+  const paidTier = profile.tier as MemberTier;
+  const tier = effectiveTier(paidTier, profile.complimentary_pro_until);
+  return {
+    user: data.user,
+    profile: {
+      ...(profile as Omit<MemberProfileRow, "tier" | "complimentary">),
+      tier,
+      complimentary: tier === "pro" && paidTier !== "pro",
+    },
+  };
 }
