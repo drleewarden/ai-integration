@@ -4,12 +4,95 @@
  * Seminar QR sign-up form. Two steps on submit:
  *   1. POST /api/seminar/register  (stores name, email, consent server-side)
  *   2. signInWithOtp magic link    (lands on /seminar/welcome once clicked)
+ * Then a thank-you pop-up counts down and sends them to the Google review
+ * page. The review is optional ("Not now" cancels it) and access never
+ * depends on it (Google review policy bans incentivised reviews).
  * Name and consent never go in a URL; they live in seminar_signups only.
  */
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { getBrowserSupabase } from "@/lib/supabase/browser";
-import { SEMINAR_CONSENT_TEXT } from "@/lib/members/seminar-copy";
+import {
+  GOOGLE_REVIEW_URL,
+  SEMINAR_CONSENT_TEXT,
+  SEMINAR_REVIEW_REDIRECT_SECONDS,
+  SEMINAR_THANKS_TEXT,
+} from "@/lib/members/seminar-copy";
+
+function ThanksDialog({ onClose }: { onClose: () => void }) {
+  const ref = useRef<HTMLDialogElement>(null);
+  const [secondsLeft, setSecondsLeft] = useState(SEMINAR_REVIEW_REDIRECT_SECONDS);
+
+  // Native modal dialog: focus trap, Escape and backdrop come for free.
+  useEffect(() => {
+    const dialog = ref.current;
+    if (dialog && !dialog.open) dialog.showModal();
+  }, []);
+
+  useEffect(() => {
+    if (secondsLeft <= 0) {
+      window.location.assign(GOOGLE_REVIEW_URL);
+      return;
+    }
+    const t = window.setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
+    return () => window.clearTimeout(t);
+  }, [secondsLeft]);
+
+  return (
+    <dialog
+      ref={ref}
+      aria-labelledby="seminar-thanks-title"
+      onClose={onClose}
+      className="seminar-thanks"
+      style={{
+        maxWidth: 480,
+        margin: "auto",
+        width: "calc(100% - 2rem)",
+        padding: "2rem",
+        border: "none",
+        background: "var(--warm-cream)",
+        color: "var(--midnight-ink)",
+      }}
+    >
+      <p className="eyebrow no-rule" id="seminar-thanks-title" style={{ marginBottom: "1rem" }}>
+        Thank you
+      </p>
+      <p style={{ fontSize: "1.0625rem", lineHeight: 1.6, marginBottom: "1.5rem" }}>
+        {SEMINAR_THANKS_TEXT}
+      </p>
+      <a
+        href={GOOGLE_REVIEW_URL}
+        className="cta cta-gold"
+        style={{ width: "100%", justifyContent: "center" }}
+      >
+        Leave a Google review
+      </a>
+      <p
+        aria-live="polite"
+        style={{ marginTop: "1rem", fontSize: "0.875rem", color: "var(--slate-mid)", textAlign: "center" }}
+      >
+        Taking you there in {secondsLeft}s.
+      </p>
+      <button
+        type="button"
+        onClick={() => ref.current?.close()}
+        style={{
+          display: "block",
+          margin: "0.5rem auto 0",
+          minHeight: 44,
+          padding: "0 1rem",
+          background: "transparent",
+          border: "none",
+          color: "var(--slate-mid)",
+          textDecoration: "underline",
+          cursor: "pointer",
+        }}
+      >
+        Not now
+      </button>
+    </dialog>
+  );
+}
 
 export default function SeminarForm({ code }: { code: string }) {
   const [name, setName] = useState("");
@@ -23,6 +106,7 @@ export default function SeminarForm({ code }: { code: string }) {
     | { state: "sent" }
     | { state: "error"; message: string }
   >({ state: "idle" });
+  const [showThanks, setShowThanks] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -64,6 +148,7 @@ export default function SeminarForm({ code }: { code: string }) {
       return;
     }
     setStatus({ state: "sent" });
+    setShowThanks(true);
   }
 
   if (status.state === "sent") {
@@ -76,6 +161,7 @@ export default function SeminarForm({ code }: { code: string }) {
         <p style={{ color: "var(--slate-mid)" }}>
           Can&rsquo;t see it? Check your spam or promotions folder.
         </p>
+        {showThanks && <ThanksDialog onClose={() => setShowThanks(false)} />}
       </div>
     );
   }

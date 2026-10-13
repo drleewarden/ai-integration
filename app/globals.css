@@ -1322,3 +1322,9 @@ textarea.input-light {
     animation: none !important;
   }
 }
+
+/* Seminar sign-up thank-you pop-up (SeminarForm.tsx) */
+.seminar-thanks::backdrop {
+  background: rgba(15, 21, 38, 0.85);
+  backdrop-filter: blur(4px);
+}
