@@ -1,0 +1,6 @@
+{
+  "from_name": "Jo Smith",
+  "from_email": "jo@example-test.com",
+  "subject": "Online shop quote",
+  "body": "Hi, we need an online store with about 200 products, Stripe payments and customer logins. Can you quote?\nJo, Smith Homewares"
+}

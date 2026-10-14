@@ -1,0 +1,111 @@
+{
+  "_comment": "Plugin defaults. Do not put personal details here: the setup skill writes ~/.creative-milk/config.json, which overrides these keys. No secrets anywhere; the Graph refresh token lives in the macOS Keychain.",
+  "mailbox": "",
+  "own_domains": [],
+  "form_senders": [],
+  "signature_name": "",
+  "signature_title": "",
+  "signoff": "Kind regards,",
+  "reply_format": "html",
+  "signature_lines": [],
+  "graph": {
+    "tenant_id": "",
+    "client_id": "",
+    "scopes": [
+      "offline_access",
+      "https://graph.microsoft.com/Mail.ReadWrite.Shared"
+    ]
+  },
+  "keychain": {
+    "service": "cm-quote-graph",
+    "account": "refresh-token"
+  },
+  "pricing_sources": [],
+  "hours_per_day": 8,
+  "page_days": {
+    "1": 2,
+    "2": 3,
+    "3": 3.5,
+    "4": 4.5,
+    "5": 5
+  },
+  "extra_page_hours": 2,
+  "max_pages_quotable": 20,
+  "seo_addon_days": 1,
+  "build_phases": [
+    {
+      "name": "Discovery and planning",
+      "scope": "goals, sitemap, content inventory, project and staging setup",
+      "share": 0.1
+    },
+    {
+      "name": "Design direction and first-draft concept",
+      "scope": "high-fidelity concepts of the key pages, styled to your brand",
+      "share": 0.2
+    },
+    {
+      "name": "Page build",
+      "scope": "responsive pages, components and contact form, built to the signed-off design",
+      "share": 0.4,
+      "absorb": true
+    },
+    {
+      "name": "Accessibility, performance and security",
+      "scope": "WCAG 2.2 AA pass, Core Web Vitals tuning, security headers",
+      "share": 0.1
+    },
+    {
+      "name": "Deploy, QA and launch",
+      "scope": "domain and SSL, analytics, final QA, go-live",
+      "share": 0.1
+    },
+    {
+      "name": "Handover",
+      "scope": "walkthrough, editing guide and documentation",
+      "share": 0.1
+    }
+  ],
+  "max_pages_auto": 5,
+  "max_total_ex_gst": 5000,
+  "min_confidence": 0.8,
+  "gst_rate": 0.1,
+  "valid_days": 30,
+  "payment_schedule": [
+    {
+      "label": "On acceptance",
+      "name": "Deposit and kickoff",
+      "trigger": "On acceptance, to begin the project",
+      "pct": 25
+    },
+    {
+      "label": "At design sign-off",
+      "name": "Design sign-off",
+      "trigger": "On approval of the design concept",
+      "pct": 50
+    },
+    {
+      "label": "On launch",
+      "name": "Launch",
+      "trigger": "Site live",
+      "pct": 25
+    }
+  ],
+  "abn": "",
+  "quotes_dir": "~/Documents/Quotes",
+  "register": {
+    "_comment": "Client Register workbook + Quotes/ + Invoices/. Point dir at a Google Drive or OneDrive folder to sync it.",
+    "dir": "~/Documents/Client Register",
+    "file": "Client Register.xlsx"
+  },
+  "categories": {
+    "SIMPLE": "Quote: Draft ready",
+    "NEEDS_INFO": "Quote: Info requested",
+    "NEEDS_REVIEW": "Quote: Needs review"
+  },
+  "classifier_model": "claude-sonnet-5-5",
+  "max_body_chars": 20000,
+  "max_classifications_per_hour": 20,
+  "open_draft_on_ready": false,
+  "hourly_rate": 100,
+  "business_description": "a small web and AI studio"
+}

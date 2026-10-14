@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+  quote-from-email: Creative Milk branded QUOTE, in the style of the proposal
+  documents (dark cover, numbered gold-eyebrow sections, stat cards, phase table,
+  staged delivery, investment table).
+  Filled by scripts/cmq/render.py. Plain values are HTML-escaped before insertion;
+  the *_BLOCK / *_ROWS placeholders are built by render.py from escaped parts.
+-->
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<title>{{BUSINESS_NAME}} Quote {{QUOTE_NO}}</title>
+<style>
+  :root{
+    --ink:#0f1526; --ink-deep:#0a0f1c;
+    --gold:#c9a84c; --gold-bright:#e8c96a; --gold-pale:#f4e9c8; --gold-text:#7a5c12;
+    --cream:#faf8f4; --card:#f6f4ef; --rule:#ebe6dc;
+    --slate:#4a4e60; --green:#3d7a5f;
+  }
+  *{box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  @page{size:A4; margin:0;}
+  html,body{margin:0; padding:0;}
+  body{font-family:"Helvetica Neue",-apple-system,Arial,sans-serif; color:var(--ink); font-size:11px; line-height:1.55; background:var(--cream);}
+
+  .page{width:210mm; height:297mm; position:relative; overflow:hidden; page-break-after:always; background:var(--cream); padding:16mm 16mm 22mm 16mm;}
+  .page:last-child{page-break-after:auto;}
+
+  /* COVER */
+  .cover{background:radial-gradient(90% 60% at 85% 18%, #2a2b3a 0%, var(--ink) 45%, var(--ink-deep) 100%); color:var(--cream); padding:28mm 22mm 22mm 22mm;}
+  .cover .logo{width:210px; height:auto;}
+  .cover .eyebrow{margin-top:52mm; font-size:12px; letter-spacing:0.32em;}
+  .cover h1{margin:10px 0 0 0; font-size:46px; line-height:1.05; font-weight:800; letter-spacing:-0.02em; color:#fff;}
+  .cover h1 .gold{display:block; color:var(--gold-bright);}
+  .cover .bar{width:28mm; height:3px; background:var(--gold); margin:9mm 0 7mm 0;}
+  .cover .lead{max-width:150mm; font-size:15px; line-height:1.6; color:#b4b8c8;}
+  .price{display:inline-block; margin-top:7mm; padding:16px 26px 14px 26px; border:1.5px solid var(--gold); border-radius:12px; background:rgba(15,21,38,0.6);}
+  .price .k{font-size:10.5px; font-weight:800; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold);}
+  .price .v{font-size:44px; font-weight:800; color:var(--gold-bright); line-height:1.15; margin-top:4px;}
+  .price .s{font-size:11.5px; color:#b4b8c8;}
+  .cover .metarow{position:absolute; left:22mm; right:22mm; bottom:26mm; display:flex; gap:10mm; border-top:1px solid rgba(255,255,255,0.18); padding-top:7mm;}
+  .cover .metarow > div{flex:1;}
+  .cover .metarow .mk{font-size:12px; font-weight:800; color:#fff; text-transform:uppercase;}
+  .cover .metarow .mv{font-size:12px; color:#b4b8c8; margin-top:3px;}
+
+  /* SECTION HEADERS */
+  .eyebrow{font-size:11px; font-weight:800; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold);}
+  h2{font-size:28px; line-height:1.15; font-weight:800; letter-spacing:-0.015em; margin:6px 0 0 0;}
+  .h2bar{width:16mm; height:3px; background:var(--gold); margin:5mm 0 5mm 0;}
+  .intro{font-size:13px; line-height:1.65; color:var(--slate); margin:0 0 6mm 0;}
+  .section + .section{margin-top:10mm;}
+
+  /* STAT CARDS */
+  .stats{display:flex; gap:4mm;}
+  .stat{flex:1; background:var(--card); border:1px solid var(--rule); border-top:4px solid var(--gold); border-radius:8px; padding:12px 14px;}
+  .stat .k{font-size:9.5px; font-weight:800; letter-spacing:0.18em; text-transform:uppercase; color:var(--slate);}
+  .stat .v{font-size:26px; font-weight:800; line-height:1.15; margin-top:4px;}
+  .stat .s{font-size:10px; color:var(--slate); margin-top:2px;}
+
+  /* TABLES */
+  table{width:100%; border-collapse:collapse; font-size:11px;}
+  th{background:var(--ink); color:var(--gold-pale); text-align:left; padding:10px 12px; font-weight:700; font-size:11px;}
+  td{padding:9px 12px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  tbody tr:nth-child(even) td{background:var(--card);}
+  .r{text-align:right;} .c{text-align:center;}
+  td .scope{color:var(--slate);}
+  tr.tot td{background:var(--gold-pale) !important; font-weight:800; border-top:2px solid var(--gold); border-bottom:none;}
+
+  /* CALLOUTS */
+  .note{background:var(--gold-pale); border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:12px 16px; font-size:10.5px; color:var(--gold-text); margin-top:6mm;}
+  .note b{color:#5c430a;}
+  .dark{background:var(--ink); color:var(--cream); border-radius:10px; padding:16px 20px; font-size:12px; line-height:1.65; margin-top:6mm;}
+  .dark b{color:var(--gold-bright);}
+
+  /* STAGED DELIVERY */
+  .step{display:flex; gap:12px; background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:10px 16px; margin-bottom:2.5mm;}
+  .step .n{flex:none; width:24px; height:24px; border-radius:50%; background:var(--ink); color:var(--gold-bright); font-weight:800; font-size:11px; display:flex; align-items:center; justify-content:center; margin-top:1px;}
+  .step .body{flex:1;}
+  .step .t{display:flex; justify-content:space-between; gap:10px; font-size:13px; font-weight:700;}
+  .step .pay{font-size:10.5px; font-weight:800; color:var(--green); white-space:nowrap;}
+  .step .d{font-size:10.5px; color:var(--slate); margin-top:2px;}
+
+  /* FOOTER */
+  .foot{position:absolute; left:16mm; right:16mm; bottom:8mm; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--rule); padding-top:4mm; font-size:9px; color:var(--slate);}
+  .foot svg{width:62px; height:auto;}
+  .cover .foot{left:22mm; right:22mm; border-top-color:rgba(255,255,255,0.12); color:#8b8fa8;}
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<section class="page cover">
+  {{LOGO_ON_DARK}}
+  <div class="eyebrow">{{COVER_EYEBROW}}</div>
+  <h1>{{CLIENT_TITLE}}<span class="gold">{{COVER_TITLE}}</span></h1>
+  <div class="bar"></div>
+  <div class="lead">{{COVER_LEAD}}</div>
+  <div class="price">
+    <div class="k">{{PRICE_LABEL}}</div>
+    <div class="v">{{SUBTOTAL_SHORT}}</div>
+    <div class="s">{{PRICE_SUB}}</div>
+  </div>
+  <div class="metarow">
+    <div><div class="mk">Prepared for</div><div class="mv">{{PREPARED_FOR}}</div></div>
+    <div><div class="mk">Date</div><div class="mv">{{QUOTE_DATE}}</div></div>
+    <div><div class="mk">Rate</div><div class="mv">{{RATE}} / hour</div></div>
+    <div><div class="mk">Valid until</div><div class="mv">{{VALID_UNTIL}}</div></div>
+  </div>
+  <div class="foot"><span>Quote {{QUOTE_NO}}</span><span>{{FOOTER_LINE}}</span></div>
+</section>
+
+<!-- 01 SCOPE + 02 BUILD -->
+<section class="page">
+  <div class="section">
+    <div class="eyebrow">01 · The scope</div>
+    <h2>{{SCOPE_HEADING}}</h2>
+    <div class="h2bar"></div>
+    <p class="intro">{{SCOPE_INTRO}}</p>
+    <div class="stats">{{STATS_BLOCK}}</div>
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">02 · The build</div>
+    <h2>Build spec, phase by phase</h2>
+    <div class="h2bar"></div>
+    <table>
+      <thead><tr><th class="c" style="width:7%">#</th><th>Phase &amp; scope</th><th class="r" style="width:10%">Hrs</th><th class="r" style="width:14%">Cost</th></tr></thead>
+      <tbody>
+        {{PHASE_ROWS}}
+        <tr class="tot"><td></td><td>TOTAL (ex GST)</td><td class="r">{{TOTAL_HOURS}}</td><td class="r">{{SUBTOTAL}}</td></tr>
+        <tr class="tot"><td></td><td>TOTAL (inc GST 10%)</td><td></td><td class="r">{{TOTAL}}</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>Assumptions:</b> {{ASSUMPTIONS}}</div>
+  </div>
+  <div class="foot">{{LOGO_ON_LIGHT}}<span>{{FOOTER_LINE}}</span></div>
+</section>
+
+<!-- 03 HOW WE WORK + 04 INVESTMENT -->
+<section class="page">
+  <div class="section">
+    <div class="eyebrow">03 · How we work together</div>
+    <h2>The staged delivery model</h2>
+    <div class="h2bar"></div>
+    <p class="intro">Each stage is a checkpoint where you see progress and give the nod before we go further. Payment is staged {{PCT_SPLIT}}: a deposit to begin, the second instalment when the design is signed off, and the balance on launch.</p>
+    {{STEPS_BLOCK}}
+  </div>
+
+  <div class="section">
+    <div class="eyebrow">04 · Investment</div>
+    <h2>Payment schedule</h2>
+    <div class="h2bar"></div>
+    <table>
+      <thead><tr><th>Instalment</th><th>Trigger</th><th class="r">Share</th><th class="r">Ex GST</th><th class="r">Inc GST</th></tr></thead>
+      <tbody>
+        {{PAY_ROWS}}
+        <tr class="tot"><td>TOTAL</td><td></td><td class="r">100%</td><td class="r">{{SUBTOTAL}}</td><td class="r">{{TOTAL}}</td></tr>
+      </tbody>
+    </table>
+    <div class="dark"><b>Next step:</b> {{NEXT_STEP}}</div>
+  </div>
+  <div class="foot">{{LOGO_ON_LIGHT}}<span>{{FOOTER_LINE}}</span></div>
+</section>
+
+</body>
+</html>

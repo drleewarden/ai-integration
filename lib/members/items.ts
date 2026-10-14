@@ -10,6 +10,8 @@
  */
 
 import aiNativeReadiness from "@/content/members/ai-native-readiness";
+import quoteFromEmail from "@/content/members/quote-from-email";
+import invoiceGenerator from "@/content/members/invoice-generator";
 import aiPolicyTemplate from "@/content/members/ai-policy-template";
 import roiQuickCheck from "@/content/members/roi-quick-check";
 import automationPlaybook from "@/content/members/automation-playbook";
@@ -94,6 +96,8 @@ export const items: MemberItem[] = [
   fiftyFreeWebsites,
   elwoodWorkshop,
   aiNativeReadiness,
+  quoteFromEmail,
+  invoiceGenerator,
   aiPolicyTemplate,
   roiQuickCheck,
   automationPlaybook,
