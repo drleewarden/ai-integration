@@ -1,0 +1,7 @@
+{
+  "subject": "New project enquiry - Sam Test",
+  "from_name": "Creative Milk",
+  "from_email": "hello@creative-milk.com.au",
+  "reply_to": "sam.form@example-test.com",
+  "body": "New project enquiry from the website form.\n\nName: Sam Test\nBusiness: Test Bakery\nEmail: sam.form@example-test.com\n\nMessage: We need a 3 page website (home, menu, contact) for our bakery. Could you send a quote?"
+}

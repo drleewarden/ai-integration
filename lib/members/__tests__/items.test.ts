@@ -14,3 +14,19 @@ describe("ai-native-readiness registry entry", () => {
     );
   });
 });
+
+describe.each([
+  ["quote-from-email", "quote-from-email-v1.zip"],
+  ["invoice-generator", "invoice-generator-v1.zip"],
+])("%s registry entry", (slug, fileName) => {
+  it("is registered as a pro download following storage conventions", () => {
+    const item = itemBySlug(slug);
+    expect(item).toBeDefined();
+    if (!item || item.type !== "download") {
+      throw new Error("expected a download item");
+    }
+    expect(item.tier).toBe("pro");
+    expect(item.fileName).toBe(fileName);
+    expect(item.storagePath).toBe(`${slug}/${fileName}`);
+  });
+});
