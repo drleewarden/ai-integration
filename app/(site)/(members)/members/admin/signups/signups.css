@@ -1,0 +1,247 @@
+.signups-admin {
+  min-height: 70vh;
+}
+
+.signups-header,
+.signups-toolbar,
+.signups-notice,
+.signups-list,
+.signups-empty {
+  margin-inline: auto;
+  max-width: 960px;
+}
+
+.signups-header {
+  align-items: end;
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+}
+
+.signups-header h1 {
+  font-size: clamp(2.75rem, 6vw, 5rem);
+  margin: 0.75rem 0 1rem;
+}
+
+.signups-header p:not(.eyebrow) {
+  color: var(--slate-mid);
+  margin: 0;
+  max-width: 62ch;
+}
+
+.signups-toolbar {
+  align-items: center;
+  border-block: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 1rem 0;
+}
+
+.signups-select {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.signups-select span,
+.signups-count,
+.signup-facts dt,
+.signup-status,
+.signup-date {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.signups-select span,
+.signups-count,
+.signup-date,
+.signup-facts dt {
+  color: var(--slate-mid);
+}
+
+.signups-select select {
+  appearance: auto;
+  background: var(--warm-cream);
+  border: 1px solid var(--rule-strong);
+  color: var(--midnight-ink);
+  font: inherit;
+  min-height: 44px;
+  min-width: 16rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.signups-select select:focus-visible {
+  outline: 2px solid var(--liquid-gold);
+  outline-offset: 2px;
+}
+
+.signups-notice {
+  background: var(--gold-pale);
+  border: 1px solid var(--liquid-gold);
+  color: var(--midnight-ink);
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.25rem;
+}
+
+.signups-list {
+  display: grid;
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+}
+
+.signup-record {
+  border: 1px solid var(--rule);
+}
+
+.signup-record[open] {
+  border-color: var(--liquid-gold);
+}
+
+.signup-record summary {
+  align-items: center;
+  cursor: pointer;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) auto auto 1rem;
+  list-style: none;
+  min-height: 44px;
+  padding: 1rem 1.25rem;
+}
+
+.signup-record summary::-webkit-details-marker {
+  display: none;
+}
+
+.signup-record summary::after {
+  color: var(--liquid-gold);
+  content: "+";
+  font-family: var(--font-mono);
+  text-align: center;
+}
+
+.signup-record[open] summary::after {
+  content: "\2212";
+}
+
+.signup-record summary:focus-visible {
+  outline: 2px solid var(--liquid-gold);
+  outline-offset: -2px;
+}
+
+.signup-who {
+  display: grid;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.signup-who strong {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.signup-who span {
+  color: var(--slate-mid);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.signup-status {
+  border: 1px solid var(--rule-strong);
+  padding: 0.35rem 0.6rem;
+  white-space: nowrap;
+}
+
+.signup-status.good {
+  background: var(--liquid-gold);
+  border-color: var(--liquid-gold);
+  color: var(--midnight-ink);
+}
+
+.signup-status.muted {
+  opacity: 0.55;
+}
+
+.signup-detail {
+  border-top: 1px solid var(--rule);
+  padding: 1.25rem;
+}
+
+.signup-facts {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0 0 1.25rem;
+}
+
+.signup-facts div {
+  border-top: 1px solid var(--rule);
+  padding-top: 0.75rem;
+}
+
+.signup-facts dt {
+  margin-bottom: 0.35rem;
+}
+
+.signup-facts dd {
+  margin: 0;
+}
+
+.signup-notes {
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.signup-mail {
+  border-bottom: 1px solid var(--liquid-gold);
+}
+
+.signups-empty {
+  border-block: 1px solid var(--rule);
+  padding: 2rem 0;
+}
+
+.signups-empty h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  margin: 0 0 0.5rem;
+}
+
+.signups-empty p {
+  color: var(--slate-mid);
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .signups-header {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .signup-record summary {
+    grid-template-columns: minmax(0, 1fr) 1rem;
+  }
+
+  .signup-date {
+    display: none;
+  }
+
+  .signup-status {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  .signup-facts {
+    grid-template-columns: 1fr;
+  }
+}
