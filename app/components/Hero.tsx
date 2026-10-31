@@ -45,7 +45,7 @@ export default function Hero() {
           className="eyebrow animate-slideDown"
           style={{ color: "var(--liquid-gold)", marginBottom: "2rem" }}
         >
-          Creative Milk &middot; Melbourne AI Automation
+          Melbourne AI Automation &amp; Implementation
         </div>
 
         <h1
@@ -75,8 +75,8 @@ export default function Hero() {
             marginTop: "2rem",
           }}
         >
-          Creative Milk builds custom AI agents and workflow automations for
-          growing Australian businesses. Every system connects to the tools your team
+          We build custom AI agents and workflow automations for growing
+          Australian businesses. Every system connects to the tools your team
           already uses and is measured by outcomes, not deliverables.
         </p>
 
