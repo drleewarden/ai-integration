@@ -19,38 +19,10 @@ export function OrganisationSchema() {
     '@type': 'Organization',
     '@id': `${BASE_URL}/#organisation`,
     name: 'Creative Milk',
-    // The social handles present the brand as "Creative Milk AI". Listing
-    // that variant, plus the registered company name, helps search engines
-    // resolve brand searches to this entity rather than to the unrelated
-    // design agencies that share the name.
-    alternateName: ['Creative Milk AI', 'CreativeMilk'],
-    legalName: 'Creative Milk Pty Ltd',
     url: BASE_URL,
-    logo: {
-      '@type': 'ImageObject',
-      url: `${BASE_URL}/icon.png`,
-    },
-    image: `${BASE_URL}/opengraph-image`,
-    slogan: 'Intelligence that actually works.',
+    logo: `${BASE_URL}/icon.png`,
     description:
-      'Creative Milk is a Melbourne AI consultancy that builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
-    email: 'contact@creative-milk.com.au',
-    telephone: '+61455775052',
-    founder: [
-      {
-        '@type': 'Person',
-        name: 'Craig Wilson',
-        jobTitle: 'Co-Founder',
-        url: `${BASE_URL}/about`,
-      },
-      {
-        '@type': 'Person',
-        name: 'Darryn Lee-Warden',
-        jobTitle: 'Co-Founder',
-        url: `${BASE_URL}/about`,
-        sameAs: ['https://www.linkedin.com/in/darryn-lee-warden-35359b43/'],
-      },
-    ],
+      'Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
     // Must stay identical to the Google Business Profile listing. Search
     // engines treat a name/address/phone mismatch between a site and its GBP
     // as a signal that the two are different entities, which matters here
@@ -104,9 +76,6 @@ export function WebsiteSchema() {
     '@id': `${BASE_URL}/#website`,
     url: BASE_URL,
     name: 'Creative Milk',
-    // Google reads WebSite.name / alternateName for the site name shown in
-    // results, so the brand variants are repeated here.
-    alternateName: ['Creative Milk AI', 'creative-milk.com.au'],
     description: 'Custom AI agents, workflow automation and specialised business websites.',
     publisher: {
       '@id': `${BASE_URL}/#organisation`,
