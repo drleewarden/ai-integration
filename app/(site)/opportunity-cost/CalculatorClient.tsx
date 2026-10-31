@@ -949,6 +949,11 @@ function MethodologyNote() {
             This is a directional estimate built from three value levers, using
             conservative industry-average benchmarks — not a quote.
           </p>
+          <p style={{ margin: '0 0 14px' }}>
+            It isn&rsquo;t a business valuation calculator either. It doesn&rsquo;t
+            estimate what your business would sell for; it estimates the value AI
+            could add to the business each year.
+          </p>
           <ul style={{ margin: '0 0 14px', paddingLeft: '20px' }}>
             <li style={{ marginBottom: '8px' }}>
               <strong style={{ color: C.slate }}>Productivity reclaimed</strong> —

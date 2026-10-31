@@ -10,19 +10,22 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
-  title: "AI Automation & Specialised Websites | Creative Milk Melbourne",
+  // Brand first: "creative milk" is the site's biggest query and page one is
+  // shared with unrelated agencies of the same name, so the title leads with
+  // the brand and says what this Creative Milk does.
+  title: "Creative Milk | AI Automation & Specialised Websites, Melbourne",
   description:
-    "Creative Milk builds custom AI agents, workflow automations and specialised business websites. Melbourne-based strategy, design and development for Australian businesses.",
+    "Creative Milk is a Melbourne AI consultancy. We build custom AI agents, workflow automations and specialised business websites for Australian businesses.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "AI Automation & Specialised Websites | Creative Milk",
+    title: "Creative Milk | AI Automation & Specialised Websites",
     description: "Custom AI agents, workflow automation and business websites, built around your business goals.",
     url: "/",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Automation & Specialised Websites | Creative Milk",
+    title: "Creative Milk | AI Automation & Specialised Websites",
     description: "Custom AI agents, workflow automation and business websites, built around your business goals.",
   },
 };

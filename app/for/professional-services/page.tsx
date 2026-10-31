@@ -585,6 +585,20 @@ export default function ProfessionalServicesPage() {
                 See full pricing
               </a>
             </div>
+            <p
+              className="body-copy"
+              style={{ maxWidth: "44ch", margin: "2.5rem auto 0", fontSize: "0.95rem" }}
+            >
+              Sector guides:{" "}
+              <a href="/insights/blog-15-ai-law-firms" style={{ textDecoration: "underline" }}>
+                AI for law firms
+              </a>{" "}
+              and{" "}
+              <a href="/insights/blog-04-ai-accounting-firms" style={{ textDecoration: "underline" }}>
+                AI for accounting firms
+              </a>
+              .
+            </p>
           </div>
         </section>
       </main>

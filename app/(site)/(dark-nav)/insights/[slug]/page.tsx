@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { posts, postBySlug, displayTitle } from "@/lib/insights/posts";
 import { BlogPostingSchema } from "@/app/components/Schema";
+import { extractFaq } from "@/lib/insights/faq";
 import PreferredSource from "@/app/components/PreferredSource";
 import "./post.css";
 
@@ -11,7 +12,9 @@ import "./post.css";
  * post.css. Statically generated for every known slug.
  *
  * Each post ships canonical + OpenGraph metadata and BlogPosting JSON-LD
- * (dates, publisher entity) so AI search engines can attribute and cite it.
+ * (dates, publisher entity) so AI search engines can attribute and cite it,
+ * plus FAQPage JSON-LD when the article has a "Frequently asked questions"
+ * section.
  */
 
 export const dynamicParams = false;
@@ -70,6 +73,21 @@ export default async function BlogPost({
   const body = barAt === -1 ? post.html : post.html.slice(0, barAt);
   const bar = barAt === -1 ? "" : post.html.slice(barAt);
 
+  // FAQPage JSON-LD, built from the article's visible FAQ section.
+  const faq = extractFaq(post.html);
+  const faqSchema =
+    faq.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faq.map((item) => ({
+            "@type": "Question",
+            name: item.q,
+            acceptedAnswer: { "@type": "Answer", text: item.a },
+          })),
+        }
+      : null;
+
   return (
     <div style={{ paddingTop: "68px" }}>
       <BlogPostingSchema
@@ -80,6 +98,12 @@ export default async function BlogPost({
         dateModified={post.dateModified}
         category={post.category}
       />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <div dangerouslySetInnerHTML={{ __html: body }} />
       <aside
         aria-label="Follow Creative Milk on Google"
