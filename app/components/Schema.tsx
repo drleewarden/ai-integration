@@ -19,8 +19,20 @@ export function OrganisationSchema() {
     '@type': 'Organization',
     '@id': `${BASE_URL}/#organisation`,
     name: 'Creative Milk',
+    // Registered entity (ABN Lookup, confirmed 2026-08-17). Entity-identity
+    // fields help Google separate this company from the unrelated design
+    // agencies that share the "Creative Milk" name on page one.
+    legalName: 'Creative Milk Pty Ltd',
+    identifier: {
+      '@type': 'PropertyValue',
+      propertyID: 'ABN',
+      value: '21 615 384 800',
+    },
     url: BASE_URL,
     logo: `${BASE_URL}/icon.png`,
+    // Same phone as the Google Business Profile listing.
+    telephone: '+61455775052',
+    email: 'contact@creative-milk.com.au',
     description:
       'Creative Milk builds custom AI agents, workflow automations and specialised business websites for Australian businesses.',
     // Must stay identical to the Google Business Profile listing. Search
@@ -43,6 +55,7 @@ export function OrganisationSchema() {
     sameAs: [
       'https://www.facebook.com/Creative.MilkAI',
       'https://www.instagram.com/creativemilk.ai/',
+      'https://abr.business.gov.au/ABN/View?id=21615384800',
     ],
     knowsAbout: [
       'Artificial Intelligence',
@@ -415,6 +428,9 @@ export function EventSchema() {
     name: 'Automate Your Business: AI Automation Workshop',
     description:
       'A two-hour, in-person AI workshop in Melbourne: learn the fundamentals in plain English and build a working automated email-reply system for your business.',
+    // Google's Events rich-result check flags "Missing field image" (GSC URL
+    // Inspection, 2026-09-01 and 2026-10-01). Reuse the site share image.
+    image: [`${BASE_URL}/opengraph-image`],
     startDate: '2026-08-07T15:00:00+10:00',
     endDate: '2026-08-07T17:00:00+10:00',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
