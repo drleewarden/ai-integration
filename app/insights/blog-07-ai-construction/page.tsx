@@ -5,8 +5,8 @@ import Nav from "../../components/Nav";
 import Footer from "../../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Blog Article 07: AI for Construction and Trades — Where the Biggest Time Savings Actually Are | Creative Milk Insights",
-  description: "The construction and trades sector has one of the highest AI ROI potentials of any Australian industry — and almost no specialist serving it. Here's where the real time savings are.",
+  title: "AI for Construction and Trades | Creative Milk",
+  description: "Construction and trades has some of the highest AI ROI potential of any Australian industry, and almost no specialist serving it. See where the time savings are.",
 };
 
 export default function BlogPost() {

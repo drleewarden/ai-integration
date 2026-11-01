@@ -12,6 +12,16 @@ export const metadata: Metadata = {
     description:
       "Melbourne-based, AU-wide: fixed-price AI builds measured by outcomes, not deliverables. See what a Discovery Sprint would find in your business.",
     type: "website",
+    // Defining openGraph replaces the root layout's, so re-declare the
+    // file-convention share image explicitly.
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Consulting Melbourne, Built by People Who've Shipped It",
+    description:
+      "Melbourne-based, AU-wide: fixed-price AI builds measured by outcomes, not deliverables. See what a Discovery Sprint would find in your business.",
+    images: ["/twitter-image"],
   },
 };
 

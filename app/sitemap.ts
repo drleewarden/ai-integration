@@ -41,6 +41,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/ai-consulting-melbourne`, lastModified: new Date('2026-08-01'), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/ai-automation-melbourne`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.9 },
 
+    // ── Legacy insights pages ────────────────────────────────────
+    // Live static routes under app/insights/ that are not in the posts
+    // registry, so the registry-derived entries below miss them. No
+    // lastModified: the real edit dates are not recorded anywhere.
+    { url: `${BASE_URL}/insights/blog-07-ai-construction`, changeFrequency: 'yearly', priority: 0.6 },
+    { url: `${BASE_URL}/insights/blog-08-choose-ai-consultant`, changeFrequency: 'yearly', priority: 0.6 },
+
     // ── Conversion / lead gen ────────────────────────────────────
     { url: `${BASE_URL}/ai-readiness`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/opportunity-cost`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },

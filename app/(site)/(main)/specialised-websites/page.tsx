@@ -9,8 +9,10 @@ export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: url },
-  openGraph: { title, description, url, type: "website" },
-  twitter: { card: "summary_large_image", title, description },
+  // Defining openGraph replaces the root layout's, so re-declare the
+  // file-convention share images explicitly.
+  openGraph: { title, description, url, type: "website", images: ["/opengraph-image"] },
+  twitter: { card: "summary_large_image", title, description, images: ["/twitter-image"] },
 };
 
 export default function SpecialisedWebsitesPage() {
