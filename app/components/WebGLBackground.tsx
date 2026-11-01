@@ -461,18 +461,25 @@ export default function WebGLBackground() {
     window.addEventListener("scroll", onScroll, { passive: true });
 
     // ── Visibility - pause when off-screen / tab hidden ────────
-    let visible = true;
+    // Two independent flags, ANDed. A single shared flag was written by both
+    // the observer and the tab-visibility handler, so returning to the tab
+    // after scrolling past the hero resumed drawing an off-screen canvas.
+    let onScreen = true;
+    let tabVisible = !document.hidden;
+    const shouldDraw = () => onScreen && tabVisible;
+
     const io = new IntersectionObserver(
       ([entry]) => {
-        visible = entry.isIntersecting;
+        onScreen = entry.isIntersecting;
+        if (onScreen) startLoop();
       },
       { threshold: 0.01 }
     );
     io.observe(canvas);
 
     const onVisibility = () => {
-      if (document.hidden) visible = false;
-      else visible = true;
+      tabVisible = !document.hidden;
+      if (tabVisible) startLoop();
     };
     document.addEventListener("visibilitychange", onVisibility);
 
@@ -491,12 +498,23 @@ export default function WebGLBackground() {
     // Seconds since the cursor last moved the water.
     let idle = 0;
 
+    // The loop halts when nothing is visible instead of re-arming forever, and
+    // is restarted by the observer / visibility handlers above. A loop that
+    // never stops also never lets the main thread go quiet.
+    function startLoop() {
+      if (raf || !shouldDraw()) return;
+      last = performance.now();
+      raf = requestAnimationFrame(render);
+    }
+
     const render = (now: number) => {
+      if (!shouldDraw()) {
+        raf = 0;
+        return;
+      }
       raf = requestAnimationFrame(render);
       const dt = Math.min((now - last) / 1000, 1 / 30);
       last = now;
-
-      if (!visible) return;
 
       // Smooth mouse
       mouse.x += (mouse.tx - mouse.x) * Math.min(1, dt * 3.5);
@@ -559,7 +577,7 @@ export default function WebGLBackground() {
       gl.uniform1f(uScroll, scroll);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
-    raf = requestAnimationFrame(render);
+    startLoop();
 
     return () => {
       cancelAnimationFrame(raf);
