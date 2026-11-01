@@ -64,7 +64,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="en-AU"
       className={`${cormorantGaramond.variable} ${syne.variable} ${dmMono.variable}`}
     >
       <head>

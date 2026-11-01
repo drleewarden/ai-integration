@@ -12,7 +12,7 @@ import Footer from "./components/Footer";
 export const metadata: Metadata = {
   title: "AI Automation & Specialised Websites | Creative Milk Melbourne",
   description:
-    "Creative Milk builds custom AI agents, workflow automations and specialised business websites. Melbourne-based strategy, design and development for Australian businesses.",
+    "Custom AI agents, workflow automations and specialised business websites for Australian businesses. Melbourne-based strategy, design and development.",
   alternates: { canonical: "/" },
   openGraph: {
     title: "AI Automation & Specialised Websites | Creative Milk",
