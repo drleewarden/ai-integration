@@ -6,13 +6,23 @@ import { BreadcrumbSchema, LocalServiceSchema } from "@/app/components/Schema";
 export const metadata: Metadata = {
   title: "AI Automation Melbourne | AI Agents for Small Business | Creative Milk",
   description:
-    "Melbourne AI automation for small and mid-sized businesses. Creative Milk builds custom AI agents, workflow automations, and integrations with human approval controls.",
+    "Melbourne AI automation for small and mid-sized businesses. Custom AI agents, workflow automations and integrations with human approval controls.",
   alternates: { canonical: "/ai-automation-melbourne" },
   openGraph: {
     title: "AI Automation Melbourne | Creative Milk",
     description:
       "Custom AI agents and workflow automations built into the systems your team already uses.",
     type: "website",
+    // Defining openGraph replaces the root layout's, so re-declare the
+    // file-convention share image explicitly.
+    images: ["/opengraph-image"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Automation Melbourne | Creative Milk",
+    description:
+      "Custom AI agents and workflow automations built into the systems your team already uses.",
+    images: ["/twitter-image"],
   },
 };
 
