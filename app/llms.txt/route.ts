@@ -34,6 +34,7 @@ Contact: contact@creative-milk.com.au. See the public pages below for current se
 - [Process](${BASE_URL}/process): How an engagement runs end to end
 - [Work](${BASE_URL}/work): Case studies and past builds
 - [For professional services firms](${BASE_URL}/for/professional-services): Industry-specific overview
+- [AI for law firms](${BASE_URL}/for/law-firms): AI research, document review, matter intake and time capture for small Australian law firms, with published pricing
 
 ## Tools
 

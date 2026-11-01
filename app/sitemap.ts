@@ -36,6 +36,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // ── Industry verticals ───────────────────────────────────────
     { url: `${BASE_URL}/for/professional-services`, lastModified: SITE_UPDATED, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/for/law-firms`, lastModified: new Date('2026-11-01'), changeFrequency: 'monthly', priority: 0.7 },
 
     // ── Geo landing pages ──────────────────────────────────────────
     { url: `${BASE_URL}/ai-consulting-melbourne`, lastModified: new Date('2026-08-01'), changeFrequency: 'monthly', priority: 0.8 },
