@@ -101,6 +101,11 @@ export default function Contact({ variant = "dark" }: { variant?: "dark" | "crea
         });
         return;
       }
+      pushEvent(EVENTS.GENERATE_LEAD, {
+        form_id: "contact_section",
+        service_line: source.serviceLine,
+        source_path: source.sourcePath,
+      });
       pushEvent(EVENTS.CONTACT_FORM_SUBMIT, {
         form_id: "contact",
         has_company: Boolean(form.company.trim()),

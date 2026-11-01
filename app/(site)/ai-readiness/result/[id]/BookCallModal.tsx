@@ -18,6 +18,7 @@ import {
   Label,
   goldButtonStyle,
 } from '../../_components/ui';
+import { EVENTS, pushEvent } from '@/app/lib/gtm';
 
 const COMPANY_SIZES = [
   { value: '1-10',    label: '1–10' },
@@ -100,6 +101,12 @@ export function BookCallModal({
       });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(body.error ?? 'Submission failed');
+      // Countable lead. No PII: form id and the two select values only.
+      pushEvent(EVENTS.GENERATE_LEAD, {
+        form_id: 'readiness_book_call',
+        company_size: companySize || 'not_specified',
+        role: role || 'not_specified',
+      });
       setDone(true);
     } catch (err) {
       console.error('[book-call] submit failed:', err);

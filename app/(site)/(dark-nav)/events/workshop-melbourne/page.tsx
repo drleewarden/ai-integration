@@ -12,6 +12,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // offer price in app/components/Schema.tsx in sync with this by hand.
 const SEAT_PRICE = "$35";
 
+// The founding cohort ran on Friday 7 August 2026. While no second date is
+// set, the page records that it ran and points to /contact instead of selling
+// seats to a past event. Set back to false (and update the dates and Event
+// schema) when the next cohort is scheduled.
+const WORKSHOP_HAS_RUN = true;
+
 const OUTCOMES = [
   "One working AI email-reply system that sounds like you",
   "A repeatable pattern for spotting the next workflow to automate",
@@ -305,15 +311,19 @@ export default function WorkshopMelbourne() {
               }}
             >
               {[
-                { label: "Date", value: "Fri 7 Aug 2026" },
+                { label: WORKSHOP_HAS_RUN ? "Ran on" : "Date", value: "Fri 7 Aug 2026" },
                 { label: "Time", value: "3:00 – 5:00 PM" },
                 { label: "Format", value: "In person, Melbourne" },
                 {
                   label: "Location",
                   value: "Elwood + St Kilda Neighbourhood Learning Centre",
                 },
-                { label: "Price", value: `${SEAT_PRICE} per seat` },
-                { label: "Seats", value: "24 only · founding cohort" },
+                ...(WORKSHOP_HAS_RUN
+                  ? [{ label: "Next date", value: "Not set yet" }]
+                  : [
+                      { label: "Price", value: `${SEAT_PRICE} per seat` },
+                      { label: "Seats", value: "24 only · founding cohort" },
+                    ]),
               ].map((item) => (
                 <div key={item.label}>
                   <dt
@@ -357,7 +367,36 @@ export default function WorkshopMelbourne() {
               boxShadow: "0 24px 60px rgba(0,0,0,0.35)",
             }}
           >
-            {isDone ? (
+            {WORKSHOP_HAS_RUN ? (
+              <div>
+                <span
+                  className="eyebrow"
+                  style={{ marginBottom: "0.75rem", color: "var(--liquid-gold)" }}
+                >
+                  - This workshop has run
+                </span>
+                <h2
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 300,
+                    fontSize: "clamp(1.5rem, 2.5vw, 2rem)",
+                    color: "var(--warm-cream)",
+                    lineHeight: 1.15,
+                    margin: "0.75rem 0 1rem",
+                  }}
+                >
+                  The founding cohort ran on Friday 7 August 2026.
+                </h2>
+                <p className="body-copy" style={{ color: "rgba(245,240,232,0.7)", marginBottom: "1.5rem" }}>
+                  The next date is not set yet. If you would like to hear when
+                  it is, or you would rather talk about your own business now,
+                  get in touch.
+                </p>
+                <a href="/contact" className="cta cta-gold">
+                  Ask about the next workshop <ArrowRight size={14} aria-hidden="true" />
+                </a>
+              </div>
+            ) : isDone ? (
               <div>
                 <CheckCircle2
                   size={32}
@@ -1038,14 +1077,19 @@ export default function WorkshopMelbourne() {
               margin: "1rem 0 1.25rem",
             }}
           >
-            24 seats. <em className="gold">{SEAT_PRICE} a seat.</em>
+            {WORKSHOP_HAS_RUN ? (
+              <>Want the <em className="gold">next one?</em></>
+            ) : (
+              <>24 seats. <em className="gold">{SEAT_PRICE} a seat.</em></>
+            )}
           </h2>
           <p className="body-copy" style={{ marginBottom: "2rem" }}>
-            One price, one room, 24 seats. Two hours, in person, one working
-            workflow you built yourself.
+            {WORKSHOP_HAS_RUN
+              ? "Two hours, in person, one working workflow you built yourself. Tell us you are interested and we will let you know when the next date is set."
+              : "One price, one room, 24 seats. Two hours, in person, one working workflow you built yourself."}
           </p>
           <a
-            href="#reserve"
+            href={WORKSHOP_HAS_RUN ? "/contact" : "#reserve"}
             className="cta cta-dark"
             style={{
               display: "inline-flex",
@@ -1054,7 +1098,7 @@ export default function WorkshopMelbourne() {
               textAlign: "center",
             }}
           >
-            Reserve my seat — {SEAT_PRICE}
+            {WORKSHOP_HAS_RUN ? "Ask about the next workshop" : `Reserve my seat - ${SEAT_PRICE}`}
             <ArrowRight size={14} aria-hidden="true" />
           </a>
         </div>
@@ -1064,7 +1108,7 @@ export default function WorkshopMelbourne() {
       {/* Sticky mobile CTA - only visible on small viewports, hidden once   */}
       {/* the user has converted                                              */}
       {/* ------------------------------------------------------------------ */}
-      {!isDone && (
+      {!isDone && !WORKSHOP_HAS_RUN && (
         <a
           href="#reserve"
           className="workshop-sticky-cta"
