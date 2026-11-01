@@ -2,6 +2,9 @@ import { ArrowRight, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import FAQ from "@/app/components/FAQ";
 import { BreadcrumbSchema, LocalServiceSchema } from "@/app/components/Schema";
+import { pricingPhaseById } from "@/lib/pricing";
+
+const ASSESSMENT = pricingPhaseById("assessment");
 
 export const metadata: Metadata = {
   title: "AI Consulting Melbourne | Creative Milk",
@@ -68,7 +71,7 @@ const FAQS = [
   },
   {
     q: "Is there a low-commitment way to see how this works first?",
-    a: "Yes — the “Automate Your Business” workshop. The first cohort runs Friday 7 August 2026, 3–5pm, in person at the Elwood + St Kilda Neighbourhood Learning Centre in Melbourne ($39, 24 seats). You leave with a working AI email-reply system, a repeatable pattern for spotting automatable workflows in your own business, and a 12-week measurement plan — not useful in the first 30 minutes, full refund on the spot.",
+    a: `Yes. The ${ASSESSMENT.name} is ${ASSESSMENT.priceDisplay} over ${ASSESSMENT.duration}: where your week goes, what AI could take off your plate, and the maths behind it. It stands on its own, so you can stop there. We also run in-person workshops in Melbourne from time to time; ask us about the next one.`,
   },
 ];
 
@@ -298,18 +301,16 @@ export default function AIConsultingMelbournePage() {
                 className="body-copy"
                 style={{ maxWidth: "48ch", marginTop: "1.25rem", color: "rgba(245,240,232,0.62)" }}
               >
-                Our first in-person workshop — &ldquo;Automate your
-                business: put time back in your pocket&rdquo; — runs
-                Friday 7 August 2026, 3–5pm, at the Elwood + St Kilda
-                Neighbourhood Learning Centre. $39, 24 seats. You leave with
-                a working AI email-reply system, a repeatable pattern for
-                spotting automatable workflows, and a 12-week measurement
-                plan. Not useful in the first 30 minutes? Full refund on the
-                spot, no questions.
+                Start small with the {ASSESSMENT.name}: {ASSESSMENT.priceDisplay}{" "}
+                over {ASSESSMENT.duration}. We map where your week goes, what
+                AI could take off your plate and the maths behind it, and the
+                findings are yours whether or not you go further. We also run
+                in-person workshops in Melbourne from time to time. Our first
+                ran in August 2026; ask us about the next one.
               </p>
               <div style={{ marginTop: "2rem" }}>
-                <a href="/events/workshop-melbourne" className="cta cta-gold">
-                  Reserve my seat <ArrowRight size={14} aria-hidden="true" />
+                <a href="/contact" className="cta cta-gold">
+                  Book a call <ArrowRight size={14} aria-hidden="true" />
                 </a>
               </div>
             </div>

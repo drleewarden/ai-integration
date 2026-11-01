@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { resolveEnquirySource } from "@/lib/service-lines";
 import { ArrowRight } from "lucide-react";
+import { EVENTS, pushEvent } from "@/app/lib/gtm";
 
 const budgetOptions = [
   "Under $10K",
@@ -102,6 +103,13 @@ export default function Contact() {
       const data = await response.json();
 
       if (response.ok) {
+        // The one countable lead for this form. No PII: an enum and a path.
+        pushEvent(EVENTS.GENERATE_LEAD, {
+          form_id: "contact_page_book_call",
+          service_line: source.serviceLine,
+          source_path: source.sourcePath,
+          budget_band: formData.budget || "not_specified",
+        });
         setSubmitted(true);
       } else {
         setStatus({ type: "error", message: data.error || "Failed to send. Please try again." });

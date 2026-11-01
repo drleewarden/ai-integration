@@ -10,7 +10,7 @@ import { EventSchema } from "@/app/components/Schema";
 export const metadata: Metadata = {
   title: "AI Automation Workshop, Melbourne | Creative Milk",
   description:
-    "A two-hour, in-person AI workshop in Melbourne on Friday 7 August 2026: learn the fundamentals in plain English and build a working automated email-reply system for your business. 24 seats, founding cohort.",
+    "A two-hour, in-person AI workshop in Melbourne. The founding cohort ran on Friday 7 August 2026; ask Creative Milk about the next date.",
 };
 
 export default function WorkshopMelbourneLayout({
