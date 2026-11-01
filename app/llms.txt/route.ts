@@ -29,6 +29,7 @@ Contact: contact@creative-milk.com.au. See the public pages below for current se
 - [Specialised websites](${BASE_URL}/specialised-websites): Business website strategy, design and development, with links to selected work
 - [Website portfolio](https://websites.creative-milk.com.au): Selected websites and digital products Darryn Lee-Warden helped bring to life
 - [What we build](${BASE_URL}/what-we-build): Types of AI systems delivered (automation, custom tools, integrations)
+- [AI consulting Melbourne](${BASE_URL}/ai-consulting-melbourne): Melbourne-based AI consulting, the three-phase engagement model, and how a Discovery Sprint works
 - [AI automation Melbourne](${BASE_URL}/ai-automation-melbourne): Custom AI agents and multi-step workflow automation for Melbourne small and mid-sized businesses
 - [Pricing](${BASE_URL}/pricing): Published pricing for all three phases with what moves the price within each range
 - [Process](${BASE_URL}/process): How an engagement runs end to end
@@ -43,6 +44,8 @@ Contact: contact@creative-milk.com.au. See the public pages below for current se
 ## Insights
 
 ${insightLinks}
+- [AI for Construction and Trades](${BASE_URL}/insights/blog-07-ai-construction): Where the biggest AI time savings are for Australian construction and trades businesses
+- [How to Choose an AI Consultant in Australia](${BASE_URL}/insights/blog-08-choose-ai-consultant): Seven questions that separate serious AI practitioners from agencies selling capability they cannot deliver
 
 ## Company
 

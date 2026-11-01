@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { posts, postBySlug, displayTitle } from "@/lib/insights/posts";
 import { BlogPostingSchema } from "@/app/components/Schema";
 import PreferredSource from "@/app/components/PreferredSource";
+import Link from "next/link";
 import "./post.css";
 
 /**
@@ -15,6 +16,15 @@ import "./post.css";
  */
 
 export const dynamicParams = false;
+
+// Articles for the firm types covered by /for/professional-services. Every
+// article already links only to /contact, so this adds the service-page links
+// that were missing (internal-link additions, seo-audit 2026-10-01).
+const PROFESSIONAL_SERVICES_SLUGS = new Set([
+  "blog-04-ai-accounting-firms",
+  "blog-13-ai-financial-advisers",
+  "blog-15-ai-law-firms",
+]);
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
@@ -81,6 +91,32 @@ export default async function BlogPost({
         category={post.category}
       />
       <div dangerouslySetInnerHTML={{ __html: body }} />
+      <nav
+        aria-label="Related Creative Milk pages"
+        style={{
+          maxWidth: "740px",
+          padding: "0 3rem 2rem",
+          fontSize: "0.95rem",
+          lineHeight: 1.7,
+        }}
+      >
+        <p style={{ margin: 0 }}>
+          <strong>Next step:</strong>{" "}
+          {PROFESSIONAL_SERVICES_SLUGS.has(post.slug) && (
+            <>
+              <Link href="/for/professional-services">
+                AI for professional services firms
+              </Link>
+              {" · "}
+            </>
+          )}
+          <Link href="/ai-consulting-melbourne">AI consulting in Melbourne</Link>
+          {" · "}
+          <Link href="/pricing">Published pricing</Link>
+          {" · "}
+          <Link href="/services">How an engagement works</Link>
+        </p>
+      </nav>
       <aside
         aria-label="Follow Creative Milk on Google"
         style={{ maxWidth: "740px", padding: "0 3rem 2.5rem" }}
