@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Cormorant_Garamond, Syne, DM_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import Analytics from "./components/Analytics";
 import ConsentBanner from "./components/ConsentBanner";
 import BackToTop from "./components/BackToTop";
@@ -8,23 +8,43 @@ import { OrganisationSchema, WebsiteSchema } from "./components/Schema";
 import { PostHogProvider } from "./components/PostHogProvider";
 import "./globals.css";
 
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ["latin"],
-  weight: ["300", "400", "600"],
-  style: ["normal", "italic"],
+// Self-hosted so builds never depend on Google Fonts. Next 15 crashes on the
+// extensionless /l/font?kit= URLs Google sometimes returns (vercel/next.js#99114,
+// fixed only in 16.4.3). Latin files and weight declarations copied from Google's
+// css2 response.
+const cormorantGaramond = localFont({
+  src: [
+    { path: "./fonts/CormorantGaramond-latin-var.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/CormorantGaramond-latin-var.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/CormorantGaramond-latin-var.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/CormorantGaramond-latin-italic-var.woff2", weight: "300", style: "italic" },
+    { path: "./fonts/CormorantGaramond-latin-italic-var.woff2", weight: "400", style: "italic" },
+    { path: "./fonts/CormorantGaramond-latin-italic-var.woff2", weight: "600", style: "italic" },
+  ],
   variable: "--font-cormorant-garamond",
+  display: "swap",
+  adjustFontFallback: "Times New Roman",
 });
 
-const syne = Syne({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+const syne = localFont({
+  src: [
+    { path: "./fonts/Syne-latin-var.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Syne-latin-var.woff2", weight: "600", style: "normal" },
+    { path: "./fonts/Syne-latin-var.woff2", weight: "700", style: "normal" },
+    { path: "./fonts/Syne-latin-var.woff2", weight: "800", style: "normal" },
+  ],
   variable: "--font-syne",
+  display: "swap",
 });
 
-const dmMono = DM_Mono({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
+const dmMono = localFont({
+  src: [
+    { path: "./fonts/DMMono-latin-300.woff2", weight: "300", style: "normal" },
+    { path: "./fonts/DMMono-latin-400.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/DMMono-latin-500.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-dm-mono",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
