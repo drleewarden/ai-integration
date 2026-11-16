@@ -28,6 +28,8 @@ import blog19 from "@/content/insights/blog-19-ai-hospitality.json";
 import blog27 from "@/content/insights/blog-27-ai-insurance.json";
 import blog30 from "@/content/insights/blog-30-ai-transport-logistics.json";
 import blog24 from "@/content/insights/blog-24-ai-retail.json";
+import blog10 from "@/content/insights/blog-10-ecommerce-ai.json";
+import blog32 from "@/content/insights/blog-32-ai-recruitment.json";
 
 export interface InsightPost {
   slug: string;
@@ -46,7 +48,7 @@ export interface InsightPost {
 }
 
 export const posts: InsightPost[] = (
-  [blog01, blog02, blog03, blog04, blog05, blog06, blog21, blog28, blog25, blog29, blog15, blog13, blog34, blog26, blog19, blog27, blog30, blog24] as InsightPost[]
+  [blog01, blog02, blog03, blog04, blog05, blog06, blog21, blog28, blog25, blog29, blog15, blog13, blog34, blog26, blog19, blog27, blog30, blog24, blog10, blog32] as InsightPost[]
 )
   // External links in post bodies open in a new tab (see lib/external-links).
   .map((p) => ({ ...p, html: withExternalLinkTargets(p.html) }))
